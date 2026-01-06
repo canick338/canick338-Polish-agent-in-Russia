@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="Character" load_steps=12 format=3]
+[gd_resource type="Resource" script_class="Character" load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://Characters/Character.gd" id="1"]
-[ext_resource type="Texture2D" path="res://Characters/Danila/danilastay.png" id="2"]
+[ext_resource type="Texture2D" path="res://Characters/danilastay.png" id="2"]
 [ext_resource type="Texture2D" path="res://Characters/Danila/danila_happy.png" id="3"]
 [ext_resource type="Texture2D" path="res://Characters/Danila/saddaniel.png" id="4"]
 [ext_resource type="Texture2D" path="res://Characters/Danila/malicioussmile.png" id="5"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" path="res://Characters/Danila/danila_surprised.png" id="9"]
 [ext_resource type="Texture2D" path="res://Characters/Danila/danila_cry.png" id="10"]
 [ext_resource type="Texture2D" path="res://Characters/Danila/danila_salutes.png" id="11"]
+[ext_resource type="Texture2D" path="res://Characters/Danila/danila_tired_at_factory.png" id="12"]
+[ext_resource type="Texture2D" path="res://Characters/Danila/danila_tired_but_happy_factory.png" id="13"]
 
 [resource]
 script = ExtResource("1")
@@ -29,6 +31,8 @@ images = {
 "worried": ExtResource("8"),
 "surprised": ExtResource("9"),
 "cry": ExtResource("10"),
-"salute": ExtResource("11")
+"salute": ExtResource("11"),
+"tired_at_factory": ExtResource("12"),
+"tired_but_happy_factory": ExtResource("13")
 }
 

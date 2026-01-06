@@ -49,6 +49,192 @@ danila worried "Но я выжил. Выжил сам."
 
 transition fade_out
 
+# Завод - тяжёлая работа
+background factory_street fade_in
+
+"Однажды он увидел объявление."
+
+danila thinking enter left "Завод. Нужны рабочие. Без опыта."
+
+"Это был шанс. Легальная работа. Деньги."
+
+danila serious "Я подал заявление."
+
+transition fade_out
+
+background factory_inside fade_in
+
+"Первый день на заводе."
+
+boss_of_factory neutral enter right "Так, новичок! Меня зовут Бронислав. Я начальник."
+
+danila serious enter left "Данила. Рад работать."
+
+boss_of_factory neutral "" right "Хорошо. У нас три задания. Расфасовка, варка и работа в павильде."
+
+boss_of_factory neutral "" right "Выполнишь всё - получишь зарплату. Не справишься - уходи."
+
+danila thinking left "Понял. Начну с расфасовки."
+
+"=== МИНИ-ИГРА: РАСФАСОВКА ==="
+
+"Перед тобой конвейер. Нужно быстро расфасовывать продукцию."
+
+danila serious left "Это... сложнее, чем я думал."
+
+boss_of_factory neutral "" right "У тебя 30 секунд. Наклей наклейки минимум на 15 банок. Начинай!"
+
+minigame factory_jam
+
+"Мини-игра завершена."
+
+if factory_jam_labeled > 15:
+	danila thinking "" left "Справился! Даже больше нормы!"
+	
+	boss_of_factory neutral "" right "Отлично! Ты перевыполнил график!"
+	
+	boss_of_factory neutral "" right "Можешь сегодня сходить на перекур на 1 минуту раньше."
+	
+	danila tired_but_happy_factory "" left "Спасибо, начальник!"
+	
+	danila thinking "" left "Хорошо, получается."
+elif factory_jam_labeled >= 15:
+	danila thinking "" left "Справился!"
+	
+	boss_of_factory neutral "" right "Неплохо. Продолжай."
+	
+	danila thinking "" left "Хорошо, получается."
+	
+	danila tired_at_factory "" left "Устал, но справился."
+elif factory_jam_labeled >= 10:
+	danila worried "" left "Не успел полностью..."
+	
+	boss_of_factory neutral "" right "Медленно! Быстрее! Переделывай!"
+	
+	danila worried "" left "Извините, стараюсь."
+	
+	danila tired_at_factory "" left "Это тяжело... Переделаю."
+else:
+	danila worried "" left "Очень плохо получилось..."
+	
+	boss_of_factory neutral "" right "Что это такое?! Ты вообще работаешь?!"
+	
+	boss_of_factory neutral "" right "Таких результатов я не видел! Это позор!"
+	
+	danila worried "" left "Извините, начальник. Я старался..."
+	
+	boss_of_factory neutral "" right "Старался?! Переделывай всё! И быстро!"
+	
+	danila tired_at_factory "" left "Понял... Переделаю всё заново."
+
+"=== МИНИ-ИГРА: ВАРКА ==="
+
+boss_of_factory neutral "" right "Теперь варка. Следи за температурой и временем."
+
+"Перед тобой огромные котлы. Нужно варить продукцию по рецепту."
+
+danila thinking "" left "Температура... Время... Всё нужно контролировать."
+
+choice:
+	"Строго следовать инструкции":
+		danila thinking "" left "Нужно внимательно читать инструкцию."
+		
+		danila serious "" left "Следую рецепту точно."
+		
+		boss_of_factory neutral "" right "Хорошо. Правильно."
+		
+		danila serious "" left "Спасибо."
+		
+		danila tired_at_factory "" left "Ещё одно задание..."
+		
+	"Импровизировать и ускорить процесс":
+		danila thinking "" left "Попробую ускорить процесс."
+		
+		danila worried "" left "Что-то идёт не так..."
+		
+		boss_of_factory neutral "" right "Что ты делаешь? Неправильно!"
+		
+		danila worried "" left "Извините, исправлю."
+		
+		danila tired_at_factory "" left "Это сложнее, чем я думал..."
+		
+	"Спросить совета у опытных рабочих":
+		danila thinking "" left "Спрошу у опытных рабочих."
+		
+		danila thinking "" left "Они помогают мне."
+		
+		boss_of_factory neutral "" right "Хм, учишься у других. Неплохо."
+		
+		danila thinking "" left "Спасибо за помощь."
+		
+		danila tired_at_factory "" left "Хорошо, что помогли."
+
+"=== МИНИ-ИГРА: ПАВИЛЬД ==="
+
+boss_of_factory neutral "" right "Последнее задание. Работа в павильде. Тяжёлая работа."
+
+"Павильд - это огромный склад. Нужно переносить тяжёлые ящики."
+
+danila serious "" left "Это... очень тяжело."
+
+choice:
+	"Работать в одиночку, не просить помощи":
+		danila serious left "Попробую работать один."
+		
+		danila tired_at_factory left "Ящики очень тяжёлые..."
+		
+		danila tired_at_factory left "Фух... Это тяжело..."
+		
+		danila tired_at_factory left "Еле справился..."
+		
+	"Просить помощи у других":
+		danila thinking left "Попрошу помощи у других рабочих."
+		
+		danila thinking left "Спасибо, ребята."
+		
+		danila tired_at_factory left "Вместе справились быстрее."
+		
+		danila tired_at_factory left "Хорошо, что помогли."
+		
+	"Работать медленно, но стабильно":
+		danila thinking left "Буду работать медленно, но стабильно."
+		
+		danila serious left "Не тороплюсь, но и не останавливаюсь."
+		
+		boss_of_factory neutral "" right "Медленно, но работает."
+		
+		danila tired_at_factory left "Справился..."
+
+"Все задания выполнены."
+
+boss_of_factory neutral "" right "Хорошо. Ты справился. Вот твоя зарплата."
+
+"Начальник протягивает тебе маленькую пачку денег."
+
+danila tired_at_factory "" left "Это... всё?"
+
+boss_of_factory neutral "" right "Да. За тяжёлую работу - маленькая зарплата. Таковы правила."
+
+danila thinking "" left "Я работал весь день... А денег так мало."
+
+boss_of_factory neutral "" right "Не нравится? Можешь уйти. Рабочих много."
+
+danila tired_but_happy_factory "" left "Нет, останусь. Нужны деньги."
+
+boss_of_factory neutral "" right "Хорошо. Завтра приходи снова."
+
+transition fade_out
+
+"Недели работы на заводе. Каждый день - тяжёлый труд."
+
+danila tired_at_factory "" left "Я устал. Очень устал."
+
+"Но я выжил. Заработал немного денег. Научился терпению."
+
+danila tired_but_happy_factory "" left "Это было тяжело. Но я справился."
+
+transition fade_out
+
 # Метро - размышления о будущем
 background warsaw_metro fade_in
 

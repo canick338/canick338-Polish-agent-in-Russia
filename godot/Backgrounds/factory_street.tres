@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Background" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Backgrounds/Background.gd" id="1"]
+[ext_resource type="Texture2D" path="res://Backgrounds/Factory/factory_on_street_location.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "factory_street"
+display_name = "Завод снаружи"
+texture = ExtResource("2")
+

@@ -5,25 +5,38 @@ const SAVE_FILE_LOCATION := "user://2DVisualNovelDemo.save"
 
 
 func add_variable(_name: String, value) -> void:
-	var save_file := FileAccess.open(SAVE_FILE_LOCATION, FileAccess.WRITE_READ)
-
-	var json = JSON.new()
-	var error = json.parse(save_file.get_as_text())
+	# Сначала читаем существующие данные
+	var data: Dictionary = {variables = {}}
 	
-	var data: Dictionary = (
-		json.data
-		if error == OK
-		else {variables = {}}
-	)
-
+	if FileAccess.file_exists(SAVE_FILE_LOCATION):
+		var read_file = FileAccess.open(SAVE_FILE_LOCATION, FileAccess.READ)
+		if read_file:
+			var json = JSON.new()
+			var error = json.parse(read_file.get_as_text())
+			if error == OK:
+				data = json.data
+			read_file.close()
+	
+	# Обновляем переменную
 	if _name != "":
 		if not data.has("variables"):
 			data["variables"] = {}
 
-		data["variables"][_name] = _evaluate(value)
-
-	save_file.store_line(JSON.stringify(data))
-	save_file.close()
+		# Если value уже число или строка, сохраняем как есть
+		# Если это строка с кодом, выполняем через _evaluate
+		if value is int or value is float or value is String:
+			data["variables"][_name] = value
+		else:
+			data["variables"][_name] = _evaluate(str(value))
+	
+	# Записываем обратно
+	var write_file = FileAccess.open(SAVE_FILE_LOCATION, FileAccess.WRITE)
+	if write_file:
+		write_file.store_line(JSON.stringify(data))
+		write_file.close()
+		print("Variable saved: %s = %s" % [_name, data["variables"][_name]])
+	else:
+		push_error("Failed to open save file for writing: " + SAVE_FILE_LOCATION)
 
 
 func get_stored_variables_list() -> Dictionary:

@@ -110,6 +110,17 @@ class CutsceneCommandNode:
 		self.auto_continue = true
 
 
+## Node type for a command that plays a minigame.
+class MinigameCommandNode:
+	extends BaseNode
+
+	var minigame_name: String
+
+	func _init(_next: int, _minigame_name: String) -> void:
+		super(_next)
+		self.minigame_name = _minigame_name
+
+
 ## Node type representing a player choice.
 class ChoiceTreeNode:
 	extends BaseNode
@@ -310,19 +321,29 @@ func transpile(syntax_tree: SceneParser.SyntaxTree, start_index: int) -> Dialogu
 	return dialogue_tree
 
 
+## Вспомогательная функция для извлечения значения из аргумента
+func _get_argument_value(arg, default = ""):
+	"""Извлекает значение из аргумента (может быть BaseExpression или токен)"""
+	if arg is SceneParser.BaseExpression:
+		return arg.value
+	elif arg is SceneLexer.Token:
+		return arg.value
+	else:
+		return arg if arg != null else default
+
 # Transpiles a command expression and returns the approriate command node type.
 func _transpile_command(dialogue_tree: DialogueTree, expression: SceneParser.BaseExpression) -> BaseNode:
 	var command_node: BaseNode = null
 
 	if expression.value == SceneLexer.BUILT_IN_COMMANDS.BACKGROUND:
-		var background: String = expression.arguments[0].value
+		var background: String = _get_argument_value(expression.arguments[0] if expression.arguments.size() > 0 else null, "")
 
 		command_node = BackgroundCommandNode.new(dialogue_tree.index + 1, background)
-		command_node.transition = expression.arguments[1].value if expression.arguments.size() > 1 else ""
+		command_node.transition = _get_argument_value(expression.arguments[1] if expression.arguments.size() > 1 else null, "")
 
 	elif expression.value == SceneLexer.BUILT_IN_COMMANDS.SCENE:
 		# For now, the command only works when next_scene is used as an argument.
-		var new_scene: String = expression.arguments[0].value
+		var new_scene: String = _get_argument_value(expression.arguments[0] if expression.arguments.size() > 0 else null, "")
 		command_node = SceneCommandNode.new(dialogue_tree.index + 1, new_scene)
 
 	elif expression.value == SceneLexer.BUILT_IN_COMMANDS.PASS:
@@ -334,7 +355,7 @@ func _transpile_command(dialogue_tree: DialogueTree, expression: SceneParser.Bas
 
 	elif expression.value == SceneLexer.BUILT_IN_COMMANDS.JUMP:
 		# Jump to an existing jump point
-		var jump_point: String = expression.arguments[0].value
+		var jump_point: String = _get_argument_value(expression.arguments[0] if expression.arguments.size() > 0 else null, "")
 		if _jump_points.has(jump_point):
 			var target: int = _get_jump_point(jump_point)
 			command_node = JumpCommandNode.new(target)
@@ -348,7 +369,7 @@ func _transpile_command(dialogue_tree: DialogueTree, expression: SceneParser.Bas
 			_unresolved_jump_nodes.append(jump_node)
 
 	elif expression.value == SceneLexer.BUILT_IN_COMMANDS.TRANSITION:
-		var transition: String = expression.arguments[0].value
+		var transition: String = _get_argument_value(expression.arguments[0] if expression.arguments.size() > 0 else null, "")
 		command_node = TransitionCommandNode.new(dialogue_tree.index + 1, transition)
 
 	elif expression.value == SceneLexer.BUILT_IN_COMMANDS.CUTSCENE:
@@ -356,7 +377,7 @@ func _transpile_command(dialogue_tree: DialogueTree, expression: SceneParser.Bas
 			push_error("CUTSCENE command requires at least 1 argument: video path")
 			return null
 		
-		var video_path: String = expression.arguments[0].value
+		var video_path: String = _get_argument_value(expression.arguments[0], "")
 		# Добавить префикс res:// если его нет
 		if not video_path.begins_with("res://"):
 			video_path = "res://Cutscenes/" + video_path
@@ -368,20 +389,37 @@ func _transpile_command(dialogue_tree: DialogueTree, expression: SceneParser.Bas
 		
 		# Опциональные параметры
 		if expression.arguments.size() > 1:
-			command_node.can_skip = expression.arguments[1].value == "true" or expression.arguments[1].value == true
+			var can_skip_val = _get_argument_value(expression.arguments[1], "false")
+			command_node.can_skip = can_skip_val == "true" or can_skip_val == true
 		if expression.arguments.size() > 2:
-			command_node.auto_continue = expression.arguments[2].value == "true" or expression.arguments[2].value == true
+			var auto_continue_val = _get_argument_value(expression.arguments[2], "false")
+			command_node.auto_continue = auto_continue_val == "true" or auto_continue_val == true
+
+	elif expression.value == SceneLexer.BUILT_IN_COMMANDS.MINIGAME:
+		if expression.arguments.size() < 1:
+			push_error("MINIGAME command requires at least 1 argument: minigame name")
+			return null
+		
+		var minigame_name: String = _get_argument_value(expression.arguments[0], "")
+		command_node = MinigameCommandNode.new(dialogue_tree.index + 1, minigame_name)
 
 	elif expression.value == SceneLexer.BUILT_IN_COMMANDS.SET:
 		if expression.arguments.size() < 2:
-			push_error("SET command requires 2 arguments: variable name and value")
+			push_error("SET command requires 2 arguments: variable name and value. Got %d arguments." % expression.arguments.size())
 			return null
-		var symbol: String = expression.arguments[0].value
-		var value = expression.arguments[1].value
+		
+		# Получаем значения из аргументов
+		var symbol: String = _get_argument_value(expression.arguments[0], "")
+		var value = _get_argument_value(expression.arguments[1] if expression.arguments.size() > 1 else null, null)
+		
+		if symbol == "":
+			push_error("SET command: variable name is empty")
+			return null
+		
 		command_node = SetCommandNode.new(dialogue_tree.index + 1, symbol, value)
 
 	elif expression.value == SceneLexer.BUILT_IN_COMMANDS.MARK:
-		var new_jump_point: String = expression.arguments[0].value
+		var new_jump_point: String = _get_argument_value(expression.arguments[0] if expression.arguments.size() > 0 else null, "")
 		_add_jump_point(new_jump_point, dialogue_tree.index)
 
 		# Handle any unresolved jump nodes that point to this jump point
@@ -402,14 +440,65 @@ func _transpile_command(dialogue_tree: DialogueTree, expression: SceneParser.Bas
 
 func _transpile_dialogue(dialogue_tree: DialogueTree, expression: SceneParser.BaseExpression) -> DialogueNode:
 	var node := DialogueNode.new(dialogue_tree.index + 1, expression.value)
-	node.character = (
-		expression.arguments[0].value
-		if not expression.arguments.is_empty()
-		else ""
-		)
-	node.expression = expression.arguments[1].value if expression.arguments.size() > 1 else ""
-	node.animation = expression.arguments[2].value if expression.arguments.size() > 2 else ""
-	node.side = expression.arguments[3].value if expression.arguments.size() > 3 else ""
+	
+	if expression.arguments.is_empty():
+		return node
+	
+	# Формат: [character, expression, animation?, side?, text]
+	# character всегда первый (SYMBOL)
+	var char_arg = expression.arguments[0] if expression.arguments.size() > 0 else null
+	if char_arg:
+		if char_arg is SceneParser.BaseExpression:
+			node.character = str(char_arg.value)
+		elif char_arg is SceneLexer.Token:
+			node.character = str(char_arg.value)
+		else:
+			node.character = str(char_arg)
+	
+	# Определяем остальные аргументы по типу и позиции
+	var arg_index := 1
+	var expression_found := false
+	var animation_found := false
+	var side_found := false
+	
+	# Проходим по аргументам и определяем их тип
+	while arg_index < expression.arguments.size():
+		var arg = expression.arguments[arg_index]
+		var arg_type = ""
+		var arg_value = null
+		
+		# Определяем тип и значение аргумента
+		if arg is SceneParser.BaseExpression:
+			arg_type = arg.type
+			arg_value = arg.value
+		elif arg is SceneLexer.Token:
+			arg_type = arg.type
+			arg_value = arg.value
+		else:
+			arg_value = arg
+		
+		# Последний аргумент - это всегда текст диалога (STRING_LITERAL, не пустой)
+		if arg_index == expression.arguments.size() - 1 and arg_type == SceneLexer.TOKEN_TYPES.STRING_LITERAL and str(arg_value) != "":
+			# Это текст диалога - уже в expression.value
+			break
+		
+		# Если это пустая строка - это animation
+		if arg_type == SceneLexer.TOKEN_TYPES.STRING_LITERAL and str(arg_value) == "":
+			if not animation_found:
+				node.animation = ""
+				animation_found = true
+		# Если это SYMBOL и это "left" или "right" - это side
+		elif arg_type == SceneLexer.TOKEN_TYPES.SYMBOL and (str(arg_value) == "left" or str(arg_value) == "right"):
+			if not side_found:
+				node.side = str(arg_value)
+				side_found = true
+		# Иначе это expression (если еще не найден)
+		elif not expression_found:
+			node.expression = str(arg_value)
+			expression_found = true
+		
+		arg_index += 1
+	
 	return node
 
 

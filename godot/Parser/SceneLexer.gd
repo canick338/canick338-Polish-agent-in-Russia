@@ -12,6 +12,7 @@ const BUILT_IN_COMMANDS := {
 	TRANSITION = "transition",
 	SET = "set",
 	CUTSCENE = "cutscene",
+	MINIGAME = "minigame",
 }
 const CONDITIONAL_STATEMENTS := ["if", "elif", "else"]
 const BOOLEAN_OPERATORS := ["and", "or", "not"]
@@ -170,6 +171,9 @@ func tokenize(input_text: String) -> Array[Token]:
 		# Handle comments.
 		elif character == "#":
 			tokens.append(_tokenize_comment(script))
+		# Handle numbers (digits) - проверяем, является ли символ цифрой
+		elif character in "0123456789":
+			tokens.append(_tokenize_number(script))
 		# Handle symbols.
 		elif character.is_valid_identifier():
 			tokens.append(_tokenize_symbol(script))
@@ -204,6 +208,33 @@ func _tokenize_comment(script: DialogueScript) -> Token:
 	# In case we reach End of File.
 	return Token.new(TOKEN_TYPES.COMMENT, comment_value)
 
+
+func _tokenize_number(script: DialogueScript) -> Token:
+	"""Парсит число (целое или с плавающей точкой)"""
+	var number_str := "%s" % script.get_current_character()
+	var has_dot := false
+
+	while not script.is_at_end_of_file():
+		var character = script.move_to_next_character()
+
+		# Если это цифра - добавляем
+		if character in "0123456789":
+			number_str += character
+		# Если это точка и еще не было точки - добавляем (для float)
+		elif character == "." and not has_dot:
+			number_str += character
+			has_dot = true
+		# Если это пробел, таб, новая строка или двоеточие - конец числа
+		elif character in ["	", " ", "\n", "\r", ":"]:
+			script.move_to_previous_character()
+			break
+		else:
+			# Неожиданный символ - возвращаемся назад
+			script.move_to_previous_character()
+			break
+
+	# Числа парсятся как SYMBOL для совместимости с существующим кодом
+	return Token.new(TOKEN_TYPES.SYMBOL, number_str)
 
 func _tokenize_symbol(script: DialogueScript) -> Token:
 	# Store the symbol's first character because that's been checked to be a

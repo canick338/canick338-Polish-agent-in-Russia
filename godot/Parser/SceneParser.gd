@@ -219,20 +219,73 @@ class Parser:
 		):
 			# Dialogue line with some options (character, expression, etc. )
 			if current_token.type == SceneLexer.TOKEN_TYPES.SYMBOL:
-				var arguments: Array = find_expressions(SceneLexer.TOKEN_TYPES.STRING_LITERAL)
-
+				# Собираем все аргументы до NEWLINE
+				# Формат: character expression [animation] [side] "text"
+				var all_tokens: Array = []
+				
+				# Собираем все токены до NEWLINE
+				while not self.is_at_end_of_list():
+					var peek_token = self.peek()
+					if peek_token == null or peek_token.type == SceneLexer.TOKEN_TYPES.NEWLINE:
+						break
+					all_tokens.append(self.move_to_next_token())
+				
+				# Находим текст диалога (последняя непустая строка)
+				var dialogue_text_token = null
+				var dialogue_text_index = -1
+				
+				for i in range(all_tokens.size() - 1, -1, -1):
+					var token = all_tokens[i]
+					if token.type == SceneLexer.TOKEN_TYPES.STRING_LITERAL and token.value != "":
+						dialogue_text_token = token
+						dialogue_text_index = i
+						break
+				
+				# Разделяем на аргументы и текст
+				var arguments: Array = []
+				if dialogue_text_index >= 0:
+					# Аргументы - все до текста диалога
+					arguments = all_tokens.slice(0, dialogue_text_index)
+				else:
+					# Нет текста диалога - все аргументы
+					arguments = all_tokens
+				
 				# Push the character name to the front
 				arguments.push_front(current_token)
 
 				return FunctionExpression.new(
-					EXPRESSION_TYPES.DIALOGUE, parse_next_token().value, arguments
+					EXPRESSION_TYPES.DIALOGUE, dialogue_text_token.value if dialogue_text_token else "", arguments
 				)
 			else:
 				# Narrator line
 				return FunctionExpression.new(EXPRESSION_TYPES.DIALOGUE, current_token.value, [])
 		elif current_token.type == SceneLexer.TOKEN_TYPES.COMMAND:
 			# Find the arguments until the parser hits newline
-			var arguments := self.find_expressions(SceneLexer.TOKEN_TYPES.NEWLINE)
+			# Для команд собираем все токены до NEWLINE
+			var arguments: Array = []
+			
+			# Собираем все токены до NEWLINE или END_BLOCK
+			while not self.is_at_end_of_list():
+				var peek_token = self.peek()
+				if peek_token == null:
+					break
+				
+				# Если это NEWLINE - конец команды
+				if peek_token.type == SceneLexer.TOKEN_TYPES.NEWLINE:
+					break
+				
+				# Если это END_BLOCK - тоже конец
+				if peek_token.type == SceneLexer.TOKEN_TYPES.END_BLOCK:
+					break
+				
+				# Получаем следующий токен
+				var token = self.move_to_next_token()
+				if token:
+					# Создаем BaseExpression из токена для совместимости
+					var expr = SceneParser.BaseExpression.new(token.type, token.value)
+					arguments.append(expr)
+				else:
+					break
 
 			return FunctionExpression.new(current_token.type, current_token.value, arguments)
 		elif current_token.type == SceneLexer.TOKEN_TYPES.CHOICE:
