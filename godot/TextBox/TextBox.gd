@@ -24,6 +24,7 @@ var _tween: Tween
 @onready var _anim_player: AnimationPlayer = $FadeAnimationPlayer
 
 
+
 func _ready() -> void:
 	hide()
 	_blinking_arrow.hide()
@@ -32,19 +33,16 @@ func _ready() -> void:
 	_rich_text_label.text = ""
 	_rich_text_label.visible_characters = 0
 	
-	# Установить белый цвет текста
-	# Компенсируем прозрачность родителя (0.55) чтобы текст был полностью непрозрачным
-	# 1.0 / 0.55 ≈ 1.818
-	_rich_text_label.add_theme_color_override("default_color", Color(1, 1, 1, 1))
-	_rich_text_label.modulate = Color(1, 1, 1, 1.818)
-
 	_choice_selector.choice_made.connect(_on_ChoiceSelector_choice_made)
 	_skip_button.timer_ticked.connect(_on_SkipButton_timer_ticked)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
-		advance_dialogue()
+		if visible:
+			advance_dialogue()
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		visible = not visible
 
 
 # Either complete the current line or show the next dialogue line
@@ -57,11 +55,6 @@ func advance_dialogue() -> void:
 
 func display(_text: String, character_name := "", speed := display_speed) -> void:
 	set_bbcode_text(_text)
-	
-	# Убедиться что текст всегда непрозрачный и белый
-	# Компенсируем прозрачность родителя (0.55) чтобы текст был полностью непрозрачным
-	_rich_text_label.modulate = Color(1, 1, 1, 1.818)
-	_rich_text_label.add_theme_color_override("default_color", Color(1, 1, 1, 1))
 
 	if speed != display_speed:
 		display_speed = speed
@@ -72,14 +65,9 @@ func display(_text: String, character_name := "", speed := display_speed) -> voi
 		_name_background.show()
 		var was_empty = _name_label.text == ""
 		_name_label.text = character_name
-		# Убедиться что имя всегда непрозрачное
-		# Компенсируем прозрачность родителя (0.55) чтобы имя было полностью непрозрачным
-		_name_label.modulate = Color(1, 1, 1, 1.818)
-		_name_background.modulate = Color(1, 1, 1, 1.818)
+		
 		if was_empty:
 			_name_label.appear()
-		# Установить компенсирующую непрозрачность после небольшой задержки (после анимации)
-		call_deferred("_ensure_name_opaque")
 
 
 func display_choice(choices: Array) -> void:
@@ -97,21 +85,13 @@ func set_bbcode_text(_text: String) -> void:
 		await self.ready
 
 	_blinking_arrow.hide()
-	# Убедиться что цвет текста белый перед установкой текста
-	# Компенсируем прозрачность родителя (0.55) чтобы текст был полностью непрозрачным
-	_rich_text_label.add_theme_color_override("default_color", Color(1, 1, 1, 1))
-	_rich_text_label.modulate = Color(1, 1, 1, 1.818)
+	
 	_rich_text_label.text = text
 	# Required for the `_rich_text_label`'s  text to update and the code below to work.
 	call_deferred("_begin_dialogue_display")
 
 
 func _begin_dialogue_display() -> void:
-	# Убедиться что цвет текста белый
-	# Компенсируем прозрачность родителя (0.55) чтобы текст был полностью непрозрачным
-	_rich_text_label.add_theme_color_override("default_color", Color(1, 1, 1, 1))
-	_rich_text_label.modulate = Color(1, 1, 1, 1.818)
-	
 	var character_count := _rich_text_label.get_total_character_count()
 	_rich_text_label.visible_characters = 0
 	_tween = create_tween()
@@ -140,20 +120,9 @@ func _on_tween_finished() -> void:
 func _on_ChoiceSelector_choice_made(target_id: int) -> void:
 	choice_made.emit(target_id)
 	_skip_button.show()
-	# Убедиться что имя всегда непрозрачное
-	# Компенсируем прозрачность родителя (0.55) чтобы имя было полностью непрозрачным
-	_name_label.modulate = Color(1, 1, 1, 1.818)
-	_name_background.modulate = Color(1, 1, 1, 1.818)
 	_name_background.appear()
 	_rich_text_label.show()
 
 
 func _on_SkipButton_timer_ticked() -> void:
 	advance_dialogue()
-
-
-func _ensure_name_opaque() -> void:
-	"""Убедиться что имя персонажа всегда непрозрачное"""
-	# Компенсируем прозрачность родителя (0.55) чтобы имя было полностью непрозрачным
-	_name_label.modulate = Color(1, 1, 1, 1.818)
-	_name_background.modulate = Color(1, 1, 1, 1.818)
