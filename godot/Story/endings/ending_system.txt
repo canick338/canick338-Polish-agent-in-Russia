@@ -1,0 +1,206 @@
+# Система концовок
+
+mark calculate_ending
+
+"=== РАСЧЕТ ФИНАЛЬНОЙ КОНЦОВКИ ==="
+
+"Миссия завершена. Подводим итоги..."
+
+"Ваши показатели:"
+"• Скрытность: [stealth_level]/100"
+"• Подозрения майора: [suspicion_volkov]/100"
+"• Выполнено заданий: [completed_missions]/6"
+"• Дружба с Димой: [friendship_dima]/100"
+"• Отношения с Анной: [relationship_anna]/100"
+
+# Проверка условий для разных концовок
+
+# Плохая концовка - арест
+"Проверка критических показателей..."
+
+# if suspicion_volkov > 80:
+#     jump ending_arrested
+
+# if stealth_level < 30:
+#     jump ending_exposed
+
+# Отличная концовка
+# if stealth_level > 80 AND completed_missions == 6 AND suspicion_volkov < 30:
+#     jump ending_perfect
+
+# Секретная концовка
+# if relationship_anna > 80 AND stealth_level > 70:
+#     jump ending_secret
+
+# Хорошая концовка
+# if stealth_level > 60 AND completed_missions >= 5:
+#     jump ending_good
+
+# Средняя концовка
+# if stealth_level > 40 AND completed_missions >= 4:
+#     jump ending_neutral
+
+# По умолчанию - плохая
+jump ending_bad
+
+# === КОНЦОВКИ ===
+
+mark ending_perfect
+
+background polish_home fade_in
+
+"=== ИДЕАЛЬНАЯ КОНЦОВКА ==="
+
+"Июль. Шесть месяцев миссии позади."
+
+danila happy "Все задания выполнены. Ни одной ошибки."
+
+"Вы идеально справились с ролью бизнесмена."
+"Никто ничего не заподозрил."
+
+volkov neutral enter right "Господин Ковальский, жаль что вы уезжаете."
+
+danila happy "Спасибо, майор. Мне здесь понравилось."
+
+volkov neutral "Удачи вам!"
+
+"Вы покидаете Обоянь с полным досье разведданных."
+
+"ЦЕНТР: Отличная работа, агент. Миссия выполнена безупречно."
+"ЦЕНТР: Вы получаете повышение и награду."
+
+danila serious "Миссия выполнена."
+
+"КОНЕЦ - ИДЕАЛЬНАЯ КОНЦОВКА"
+"Разблокировано: [Достижение: Невидимка]"
+
+transition fade_out
+
+mark ending_good
+
+background polish_home fade_in
+
+"=== ХОРОШАЯ КОНЦОВКА ==="
+
+"Миссия завершена успешно, хотя были моменты..."
+
+danila neutral "Справился. Не идеально, но справился."
+
+"Большая часть заданий выполнена."
+"У майора остались легкие подозрения, но без доказательств."
+
+"ЦЕНТР: Хорошая работа, агент. Данные получены."
+
+danila happy "Я сделал все, что мог."
+
+"КОНЕЦ - ХОРОШАЯ КОНЦОВКА"
+
+transition fade_out
+
+mark ending_neutral
+
+background polish_home fade_in
+
+"=== СРЕДНЯЯ КОНЦОВКА ==="
+
+"Миссия выполнена частично."
+
+danila worried "Пришлось уехать раньше срока..."
+
+"Подозрения стали слишком сильными."
+"Вы эвакуировались до ареста."
+
+"ЦЕНТР: Данные получены, но миссия не завершена."
+
+danila sad "Мог бы лучше..."
+
+"КОНЕЦ - ЭВАКУАЦИЯ"
+
+transition fade_out
+
+mark ending_bad
+
+background polish_home fade_in
+
+"=== ПЛОХАЯ КОНЦОВКА ==="
+
+"Миссия провалена."
+
+danila sad "Все пошло не так..."
+
+"Низкая скрытность привела к провалу."
+
+"ЦЕНТР: Агент, вы провалили миссию."
+
+"КОНЕЦ - ПРОВАЛ"
+
+transition fade_out
+
+mark ending_arrested
+
+background polish_home fade_in
+
+"=== КОНЦОВКА: АРЕСТ ==="
+
+"Кабинет ФСБ."
+
+volkov serious enter right "Господин Ковальски... Или как вас на самом деле зовут?"
+
+danila worried "Майор, я не понимаю..."
+
+volkov angry "Не притворяйтесь! Мы все про вас знаем!"
+
+"Входят охранники."
+
+volkov serious "Вы арестованы по подозрению в шпионаже."
+
+danila sad "..."
+
+"КОНЕЦ - АРЕСТ"
+"Вас ждет долгое заключение."
+
+transition fade_out
+
+mark ending_secret
+
+background polish_home fade_in
+
+"=== СЕКРЕТНАЯ КОНЦОВКА ==="
+
+"Встреча с Анной."
+
+anna sad enter right "Данила... Я знаю кто ты."
+
+danila surprised "Анна..."
+
+anna thinking "Ты шпион, правда?"
+
+choice:
+	"Признаться":
+		danila serious "Да. Но я не хотел тебя обманывать."
+		anna sad "Я знала... Но я люблю тебя."
+		
+		danila surprised "Анна..."
+		
+		anna neutral "Останься. Брось эту работу."
+		
+		choice:
+			"Остаться с Анной":
+				danila happy "Я останусь."
+				
+				"Вы остаетесь в России с Анной."
+				"Новая жизнь. Новая личность."
+				
+				"КОНЕЦ - НОВАЯ ЖИЗНЬ"
+				"Разблокировано: [Достижение: Выбор сердца]"
+				
+			"Вернуться домой":
+				danila sad "Прости, Анна. Я не могу."
+				jump ending_good
+	
+	"Отрицать":
+		danila neutral "Не знаю, о чем ты."
+		anna angry "Лжец!"
+		jump ending_bad
+
+transition fade_out

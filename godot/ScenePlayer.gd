@@ -1,0 +1,201 @@
+## Loads and plays a scene's dialogue sequences, delegating to other nodes to display images or text.
+class_name ScenePlayer
+extends Node
+
+signal scene_finished
+signal restart_requested
+signal transition_finished
+
+const KEY_END_OF_SCENE := -1
+const KEY_RESTART_SCENE := -2
+
+## Maps transition keys to a corresponding function to call.
+const TRANSITIONS := {
+	fade_in = "_appear_async",
+	fade_out = "_disappear_async",
+}
+
+const CUTSCENE_PLAYER := preload("res://Cutscenes/CutscenePlayer.tscn")
+
+var _scene_data := {}
+var _cutscene_player: Control = null
+
+@onready var _text_box := $TextBox
+@onready var _character_displayer := $CharacterDisplayer
+@onready var _anim_player: AnimationPlayer = $FadeAnimationPlayer
+@onready var _background := $Background
+
+
+func run_scene() -> void:
+	var key = 0
+	while key != KEY_END_OF_SCENE:
+		var node: SceneTranspiler.BaseNode = _scene_data[key]
+		var character: Character = (
+			ResourceDB.get_character(node.character)
+			if "character" in node and node.character != ""
+			else ResourceDB.get_narrator()
+		)
+		
+		# Проверка на null персонажа
+		if not character:
+			var char_id = node.character if "character" in node and node.character != "" else "narrator"
+			push_error("Character not found: " + char_id)
+			character = ResourceDB.get_narrator()  # Fallback на narrator
+			# Если narrator тоже не найден, создаем минимальный fallback
+			if not character:
+				push_error("Narrator not found! Creating fallback character.")
+				# Создаем минимальный Character ресурс программно
+				character = Character.new()
+				character.id = "narrator"
+				character.display_name = ""
+				character.images = {"neutral": null}
+
+		if node is SceneTranspiler.BackgroundCommandNode:
+			var bg: Background = ResourceDB.get_background(node.background)
+			if bg and bg.texture:
+				_background.texture = bg.texture
+			else:
+				push_error("Background not found: " + node.background)
+
+		# Displaying a character.
+		if "character" in node and character:
+			var side: String = "left"  # По умолчанию слева
+			if "side" in node and node.side != "":
+				side = node.side
+			var animation: String = node.animation if "animation" in node else ""
+			var expression: String = node.expression if "expression" in node else ""
+			_character_displayer.display(character, side, expression, animation)
+			if not "line" in node:
+				await _character_displayer.display_finished
+
+		# Normal text reply.
+		if "line" in node:
+			var display_name = character.display_name if character else "Unknown"
+			_text_box.display(node.line, display_name)
+			await _text_box.next_requested
+			key = node.next
+
+		# Transition animation.
+		elif "transition" in node:
+			if node.transition != "":
+				call(TRANSITIONS[node.transition])
+				await self.transition_finished
+			key = node.next
+
+		# Cutscene video playback
+		elif node is SceneTranspiler.CutsceneCommandNode:
+			await _play_cutscene(node.video_path, node.can_skip, node.auto_continue)
+			key = node.next
+
+		# Manage variables
+		elif node is SceneTranspiler.SetCommandNode:
+			Variables.add_variable(node.symbol, node.value)
+			key = node.next
+
+		# Change to another scene
+		elif node is SceneTranspiler.SceneCommandNode:
+			if node.scene_path == "next_scene":
+				key = KEY_END_OF_SCENE
+			else:
+				key = node.next
+
+		# Choices.
+		elif node is SceneTranspiler.ChoiceTreeNode:
+			# Temporary fix for the buttons not showing when there are consecutive choice nodes
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+
+			_text_box.display_choice(node.choices)
+
+			key = await _text_box.choice_made
+
+			if key == KEY_RESTART_SCENE:
+				restart_requested.emit()
+				return
+		elif node is SceneTranspiler.ConditionalTreeNode:
+			var variables_list: Dictionary = Variables.get_stored_variables_list()
+
+			# Evaluate the if's condition
+			if (
+				variables_list.has(node.if_block.condition.value)
+				and variables_list[node.if_block.condition.value]
+			):
+				key = node.if_block.next
+			else:
+				# Have to use this flag because we can't `continue` out of the
+				# elif loop
+				var elif_condition_fulfilled := false
+
+				# Evaluate the elif's conditions
+				for block in node.elif_blocks:
+					if (
+						variables_list.has(block.condition.value)
+						and variables_list[block.condition.value]
+					):
+						key = block.next
+						elif_condition_fulfilled = true
+						break
+
+				if not elif_condition_fulfilled:
+					if node.else_block:
+						# Go to else
+						key = node.else_block.next
+					else:
+						# Move on
+						key = node.next
+
+		# Ensures we don't get stuck in an infinite loop if there's no line to display.
+		else:
+			key = node.next
+
+	_character_displayer.hide()
+	scene_finished.emit()
+
+
+func load_scene(dialogue: SceneTranspiler.DialogueTree) -> void:
+	# The main script
+	_scene_data = dialogue.nodes
+
+
+func _appear_async() -> void:
+	_anim_player.play("fade_in")
+	await _anim_player.animation_finished
+	#await _text_box.fade_in_async().completed
+	await _text_box.fade_in_async()
+	transition_finished.emit()
+
+
+func _disappear_async() -> void:
+	#await _text_box.fade_out_async().completed
+	await _text_box.fade_out_async()
+	_anim_player.play("fade_out")
+	await _anim_player.animation_finished
+	transition_finished.emit()
+
+
+## Проиграть кат-сцену
+func _play_cutscene(video_path: String, can_skip: bool, auto_continue: bool) -> void:
+	# Создать плеер если его нет
+	if not _cutscene_player:
+		_cutscene_player = CUTSCENE_PLAYER.instantiate()
+		add_child(_cutscene_player)
+	
+	# Скрыть UI визуальной новеллы
+	_text_box.hide()
+	_character_displayer.hide()
+	
+	# Проиграть видео
+	_cutscene_player.play_cutscene(video_path, can_skip, auto_continue)
+	await _cutscene_player.cutscene_finished
+	
+	# Показать UI обратно
+	_text_box.show()
+	_character_displayer.show()
+
+
+## Saves a dictionary representing a scene to the disk using `var2str`.
+func _store_scene_data(data: Dictionary, path: String) -> void:
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(var_to_str(_scene_data))
+	file.close()

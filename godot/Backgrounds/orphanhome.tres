@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Background" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Backgrounds/Background.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bibpt6uw5tftt" path="res://Backgrounds/orphanhome.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "orphanhome"
+display_name = "Детский дом"
+texture = ExtResource("2")
+

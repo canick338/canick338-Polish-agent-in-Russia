@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Background" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Backgrounds/Background.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cvwpqdehyvh3a" path="res://Backgrounds/PolishHomeDanila.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "polish_home"
+display_name = "Дом Данилы в Польше"
+texture = ExtResource("2")
+

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Background" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Backgrounds/Background.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://fe8f255qool3" path="res://Backgrounds/OfficersSquare_warsaw_location1.jpg" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "officer_school"
+display_name = "Школа офицеров"
+texture = ExtResource("2")
+
