@@ -1,7 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://card_game_scene"]
+[gd_scene load_steps=10 format=3 uid="uid://card_game_scene"]
 
 [ext_resource type="Script" path="res://CardGame/CardGameScene.gd" id="1"]
 [ext_resource type="Texture2D" path="res://Characters/Danila/danila_neutral.png" id="2"]
+[ext_resource type="Texture2D" path="res://Characters/Worker/worker_neutral.png" id="3"]
+[ext_resource type="Shader" path="res://Shaders/Blur.gdshader" id="4"]
+[ext_resource type="Texture2D" path="res://boardgamePackAsset/PNG/Chips/chipBlueWhite.png" id="5"]
+[ext_resource type="Texture2D" path="res://boardgamePackAsset/PNG/Chips/chipRedWhite.png" id="6"]
+[ext_resource type="Shader" path="res://Shaders/Glitch.gdshader" id="7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.1, 0.1, 0.1, 0.9)
@@ -25,6 +30,15 @@ shadow_size = 4
 shadow_color = Color(0, 0, 0, 0.5)
 shadow_offset = Vector2(2, 2)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
+shader = ExtResource("4")
+shader_parameter/lod = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_boss_glitch"]
+shader = ExtResource("7")
+shader_parameter/shake_power = 0.0
+shader_parameter/color_rate = 0.0
+
 [node name="CardGameScene" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -43,12 +57,50 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.07, 0.2, 0.12, 1)
 
+[node name="Decorations" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Chip1" type="TextureRect" parent="Decorations"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 512.0
+offset_right = 190.0
+offset_bottom = 576.0
+rotation = -0.523599
+texture = ExtResource("5")
+
+[node name="Chip2" type="TextureRect" parent="Decorations"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 114.0
+offset_bottom = 114.0
+rotation = 0.261799
+texture = ExtResource("6")
+
+[node name="Chip3" type="TextureRect" parent="Decorations"]
+layout_mode = 0
+offset_left = 217.0
+offset_top = 92.0
+offset_right = 281.0
+offset_bottom = 156.0
+rotation = 0.785398
+texture = ExtResource("5")
+
 [node name="DanilaContainer" type="Control" parent="."]
 layout_mode = 1
 anchor_left = 0.05
-anchor_top = 0.15
-anchor_right = 0.35
+anchor_top = 0.4
+anchor_right = 0.3
 anchor_bottom = 1.0
+scale = Vector2(1.1, 1.1)
+pivot_offset = Vector2(100, 300)
 mouse_filter = 2
 
 [node name="DanilaPortrait" type="TextureRect" parent="DanilaContainer"]
@@ -62,15 +114,38 @@ texture = ExtResource("2")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="WorkerContainer" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.75
+anchor_top = 0.15
+anchor_right = 0.95
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="WorkerPortrait" type="TextureRect" parent="WorkerContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
+
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 400.0
+offset_left = 320.0
+offset_top = 80.0
+offset_right = -320.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 30
 
 [node name="DealerArea" type="VBoxContainer" parent="MainContainer"]
 layout_mode = 2
@@ -80,7 +155,7 @@ alignment = 1
 [node name="DealerLabel" type="Label" parent="MainContainer/DealerArea"]
 layout_mode = 2
 size_flags_vertical = 0
-text = "ДИЛЕР"
+text = "РАБОЧИЙ (ДИЛЕР)"
 label_settings = SubResource("LabelSettings_score")
 horizontal_alignment = 1
 
@@ -91,7 +166,7 @@ alignment = 1
 theme_override_constants/separation = -40
 
 [node name="InfoArea" type="Control" parent="MainContainer"]
-custom_minimum_size = Vector2(0, 150)
+custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 
 [node name="InfoPanel" type="PanelContainer" parent="MainContainer/InfoArea"]
@@ -101,10 +176,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -60.0
-offset_right = 250.0
-offset_bottom = 60.0
+offset_left = -280.0
+offset_top = -65.0
+offset_right = 280.0
+offset_bottom = 65.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
@@ -112,16 +187,43 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 [node name="VBox" type="VBoxContainer" parent="MainContainer/InfoArea/InfoPanel"]
 layout_mode = 2
 alignment = 1
+theme_override_constants/separation = 10
+
+[node name="MoneyInfo" type="HBoxContainer" parent="MainContainer/InfoArea/InfoPanel/VBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 30
+
+[node name="BalanceLabel" type="Label" parent="MainContainer/InfoArea/InfoPanel/VBox/MoneyInfo"]
+layout_mode = 2
+text = "Баланс: 1000"
+label_settings = SubResource("LabelSettings_score")
+horizontal_alignment = 1
+
+[node name="BetLabel" type="Label" parent="MainContainer/InfoArea/InfoPanel/VBox/MoneyInfo"]
+layout_mode = 2
+text = "Ставка: 0"
+label_settings = SubResource("LabelSettings_score")
+horizontal_alignment = 1
+modulate = Color(1, 1, 0.4, 1)
 
 [node name="ScoreContainer" type="HBoxContainer" parent="MainContainer/InfoArea/InfoPanel/VBox"]
 layout_mode = 2
 alignment = 1
-theme_override_constants/separation = 40
+theme_override_constants/separation = 50
 
 [node name="DealerScoreLabel" type="Label" parent="MainContainer/InfoArea/InfoPanel/VBox/ScoreContainer"]
 layout_mode = 2
 text = "Дилер: ?"
 label_settings = SubResource("LabelSettings_score")
+
+[node name="MatchScoreLabel" type="Label" parent="MainContainer/InfoArea/InfoPanel/VBox/ScoreContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "СЧЕТ: 0 - 0"
+label_settings = SubResource("LabelSettings_score")
+horizontal_alignment = 1
+modulate = Color(0.5, 1, 1, 1)
 
 [node name="PlayerScoreLabel" type="Label" parent="MainContainer/InfoArea/InfoPanel/VBox/ScoreContainer"]
 layout_mode = 2
@@ -146,29 +248,277 @@ alignment = 1
 theme_override_constants/separation = -40
 
 [node name="ButtonsArea" type="HBoxContainer" parent="MainContainer"]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 30
 alignment = 1
 
 [node name="HitButton" type="Button" parent="MainContainer/ButtonsArea"]
-custom_minimum_size = Vector2(180, 60)
+custom_minimum_size = Vector2(180, 70)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 28
 text = "ВЗЯТЬ"
 
 [node name="StandButton" type="Button" parent="MainContainer/ButtonsArea"]
-custom_minimum_size = Vector2(180, 60)
+custom_minimum_size = Vector2(180, 70)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 28
 text = "СТОП"
+
+[node name="NextRoundButton" type="Button" parent="MainContainer/ButtonsArea"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(250, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "СЛЕД. РАУНД"
 
 [node name="NewGameButton" type="Button" parent="MainContainer/ButtonsArea"]
 visible = false
-custom_minimum_size = Vector2(250, 60)
+custom_minimum_size = Vector2(250, 70)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "НОВАЯ ИГРА"
+theme_override_font_sizes/font_size = 28
+text = "НОВЫЙ МАТЧ"
+
+[node name="BettingOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_blur")
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="CenterContainer" type="CenterContainer" parent="BettingOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BettingOverlay/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Label" type="Label" parent="BettingOverlay/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "СТАВКА НА МАТЧ (ДО 3 ПОБЕД)"
+label_settings = SubResource("LabelSettings_score")
+horizontal_alignment = 1
+
+[node name="InternalBalanceLabel" type="Label" parent="BettingOverlay/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "ВАШ БАЛАНС: 30$"
+label_settings = SubResource("LabelSettings_score")
+horizontal_alignment = 1
+modulate = Color(1, 1, 0.5, 1)
+
+[node name="BegButton" type="Button" parent="BettingOverlay/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(300, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "ВЫПРОСИТЬ АВАНС (30$)"
+
+[node name="StealButton" type="Button" parent="BettingOverlay/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(300, 70)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 26
+text = "УКРАСТЬ БАНКУ ВАРЕНЬЯ"
+
+[node name="BetsHBox" type="HBoxContainer" parent="BettingOverlay/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Bet10" type="Button" parent="BettingOverlay/CenterContainer/VBoxContainer/BetsHBox"]
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "10$"
+
+[node name="Bet50" type="Button" parent="BettingOverlay/CenterContainer/VBoxContainer/BetsHBox"]
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "50$"
+
+[node name="Bet100" type="Button" parent="BettingOverlay/CenterContainer/VBoxContainer/BetsHBox"]
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "100$"
+
+[node name="BetAll" type="Button" parent="BettingOverlay/CenterContainer/VBoxContainer/BetsHBox"]
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "VA-BANK"
+
+[node name="IntroOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_blur")
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.1, 0.95)
+
+[node name="CenterContainer" type="CenterContainer" parent="IntroOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="IntroOverlay/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Title" type="Label" parent="IntroOverlay/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "ОЧКО / 21: ТУРНИР"
+label_settings = SubResource("LabelSettings_score")
+horizontal_alignment = 1
+
+[node name="Rules" type="Label" parent="IntroOverlay/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "1. Играем матч до 3-х побед.
+2. Ставка делается ОДИН раз на весь матч.
+3. Победитель матча забирает всё (x2).
+4. Правила раздачи классические.
+5. Не зли Данилу и Рабочего."
+horizontal_alignment = 1
+
+[node name="StartGameButton" type="Button" parent="IntroOverlay/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "НАЧАТЬ ТУРНИР"
+
+[node name="BossOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+
+
+[node name="BossSprite" type="TextureRect" parent="BossOverlay"]
+material = SubResource("ShaderMaterial_boss_glitch")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="BossText" type="Label" parent="BossOverlay"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "ТЫ УВОЛЕН!!!"
+label_settings = SubResource("LabelSettings_score")
+horizontal_alignment = 1
+
+[node name="GameOverLabel" type="Label" parent="BossOverlay"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -50.0
+offset_right = 200.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 64
+text = "ИГРА ОКОНЧЕНА"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="BossOverlay"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -200.0
+offset_right = 150.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "НАЧАТЬ ЗАНОВО"
+
+[node name="BossContinueButton" type="Button" parent="BossOverlay"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "ПОНЯЛ..."
+
+[node name="ExitButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -150.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 60.0
+grow_horizontal = 0
+text = "ВЫЙТИ"
 
 [node name="SkipButton" type="Button" parent="."]
 visible = false
