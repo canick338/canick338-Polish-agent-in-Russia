@@ -1,13 +1,13 @@
 [gd_scene load_steps=14 format=3 uid="uid://c3fdyxa55lvir"]
 
-[ext_resource type="Script" path="res://TextBox/TextBox.gd" id="1"]
+[ext_resource type="Script" uid="uid://bpoxrs2j7w2ye" path="res://TextBox/TextBox.gd" id="1"]
 [ext_resource type="PackedScene" path="res://TextBox/BlinkingArrow.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://c52hncojts061" path="res://TextBox/ChoiceSelector.tscn" id="3"]
-[ext_resource type="Theme" path="res://Theme/theme.tres" id="4"]
-[ext_resource type="Texture2D" path="res://TextBox/text-box.png" id="5"]
-[ext_resource type="Texture2D" path="res://TextBox/character-name-box.png" id="6"]
-[ext_resource type="Font" path="res://Theme/Montserrat-ExtraBold.ttf" id="7"]
-[ext_resource type="Script" path="res://TextBox/FadingControl.gd" id="8"]
+[ext_resource type="Theme" uid="uid://ehpjfvmuujjg" path="res://Theme/theme.tres" id="4"]
+[ext_resource type="Texture2D" uid="uid://dax5bqfw4n3al" path="res://TextBox/text-box.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://di43q0kt7kvpo" path="res://TextBox/character-name-box.png" id="6"]
+[ext_resource type="FontFile" uid="uid://bijargpv0txdf" path="res://Theme/Montserrat-ExtraBold.ttf" id="7"]
+[ext_resource type="Script" uid="uid://cy0i4tr40p3s7" path="res://TextBox/FadingControl.gd" id="8"]
 [ext_resource type="PackedScene" path="res://TextBox/SkipButton.tscn" id="9"]
 
 [sub_resource type="Animation" id="1"]
@@ -206,9 +206,9 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_40ejx"]
 _data = {
-"fade_in": SubResource("1"),
-"fade_out": SubResource("2"),
-"setup": SubResource("3")
+&"fade_in": SubResource("1"),
+&"fade_out": SubResource("2"),
+&"setup": SubResource("3")
 }
 
 [node name="TextBox" type="TextureRect"]
@@ -245,7 +245,6 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 
 [node name="NameBackground" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 1)
 layout_mode = 0
 offset_left = 78.0
 offset_top = -45.1899
@@ -274,7 +273,6 @@ script = ExtResource("8")
 appear_duration = 0.4
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-modulate = Color(1, 1, 1, 1)
 layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
@@ -287,9 +285,9 @@ offset_bottom = 100.0
 mouse_filter = 2
 theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_constants/shadow_outline_size = 4
 theme_override_font_sizes/normal_font_size = 36
 bbcode_enabled = true
 text = "Text body"
@@ -325,9 +323,6 @@ mouse_filter = 2
 
 [node name="FadeAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_40ejx")
+&"": SubResource("AnimationLibrary_40ejx")
 }
 autoplay = "setup"
-
-
-

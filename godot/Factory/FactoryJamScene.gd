@@ -7,7 +7,7 @@ extends Control
 @onready var conveyor: Control = $Container/Conveyor
 @onready var skip_button: Button = $Container/SkipButton
 @onready var game_logic: FactoryJamGame = $FactoryJamGame
-@onready var conveyor_background: ColorRect = $Container/Conveyor/Background
+@onready var conveyor_background: TextureRect = $Container/Conveyor/Background
 
 var jar_scene: PackedScene
 var jars: Array[Control] = []
@@ -31,8 +31,8 @@ func _ready():
 	# Создать звуки
 	_create_audio_players()
 	
-	# Создать движущийся конвейер (async, так как используем await)
-	call_deferred("_create_conveyor")
+	# Настроить конвейер
+	_create_conveyor()
 	
 	# Подключить сигналы
 	if game_logic:
@@ -51,7 +51,7 @@ func _ready():
 	
 	# Настроить конвейер
 	if conveyor_background:
-		conveyor_background.color = Color(0.3, 0.3, 0.3)  # Серый конвейер
+		conveyor_background.modulate = Color(1, 1, 1)
 	
 	# НЕ запускаем игру автоматически - ждём сигнала от ScenePlayer
 	# call_deferred("start_game_auto")
@@ -64,140 +64,26 @@ func _create_audio_players():
 	sticker_sound = AudioStreamPlayer.new()
 	sticker_sound.name = "StickerSound"
 	add_child(sticker_sound)
-	# Загрузить звук если есть (опционально)
-	# sticker_sound.stream = load("res://Factory/Sounds/sticker_sound.ogg")
 	
 	# Звук конвейера (зацикленный)
 	conveyor_sound = AudioStreamPlayer.new()
 	conveyor_sound.name = "ConveyorSound"
 	conveyor_sound.autoplay = false
 	add_child(conveyor_sound)
-	# Загрузить звук если есть (опционально)
-	# conveyor_sound.stream = load("res://Factory/Sounds/conveyor_sound.ogg")
 
 func _create_conveyor():
-	"""Создать визуальный конвейер с текстурой"""
-	if not conveyor:
+	"""Настроить визуальный конвейер"""
+	if not conveyor_background:
 		return
 	
-	# Создать TextureRect для конвейерной ленты
-	conveyor_texture = TextureRect.new()
-	conveyor_texture.name = "ConveyorTexture"
-	conveyor_texture.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	conveyor_texture.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+	# Используем уже существующий TextureRect из сцены
+	conveyor_texture = conveyor_background
+	
+	# Настройка параметров текстуры
+	conveyor_texture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	conveyor_texture.stretch_mode = TextureRect.STRETCH_TILE
-	# Устанавливаем anchors и размеры вручную для правильного позиционирования
-	conveyor_texture.anchors_preset = Control.PRESET_FULL_RECT
-	conveyor_texture.anchor_left = 0.0
-	conveyor_texture.anchor_top = 0.0
-	conveyor_texture.anchor_right = 1.0
-	conveyor_texture.anchor_bottom = 1.0
-	conveyor_texture.offset_left = 0
-	conveyor_texture.offset_top = 0
-	conveyor_texture.offset_right = 0
-	conveyor_texture.offset_bottom = 0
-	conveyor_texture.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	conveyor_texture.grow_vertical = Control.GROW_DIRECTION_BOTH
-	# Используем anchors напрямую, layout_mode не нужен
 	
-	# Если есть текстура конвейера, загрузить её
-	var conveyor_img = null
-	# Пробуем несколько способов загрузки
-	conveyor_img = load("res://Factory/conveyor_belt.png")
-	if not conveyor_img:
-		conveyor_img = ResourceLoader.load("res://Factory/conveyor_belt.png", "Texture2D", ResourceLoader.CACHE_MODE_REUSE)
-	if not conveyor_img:
-		# Пробуем загрузить как CompressedTexture2D
-		conveyor_img = ResourceLoader.load("res://Factory/conveyor_belt.png")
-	
-	if conveyor_img:
-		conveyor_texture.texture = conveyor_img
-		# Убеждаемся, что текстура видна
-		conveyor_texture.show()
-		conveyor_texture.modulate = Color.WHITE
-		conveyor_texture.visible = true
-		print("✅ Conveyor belt texture loaded successfully. Size: ", conveyor_img.get_width(), "x", conveyor_img.get_height())
-		print("   Texture type: ", conveyor_img.get_class())
-	else:
-		# Временная текстура - полосы
-		conveyor_texture.modulate = Color(0.4, 0.4, 0.4)
-		conveyor_texture.show()
-		conveyor_texture.visible = true
-		push_error("❌ Conveyor belt texture not found at res://Factory/conveyor_belt.png. Make sure the file is imported in Godot.")
-		print("   Trying to create fallback texture...")
-	
-	# Убеждаемся, что TextureRect видим и правильно позиционирован
-	conveyor_texture.show()
-	conveyor_texture.z_index = 1  # Над Background (z_index=0), но под банками
-	conveyor_texture.modulate = Color.WHITE  # Убеждаемся, что не прозрачный
-	conveyor_texture.visible = true
-	
-	# Добавить в конвейер (под банками, но над Background)
-	conveyor.add_child(conveyor_texture)
-	
-	# Убеждаемся, что размеры правильные (используем call_deferred для правильного размера)
-	call_deferred("_setup_conveyor_texture_size")
-	
-	# Переместить после Background (индекс 0), чтобы быть поверх него
-	call_deferred("_move_conveyor_texture_to_top")
-	
-	# Отладочная информация
-	print("Conveyor texture created. Visible: ", conveyor_texture.visible)
-	print("Conveyor texture z_index: ", conveyor_texture.z_index)
-	if conveyor_texture.texture:
-		print("Conveyor texture loaded. Size: ", conveyor_texture.texture.get_width(), "x", conveyor_texture.texture.get_height())
-
-func _setup_conveyor_texture_size():
-	"""Установить правильный размер текстуры конвейера"""
-	if conveyor and conveyor_texture and conveyor.is_inside_tree():
-		var conveyor_size = conveyor.size
-		if conveyor_size.x > 0 and conveyor_size.y > 0:
-			# Убеждаемся, что anchors правильно установлены
-			conveyor_texture.anchor_left = 0.0
-			conveyor_texture.anchor_top = 0.0
-			conveyor_texture.anchor_right = 1.0
-			conveyor_texture.anchor_bottom = 1.0
-			conveyor_texture.offset_left = 0
-			conveyor_texture.offset_top = 0
-			conveyor_texture.offset_right = 0
-			conveyor_texture.offset_bottom = 0
-			conveyor_texture.position = Vector2.ZERO
-			conveyor_texture.size = conveyor_size
-			conveyor_texture.visible = true
-			conveyor_texture.show()
-			print("✅ Conveyor texture size set: ", conveyor_size)
-			print("   Texture position: ", conveyor_texture.position)
-			print("   Texture actual size: ", conveyor_texture.size)
-			print("   Texture visible: ", conveyor_texture.visible)
-			print("   Texture z_index: ", conveyor_texture.z_index)
-			if conveyor_texture.texture:
-				print("   Texture resource: ", conveyor_texture.texture.resource_path)
-		else:
-			print("⚠️ Conveyor size is zero: ", conveyor_size)
-			# Попробуем установить минимальный размер для теста
-			conveyor_texture.size = Vector2(1920, 200)
-			print("   Set test size: ", conveyor_texture.size)
-
-func _move_conveyor_texture_to_top():
-	"""Переместить текстуру конвейера поверх Background"""
-	if conveyor and conveyor_texture and conveyor.is_inside_tree():
-		# Найти Background и переместить текстуру после него
-		var bg_index = -1
-		for i in range(conveyor.get_child_count()):
-			if conveyor.get_child(i).name == "Background":
-				bg_index = i
-				break
-		
-		if bg_index >= 0 and conveyor.get_child_count() > bg_index + 1:
-			conveyor.move_child(conveyor_texture, bg_index + 1)
-			print("✅ Conveyor texture moved after Background (index ", bg_index + 1, ")")
-		elif bg_index >= 0:
-			# Background найден, но текстура уже после него
-			print("ℹ️ Conveyor texture already after Background")
-		else:
-			# Background не найден, переместить в начало
-			conveyor.move_child(conveyor_texture, 0)
-			print("⚠️ Background not found, moved texture to index 0")
+	print("✅ Conveyor belt initialized.")
 
 func _input(event: InputEvent):
 	"""Обработка кликов по банкам через глобальный input"""
@@ -462,14 +348,13 @@ func _on_jar_clicked(jar: Control = null):
 	_play_sticker_sound()
 	
 	# Добавить визуальную наклейку с анимацией
-	if jar.has_method("label_jar"):
+	if jar.has_method("add_sticker"):
+		jar.add_sticker("OK")
+	elif jar.has_method("label_jar"):
 		jar.label_jar()
 	else:
 		# Создать наклейку визуально
 		_add_sticker_to_jar(jar)
-	
-	# Анимация наклеивания наклейки
-	_animate_sticker_application(jar)
 	
 	# Анимация успеха банки
 	var tween = create_tween()
@@ -488,38 +373,6 @@ func _play_sticker_sound():
 		else:
 			# Генерируем простой звук программно (опционально)
 			pass
-
-func _animate_sticker_application(jar: Control):
-	"""Анимация наклеивания наклейки"""
-	if not jar or not is_instance_valid(jar):
-		return
-	
-	# Найти наклейку
-	var sticker = null
-	for child in jar.get_children():
-		if child.name == "Sticker":
-			sticker = child
-			break
-	
-	if not sticker:
-		return
-	
-	# Анимация: наклейка появляется сверху и "приклеивается"
-	sticker.visible = true
-	sticker.modulate = Color(1, 1, 1, 0)
-	sticker.scale = Vector2(0.5, 0.5)
-	sticker.position.y = -20  # Начать сверху
-	
-	var tween = create_tween()
-	tween.set_parallel(true)
-	# Движение вниз
-	tween.tween_property(sticker, "position:y", 0, 0.2).set_ease(Tween.EASE_OUT)
-	# Появление
-	tween.tween_property(sticker, "modulate:a", 1.0, 0.15)
-	# Увеличение
-	tween.tween_property(sticker, "scale", Vector2(1.1, 1.1), 0.15)
-	# Небольшой "отскок" при приклеивании
-	tween.tween_property(sticker, "scale", Vector2(1.0, 1.0), 0.1).set_delay(0.15).set_ease(Tween.EASE_IN)
 
 func remove_jar(jar: Control):
 	"""Удалить банку"""

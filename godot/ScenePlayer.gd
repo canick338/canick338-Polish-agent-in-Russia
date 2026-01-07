@@ -17,6 +17,7 @@ const TRANSITIONS := {
 
 const CUTSCENE_PLAYER := preload("res://Cutscenes/CutscenePlayer.tscn")
 const FACTORY_JAM_SCENE := preload("res://Factory/FactoryJamScene.tscn")
+const CARD_GAME_SCENE := preload("res://CardGame/CardGameScene.tscn")
 
 var _scene_data := {}
 var _cutscene_player: Control = null
@@ -255,6 +256,8 @@ func _play_minigame(minigame_name: String) -> void:
 	match minigame_name:
 		"factory_jam", "jam_factory", "расфасовка":
 			await _play_factory_jam_game()
+		"card_game", "cards", "карты", "21", "очки":
+			await _play_card_game()
 		_:
 			push_error("Unknown minigame: " + minigame_name)
 
@@ -313,6 +316,60 @@ func _play_factory_jam_game() -> void:
 	
 	# Небольшая задержка для плавного перехода
 	await get_tree().create_timer(0.2).timeout
+
+
+func _play_card_game() -> void:
+	"""Проиграть карточную игру"""
+	# Создать экземпляр мини-игры
+	if not _minigame_instance and CARD_GAME_SCENE:
+		_minigame_instance = CARD_GAME_SCENE.instantiate()
+		if _minigame_instance:
+			add_child(_minigame_instance)
+	
+	if not _minigame_instance:
+		push_error("Failed to create CardGameScene instance")
+		return
+	
+	# Подключить сигнал окончания (если еще не подключен)
+	if _minigame_instance.has_signal("card_game_finished"):
+		# Отключаем предыдущее подключение, если есть
+		if _minigame_instance.card_game_finished.is_connected(_on_card_game_finished):
+			_minigame_instance.card_game_finished.disconnect(_on_card_game_finished)
+		_minigame_instance.card_game_finished.connect(_on_card_game_finished)
+	
+	# Скрыть UI визуальной новеллы
+	if _text_box:
+		_text_box.hide()
+	if _character_displayer:
+		_character_displayer.hide()
+	
+	# Ждать окончания игры
+	await _minigame_instance.card_game_finished
+	
+	# Удалить мини-игру
+	if _minigame_instance:
+		_minigame_instance.queue_free()
+		_minigame_instance = null
+	
+	# Показать UI обратно
+	if _text_box:
+		_text_box.show()
+		await get_tree().process_frame
+	if _character_displayer:
+		_character_displayer.show()
+		await get_tree().process_frame
+	
+	# Небольшая задержка для плавного перехода
+	await get_tree().create_timer(0.2).timeout
+
+
+func _on_card_game_finished(player_won: bool, player_score: int, dealer_score: int) -> void:
+	"""Обработчик окончания карточной игры"""
+	print("Card game finished! Player won: ", player_won, " (Player: ", player_score, ", Dealer: ", dealer_score, ")")
+	# Можно сохранить результат в переменные, если нужно
+	Variables.add_variable("card_game_won", 1 if player_won else 0)
+	Variables.add_variable("card_game_player_score", player_score)
+	Variables.add_variable("card_game_dealer_score", dealer_score)
 
 
 func _evaluate_condition(condition: SceneParser.BaseExpression, variables_list: Dictionary) -> bool:
