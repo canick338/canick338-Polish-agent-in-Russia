@@ -178,3 +178,4 @@ set mission2_quality 30
 "Задание провалено (30%)"
 
 jump month2_mission_complete
+

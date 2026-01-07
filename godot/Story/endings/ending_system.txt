@@ -204,3 +204,4 @@ choice:
 		jump ending_bad
 
 transition fade_out
+

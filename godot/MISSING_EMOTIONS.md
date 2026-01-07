@@ -31,3 +31,4 @@
 - `danila serious` вместо `danila determined`
 - `boss_of_factory neutral` для всех случаев
 
+

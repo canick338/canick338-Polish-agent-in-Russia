@@ -178,3 +178,4 @@ danila worried "(Ф-фух... Первый допрос позади.)"
 # Возврат к основному сюжету
 transition fade_out
 jump month1_end
+

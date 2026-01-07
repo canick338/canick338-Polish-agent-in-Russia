@@ -9,3 +9,4 @@ id = "factory_inside"
 display_name = "Внутри завода"
 texture = ExtResource("2")
 
+
