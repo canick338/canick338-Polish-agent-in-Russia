@@ -5,6 +5,7 @@ signal options_requested
 signal exit_requested
 
 @onready var start_button: Button = $VBoxContainer/StartButton
+@onready var collection_button: Button = $VBoxContainer/CollectionButton
 @onready var options_button: Button = $VBoxContainer/OptionsButton
 @onready var exit_button: Button = $VBoxContainer/ExitButton
 
@@ -37,6 +38,10 @@ func _connect_signals():
 	if start_button:
 		start_button.pressed.connect(_on_start_pressed)
 		start_button.mouse_entered.connect(_on_button_hover.bind(start_button))
+		
+	if collection_button:
+		collection_button.pressed.connect(_on_collection_pressed)
+		collection_button.mouse_entered.connect(_on_button_hover.bind(collection_button))
 	
 	if options_button:
 		options_button.pressed.connect(_on_options_pressed)
@@ -73,12 +78,21 @@ func _on_start_pressed():
 	start_game_requested.emit()
 
 const SETTINGS_SCENE = preload("res://SettingsMenu.tscn")
+const COLLECTION_SCENE = preload("res://CollectionMenu.tscn")
 
 func _on_options_pressed():
 	options_requested.emit()
 	var settings = SETTINGS_SCENE.instantiate()
 	add_child(settings)
 	settings.back_requested.connect(_on_settings_back)
+	
+	# Hide main buttons temporarily
+	$VBoxContainer.visible = false
+
+func _on_collection_pressed():
+	var collection = COLLECTION_SCENE.instantiate()
+	add_child(collection)
+	collection.back_requested.connect(_on_settings_back) # Reuse same back handler
 	
 	# Hide main buttons temporarily
 	$VBoxContainer.visible = false

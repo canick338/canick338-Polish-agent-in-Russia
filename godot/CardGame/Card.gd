@@ -82,4 +82,3 @@ func get_texture_name() -> String:
 func get_texture_path() -> String:
 	var texture_name = get_texture_name()
 	return "res://boardgamePackAsset/PNG/Cards/" + texture_name + ".png"
-

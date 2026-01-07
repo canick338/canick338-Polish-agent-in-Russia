@@ -78,8 +78,8 @@ volkov "Итак, товарищ Данила..."
 # Диалог допроса...
 
 if suspicion > 50:
-    cutscene interrogation_suspicion
-    volkov "Что-то в вас не так..."
+	cutscene interrogation_suspicion
+	volkov "Что-то в вас не так..."
 ```
 
 ### Миссия - Фотографирование
@@ -90,11 +90,11 @@ cutscene photo_mission false
 "Вспышка камеры... Кто-то идет!"
 
 choice:
-    "Спрятаться":
-        set stealth +10
+	"Спрятаться":
+		set stealth +10
         "Вы успели спрятаться"
-    "Бежать":
-        set suspicion +20
+	"Бежать":
+		set suspicion +20
         "Вы привлекли внимание"
 ```
 
@@ -159,11 +159,11 @@ volkov "Проходите, товарищ Данила."
 mark check_ending
 
 if suspicion >= 80:
-    cutscene ending_arrested false
-    jump ending_arrested
+	cutscene ending_arrested false
+	jump ending_arrested
 elif stealth >= 70 and suspicion < 50:
-    cutscene ending_hero false
-    jump ending_hero
+	cutscene ending_hero false
+	jump ending_hero
 ```
 
 ---
@@ -200,13 +200,3 @@ cutscene res://my.ogv   → res://my.ogv (без изменений)
 - **Любая кнопка** - пропустить (если разрешено)
 - **ESC** - пропустить (если разрешено)
 - **Клик мыши** - пропустить (если разрешено)
-
-
-
-
-
-
-
-
-
-

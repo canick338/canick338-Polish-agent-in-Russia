@@ -206,6 +206,11 @@ func _show_boss_game_over():
 		tween.set_parallel(true)
 		tween.tween_property(mat, "shader_parameter/shake_power", 0.1, 0.5).set_trans(Tween.TRANS_BOUNCE) # More intense
 		tween.tween_property(mat, "shader_parameter/color_rate", 0.05, 1.0)
+		
+		# Calm down smoothly
+		tween.chain().tween_interval(1.5)
+		tween.chain().tween_property(mat, "shader_parameter/shake_power", 0.0, 1.0).set_trans(Tween.TRANS_SINE)
+		tween.parallel().tween_property(mat, "shader_parameter/color_rate", 0.0, 1.0)
 	
 	# Camera Zoom & Shake
 	var cam = $Camera2D
