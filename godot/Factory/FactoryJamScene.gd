@@ -1,8 +1,9 @@
 extends Control
 ## Сцена мини-игры: Расфасовка повидла
 
-@onready var timer_label: Label = $Container/InfoPanel/TimerLabel
-@onready var score_label: Label = $Container/InfoPanel/ScoreLabel
+@onready var timer_label: Label = $Container/InfoPanelContainer/InfoPanel/TimerLabel
+@onready var score_label: Label = $Container/InfoPanelContainer/InfoPanel/ScoreLabel
+@onready var progress_label: Label = $Container/InfoPanelContainer/InfoPanel/ProgressLabel
 @onready var conveyor: Control = $Container/Conveyor
 @onready var skip_button: Button = $Container/SkipButton
 @onready var game_logic: FactoryJamGame = $FactoryJamGame
@@ -30,8 +31,8 @@ func _ready():
 	# Создать звуки
 	_create_audio_players()
 	
-	# Создать движущийся конвейер
-	_create_conveyor()
+	# Создать движущийся конвейер (async, так как используем await)
+	call_deferred("_create_conveyor")
 	
 	# Подключить сигналы
 	if game_logic:
@@ -85,21 +86,118 @@ func _create_conveyor():
 	conveyor_texture.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	conveyor_texture.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 	conveyor_texture.stretch_mode = TextureRect.STRETCH_TILE
+	# Устанавливаем anchors и размеры вручную для правильного позиционирования
 	conveyor_texture.anchors_preset = Control.PRESET_FULL_RECT
+	conveyor_texture.anchor_left = 0.0
+	conveyor_texture.anchor_top = 0.0
+	conveyor_texture.anchor_right = 1.0
+	conveyor_texture.anchor_bottom = 1.0
+	conveyor_texture.offset_left = 0
+	conveyor_texture.offset_top = 0
+	conveyor_texture.offset_right = 0
+	conveyor_texture.offset_bottom = 0
 	conveyor_texture.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	conveyor_texture.grow_vertical = Control.GROW_DIRECTION_BOTH
+	# Используем anchors напрямую, layout_mode не нужен
 	
 	# Если есть текстура конвейера, загрузить её
-	# var conveyor_img = load("res://Factory/Textures/conveyor_belt.png")
-	# if conveyor_img:
-	# 	conveyor_texture.texture = conveyor_img
-	# else:
-	# 	# Временная текстура - полосы
-	# 	conveyor_texture.modulate = Color(0.4, 0.4, 0.4)
+	var conveyor_img = null
+	# Пробуем несколько способов загрузки
+	conveyor_img = load("res://Factory/conveyor_belt.png")
+	if not conveyor_img:
+		conveyor_img = ResourceLoader.load("res://Factory/conveyor_belt.png", "Texture2D", ResourceLoader.CACHE_MODE_REUSE)
+	if not conveyor_img:
+		# Пробуем загрузить как CompressedTexture2D
+		conveyor_img = ResourceLoader.load("res://Factory/conveyor_belt.png")
 	
-	# Добавить в конвейер (под банками)
+	if conveyor_img:
+		conveyor_texture.texture = conveyor_img
+		# Убеждаемся, что текстура видна
+		conveyor_texture.show()
+		conveyor_texture.modulate = Color.WHITE
+		conveyor_texture.visible = true
+		print("✅ Conveyor belt texture loaded successfully. Size: ", conveyor_img.get_width(), "x", conveyor_img.get_height())
+		print("   Texture type: ", conveyor_img.get_class())
+	else:
+		# Временная текстура - полосы
+		conveyor_texture.modulate = Color(0.4, 0.4, 0.4)
+		conveyor_texture.show()
+		conveyor_texture.visible = true
+		push_error("❌ Conveyor belt texture not found at res://Factory/conveyor_belt.png. Make sure the file is imported in Godot.")
+		print("   Trying to create fallback texture...")
+	
+	# Убеждаемся, что TextureRect видим и правильно позиционирован
+	conveyor_texture.show()
+	conveyor_texture.z_index = 1  # Над Background (z_index=0), но под банками
+	conveyor_texture.modulate = Color.WHITE  # Убеждаемся, что не прозрачный
+	conveyor_texture.visible = true
+	
+	# Добавить в конвейер (под банками, но над Background)
 	conveyor.add_child(conveyor_texture)
-	conveyor.move_child(conveyor_texture, 0)  # Переместить в начало (под Background)
+	
+	# Убеждаемся, что размеры правильные (используем call_deferred для правильного размера)
+	call_deferred("_setup_conveyor_texture_size")
+	
+	# Переместить после Background (индекс 0), чтобы быть поверх него
+	call_deferred("_move_conveyor_texture_to_top")
+	
+	# Отладочная информация
+	print("Conveyor texture created. Visible: ", conveyor_texture.visible)
+	print("Conveyor texture z_index: ", conveyor_texture.z_index)
+	if conveyor_texture.texture:
+		print("Conveyor texture loaded. Size: ", conveyor_texture.texture.get_width(), "x", conveyor_texture.texture.get_height())
+
+func _setup_conveyor_texture_size():
+	"""Установить правильный размер текстуры конвейера"""
+	if conveyor and conveyor_texture and conveyor.is_inside_tree():
+		var conveyor_size = conveyor.size
+		if conveyor_size.x > 0 and conveyor_size.y > 0:
+			# Убеждаемся, что anchors правильно установлены
+			conveyor_texture.anchor_left = 0.0
+			conveyor_texture.anchor_top = 0.0
+			conveyor_texture.anchor_right = 1.0
+			conveyor_texture.anchor_bottom = 1.0
+			conveyor_texture.offset_left = 0
+			conveyor_texture.offset_top = 0
+			conveyor_texture.offset_right = 0
+			conveyor_texture.offset_bottom = 0
+			conveyor_texture.position = Vector2.ZERO
+			conveyor_texture.size = conveyor_size
+			conveyor_texture.visible = true
+			conveyor_texture.show()
+			print("✅ Conveyor texture size set: ", conveyor_size)
+			print("   Texture position: ", conveyor_texture.position)
+			print("   Texture actual size: ", conveyor_texture.size)
+			print("   Texture visible: ", conveyor_texture.visible)
+			print("   Texture z_index: ", conveyor_texture.z_index)
+			if conveyor_texture.texture:
+				print("   Texture resource: ", conveyor_texture.texture.resource_path)
+		else:
+			print("⚠️ Conveyor size is zero: ", conveyor_size)
+			# Попробуем установить минимальный размер для теста
+			conveyor_texture.size = Vector2(1920, 200)
+			print("   Set test size: ", conveyor_texture.size)
+
+func _move_conveyor_texture_to_top():
+	"""Переместить текстуру конвейера поверх Background"""
+	if conveyor and conveyor_texture and conveyor.is_inside_tree():
+		# Найти Background и переместить текстуру после него
+		var bg_index = -1
+		for i in range(conveyor.get_child_count()):
+			if conveyor.get_child(i).name == "Background":
+				bg_index = i
+				break
+		
+		if bg_index >= 0 and conveyor.get_child_count() > bg_index + 1:
+			conveyor.move_child(conveyor_texture, bg_index + 1)
+			print("✅ Conveyor texture moved after Background (index ", bg_index + 1, ")")
+		elif bg_index >= 0:
+			# Background найден, но текстура уже после него
+			print("ℹ️ Conveyor texture already after Background")
+		else:
+			# Background не найден, переместить в начало
+			conveyor.move_child(conveyor_texture, 0)
+			print("⚠️ Background not found, moved texture to index 0")
 
 func _input(event: InputEvent):
 	"""Обработка кликов по банкам через глобальный input"""
@@ -145,18 +243,31 @@ func _process(delta: float):
 			if jar and is_instance_valid(jar):
 				jar.position.x += jar_speed * delta
 				
+				# Wobble effect (покачивание при движении)
+				var wobble_freq = 0.05
+				var wobble_amp = 3.0
+				# Используем position.x для синхронизации с движением
+				jar.rotation_degrees = sin(jar.position.x * wobble_freq) * wobble_amp
+				
 				# Удалить банки, которые ушли за экран
 				if jar.position.x > get_viewport_rect().size.x + 100:
 					jars_to_remove.append(jar)
 		
 		# Удалить пропущенные банки
 		for jar in jars_to_remove:
+			# Проверяем, была ли банка помечена
+			var is_labeled = false
+			if jar.has_node("Sticker"):
+				if jar.get_node("Sticker").visible:
+					is_labeled = true
+			
 			remove_jar(jar)
-			if game_logic:
+			
+			if not is_labeled and game_logic:
 				game_logic.miss_jar()
 		
-		# Двигать конвейер
-		if conveyor_texture and game_logic.current_state == FactoryJamGame.GameState.PLAYING:
+		# Двигать конвейер постоянно (независимо от состояния игры)
+		if conveyor_texture:
 			conveyor_offset += conveyor_speed * delta
 			# Зациклить смещение для бесшовного движения
 			if conveyor_texture.texture:
@@ -214,6 +325,9 @@ func _on_spawn_jar():
 	var spawn_delay = randf_range(0.0, 0.3)
 	if spawn_delay > 0:
 		await get_tree().create_timer(spawn_delay).timeout
+	
+	# Установить z_index для банки, чтобы она была поверх ленты конвейера
+	jar.z_index = 2  # Выше ленты (z_index = 1) и Background (z_index = 0)
 	
 	conveyor.add_child(jar)
 	jars.append(jar)
@@ -280,6 +394,7 @@ func create_simple_jar() -> Control:
 	jar.custom_minimum_size = Vector2(80, 120)
 	jar.mouse_filter = Control.MOUSE_FILTER_STOP
 	jar.name = "SimpleJar"
+	jar.z_index = 2  # Выше ленты конвейера (z_index = 1)
 	
 	# Тело банки (цилиндр)
 	var body = ColorRect.new()
@@ -413,7 +528,7 @@ func remove_jar(jar: Control):
 	if is_instance_valid(jar):
 		jar.queue_free()
 
-func _on_jar_labeled():
+func _on_jar_labeled(combo: int, current_score: int):
 	"""Банка помечена"""
 	# Эффект успеха - найти последнюю банку и добавить эффект
 	if jars.size() > 0:
@@ -424,11 +539,77 @@ func _on_jar_labeled():
 			tween.set_parallel(true)
 			tween.tween_property(last_jar, "scale", Vector2(1.2, 1.2), 0.1)
 			tween.tween_property(last_jar, "scale", Vector2(1.0, 1.0), 0.1).set_delay(0.1)
+			
+			# Частицы
+			_create_label_particles(last_jar.position + Vector2(last_jar.size.x/2, last_jar.size.y/2))
+			
+			# Текст комбо (если комбо > 1)
+			if combo > 1:
+				_show_floating_text(last_jar.position, "Combo x%d!" % combo, Color(1, 0.8, 0.2))
+			else:
+				_show_floating_text(last_jar.position, "+10", Color(0.2, 1, 0.2))
 
 func _on_jar_missed():
 	"""Банка пропущена"""
-	# Эффект провала - затемнение
-	pass
+	# Эффект провала - затемнение экрана или красная вспышка
+	var flash = ColorRect.new()
+	flash.color = Color(1, 0, 0, 0.3)
+	flash.anchors_preset = Control.PRESET_FULL_RECT
+	flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(flash)
+	
+	var tween = create_tween()
+	tween.tween_property(flash, "modulate:a", 0.0, 0.3)
+	tween.tween_callback(flash.queue_free)
+	
+	_show_floating_text(Vector2(get_viewport_rect().size.x - 100, get_viewport_rect().size.y/2), "Miss!", Color(1, 0.2, 0.2))
+
+func _create_label_particles(pos: Vector2):
+	"""Создать эффект частиц"""
+	var particles = CPUParticles2D.new()
+	particles.position = pos
+	particles.amount = 10
+	particles.lifetime = 0.5
+	particles.one_shot = true
+	particles.explosiveness = 1.0
+	particles.spread = 180.0
+	particles.gravity = Vector2(0, 500)
+	particles.initial_velocity_min = 100.0
+	particles.initial_velocity_max = 200.0
+	particles.scale_amount_min = 2.0
+	particles.scale_amount_max = 4.0
+	particles.color = Color(1, 1, 0.5)
+	
+	# Контейнер для частиц (важно чтобы они были поверх банок)
+	if conveyor:
+		conveyor.add_child(particles)
+	else:
+		add_child(particles)
+		
+	# Удаление после завершения
+	await get_tree().create_timer(1.0).timeout
+	particles.queue_free()
+
+func _show_floating_text(pos: Vector2, text: String, color: Color):
+	"""Показать всплывающий текст"""
+	var label = Label.new()
+	label.text = text
+	label.modulate = color
+	label.position = pos + Vector2(0, -20)
+	label.add_theme_font_size_override("font_size", 24)
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 4)
+	
+	if conveyor:
+		conveyor.add_child(label)
+	else:
+		add_child(label)
+	
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(label, "position:y", pos.y - 80, 0.8).set_ease(Tween.EASE_OUT)
+	tween.tween_property(label, "modulate:a", 0.0, 0.8).set_ease(Tween.EASE_IN)
+	tween.tween_callback(label.queue_free).set_delay(0.8)
 
 func _on_game_finished(score: int, jars_labeled: int, jars_missed: int):
 	"""Игра закончена"""
@@ -454,14 +635,21 @@ func _on_game_finished(score: int, jars_labeled: int, jars_missed: int):
 
 func update_ui():
 	"""Обновить интерфейс"""
-	if score_label and game_logic:
-		var progress = float(game_logic.jars_labeled) / float(game_logic.required_jars) * 100.0
-		score_label.text = "📊 Очки: %d | ✅ Помечено: %d/%d (%.0f%%)" % [game_logic.score, game_logic.jars_labeled, game_logic.required_jars, progress]
+	if not game_logic:
+		return
+		
+	var progress = float(game_logic.jars_labeled) / float(game_logic.required_jars) * 100.0
+	
+	if score_label:
+		score_label.text = "📊 Очки: %d (Комбо: x%d)" % [game_logic.score, game_logic.combo_count]
+	
+	if progress_label:
+		progress_label.text = "✅ Помечено: %d/%d (%.0f%%)" % [game_logic.jars_labeled, game_logic.required_jars, progress]
 		
 		# Зелёный цвет при хорошем прогрессе
 		if progress >= 100:
-			score_label.modulate = Color(0.3, 1, 0.3)  # Зелёный
+			progress_label.modulate = Color(0.3, 1, 0.3)  # Зелёный
 		elif progress >= 70:
-			score_label.modulate = Color(1, 1, 0.3)  # Жёлтый
+			progress_label.modulate = Color(1, 1, 0.3)  # Жёлтый
 		else:
-			score_label.modulate = Color(1, 1, 1)  # Белый
+			progress_label.modulate = Color(1, 1, 1)  # Белый

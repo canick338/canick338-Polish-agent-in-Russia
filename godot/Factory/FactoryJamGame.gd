@@ -65,6 +65,9 @@ func _process(delta: float):
 		jar_spawn_timer = jar_spawn_interval * randf_range(0.8, 1.2)
 		spawn_jar_requested.emit()
 
+var combo_count: int = 0
+var max_combo: int = 0
+
 signal spawn_jar_requested()
 
 func label_jar():
@@ -74,10 +77,19 @@ func label_jar():
 	
 	jars_labeled += 1
 	total_jars += 1
-	score += 10
-	jar_labeled.emit()
+	
+	# Combo logic
+	combo_count += 1
+	if combo_count > max_combo:
+		max_combo = combo_count
+	
+	# Score multiplier based on combo (max x3)
+	var multiplier = min(1 + (combo_count / 5), 3)
+	score += 10 * multiplier
+	
+	jar_labeled.emit(combo_count, score)
 
-signal jar_labeled()
+signal jar_labeled(combo_count, current_score)
 
 func miss_jar():
 	"""Банка ушла без наклейки"""
@@ -86,6 +98,10 @@ func miss_jar():
 	
 	jars_missed += 1
 	total_jars += 1
+	
+	# Reset combo
+	combo_count = 0
+	
 	score -= 5
 	jar_missed.emit()
 
@@ -112,4 +128,3 @@ func get_time_remaining() -> float:
 func is_passed() -> bool:
 	"""Проверить, прошёл ли игрок минимум"""
 	return jars_labeled >= required_jars
-

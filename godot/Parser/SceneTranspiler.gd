@@ -496,6 +496,10 @@ func _transpile_dialogue(dialogue_tree: DialogueTree, expression: SceneParser.Ba
 		elif not expression_found:
 			node.expression = str(arg_value)
 			expression_found = true
+		# Если expression уже найден, то следующий символ - это animation (если еще не найден)
+		elif not animation_found:
+			node.animation = str(arg_value)
+			animation_found = true
 		
 		arg_index += 1
 	

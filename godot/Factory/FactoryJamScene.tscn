@@ -1,7 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://factory_jam_scene"]
+[gd_scene load_steps=4 format=3 uid="uid://factory_jam_scene"]
 
 [ext_resource type="Script" path="res://Factory/FactoryJamScene.gd" id="1"]
 [ext_resource type="Script" path="res://Factory/FactoryJamGame.gd" id="2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_info"]
+bg_color = Color(0.1, 0.1, 0.1, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.5, 0.2, 1)
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
 
 [node name="FactoryJamScene" type="Control"]
 layout_mode = 3
@@ -35,19 +51,29 @@ text = "🏭 РАСФАСОВКА ПОВИДЛА"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="InfoPanel" type="VBoxContainer" parent="Container"]
+[node name="InfoPanelContainer" type="PanelContainer" parent="Container"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_info")
+
+[node name="InfoPanel" type="VBoxContainer" parent="Container/InfoPanelContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="TimerLabel" type="Label" parent="Container/InfoPanel"]
+[node name="TimerLabel" type="Label" parent="Container/InfoPanelContainer/InfoPanel"]
 layout_mode = 2
 text = "⏱ Время: 30.0 сек"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreLabel" type="Label" parent="Container/InfoPanel"]
+[node name="ScoreLabel" type="Label" parent="Container/InfoPanelContainer/InfoPanel"]
 layout_mode = 2
-text = "📊 Очки: 0 | ✅ Помечено: 0/15 (0%)"
+text = "📊 Очки: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressLabel" type="Label" parent="Container/InfoPanelContainer/InfoPanel"]
+layout_mode = 2
+text = "✅ Помечено: 0/15"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -63,7 +89,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.3, 0.3, 0.3, 1)
+color = Color(0.3, 0.3, 0.3, 0.5)
+z_index = 0
 
 [node name="InstructionsLabel" type="Label" parent="Container"]
 layout_mode = 2

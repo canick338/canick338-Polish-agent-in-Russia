@@ -1,7 +1,10 @@
-[gd_resource type="Resource" script_class="Character" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="Character" load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://Characters/Character.gd" id="1"]
 [ext_resource type="Texture2D" path="res://Characters/boss_of_factory/boss_of_factory.png" id="2"]
+[ext_resource type="Texture2D" path="res://Characters/boss_of_factory/boss_of_factory_suspicious.png" id="3"]
+[ext_resource type="Texture2D" path="res://Characters/boss_of_factory/boss_of_factory_happy.png" id="4"]
+[ext_resource type="Texture2D" path="res://Characters/boss_of_factory/boss_of_factory_angry.png" id="5"]
 
 [resource]
 script = ExtResource("1")
@@ -11,6 +14,9 @@ bio = "Хитрый начальник завода, который всегда
 age = 50
 default_image = "neutral"
 images = {
-"neutral": ExtResource("2")
+"neutral": ExtResource("2"),
+"suspicious": ExtResource("3"),
+"happy": ExtResource("4"),
+"angry": ExtResource("5")
 }
 

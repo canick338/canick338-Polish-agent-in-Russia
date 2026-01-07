@@ -164,6 +164,7 @@ func _leave(from_side: String, node: Node) -> void:
 		var start := sprite.position
 		var end := sprite.position + Vector2(offset, 0.0)
 
+
 		_tween = create_tween()
 		_tween.finished.connect(_on_tween_finished)
 		_tween.set_parallel(true)
@@ -176,8 +177,15 @@ func _leave(from_side: String, node: Node) -> void:
 			COLOR_WHITE_TRANSPARENT,
 			0.25,
 		).set_delay(.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_LINEAR).from(Color.WHITE)
-		_tween.start()
-		_tween.seek(0.0)
+		
+		# Очищаем ссылку на персонажа после анимации
+		_tween.finished.connect(func():
+			sprite.hide()
+			if from_side == SIDE_LEFT:
+				_left_character = null
+			else:
+				_right_character = null
+		)
 
 
 func _on_tween_finished() -> void:
