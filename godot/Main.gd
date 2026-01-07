@@ -5,12 +5,14 @@ extends Node
 
 const SCENE_PLAYER := preload("res://ScenePlayer.tscn")
 const SLOT_MACHINE_SCENE := preload("res://Casino/SlotMachineScene.tscn")
+const MAIN_MENU_SCENE := preload("res://MainMenu.tscn")
 
 var SCENES := []
 
 var _current_index := -1
 var _scene_player: ScenePlayer
 var _casino_instance: Control = null
+var _main_menu_instance: Control = null
 var _casino_shown: bool = false
 
 var lexer := SceneLexer.new()
@@ -19,9 +21,27 @@ var transpiler := SceneTranspiler.new()
 
 
 func _ready() -> void:
-	# Сначала показываем казино
-	show_casino()
+	# Сначала показываем главное меню
+	show_main_menu()
 
+func show_main_menu() -> void:
+	"""Показать главное меню"""
+	if MAIN_MENU_SCENE:
+		_main_menu_instance = MAIN_MENU_SCENE.instantiate()
+		add_child(_main_menu_instance)
+		
+		if _main_menu_instance.has_signal("start_game_requested"):
+			_main_menu_instance.start_game_requested.connect(_on_main_menu_start_game)
+		if _main_menu_instance.has_signal("exit_requested"):
+			_main_menu_instance.exit_requested.connect(func(): get_tree().quit())
+
+func _on_main_menu_start_game() -> void:
+	"""Начало игры из меню"""
+	if _main_menu_instance:
+		_main_menu_instance.queue_free()
+		_main_menu_instance = null
+		
+	show_casino() # Или start_story(), если хотите пропустить казино
 
 func show_casino() -> void:
 	"""Показать слот-машину в начале игры"""
@@ -32,7 +52,9 @@ func show_casino() -> void:
 		# Подключить сигнал окончания казино
 		if _casino_instance.has_signal("casino_finished"):
 			_casino_instance.casino_finished.connect(_on_casino_finished)
-
+	# Fallback if slot machine fails to load
+	else:
+		start_story()
 
 func _on_casino_finished(is_win: bool) -> void:
 	"""Казино закончено - переход к сюжету"""
