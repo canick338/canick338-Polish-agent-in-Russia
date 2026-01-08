@@ -35,45 +35,96 @@ offset_top = 40.0
 offset_right = 150.0
 offset_bottom = 110.0
 grow_horizontal = 2
-text = "КОЛЛЕКЦИЯ"
+text = "ДОСЬЕ"
 label_settings = SubResource("LabelSettings_title")
 horizontal_alignment = 1
 
-[node name="BalanceLabel" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -250.0
-offset_top = 50.0
-offset_right = -50.0
-offset_bottom = 90.0
-grow_horizontal = 0
-theme_override_colors/font_color = Color(1, 1, 0.4, 1)
-theme_override_font_sizes/font_size = 24
-text = "Баланс: 0$"
-horizontal_alignment = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="MainLayout" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 50.0
-offset_top = 150.0
+offset_top = 120.0
 offset_right = -50.0
-offset_bottom = -150.0
+offset_bottom = -120.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 40
 
-[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+[node name="ListPanel" type="PanelContainer" parent="MainLayout"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainLayout/ListPanel"]
+layout_mode = 2
+
+[node name="CharacterList" type="VBoxContainer" parent="MainLayout/ListPanel/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/h_separation = 30
-theme_override_constants/v_separation = 30
-columns = 4
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="DetailsPanel" type="Panel" parent="MainLayout"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DetailContent" type="VBoxContainer" parent="MainLayout/DetailsPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="DetailTexture" type="TextureRect" parent="MainLayout/DetailsPanel/DetailContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DetailName" type="Label" parent="MainLayout/DetailsPanel/DetailContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+theme_override_font_sizes/font_size = 42
+text = "Имя Персонажа"
+horizontal_alignment = 1
+
+[node name="DetailDesc" type="Label" parent="MainLayout/DetailsPanel/DetailContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Описание..."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="EmptyLabel" type="Label" parent="MainLayout/DetailsPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_font_sizes/font_size = 24
+text = "Выберите персонажа из списка"
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 1
@@ -87,6 +138,6 @@ offset_top = -100.0
 offset_right = 100.0
 offset_bottom = -40.0
 grow_horizontal = 2
-grow_vertical = 0
 theme_override_font_sizes/font_size = 32
 text = "НАЗАД"
+

@@ -13,6 +13,7 @@ const BUILT_IN_COMMANDS := {
 	SET = "set",
 	CUTSCENE = "cutscene",
 	MINIGAME = "minigame",
+	UNLOCK = "unlock",
 }
 const CONDITIONAL_STATEMENTS := ["if", "elif", "else"]
 const BOOLEAN_OPERATORS := ["and", "or", "not"]

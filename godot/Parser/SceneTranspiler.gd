@@ -192,6 +192,17 @@ class PassCommandNode:
 		super(_next)
 
 
+## Node type for unlocking a card/dossier entry
+class UnlockCommandNode:
+	extends BaseNode
+	
+	var card_id: String
+	
+	func _init(_next: int, _card_id: String) -> void:
+		super(_next)
+		self.card_id = _card_id
+
+
 ## Takes in a syntax tree from the SceneParser and turns it into a
 ## `DialogueTree` for the `ScenePlayer` to play.
 func transpile(syntax_tree: SceneParser.SyntaxTree, start_index: int) -> DialogueTree:
@@ -432,6 +443,14 @@ func _transpile_command(dialogue_tree: DialogueTree, expression: SceneParser.Bas
 				temp.erase(jump_node)
 
 		_unresolved_jump_nodes = temp
+
+	elif expression.value == SceneLexer.BUILT_IN_COMMANDS.UNLOCK:
+		var card_id: String = _get_argument_value(expression.arguments[0] if expression.arguments.size() > 0 else null, "")
+		if card_id == "":
+			push_error("UNLOCK command requires a card_id argument")
+		else:
+			command_node = UnlockCommandNode.new(dialogue_tree.index + 1, card_id)
+
 	else:
 		push_error("Unrecognized command type `%s`" % expression.value)
 

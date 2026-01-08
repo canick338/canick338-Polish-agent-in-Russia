@@ -144,6 +144,11 @@ func run_scene() -> void:
 			else:
 				key = node.next
 
+		# Unlock Card/Dossier
+		elif node is SceneTranspiler.UnlockCommandNode:
+			GameGlobal.unlock_card(node.card_id)
+			key = node.next
+
 		# Choices.
 		elif node is SceneTranspiler.ChoiceTreeNode:
 			# Ensure screen is visible before showing choices

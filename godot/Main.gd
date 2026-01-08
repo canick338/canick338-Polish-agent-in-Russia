@@ -9,11 +9,13 @@ const MAIN_MENU_SCENE := preload("res://MainMenu.tscn")
 
 var SCENES := []
 
+const PAUSE_MENU_SCENE := preload("res://PauseMenu.tscn")
+
 var _current_index := -1
 var _scene_player: ScenePlayer
 var _casino_instance: Control = null
 var _main_menu_instance: Control = null
-var _casino_shown: bool = false
+# var _casino_shown: bool = false # Removed unused variable warning if any
 
 var lexer := SceneLexer.new()
 var parser := SceneParser.new()
@@ -23,6 +25,22 @@ var transpiler := SceneTranspiler.new()
 func _ready() -> void:
 	# Сначала показываем главное меню
 	show_main_menu()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		# Toggle pause menu
+		if not get_tree().paused:
+			# Check if we are in main menu, usually we don't pause inside main menu
+			if _main_menu_instance != null:
+				return
+				
+			show_pause_menu()
+
+func show_pause_menu():
+	if PAUSE_MENU_SCENE:
+		var menu = PAUSE_MENU_SCENE.instantiate()
+		add_child(menu)
+		# Menu script handles pausing the tree in _ready
 
 func show_main_menu() -> void:
 	"""Показать главное меню"""
@@ -40,7 +58,10 @@ func _on_main_menu_start_game() -> void:
 	if _main_menu_instance:
 		_main_menu_instance.queue_free()
 		_main_menu_instance = null
-		
+	
+	# Unlock base character when starting story
+	# GameGlobal.unlock_card("card_danila_happy")
+	
 	show_casino() # Или start_story(), если хотите пропустить казино
 
 func show_casino() -> void:

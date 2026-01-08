@@ -5,6 +5,7 @@ signal options_requested
 signal exit_requested
 
 @onready var start_button: Button = $VBoxContainer/StartButton
+@onready var load_button: Button = %LoadButton
 @onready var collection_button: Button = $VBoxContainer/CollectionButton
 @onready var options_button: Button = $VBoxContainer/OptionsButton
 @onready var exit_button: Button = $VBoxContainer/ExitButton
@@ -22,6 +23,9 @@ func _ready():
 	_connect_signals()
 	_setup_animations()
 	
+	# Check if we have any saves to enable/disable load button?
+	# For now, always enabled, let the menu handle empty slots.
+	
 	# Initial state & setup pivots
 	if danila_highlight: 
 		danila_highlight.modulate.a = 0
@@ -38,6 +42,10 @@ func _connect_signals():
 	if start_button:
 		start_button.pressed.connect(_on_start_pressed)
 		start_button.mouse_entered.connect(_on_button_hover.bind(start_button))
+	
+	if load_button:
+		load_button.pressed.connect(_on_load_pressed)
+		load_button.mouse_entered.connect(_on_button_hover.bind(load_button))
 		
 	if collection_button:
 		collection_button.pressed.connect(_on_collection_pressed)
@@ -62,7 +70,7 @@ func _connect_signals():
 
 func _setup_animations():
 	# Intro animation for buttons
-	var buttons = [start_button, options_button, exit_button]
+	var buttons = [start_button, load_button, collection_button, options_button, exit_button]
 	for i in range(buttons.size()):
 		var btn = buttons[i]
 		if btn:
@@ -79,6 +87,7 @@ func _on_start_pressed():
 
 const SETTINGS_SCENE = preload("res://SettingsMenu.tscn")
 const COLLECTION_SCENE = preload("res://CollectionMenu.tscn")
+const SAVE_LOAD_SCENE = preload("res://SaveLoadMenu.tscn")
 
 func _on_options_pressed():
 	options_requested.emit()
@@ -96,6 +105,19 @@ func _on_collection_pressed():
 	
 	# Hide main buttons temporarily
 	$VBoxContainer.visible = false
+
+func _on_load_pressed():
+	var menu = SAVE_LOAD_SCENE.instantiate()
+	menu.set_mode("load")
+	add_child(menu)
+	# Menu handles closing itself, or we can listen to destroy signal
+	# Since it covers screen, we don't strictly need to hide buttons, but for consistency:
+	# $VBoxContainer.visible = false 
+	# (Actually SaveMenu usually has a semi-transparent BG, so maybe keep buttons visible underneath? 
+	#  The design has opaque panel but typical overlay. keep buttons visible.)
+
+func start_game_from_load():
+	_on_start_pressed()
 
 func _on_settings_back():
 	$VBoxContainer.visible = true

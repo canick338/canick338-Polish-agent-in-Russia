@@ -199,6 +199,8 @@ func _show_boss_game_over():
 	%BossOverlay/BossSprite.texture = boss_tex
 	%BossOverlay/BossText.text = "ТЫ ЧТО ТВОРИШЬ?! Я ВИЖУ ВСЁ!! ВОР!! \nУВОЛЕН!!!"
 	
+	GameGlobal.unlock_card("card_boss_angry")
+	
 	# Glitch Effect
 	var mat = %BossOverlay/BossSprite.material as ShaderMaterial
 	if mat:

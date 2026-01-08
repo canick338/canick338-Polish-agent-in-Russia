@@ -68,6 +68,8 @@ background factory_inside fade_in
 
 boss_of_factory neutral enter right "Так, новичок! Меня зовут Бронислав. Я начальник."
 
+unlock card_bronislav
+
 danila serious enter left "Данила. Рад работать."
 
 boss_of_factory neutral "" right "Хорошо. У нас три задания. Расфасовка, варка и работа в павильде."
@@ -246,6 +248,8 @@ choice:
 		danila thinking_factory "" left "Ладно, почему бы и нет."
 		
 		"Отлично! Садись!" - радуются рабочие.
+
+		unlock card_worker
 		
 		"=== ИГРА В КАРТЫ ==="
 		
@@ -346,6 +350,8 @@ danila happy "Я больше не был один."
 danila serious "И вот я здесь. Агент. Готов к миссии."
 
 danila salute "За Польшу. За свою страну."
+
+unlock card_danila
 
 transition fade_out
 
