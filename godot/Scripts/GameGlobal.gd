@@ -41,7 +41,10 @@ const SAVE_PATH = "user://savegame.dat"
 
 # Авто-загрузка при старте
 func _ready():
-	load_game()
+	# DON'T auto-load on startup - it bypasses main menu!
+	# Only load when explicitly requested
+	pass
+	# load_game()
 
 # === УПРАВЛЕНИЕ ДЕНЬГАМИ ===
 # (Обертки для удобства, работают с save_data)
@@ -95,7 +98,14 @@ func save_game(slot_id: int = 0):
 	var final_data = save_data.duplicate(true)
 	final_data["timestamp"] = Time.get_datetime_string_from_system()
 	
-	# Сохраняем переменные сюжета (если есть синглтон Variables)
+	# Сохраняем позицию в сюжете
+	var main_node = get_tree().root.get_node_or_null("Main")
+	if main_node and main_node.has_method("get_current_state"):
+		var game_state = main_node.get_current_state()
+		final_data["scene_index"] = game_state.get("scene_index", 0)
+		final_data["node_index"] = game_state.get("node_index", 0)
+	
+	# Сохраняем переменные сюжета
 	if has_node("/root/Variables"):
 		final_data["story_vars"] = get_node("/root/Variables").get_stored_variables_list()
 	
@@ -103,6 +113,9 @@ func save_game(slot_id: int = 0):
 		var json_str = JSON.stringify(final_data)
 		file.store_string(json_str)
 		print("Game saved to slot ", slot_id)
+	
+	# Захватить скриншот
+	_take_screenshot(slot_id)
 
 func load_game(slot_id: int = 0) -> bool:
 	var path = get_save_path(slot_id)
@@ -118,18 +131,28 @@ func load_game(slot_id: int = 0) -> bool:
 		if parse_result == OK:
 			var loaded_data = json.get_data()
 			
-			# Обновляем безопасным способом (merge)
+			# Обновляем состояние игры
 			if "money" in loaded_data: save_data["money"] = int(loaded_data["money"])
 			if "unlocked_cards" in loaded_data: save_data["unlocked_cards"] = loaded_data["unlocked_cards"]
 			
-			# Загружаем сюжетные переменные
-			if "story_vars" in loaded_data and has_node("/root/Variables"):
-				var vars_node = get_node("/root/Variables")
-				# Очищаем старые и загружаем новые
-				# (Предполагаем наличие метода set_variables или делаем вручную)
-				# TODO: Лучше добавить метод set_all в Variables.gd
-				pass
-				
+			# Восстанавливаем позицию в сюжете
+			var main_node = get_tree().root.get_node_or_null("Main")
+			if main_node:
+				# Main is already running (loading from pause menu)
+				if main_node.has_method("load_from_state"):
+					var game_state = {
+						"scene_index": loaded_data.get("scene_index", 0),
+						"node_index": loaded_data.get("node_index", 0)
+					}
+					main_node.load_from_state(game_state)
+			else:
+				# Main is not running (loading from main menu)
+				# Store the state to load later when Main starts
+				save_data["pending_load"] = {
+					"scene_index": loaded_data.get("scene_index", 0),
+					"node_index": loaded_data.get("node_index", 0)
+				}
+			
 			print("Game loaded from slot ", slot_id)
 			return true
 		else:
@@ -151,3 +174,23 @@ func get_slot_info(slot_id: int) -> Dictionary:
 			return {"empty": false, "timestamp": timestamp, "money": data.get("money", 0)}
 			
 	return {"empty": true}
+
+
+func _take_screenshot(slot_id: int) -> void:
+	"""Captures a screenshot for the save slot."""
+	await get_tree().process_frame
+	
+	var viewport = get_tree().root.get_viewport()
+	var img = viewport.get_texture().get_image()
+	
+	# Resize to thumbnail size (320x180 is 16:9 aspect ratio)
+	img.resize(320, 180, Image.INTERPOLATE_LANCZOS)
+	
+	var screenshot_path = "user://screenshot_%d.png" % slot_id
+	img.save_png(screenshot_path)
+	print("Screenshot saved: ", screenshot_path)
+
+
+func get_screenshot_path(slot_id: int) -> String:
+	"""Returns the path to the screenshot for a save slot."""
+	return "user://screenshot_%d.png" % slot_id

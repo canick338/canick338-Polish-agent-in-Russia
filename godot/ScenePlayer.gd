@@ -22,6 +22,7 @@ const CARD_GAME_SCENE := preload("res://CardGame/CardGameScene.tscn")
 var _scene_data := {}
 var _cutscene_player: Control = null
 var _minigame_instance: Control = null
+var _current_node_index := 0  # Track current position for save/load
 
 @onready var _text_box := $TextBox
 @onready var _character_displayer := $CharacterDisplayer
@@ -29,9 +30,19 @@ var _minigame_instance: Control = null
 @onready var _background := $Background
 
 
-func run_scene() -> void:
-	var key = 0
+func run_scene(start_key: int = 0) -> void:
+	# Ensure all @onready variables are initialized
+	if not is_node_ready():
+		await ready
+	
+	# If resuming from a saved position, restore background
+	if start_key > 0:
+		_restore_background_for_position(start_key)
+	
+	var key = start_key
+	_current_node_index = start_key
 	while key != KEY_END_OF_SCENE:
+		_current_node_index = key  # Update position tracker
 		# Проверяем, что key валидный
 		if not _scene_data.has(key):
 			push_error("Invalid key in scene data: %d (scene has %d nodes)" % [key, _scene_data.size()])
@@ -62,7 +73,10 @@ func run_scene() -> void:
 		if node is SceneTranspiler.BackgroundCommandNode:
 			var bg: Background = ResourceDB.get_background(node.background)
 			if bg and bg.texture:
-				_background.texture = bg.texture
+				if _background:
+					_background.texture = bg.texture
+				else:
+					push_error("Background node not ready!")
 			else:
 				push_error("Background not found: " + node.background)
 			
@@ -204,6 +218,29 @@ func load_scene(dialogue: SceneTranspiler.DialogueTree) -> void:
 	# The main script
 	_scene_data = dialogue.nodes
 
+
+func get_current_position() -> int:
+	"""Returns the current dialogue node index for saving."""
+	return _current_node_index
+
+
+func _restore_background_for_position(start_key: int) -> void:
+	"""Finds and applies the most recent background command before the given position."""
+	# Scan backwards from start_key to find the last background command
+	var key = start_key - 1
+	while key >= 0:
+		if _scene_data.has(key):
+			var node = _scene_data[key]
+			if node is SceneTranspiler.BackgroundCommandNode:
+				# Found the background! Apply it
+				var bg: Background = ResourceDB.get_background(node.background)
+				if bg and bg.texture and _background:
+					_background.texture = bg.texture
+					print("Restored background: ", node.background)
+				break
+		key -= 1
+	
+	# If no background found, that's okay - some scenes start without one
 
 
 func _appear_async() -> void:

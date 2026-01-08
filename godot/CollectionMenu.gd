@@ -21,10 +21,14 @@ func _update_list():
 	
 	# Populate List
 	for card_id in GameGlobal.CARD_DATABASE:
-		# Use default dict for safety
+		# Duplicate the data to avoid read-only issues
 		var default_data = {"name": "?", "texture_path": "", "unlock_type": "event", "description": ""}
-		var data = GameGlobal.CARD_DATABASE[card_id]
-		data.merge(default_data, false)
+		var data = GameGlobal.CARD_DATABASE[card_id].duplicate()
+		
+		# Merge defaults for missing fields
+		for key in default_data:
+			if not data.has(key):
+				data[key] = default_data[key]
 		
 		var is_unlocked = GameGlobal.is_card_unlocked(card_id)
 		

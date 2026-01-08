@@ -53,16 +53,6 @@ func show_main_menu() -> void:
 		if _main_menu_instance.has_signal("exit_requested"):
 			_main_menu_instance.exit_requested.connect(func(): get_tree().quit())
 
-func _on_main_menu_start_game() -> void:
-	"""Начало игры из меню"""
-	if _main_menu_instance:
-		_main_menu_instance.queue_free()
-		_main_menu_instance = null
-	
-	# Unlock base character when starting story
-	# GameGlobal.unlock_card("card_danila_happy")
-	
-	show_casino() # Или start_story(), если хотите пропустить казино
 
 func show_casino() -> void:
 	"""Показать слот-машину в начале игры"""
@@ -111,7 +101,7 @@ func start_story() -> void:
 		_play_scene(0)
 
 
-func _play_scene(index: int) -> void:
+func _play_scene(index: int, start_node: int = 0) -> void:
 	_current_index = int(clamp(index, 0.0, SCENES.size() - 1))
 
 	if _scene_player:
@@ -122,8 +112,60 @@ func _play_scene(index: int) -> void:
 	_scene_player.load_scene(SCENES[_current_index])
 	_scene_player.scene_finished.connect(_on_ScenePlayer_scene_finished)
 	_scene_player.restart_requested.connect(_on_ScenePlayer_restart_requested)
-	_scene_player.run_scene()
+	_scene_player.run_scene(start_node)
 
+
+func get_current_state() -> Dictionary:
+	"""Returns current game state for saving."""
+	var state = {
+		"scene_index": _current_index,
+		"node_index": 0
+	}
+	
+	if _scene_player:
+		state["node_index"] = _scene_player.get_current_position()
+	
+	return state
+
+
+func load_from_state(state: Dictionary) -> void:
+	"""Restores game from saved state."""
+	# Ensure scenes are loaded
+	if SCENES.is_empty():
+		start_story()
+		await get_tree().process_frame
+	
+	var scene_idx = state.get("scene_index", 0)
+	var node_idx = state.get("node_index", 0)
+	
+	_play_scene(scene_idx, node_idx)
+
+
+func _on_main_menu_start_game() -> void:
+	"""Начало игры из меню"""
+	# Check if there's a pending load from main menu
+	var has_pending_load = GameGlobal.save_data.has("pending_load")
+	
+	if _main_menu_instance:
+		_main_menu_instance.queue_free()
+		_main_menu_instance = null
+	
+	# Small delay to ensure menu is cleaned up
+	await get_tree().process_frame
+	
+	if has_pending_load:
+		var pending = GameGlobal.save_data["pending_load"]
+		GameGlobal.save_data.erase("pending_load")
+		
+		print("Loading from saved position: scene=%d, node=%d" % [pending["scene_index"], pending["node_index"]])
+		
+		# Load the game
+		start_story()
+		await get_tree().process_frame
+		load_from_state(pending)
+	else:
+		# Normal new game start
+		show_casino()
 
 func _on_ScenePlayer_scene_finished() -> void:
 	# If the scene that ended is the last scene, we're done playing the game.
