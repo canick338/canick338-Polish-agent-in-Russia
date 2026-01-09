@@ -1,21 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://factory_jam_scene"]
+[gd_scene load_steps=6 format=3 uid="uid://dcsrhxgshc0kc"]
 
-[ext_resource type="Script" path="res://Factory/FactoryJamScene.gd" id="1"]
-[ext_resource type="Script" path="res://Factory/FactoryJamGame.gd" id="2"]
-[ext_resource type="Texture2D" path="res://Factory/Assets/factory_bg.png" id="3"]
-[ext_resource type="Texture2D" path="res://Factory/Assets/conveyor_belt.png" id="4"]
+[ext_resource type="Script" uid="uid://d1kbspolp5h11" path="res://Factory/FactoryJamScene.gd" id="1"]
+[ext_resource type="Script" uid="uid://bwm8en1y4k0fo" path="res://Factory/FactoryJamGame.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://c647xfh14ec65" path="res://Factory/Assets/factory_bg.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://dcjo355ihbfgy" path="res://Factory/Assets/conveyor_belt.png" id="4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_info"]
 bg_color = Color(0.1, 0.1, 0.1, 0.8)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.8, 0.5, 0.2, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 expand_margin_left = 10.0
 expand_margin_top = 10.0
 expand_margin_right = 10.0
@@ -91,8 +91,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Conveyor" type="Control" parent="Container"]
-layout_mode = 2
 custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
 mouse_filter = 2
 
 [node name="Background" type="TextureRect" parent="Container/Conveyor"]
@@ -100,6 +100,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -312.0
+offset_bottom = 312.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4")
@@ -112,8 +114,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SkipButton" type="Button" parent="Container"]
-layout_mode = 2
 custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
 text = "ПРОПУСТИТЬ"
 
 [node name="FactoryJamGame" type="Node" parent="."]

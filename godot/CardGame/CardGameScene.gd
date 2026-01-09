@@ -2,21 +2,22 @@ extends Control
 ## Сцена карточной игры "21" (очки) с реакциями Данилы и Рабочего
 
 # UI ссылки
-@onready var player_hand_container: HBoxContainer = $MainContainer/PlayerArea/PlayerHand
-@onready var dealer_hand_container: HBoxContainer = $MainContainer/DealerArea/DealerHand
-@onready var player_score_label: Label = $MainContainer/InfoArea/InfoPanel/VBox/ScoreContainer/PlayerScoreLabel
-@onready var dealer_score_label: Label = $MainContainer/InfoArea/InfoPanel/VBox/ScoreContainer/DealerScoreLabel
+# UI ссылки
+@onready var player_hand_container: HBoxContainer = %PlayerHand
+@onready var dealer_hand_container: HBoxContainer = %DealerHand
+@onready var player_score_label: Label = %PlayerScoreLabel
+@onready var dealer_score_label: Label = %DealerScoreLabel
 @onready var match_score_label: Label = %MatchScoreLabel
-@onready var status_label: Label = $MainContainer/InfoArea/InfoPanel/VBox/StatusLabel
-@onready var hit_button: Button = $MainContainer/ButtonsArea/HitButton
-@onready var stand_button: Button = $MainContainer/ButtonsArea/StandButton
+@onready var status_label: Label = %StatusLabel
+@onready var hit_button: TextureButton = %HitButton
+@onready var stand_button: TextureButton = %StandButton
 @onready var next_round_button: Button = %NextRoundButton
-@onready var new_game_button: Button = $MainContainer/ButtonsArea/NewGameButton
-@onready var skip_button: Button = $SkipButton
+@onready var new_game_button: Button = %NewGameButton
+@onready var skip_button: Button = $UI/SkipButton
 @onready var danila_portrait: TextureRect = $DanilaContainer/DanilaPortrait
 @onready var worker_portrait: TextureRect = $WorkerContainer/WorkerPortrait
-@onready var balance_label: Label = $MainContainer/InfoArea/InfoPanel/VBox/MoneyInfo/BalanceLabel
-@onready var current_bet_label: Label = $MainContainer/InfoArea/InfoPanel/VBox/MoneyInfo/BetLabel
+@onready var balance_label: Label = %BalanceLabel
+@onready var current_bet_label: Label = %BetLabel
 @onready var betting_overlay: Control = %BettingOverlay
 @onready var bets_hbox: HBoxContainer = %BetsHBox
 
@@ -61,15 +62,20 @@ func _ready():
 	_setup_audio()
 	
 	# Подключить кнопки игрового процесса
-	if hit_button: hit_button.pressed.connect(_on_hit_pressed)
-	if stand_button: stand_button.pressed.connect(_on_stand_pressed)
+	# Подключить кнопки игрового процесса
+	if hit_button: 
+		hit_button.pressed.connect(_on_hit_pressed)
+		_connect_button_animations(hit_button)
+	if stand_button: 
+		stand_button.pressed.connect(_on_stand_pressed)
+		_connect_button_animations(stand_button)
 	if next_round_button: next_round_button.pressed.connect(_start_next_round)
 	if new_game_button: new_game_button.pressed.connect(_on_new_game_pressed)
 	if skip_button: skip_button.pressed.connect(_on_skip_pressed)
 	
 	# Кнопки меню
-	%StartGameButton.pressed.connect(_on_intro_start_pressed)
-	%ExitButton.pressed.connect(func(): card_game_finished.emit(false, 0, 0)) # Выход
+	if %StartGameButton: %StartGameButton.pressed.connect(_on_intro_start_pressed)
+	if %ExitButton: %ExitButton.pressed.connect(func(): card_game_finished.emit(false, 0, 0)) # Выход
 	
 	# Подключить кнопки ставок
 	for btn in bets_hbox.get_children():
@@ -91,6 +97,9 @@ func _ready():
 	# Показать интро
 	%IntroOverlay.visible = true
 	betting_overlay.visible = false
+	
+	# Clear editor placeholders
+	_clear_hand_containers()
 	
 # ... (rest of the file until _on_beg_pressed)
 
@@ -504,6 +513,7 @@ func _on_stand_pressed():
 
 func _process_round_result(result_code: String):
 	game_state = "round_ended"
+	_update_ui() # Force update to reveal dealer score
 	var round_winner = "none"
 	
 	match result_code:
@@ -596,3 +606,23 @@ func _play_card_sound():
 func _shake_screen():
 	# Screen shake implementation
 	pass
+
+func _connect_button_animations(btn: TextureButton):
+	if not btn: return
+	
+	# Ensure pivot is center for scaling
+	btn.pivot_offset = btn.custom_minimum_size / 2
+	
+	btn.mouse_entered.connect(_animate_scale.bind(btn, Vector2(1.1, 1.1)))
+	btn.mouse_exited.connect(_animate_scale.bind(btn, Vector2(1.0, 1.0)))
+	btn.button_down.connect(_animate_scale.bind(btn, Vector2(0.95, 0.95)))
+	btn.button_up.connect(func(): 
+		if btn.is_hovered():
+			_animate_scale(btn, Vector2(1.1, 1.1))
+		else:
+			_animate_scale(btn, Vector2(1.0, 1.0))
+	)
+
+func _animate_scale(btn: Control, target_scale: Vector2):
+	var tween = create_tween()
+	tween.tween_property(btn, "scale", target_scale, 0.1).set_trans(Tween.TRANS_SINE)
