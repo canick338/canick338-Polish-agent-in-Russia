@@ -308,8 +308,7 @@ func _play_minigame(minigame_name: String) -> void:
 
 func _play_factory_jam_game() -> void:
 	"""Проиграть мини-игру расфасовки повидла"""
-	# Reset score to avoid stale data
-	Variables.add_variable("factory_jam_final_score", 0)
+	# Score reset is handled by the mini-game scene itself.
 	
 	# Создать экземпляр мини-игры
 	# ... instantiation logic stays same ...
@@ -373,20 +372,9 @@ func _play_factory_jam_game() -> void:
 
 func _on_factory_game_finished(score: int, jars_labeled: int, jars_missed: int) -> void:
 	"""Мини-игра закончена"""
-	print("ScenePlayer: Factory Jam Game finished AND CAUGHT! Score: %d, Labeled: %d, Missed: %d" % [score, jars_labeled, jars_missed])
-	# Сохранить результаты в переменные (как числа, не строки!)
-	if Variables:
-		# Сохраняем как числа для правильного сравнения
-		Variables.add_variable("factory_jam_final_score", score)
-		Variables.add_variable("factory_jam_labeled", jars_labeled)
-		Variables.add_variable("factory_jam_missed", jars_missed)
-		print("Variables saved: factory_jam_final_score = ", score)
-		
-		# Award Money based on performance
-		if score > 0:
-			var money_earned = score # 1 Ruble per jar?
-			GameGlobal.add_money(money_earned)
-			print("ScenePlayer: Awarded %d money for Factory Job." % money_earned)
+	print("ScenePlayer: Factory Jam Game finished. Score: %d" % score)
+	# Variables are now set by the mini-game scene itself to ensure sync.
+	# Money is also awarded by the mini-game scene.
 
 
 func _play_card_game() -> void:

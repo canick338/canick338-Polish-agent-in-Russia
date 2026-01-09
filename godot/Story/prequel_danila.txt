@@ -91,32 +91,33 @@ minigame factory_jam
 
 "Мини-игра завершена."
 
-danila thinking_factory "" left "Мой счет: [factory_jam_final_score]. Надеюсь, этого хватит."
+danila thinking_factory "" left "Фух... Вроде закончил. Счет: [factory_jam_result_v2]. Надеюсь, этого хватит."
 
-if factory_jam_final_score >= 20:
+if factory_jam_result_v2 >= 20:
 	danila thinking_factory "" left "Справился! Даже больше нормы!"
 	
 	boss_of_factory happy "" right "Отлично! Ты перевыполнил график!"
-	
-	boss_of_factory happy "" right "Можешь сегодня сходить на перекур на 1 минуту раньше."
+	boss_of_factory happy "" right "Вот твоя зарплата и премия. Заслужил."
 	
 	danila tired_but_happy_factory "" left "Спасибо, начальник!"
+	danila thinking_factory "" left "Отличные деньги."
+elif factory_jam_result_v2 >= 8:
+	danila thinking_factory "" left "Нормально. Могло быть и лучше."
 	
-	danila thinking_factory "" left "Хорошо, получается."
+	boss_of_factory neutral "" right "Приемлемо. Но старайся лучше."
+	boss_of_factory neutral "" right "Вот твоя стандартная плата."
+	
+	danila tired_at_factory "" left "Спасибо."
 else:
 	danila sad_factory "" left "Чёрт... Всё валится из рук..."
 	
 	boss_of_factory angry "" right "Стоп! Остановите конвейер!"
+	boss_of_factory angry "" right "Ты что творишь?! Разбил кучу банок!"
 	
-	boss_of_factory angry "" right "Ты что творишь, идиот?! Ты сколько банок разбил?!"
+	boss_of_factory angry "" right "Никакой зарплаты сегодня! Скажи спасибо, что не уволил!"
 	
-	danila sad_factory "" left "Извините, начальник. Я не специально..."
-	
-	boss_of_factory angry "" right "Извините?! А кто платить будет? Пушкин?!"
-	
-	boss_of_factory suspicious "" right "Ещё одна такая выходка - и вылетишь отсюда!"
-	
-	danila tired_at_factory "" left "Понял... Буду внимательнее."
+	danila sad_factory "" left "Извините, начальник..."
+	danila thinking_factory "" left "Плохое начало..."
 
 "=== МИНИ-ИГРА: ВАРКА ==="
 

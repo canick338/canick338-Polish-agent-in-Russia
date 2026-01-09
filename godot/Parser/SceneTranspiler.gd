@@ -281,7 +281,7 @@ func transpile(syntax_tree: SceneParser.SyntaxTree, start_index: int) -> Dialogu
 					# The pointer to the if block's index in the dialogue tree
 					dialogue_tree.index,
 					# The if's condition
-					expression.if_block.value.front()
+					expression.if_block
 					)
 				)
 
@@ -305,7 +305,7 @@ func transpile(syntax_tree: SceneParser.SyntaxTree, start_index: int) -> Dialogu
 					)
 
 					# Store pointer to the elif block in the choice tree node
-					elif_blocks.append(ConditionalBlockNode.new(dialogue_tree.index, elif_block.value.front()))
+					elif_blocks.append(ConditionalBlockNode.new(dialogue_tree.index, elif_block))
 					# copy the elif block's tree nodes to the main dialogue tree
 					_copy_nodes(original_value, elif_block_dialogue_tree.nodes.keys(), dialogue_tree, elif_block_dialogue_tree)
 				tree_node.elif_blocks = elif_blocks

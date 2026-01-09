@@ -178,6 +178,9 @@ func tokenize(input_text: String) -> Array[Token]:
 		# Handle symbols.
 		elif character.is_valid_identifier():
 			tokens.append(_tokenize_symbol(script))
+		# Handle operators
+		elif character in ["<", ">", "=", "!"]:
+			tokens.append(_tokenize_operator(script))
 		# Пропустить невидимые символы (пробелы, табы уже обработаны)
 		elif character == "\r" or character == "\t" or character == " ":
 			pass  # Игнорировать
@@ -294,3 +297,16 @@ func _tokenize_string_literal(script: DialogueScript) -> Token:
 	# the end of the file.
 	push_error("Unterminated string")
 	return Token.new("", "")
+
+
+func _tokenize_operator(script: DialogueScript) -> Token:
+	var op := "%s" % script.get_current_character()
+	var next_char = script.get_next_character()
+	
+	# Check for 2-character operators
+	if next_char == "=":
+		op += "="
+		script.move_to_next_character()
+	
+	# Treat operators as symbols so they are passed through to the evaluator
+	return Token.new(TOKEN_TYPES.SYMBOL, op)

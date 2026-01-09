@@ -1,7 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dcsrhxgshc0kc"]
 
 [ext_resource type="Script" uid="uid://d1kbspolp5h11" path="res://Factory/FactoryJamScene.gd" id="1"]
-[ext_resource type="Script" uid="uid://bwm8en1y4k0fo" path="res://Factory/FactoryJamGame.gd" id="2"]
 [ext_resource type="Texture2D" path="res://Factory/chibi_danila_left_up_basket_minigame.png" id="3"]
 [ext_resource type="Texture2D" path="res://Factory/chibi_danila_left_down_basket_minigame.png" id="4"]
 [ext_resource type="Texture2D" path="res://Factory/chibi_danila_right_up_basket_minigame.png" id="5"]
@@ -169,6 +168,3 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Score: 0"
 horizontal_alignment = 1
-
-[node name="FactoryJamGame" type="Node" parent="."]
-script = ExtResource("2")
