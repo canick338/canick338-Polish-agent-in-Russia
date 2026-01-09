@@ -54,7 +54,9 @@ func advance_dialogue() -> void:
 
 
 func display(_text: String, character_name := "", speed := display_speed) -> void:
-	set_bbcode_text(_text)
+	# Substitute variables: [variable_name]
+	var final_text = _substitute_variables(_text)
+	set_bbcode_text(final_text)
 
 	if speed != display_speed:
 		display_speed = speed
@@ -126,3 +128,20 @@ func _on_ChoiceSelector_choice_made(target_id: int) -> void:
 
 func _on_SkipButton_timer_ticked() -> void:
 	advance_dialogue()
+
+
+func _substitute_variables(text_to_process: String) -> String:
+	var result = text_to_process
+	var regex = RegEx.new()
+	regex.compile("\\[([a-zA-Z0-9_]+)\\]")
+	
+	var matches = regex.search_all(text_to_process)
+	for regex_match in matches:
+		var full_match = regex_match.get_string()
+		var var_name = regex_match.get_string(1)
+		
+		var val = Variables.get_stored_variables_list().get(var_name)
+		if val != null:
+			result = result.replace(full_match, str(val))
+	
+	return result

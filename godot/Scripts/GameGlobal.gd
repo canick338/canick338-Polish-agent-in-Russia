@@ -4,6 +4,7 @@ extends Node
 # Доступен везде как 'GameGlobal'
 
 signal card_unlocked(card_id)
+signal money_changed(new_amount)
 
 # === БАЗА ДАННЫХ КАРТОЧЕК ===
 # Здесь мы добавляем новые карточки.
@@ -56,6 +57,7 @@ var player_money: int:
 	get: return save_data["money"]
 	set(value): 
 		save_data["money"] = value
+		money_changed.emit(value)
 		save_game()
 
 func add_money(amount: int):

@@ -16,7 +16,7 @@
    C:\Users\rushe\OneDrive\Desktop\Code\godot-2d-visual-novel-main\godot\Characters\Animations\Danila\
    ```
 
-2. **Найдите файл:**
+2. **Найдите 'nj файл:**
    ```
    characterisnervous.ogv
    ```

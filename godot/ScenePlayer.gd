@@ -182,6 +182,8 @@ func run_scene(start_key: int = 0) -> void:
 				return
 		elif node is SceneTranspiler.ConditionalTreeNode:
 			var variables_list: Dictionary = Variables.get_stored_variables_list()
+			print("ScenePlayer: Condition Check. factory_jam_final_score = ", variables_list.get("factory_jam_final_score", "NOT_FOUND"))
+			print("ScenePlayer: All Variables: ", variables_list)
 
 			# Evaluate the if's condition
 			if _evaluate_condition(node.if_block.condition, variables_list):
@@ -306,7 +308,12 @@ func _play_minigame(minigame_name: String) -> void:
 
 func _play_factory_jam_game() -> void:
 	"""Проиграть мини-игру расфасовки повидла"""
+	# Reset score to avoid stale data
+	Variables.add_variable("factory_jam_final_score", 0)
+	
 	# Создать экземпляр мини-игры
+	# ... instantiation logic stays same ...
+	# Just checking if I can use ... to skip lines in replace_file_content? No, I must provide complete chunks.
 	if not _minigame_instance and FACTORY_JAM_SCENE:
 		_minigame_instance = FACTORY_JAM_SCENE.instantiate()
 		if _minigame_instance:
@@ -339,8 +346,7 @@ func _play_factory_jam_game() -> void:
 	# Переменные уже установлены в _on_factory_game_finished
 	# Проверяем, что переменные установлены
 	var vars = Variables.get_stored_variables_list()
-	print("After minigame - factory_jam_labeled = ", vars.get("factory_jam_labeled", "NOT SET"))
-	print("All variables after minigame: ", vars)
+	print("After minigame - factory_jam_final_score = ", vars.get("factory_jam_final_score", "NOT SET"))
 	
 	# Удалить мини-игру
 	if _minigame_instance:
@@ -351,13 +357,36 @@ func _play_factory_jam_game() -> void:
 	if _text_box:
 		_text_box.show()
 		# Убеждаемся, что text_box видим и готов к отображению
-		await get_tree().process_frame
+		if is_inside_tree():
+			await get_tree().process_frame
 	if _character_displayer:
 		_character_displayer.show()
-		await get_tree().process_frame
+		if is_inside_tree():
+			await get_tree().process_frame
 	
 	# Небольшая задержка для плавного перехода
 	await get_tree().create_timer(0.2).timeout
+
+
+# ... (card game logic omitted) ...
+
+
+func _on_factory_game_finished(score: int, jars_labeled: int, jars_missed: int) -> void:
+	"""Мини-игра закончена"""
+	print("ScenePlayer: Factory Jam Game finished AND CAUGHT! Score: %d, Labeled: %d, Missed: %d" % [score, jars_labeled, jars_missed])
+	# Сохранить результаты в переменные (как числа, не строки!)
+	if Variables:
+		# Сохраняем как числа для правильного сравнения
+		Variables.add_variable("factory_jam_final_score", score)
+		Variables.add_variable("factory_jam_labeled", jars_labeled)
+		Variables.add_variable("factory_jam_missed", jars_missed)
+		print("Variables saved: factory_jam_final_score = ", score)
+		
+		# Award Money based on performance
+		if score > 0:
+			var money_earned = score # 1 Ruble per jar?
+			GameGlobal.add_money(money_earned)
+			print("ScenePlayer: Awarded %d money for Factory Job." % money_earned)
 
 
 func _play_card_game() -> void:
@@ -396,10 +425,12 @@ func _play_card_game() -> void:
 	# Показать UI обратно
 	if _text_box:
 		_text_box.show()
-		await get_tree().process_frame
+		if is_inside_tree():
+			await get_tree().process_frame
 	if _character_displayer:
 		_character_displayer.show()
-		await get_tree().process_frame
+		if is_inside_tree():
+			await get_tree().process_frame
 	
 	# Небольшая задержка для плавного перехода
 	await get_tree().create_timer(0.2).timeout
@@ -462,11 +493,13 @@ func _evaluate_condition(condition: SceneParser.BaseExpression, variables_list: 
 		
 		# Выполняем выражение
 		if condition_str != "":
-			# Отладочный вывод
-			print("Evaluating condition: ", condition_str)
+			print("ScenePlayer: Evaluating condition array: ", condition_str)
 			# Безопасное выполнение выражения
 			var script = GDScript.new()
 			var script_code = "func eval():\n\treturn " + condition_str
+			
+			print("ScenePlayer EVAL DEBUG: condition_str='%s'" % condition_str)
+			
 			script.set_source_code(script_code)
 			var parse_result = script.reload()
 			if parse_result != OK:
@@ -478,7 +511,7 @@ func _evaluate_condition(condition: SceneParser.BaseExpression, variables_list: 
 				push_error("Script does not have eval method")
 				return false
 			var result = obj.eval()
-			print("Condition result: ", result, " (type: ", typeof(result), ")")
+			print("ScenePlayer EVAL RESULT: ", result, " (type: ", typeof(result), ")")
 			return bool(result)
 	
 	# Если условие - просто переменная (проверка на truthiness)
@@ -487,6 +520,7 @@ func _evaluate_condition(condition: SceneParser.BaseExpression, variables_list: 
 	if condition_type == SceneLexer.TOKEN_TYPES.SYMBOL or condition_type == "Symbol":
 		if variables_list.has(condition.value):
 			var value = variables_list[condition.value]
+			print("ScenePlayer: Checking single variable ", condition.value, " = ", value)
 			# Преобразовать в bool, учитывая числа
 			if value is String:
 				if value.is_valid_int():
@@ -496,20 +530,13 @@ func _evaluate_condition(condition: SceneParser.BaseExpression, variables_list: 
 			elif value is int or value is float:
 				return value != 0
 			return bool(value)
+		else:
+			print("ScenePlayer: Variable not found for condition: ", condition.value)
 		return false
 	
 	return false
 
-func _on_factory_game_finished(score: int, jars_labeled: int, jars_missed: int) -> void:
-	"""Мини-игра закончена"""
-	print("Factory Jam Game finished! Score: %d, Labeled: %d, Missed: %d" % [score, jars_labeled, jars_missed])
-	# Сохранить результаты в переменные (как числа, не строки!)
-	if Variables:
-		# Сохраняем как числа для правильного сравнения
-		Variables.add_variable("factory_jam_score", score)
-		Variables.add_variable("factory_jam_labeled", jars_labeled)
-		Variables.add_variable("factory_jam_missed", jars_missed)
-		print("Variables saved: factory_jam_labeled = ", jars_labeled)
+
 
 
 ## Saves a dictionary representing a scene to the disk using `var2str`.

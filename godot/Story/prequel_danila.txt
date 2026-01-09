@@ -84,13 +84,16 @@ danila thinking_factory "" left "Понял. Начну с расфасовки.
 
 danila serious left "Это... сложнее, чем я думал."
 
-boss_of_factory neutral "" right "У тебя 30 секунд. Наклей наклейки минимум на 15 банок. Начинай!"
+boss_of_factory neutral "" right "У тебя 30 секунд. Наклей наклейки минимум на 20 банок. Начинай!"
 
 minigame factory_jam
 
+
 "Мини-игра завершена."
 
-if factory_jam_labeled > 15:
+danila thinking_factory "" left "Мой счет: [factory_jam_final_score]. Надеюсь, этого хватит."
+
+if factory_jam_final_score >= 20:
 	danila thinking_factory "" left "Справился! Даже больше нормы!"
 	
 	boss_of_factory happy "" right "Отлично! Ты перевыполнил график!"
@@ -100,34 +103,20 @@ if factory_jam_labeled > 15:
 	danila tired_but_happy_factory "" left "Спасибо, начальник!"
 	
 	danila thinking_factory "" left "Хорошо, получается."
-elif factory_jam_labeled >= 15:
-	danila thinking_factory "" left "Справился!"
-	
-	boss_of_factory neutral "" right "Неплохо. Продолжай."
-	
-	danila thinking_factory "" left "Хорошо, получается."
-	
-	danila tired_at_factory "" left "Устал, но справился."
-elif factory_jam_labeled >= 10:
-	danila sad_factory "" left "Не успел полностью..."
-	
-	boss_of_factory suspicious "" right "Медленно! Быстрее! Переделывай!"
-	
-	danila sad_factory "" left "Извините, стараюсь."
-	
-	danila tired_at_factory "" left "Это тяжело... Переделаю."
 else:
-	danila sad_factory "" left "Очень плохо получилось..."
+	danila sad_factory "" left "Чёрт... Всё валится из рук..."
 	
-	boss_of_factory angry "" right "Что это такое?! Ты вообще работаешь?!"
+	boss_of_factory angry "" right "Стоп! Остановите конвейер!"
 	
-	boss_of_factory angry "" right "Таких результатов я не видел! Это позор!"
+	boss_of_factory angry "" right "Ты что творишь, идиот?! Ты сколько банок разбил?!"
 	
-	danila sad_factory "" left "Извините, начальник. Я старался..."
+	danila sad_factory "" left "Извините, начальник. Я не специально..."
 	
-	boss_of_factory angry "" right "Старался?! Переделывай всё! И быстро!"
+	boss_of_factory angry "" right "Извините?! А кто платить будет? Пушкин?!"
 	
-	danila tired_at_factory "" left "Понял... Переделаю всё заново."
+	boss_of_factory suspicious "" right "Ещё одна такая выходка - и вылетишь отсюда!"
+	
+	danila tired_at_factory "" left "Понял... Буду внимательнее."
 
 "=== МИНИ-ИГРА: ВАРКА ==="
 
@@ -383,5 +372,3 @@ danila serious "Сирота, который стал агентом. Котор
 "И который выживет снова."
 
 transition fade_out
-
-
