@@ -22,6 +22,7 @@ var _current_basket: int = BasketPos.LB
 var _spawn_timer: float = 0.0
 var _current_spawn_interval: float = SPAWN_INTERVAL_START
 var _input_cooldown: float = 0.0
+var _last_size: Vector2 = Vector2.ZERO
 
 # === DATA CLASSES ===
 class JarData:
@@ -55,6 +56,13 @@ func _ready() -> void:
 		get_node("FactoryJamGame").queue_free()
 	
 	_ui_game_over.visible = false
+	
+	# Fix container offsets to ensure precise positioning
+	_jars_container.offset_left = 0
+	_jars_container.offset_top = 0
+	_jars_container.offset_right = 0
+	_jars_container.offset_bottom = 0
+	
 	_update_lane_visuals()
 	_update_basket_visuals()
 	_update_ui()
@@ -70,22 +78,41 @@ func _ready() -> void:
 
 func _update_lane_visuals() -> void:
 	# Draw lines for visual reference
-	var _set_line = func(name: String, start: Vector2, end: Vector2):
+	var _set_line = func(name: String, lane_enum: int, flip: bool = false):
 		var line = $GameArea.get_node_or_null(name)
 		if line and line is Line2D:
-			line.points = PackedVector2Array([start, end])
-			line.width = 10.0
-			line.default_color = Color(0.6, 0.6, 0.6, 0.5)
+			var coords = _get_lane_coords(lane_enum)
+			if flip:
+				line.points = PackedVector2Array([coords.end, coords.start])
+			else:
+				line.points = PackedVector2Array([coords.start, coords.end])
+				
+			line.width = 220.0 # Thicker conveyor to scale up texture
+			line.default_color = Color.WHITE
+			
+			# Apply Texture
+			var tex = load("res://Factory/conveyor.png")
+			if tex:
+				line.texture = tex
+				line.texture_mode = Line2D.LINE_TEXTURE_TILE
+				line.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 
 	# Visual Chutes based on jar paths
-	_set_line.call("LaneLT", Vector2(460, 200), Vector2(660, 440))
-	_set_line.call("LaneLB", Vector2(460, 600), Vector2(660, 640))
-	_set_line.call("LaneRT", Vector2(1460, 200), Vector2(1260, 440))
-	_set_line.call("LaneRB", Vector2(1460, 600), Vector2(1260, 640))
+	# Note: Right lanes flipped to correct texture direction
+	_set_line.call("LaneLT", Lane.LT, false)
+	_set_line.call("LaneLB", Lane.LB, false)
+	_set_line.call("LaneRT", Lane.RT, true)
+	_set_line.call("LaneRB", Lane.RB, true)
 
 func _process(delta: float) -> void:
 	if _state != GameState.PLAYING:
+		# Still update layout in waiting state if needed
+		if size != _last_size:
+			_update_layout()
 		return
+	
+	if size != _last_size:
+		_update_layout()
 		
 	# 1. Spawning
 	_process_spawner(delta)
@@ -170,7 +197,12 @@ func _process_jars(delta: float) -> void:
 	
 	for jar in _active_jars:
 		# Move visual progress 0.0 -> 1.0
-		jar.progress += (jar.speed / 300.0) * delta
+		# Calculate distance dynamically
+		var coords = _get_lane_coords(jar.lane)
+		var dist = coords.start.distance_to(coords.end)
+		if dist <= 0.1: dist = 1.0 # Safety
+		
+		jar.progress += (jar.speed / dist) * delta
 		_update_jar_visual(jar)
 		
 		if jar.progress >= 1.0:
@@ -178,7 +210,7 @@ func _process_jars(delta: float) -> void:
 			if jar.lane == _current_basket:
 				_on_catch(jar)
 				to_remove.append(jar)
-			elif jar.progress >= 1.2:
+			elif jar.progress >= 1.05:
 				_on_miss(jar)
 				to_remove.append(jar)
 	
@@ -198,9 +230,12 @@ func _spawn_jar() -> void:
 	if tex:
 		node.texture = tex
 		node.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		node.size = Vector2(40, 50)
+		node.size = Vector2(80, 100)
 	else:
-		node.custom_minimum_size = Vector2(40, 50) # Fallback
+		node.custom_minimum_size = Vector2(80, 100) # Fallback
+	
+	# Set pivot to center for correct rotation
+	node.pivot_offset = node.size / 2.0
 	
 	if is_bad: node.modulate = Color.GREEN # Double ensure green
 	
@@ -230,6 +265,7 @@ func _on_catch(jar: JarData) -> void:
 		_score += 1
 		_update_ui()
 		_show_popup(jar.node.position, "+1", Color.GREEN)
+		_input_cooldown = 0.5
 
 func _on_miss(jar: JarData) -> void:
 	if jar.is_bad:
@@ -248,6 +284,15 @@ func _modify_lives(amount: int) -> void:
 
 # === VISUALS ===
 
+func _update_layout() -> void:
+	_last_size = size
+	var center = get_viewport_rect().size / 2
+	
+	for s in _danila_sprites.values():
+		if s: s.position = center
+		
+	_update_lane_visuals()
+
 func _update_basket_visuals() -> void:
 	for k in _danila_sprites:
 		var sprite = _danila_sprites[k]
@@ -255,25 +300,55 @@ func _update_basket_visuals() -> void:
 
 func _update_jar_visual(jar: JarData) -> void:
 	# Visual Trajectory (Diagonal Chutes)
+	var coords = _get_lane_coords(jar.lane)
+	var start = coords.start
+	var end = coords.end
+	
+	jar.node.position = start.lerp(end, jar.progress) - (jar.node.size / 2)
+	
+	# Perpendicular alignment (no spin)
+	var direction = (end - start).normalized()
+	# Angle + 90 degrees (PI/2) to face perpendicular to the path
+	jar.node.rotation = direction.angle() + (PI / 2.0)
+
+func _get_lane_coords(lane: int) -> Dictionary:
+	var viewport_size = get_viewport_rect().size
+	var center = viewport_size / 2
+	
 	var start = Vector2.ZERO
 	var end = Vector2.ZERO
 	
-	match jar.lane:
-		Lane.LT: 
-			start = Vector2(460, 200)
-			end = Vector2(660, 440)
-		Lane.LB:
-			start = Vector2(460, 600)
-			end = Vector2(660, 640)
-		Lane.RT:
-			start = Vector2(1460, 200)
-			end = Vector2(1260, 440)
-		Lane.RB:
-			start = Vector2(1460, 600)
-			end = Vector2(1260, 640)
+	# Relative offsets from 1920x1080 baseline:
+	# Center (960, 540)
+	# Basket Offsets: X +/- 300, Y +/- 100
 	
-	jar.node.position = start.lerp(end, jar.progress) - (jar.node.size / 2)
-	jar.node.rotation_degrees += 5.0 # Faster spin
+	var basket_x_offset = 300
+	var basket_y_offset_top = -100 # 440 - 540
+	var basket_y_offset_bottom = 100 # 640 - 540
+	
+	# Start Y Offsets
+	var start_y_offset_top = -340 # 200 - 540
+	var start_y_offset_bottom = -32 # 508 - 540
+	
+	match lane:
+		Lane.LT: 
+			# Start Left Edge
+			start = Vector2(0, center.y + start_y_offset_top)
+			end = Vector2(center.x - basket_x_offset, center.y + basket_y_offset_top)
+		Lane.LB:
+			# Start Left Edge
+			start = Vector2(0, center.y + start_y_offset_bottom)
+			end = Vector2(center.x - basket_x_offset, center.y + basket_y_offset_bottom)
+		Lane.RT:
+			# Start Right Edge
+			start = Vector2(viewport_size.x, center.y + start_y_offset_top)
+			end = Vector2(center.x + basket_x_offset, center.y + basket_y_offset_top)
+		Lane.RB:
+			# Start Right Edge
+			start = Vector2(viewport_size.x, center.y + start_y_offset_bottom)
+			end = Vector2(center.x + basket_x_offset, center.y + basket_y_offset_bottom)
+			
+	return {"start": start, "end": end}
 
 func _update_ui() -> void:
 	if _ui_score: _ui_score.text = "Счет: %d" % _score
