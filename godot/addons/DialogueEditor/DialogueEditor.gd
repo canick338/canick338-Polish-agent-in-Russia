@@ -39,7 +39,6 @@ func _ready():
 	refresh_btn.pressed.connect(_scan_resources)
 	
 	file_tree.item_selected.connect(_on_file_selected)
-	file_tree.item_selected.connect(_on_file_selected)
 	save_btn.pressed.connect(_save_current_file)
 	add_node_btn.get_popup().id_pressed.connect(_on_add_node_pressed)
 	
