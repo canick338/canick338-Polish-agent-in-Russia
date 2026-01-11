@@ -1,0 +1,386 @@
+[
+	{
+		"args": [
+			"start_act1"
+		],
+		"name": "mark",
+		"type": "command"
+	},
+	{
+		"args": [
+			"polish_home",
+			"fade_in"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"text": "Следующее утро. Обоянь, небольшой город в Курской области.",
+		"type": "dialogue"
+	},
+	{
+		"text": "Серое небо, заснеженные улицы, старые советские здания.",
+		"type": "dialogue"
+	},
+	{
+		"animation": "enter",
+		"character": "marek",
+		"mood": "neutral",
+		"side": "left",
+		"text": "Итак, я здесь. Город небольшой, все друг друга знают...",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "thinking",
+		"text": "Нужно быть осторожным. Моя легенда - польский бизнесмен.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "neutral",
+		"text": "Сначала нужно зарегистрироваться в местной администрации.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"polish_home",
+			"fade_in"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"text": "Здание местной администрации. Типичный советский интерьер.",
+		"type": "dialogue"
+	},
+	{
+		"animation": "enter",
+		"character": "anna",
+		"mood": "neutral",
+		"side": "right",
+		"text": "Добрый день! Чем могу помочь?",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "neutral",
+		"text": "Здравствуйте! Я приехал по делам, хотел бы зарегистрироваться.",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"mood": "happy",
+		"text": "Конечно! Вы откуда приехали?",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "neutral",
+		"text": "Из Польши. Я бизнесмен, интересуюсь инвестициями в регион.",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"mood": "surprised",
+		"text": "Из Польши? Ого! У нас редко иностранцы бывают.",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"mood": "neutral",
+		"text": "Паспорт, пожалуйста.",
+		"type": "dialogue"
+	},
+	{
+		"text": "Вы протягиваете поддельный польский паспорт.",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"mood": "neutral",
+		"text": "Марек Ковальски... Хорошо.",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"mood": "thinking",
+		"text": "А что именно вас интересует в нашем городе?",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Слышал, у вас есть крупный завод. Интересуюсь возможностями сотрудничества.",
+						"type": "dialogue"
+					},
+					{
+						"character": "anna",
+						"mood": "suspicious",
+						"text": "Завод? Хм... Обычно представители приходят через официальные каналы...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"20"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"character": "anna",
+						"mood": "neutral",
+						"text": "Ну ладно, вам нужно будет связаться с дирекцией напрямую.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Интересуюсь местным производством"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "Хочу узнать больше о регионе в целом. Культура, экономика, люди...",
+						"type": "dialogue"
+					},
+					{
+						"character": "anna",
+						"mood": "happy",
+						"text": "О, как интересно! Рада, что кто-то интересуется нашим городом!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"friendship_anna",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Просто изучаю регион"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Просто ищу новые возможности для бизнеса. Может быть, ваш город подходит.",
+						"type": "dialogue"
+					},
+					{
+						"character": "anna",
+						"mood": "neutral",
+						"text": "Понятно. Что ж, надеюсь, вам понравится Обоянь!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Ищу новые возможности"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "anna",
+		"mood": "happy",
+		"text": "Вот ваша регистрация. Где планируете остановиться?",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "neutral",
+		"text": "Есть ли здесь гостиница?",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"mood": "neutral",
+		"text": "Есть одна, на центральной улице. Называется 'Обоянь'.",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"mood": "happy",
+		"text": "Если что-то понадобится, обращайтесь! Я Анна, кстати.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "happy",
+		"text": "Приятно познакомиться, Анна. Спасибо за помощь!",
+		"type": "dialogue"
+	},
+	{
+		"text": "Анна улыбается и возвращается к своим делам.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"polish_home",
+			"fade_in"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"text": "Номер в гостинице 'Обоянь'. Скромно, но чисто.",
+		"type": "dialogue"
+	},
+	{
+		"animation": "enter",
+		"character": "marek",
+		"mood": "neutral",
+		"side": "left",
+		"text": "Так, теперь можно начинать работу.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "thinking",
+		"text": "Нужно собрать информацию о заводе, но делать это осторожно.",
+		"type": "dialogue"
+	},
+	{
+		"text": "Вы достаете специальное оборудование из чемодана.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "neutral",
+		"text": "Связь с центром работает. Хорошо.",
+		"type": "dialogue"
+	},
+	{
+		"text": "Внезапно в дверь стучат.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "surprised",
+		"text": "Кто там?",
+		"type": "dialogue"
+	},
+	{
+		"text": "За дверью незнакомый мужской голос.",
+		"type": "dialogue"
+	},
+	{
+		"text": "Охрана гостиницы. Проверка документов.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "neutral",
+		"text": "Сейчас...",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"text": "Вы быстро прячете оборудование и открываете дверь.",
+						"type": "dialogue"
+					},
+					{
+						"text": "Охранник проверяет документы и уходит.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Открыть сразу"
+			},
+			{
+				"children": [
+					{
+						"text": "Вы тщательно прячете всё оборудование.",
+						"type": "dialogue"
+					},
+					{
+						"text": "Охранник ждёт долго, это выглядит подозрительно.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Спрятать всё тщательно, потом открыть"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Извините, я занят. Можно позже?",
+						"type": "dialogue"
+					},
+					{
+						"text": "Это вызывает подозрения...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"20"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Сказать что занят"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "marek",
+		"mood": "thinking",
+		"text": "Нужно быть осторожнее. За мной уже следят?",
+		"type": "dialogue"
+	},
+	{
+		"text": "Наступает вечер. Пора действовать.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	}
+]

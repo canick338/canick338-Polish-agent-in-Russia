@@ -1,0 +1,375 @@
+# Предыстория Данилы: Воспоминания из Польши
+
+# Начало - чёрный экран, затем плавное появление
+background polish_home fade_in
+
+"..."
+
+"Голова раскалывается. Где я?"
+
+danila worried enter left "Что это было?"
+
+"Воспоминания... Они возвращаются."
+
+transition fade_out
+
+# Детский дом
+background orphanhome fade_in
+
+"Варшава. 1990-е годы."
+
+"Маленький мальчик. Без родителей. Без дома."
+
+danila sad enter left "Я помню... Детский дом."
+
+"Холодные стены. Пустые коридоры. Одиночество."
+
+danila cry "Никто не хотел меня забрать."
+
+"Годы шли. Мальчик рос."
+
+danila sad "Но одиночество оставалось. Всегда."
+
+transition fade_out
+
+# Улицы Варшавы - подработка
+background warsaw_street fade_in
+
+"Подростковые годы. Улицы Варшавы стали домом."
+
+danila serious enter left "Нужно было выживать."
+
+"Подработки. Мелкие дела. Иногда не совсем законные."
+
+danila thinking "Я научился быть незаметным. Наблюдать. Запоминать."
+
+"Люди проходили мимо. Никто не замечал маленького сироту."
+
+danila worried "Но я выжил. Выжил сам."
+
+transition fade_out
+
+# Завод - тяжёлая работа
+background factory_street fade_in
+
+"Однажды он увидел объявление."
+
+danila thinking enter left "Завод. Нужны рабочие. Без опыта."
+
+"Это был шанс. Легальная работа. Деньги."
+
+danila serious "Я подал заявление."
+
+transition fade_out
+
+background factory_inside fade_in
+
+"Первый день на заводе."
+
+boss_of_factory neutral enter right "Так, новичок! Меня зовут Бронислав. Я начальник."
+
+unlock card_bronislav
+
+danila serious enter left "Данила. Рад работать."
+
+boss_of_factory neutral "" right "Хорошо. У нас три задания. Расфасовка, варка и работа в павильде."
+
+boss_of_factory neutral "" right "Выполнишь всё - получишь зарплату. Не справишься - уходи."
+
+danila thinking_factory "" left "Понял. Начну с расфасовки."
+
+"=== МИНИ-ИГРА: РАСФАСОВКА ==="
+
+"Перед тобой конвейер. Нужно быстро расфасовывать продукцию."
+
+danila serious left "Это... сложнее, чем я думал."
+
+boss_of_factory neutral "" right "У тебя 30 секунд. Наклей наклейки минимум на 20 банок. Начинай!"
+
+minigame factory_jam
+
+
+"Мини-игра завершена."
+
+danila thinking_factory "" left "Фух... Вроде закончил. Счет: [factory_jam_result_v2]. Надеюсь, этого хватит."
+
+if factory_jam_result_v2 >= 20:
+	danila thinking_factory "" left "Справился! Даже больше нормы!"
+	
+	boss_of_factory happy "" right "Отлично! Ты перевыполнил график!"
+	boss_of_factory happy "" right "Вот твоя зарплата и премия. Заслужил."
+	
+	danila tired_but_happy_factory "" left "Спасибо, начальник!"
+	danila thinking_factory "" left "Отличные деньги."
+elif factory_jam_result_v2 >= 8:
+	danila thinking_factory "" left "Нормально. Могло быть и лучше."
+	
+	boss_of_factory neutral "" right "Приемлемо. Но старайся лучше."
+	boss_of_factory neutral "" right "Вот твоя стандартная плата."
+	
+	danila tired_at_factory "" left "Спасибо."
+else:
+	danila sad_factory "" left "Чёрт... Всё валится из рук..."
+	
+	boss_of_factory angry "" right "Стоп! Остановите конвейер!"
+	boss_of_factory angry "" right "Ты что творишь?! Разбил кучу банок!"
+	
+	boss_of_factory angry "" right "Никакой зарплаты сегодня! Скажи спасибо, что не уволил!"
+	
+	danila sad_factory "" left "Извините, начальник..."
+	danila thinking_factory "" left "Плохое начало..."
+
+"=== МИНИ-ИГРА: ВАРКА ==="
+
+boss_of_factory neutral "" right "Теперь варка. Следи за температурой и временем."
+
+"Перед тобой огромные котлы. Нужно варить продукцию по рецепту."
+
+danila thinking_factory "" left "Температура... Время... Всё нужно контролировать."
+
+choice:
+	"Строго следовать инструкции":
+		danila thinking_factory "" left "Нужно внимательно читать инструкцию."
+		
+		danila serious "" left "Следую рецепту точно."
+		
+		boss_of_factory happy "" right "Хорошо. Правильно."
+		
+		danila serious "" left "Спасибо."
+		
+		danila tired_at_factory "" left "Ещё одно задание..."
+		
+	"Импровизировать и ускорить процесс":
+		danila thinking_factory "" left "Попробую ускорить процесс."
+		
+		danila sad_factory "" left "Что-то идёт не так..."
+		
+		boss_of_factory suspicious "" right "Что ты делаешь? Неправильно!"
+		
+		danila sad_factory "" left "Извините, исправлю."
+		
+		danila tired_at_factory "" left "Это сложнее, чем я думал..."
+		
+	"Спросить совета у опытных рабочих":
+		danila thinking_factory "" left "Спрошу у опытных рабочих."
+		
+		danila thinking_factory "" left "Они помогают мне."
+		
+		boss_of_factory suspicious "" right "Хм, учишься у других. Неплохо."
+		
+		danila thinking_factory "" left "Спасибо за помощь."
+		
+		danila tired_at_factory "" left "Хорошо, что помогли."
+
+"=== МИНИ-ИГРА: ПАВИЛЬД ==="
+
+boss_of_factory neutral "" right "Последнее задание. Работа в павильде. Тяжёлая работа."
+
+"Павильд - это огромный склад. Нужно переносить тяжёлые ящики."
+
+danila serious "" left "Это... очень тяжело."
+
+choice:
+	"Работать в одиночку, не просить помощи":
+		danila serious left "Попробую работать один."
+		
+		danila tired_at_factory left "Ящики очень тяжёлые..."
+		
+		danila tired_at_factory left "Фух... Это тяжело..."
+		
+		danila tired_at_factory left "Еле справился..."
+		
+	"Просить помощи у других":
+		danila thinking_factory "" left "Попрошу помощи у других рабочих."
+		
+		danila thinking_factory "" left "Спасибо, ребята."
+		
+		danila tired_at_factory "" left "Вместе справились быстрее."
+		
+		danila tired_at_factory "" left "Хорошо, что помогли."
+		
+	"Работать медленно, но стабильно":
+		danila thinking_factory "" left "Буду работать медленно, но стабильно."
+		
+		danila serious left "Не тороплюсь, но и не останавливаюсь."
+		
+		boss_of_factory neutral "" right "Медленно, но работает."
+		
+		danila tired_at_factory left "Справился..."
+
+"Все задания выполнены."
+
+boss_of_factory happy "" right "Хорошо. Ты справился. Вот твоя зарплата."
+
+"Начальник протягивает тебе маленькую пачку денег."
+
+danila tired_at_factory "" left "Это... всё?"
+
+boss_of_factory suspicious "" right "Да. За тяжёлую работу - маленькая зарплата. Таковы правила."
+
+danila thinking_factory "" left "Я работал весь день... А денег так мало."
+
+boss_of_factory suspicious "" right "Не нравится? Можешь уйти. Рабочих много."
+
+danila tired_but_happy_factory "" left "Нет, останусь. Нужны деньги."
+
+boss_of_factory neutral "" right "Хорошо. Завтра приходи снова."
+
+boss_of_factory neutral leave right ""
+
+"После работы рабочие собираются в углу цеха."
+
+"Несколько мужиков сидят за столом, играют в карты."
+
+danila thinking_factory "" left "Рабочие играют в карты..."
+
+"Эй, новичок! Идёшь играть?" - кричит один из рабочих.
+
+danila thinking_factory "" left "Карты? Я не очень умею..."
+
+"Ничего страшного! Простая игра - 21. Научим!" - отвечает другой.
+
+"Давай, садись! Развлечёмся после работы." - подбадривает первый.
+
+danila thinking_factory "" left "Хм... Может, стоит попробовать?"
+
+choice:
+	"Согласиться и сыграть":
+		danila thinking_factory "" left "Ладно, почему бы и нет."
+		
+		"Отлично! Садись!" - радуются рабочие.
+
+		unlock card_worker
+		
+		"=== ИГРА В КАРТЫ ==="
+		
+		"Рабочие объясняют правила: нужно набрать 21 очко или максимально близко."
+		
+		danila thinking_factory "" left "Понял. Попробую."
+		
+		minigame card_game
+		
+		"Игра завершена."
+		
+		if card_game_won >= 1:
+			danila tired_but_happy_factory "" left "Выиграл! Неплохо получилось!"
+			
+			"Молодец, новичок! Неплохо играешь!" - хвалит один из рабочих.
+			
+			"Да, для первого раза - отлично!" - поддерживает другой.
+			
+			danila thinking_factory "" left "Спасибо, ребята. Было интересно."
+			
+			"Завтра снова сыграем, если хочешь." - предлагает рабочий.
+			
+			danila tired_but_happy_factory "" left "Конечно! Буду рад."
+		else:
+			danila thinking_factory "" left "Проиграл... Но было интересно."
+			
+			"Ничего страшного! В следующий раз повезёт!" - утешает рабочий.
+			
+			"Главное - научился. Завтра сыграем ещё!" - подбадривает другой.
+			
+			danila thinking_factory "" left "Спасибо, ребята. Научили."
+			
+			"Всегда пожалуйста! Мы тут часто играем после смены." - говорит рабочий.
+		
+		"Рабочие продолжают играть, а ты идёшь домой."
+		
+		danila tired_but_happy_factory "" left "Хорошие ребята. Может, здесь будет не так одиноко..."
+		
+	"Вежливо отказаться":
+		danila thinking_factory "" left "Спасибо за приглашение, но я устал. Может, в другой раз?"
+		
+		"Понятно. Ничего страшного." - отвечает рабочий.
+		
+		"Если захочешь - мы всегда здесь после смены." - говорит другой.
+		
+		danila thinking_factory "" left "Спасибо. Увидимся завтра."
+		
+		"Ты уходишь, а рабочие продолжают играть."
+
+transition fade_out
+
+"Недели работы на заводе. Каждый день - тяжёлый труд."
+
+danila tired_at_factory "" left "Я устал. Очень устал."
+
+"Но я выжил. Заработал немного денег. Научился терпению."
+
+danila tired_but_happy_factory "" left "Это было тяжело. Но я справился."
+
+transition fade_out
+
+# Метро - размышления о будущем
+background warsaw_metro fade_in
+
+"Метро. Ежедневные поездки. Куда? Зачем?"
+
+danila thinking enter left "Я не знал, куда иду."
+
+"Но что-то внутри говорило: твоя судьба ещё не написана."
+
+"Однажды, в вагоне метро, он увидел плакат."
+
+danila surprised "Школа офицеров польской разведки."
+
+"Сердце забилось чаще. Это было оно."
+
+danila serious "Судьба дала мне шанс."
+
+transition fade_out
+
+# Школа офицеров
+background officer_school fade_in
+
+"Экзамены. Тренировки. Жесткая дисциплина."
+
+danila serious enter left "Я был готов. Готов ко всему."
+
+"Сирота, который вырос на улицах, стал одним из лучших."
+
+danila thinking "Они научили меня быть невидимым. Собирать информацию. Действовать."
+
+"Но главное - они дали мне цель. Принадлежность."
+
+danila happy "Я больше не был один."
+
+"Годы обучения пролетели быстро."
+
+danila serious "И вот я здесь. Агент. Готов к миссии."
+
+danila salute "За Польшу. За свою страну."
+
+unlock card_danila
+
+transition fade_out
+
+# Возвращение в реальность - пробуждение
+background polish_home fade_in
+
+"..."
+
+"Глаза медленно открываются."
+
+danila worried enter left "Где я?"
+
+"Знакомая комната. Свой дом в Варшаве."
+
+danila thinking "Всё это было... воспоминанием?"
+
+"Голова всё ещё болит. Но теперь ясно."
+
+danila serious "Завтра начинается миссия. В Россию. В Обоянь."
+
+"Шесть месяцев под прикрытием. Шесть месяцев опасности."
+
+danila worried "Но я готов. Я всегда был готов."
+
+"Воспоминания вернули мне силу. Напоминали, кто я."
+
+danila serious "Сирота, который стал агентом. Который выжил."
+
+"И который выживет снова."
+
+transition fade_out

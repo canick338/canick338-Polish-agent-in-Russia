@@ -1,0 +1,1109 @@
+[
+	{
+		"args": [
+			"polish_home"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "...",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Голова раскалывается. Где я?",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Что это было?",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Воспоминания... Они возвращаются.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": [
+			"orphanhome"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Варшава. 1990-е годы жёсткий секс.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Маленький мальчик. Без родителей. Без дома.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я помню... Детский дом родной.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Холодные стены. Пустые коридоры. Одиночество.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Никто не хотел меня забрать.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Годы шли. Мальчик рос.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Но одиночество оставалось. Всегда.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": [
+			"warsaw_street"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Подростковые годы. Улицы Варшавы стали домом.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Нужно было выживать.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Подработки. Мелкие дела. Иногда не совсем законные.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я научился быть незаметным. Наблюдать. Запоминать.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Люди проходили мимо. Никто не замечал маленького сироту.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Но я выжил. Выжил сам.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": [
+			"factory_street"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Однажды он увидел объявление.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Завод. Нужны рабочие. Без опыта.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Это был шанс. Легальная работа. Деньги.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я подал заявление.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": [
+			"factory_inside"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Первый день на заводе.",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "Так, новичок! Меня зовут Бронислав. Я начальник.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"card_bronislav"
+		],
+		"name": "unlock",
+		"type": "command"
+	},
+	{
+		"character": "danila",
+		"text": "Данила. Рад работать.",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "Хорошо. У нас три задания. Расфасовка, варка и работа в павильде.",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "Выполнишь всё - получишь зарплату. Не справишься - уходи.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Понял. Начну с расфасовки.",
+		"type": "dialogue"
+	},
+	{
+		"character": "=== МИНИ-ИГРА",
+		"text": "РАСФАСОВКА ===",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Перед тобой конвейер. Нужно быстро расфасовывать продукцию.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Это... сложнее, чем я думал.",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "У тебя 30 секунд. Наклей наклейки минимум на 20 банок. Начинай!",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"factory_jam"
+		],
+		"name": "minigame",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Мини-игра завершена.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Фух... Вроде закончил. Счет: [factory_jam_result_v2]. Надеюсь, этого хватит.",
+		"type": "dialogue"
+	},
+	{
+		"condition": "factory_jam_result_v2>=20",
+		"elif": [
+			{
+				"condition": "factory_jam_result_v2>=8",
+				"then": [
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Нормально. Могло быть и лучше.",
+						"type": "dialogue"
+					},
+					{
+						"character": "boss_of_factory",
+						"mood": "neutral",
+						"side": "right",
+						"text": "Приемлемо. Но старайся лучше.",
+						"type": "dialogue"
+					},
+					{
+						"character": "boss_of_factory",
+						"mood": "neutral",
+						"side": "right",
+						"text": "Вот твоя стандартная плата.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "tired_at_factory",
+						"side": "left",
+						"text": "Спасибо.",
+						"type": "dialogue"
+					}
+				]
+			}
+		],
+		"else": [
+			{
+				"character": "danila",
+				"mood": "sad_factory",
+				"side": "left",
+				"text": "Чёрт... Всё валится из рук...",
+				"type": "dialogue"
+			},
+			{
+				"character": "boss_of_factory",
+				"mood": "angry",
+				"side": "right",
+				"text": "Стоп! Остановите конвейер!",
+				"type": "dialogue"
+			},
+			{
+				"character": "boss_of_factory",
+				"mood": "angry",
+				"side": "right",
+				"text": "Ты что творишь?! Разбил кучу банок!",
+				"type": "dialogue"
+			},
+			{
+				"character": "boss_of_factory",
+				"mood": "angry",
+				"side": "right",
+				"text": "Никакой зарплаты сегодня! Скажи спасибо, что не уволил!",
+				"type": "dialogue"
+			},
+			{
+				"character": "danila",
+				"mood": "sad_factory",
+				"side": "left",
+				"text": "Извините, начальник...",
+				"type": "dialogue"
+			},
+			{
+				"character": "danila",
+				"mood": "thinking_factory",
+				"side": "left",
+				"text": "Плохое начало...",
+				"type": "dialogue"
+			}
+		],
+		"then": [
+			{
+				"character": "danila",
+				"mood": "thinking_factory",
+				"side": "left",
+				"text": "Справился! Даже больше нормы!",
+				"type": "dialogue"
+			},
+			{
+				"character": "boss_of_factory",
+				"mood": "happy",
+				"side": "right",
+				"text": "Отлично! Ты перевыполнил график!",
+				"type": "dialogue"
+			},
+			{
+				"character": "boss_of_factory",
+				"mood": "happy",
+				"side": "right",
+				"text": "Вот твоя зарплата и премия. Заслужил.",
+				"type": "dialogue"
+			},
+			{
+				"character": "danila",
+				"mood": "tired_but_happy_factory",
+				"side": "left",
+				"text": "Спасибо, начальник!",
+				"type": "dialogue"
+			},
+			{
+				"character": "danila",
+				"mood": "thinking_factory",
+				"side": "left",
+				"text": "Отличные деньги.",
+				"type": "dialogue"
+			}
+		],
+		"type": "if"
+	},
+	{
+		"character": "=== МИНИ-ИГРА",
+		"text": "ВАРКА ===",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "Теперь варка. Следи за температурой и временем.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Перед тобой огромные котлы. Нужно варить продукцию по рецепту.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Температура... Время... Всё нужно контролировать.",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Нужно внимательно читать инструкцию.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "serious",
+						"side": "left",
+						"text": "Следую рецепту точно.",
+						"type": "dialogue"
+					},
+					{
+						"character": "boss_of_factory",
+						"mood": "happy",
+						"side": "right",
+						"text": "Хорошо. Правильно.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "serious",
+						"side": "left",
+						"text": "Спасибо.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "tired_at_factory",
+						"side": "left",
+						"text": "Ещё одно задание...",
+						"type": "dialogue"
+					}
+				],
+				"text": "Строго следовать инструкции"
+			},
+			{
+				"children": [
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Попробую ускорить процесс.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "sad_factory",
+						"side": "left",
+						"text": "Что-то идёт не так...",
+						"type": "dialogue"
+					},
+					{
+						"character": "boss_of_factory",
+						"mood": "suspicious",
+						"side": "right",
+						"text": "Что ты делаешь? Неправильно!",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "sad_factory",
+						"side": "left",
+						"text": "Извините, исправлю.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "tired_at_factory",
+						"side": "left",
+						"text": "Это сложнее, чем я думал...",
+						"type": "dialogue"
+					}
+				],
+				"text": "Импровизировать и ускорить процесс"
+			},
+			{
+				"children": [
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Спрошу у опытных рабочих.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Они помогают мне.",
+						"type": "dialogue"
+					},
+					{
+						"character": "boss_of_factory",
+						"mood": "suspicious",
+						"side": "right",
+						"text": "Хм, учишься у других. Неплохо.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Спасибо за помощь.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "tired_at_factory",
+						"side": "left",
+						"text": "Хорошо, что помогли.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Спросить совета у опытных рабочих"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "=== МИНИ-ИГРА",
+		"text": "ПАВИЛЬД ===",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "Последнее задание. Работа в павильде. Тяжёлая работа.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Павильд - это огромный склад. Нужно переносить тяжёлые ящики.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Это... очень тяжело.",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "danila",
+						"mood": "serious",
+						"side": "left",
+						"text": "Попробую работать один.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "tired_at_factory",
+						"side": "left",
+						"text": "Ящики очень тяжёлые...",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "tired_at_factory",
+						"side": "left",
+						"text": "Фух... Это тяжело...",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "tired_at_factory",
+						"side": "left",
+						"text": "Еле справился...",
+						"type": "dialogue"
+					}
+				],
+				"text": "Работать в одиночку, не просить помощи"
+			},
+			{
+				"children": [
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Попрошу помощи у других рабочих.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Спасибо, ребята.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "tired_at_factory",
+						"side": "left",
+						"text": "Вместе справились быстрее.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "tired_at_factory",
+						"side": "left",
+						"text": "Хорошо, что помогли.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Просить помощи у других"
+			},
+			{
+				"children": [
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Буду работать медленно, но стабильно.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "serious",
+						"side": "left",
+						"text": "Не тороплюсь, но и не останавливаюсь.",
+						"type": "dialogue"
+					},
+					{
+						"character": "boss_of_factory",
+						"mood": "neutral",
+						"side": "right",
+						"text": "Медленно, но работает.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "tired_at_factory",
+						"side": "left",
+						"text": "Справился...",
+						"type": "dialogue"
+					}
+				],
+				"text": "Работать медленно, но стабильно"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "",
+		"text": "Все задания выполнены.",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "Хорошо. Ты справился. Вот твоя зарплата.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Начальник протягивает тебе маленькую пачку денег.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Это... всё?",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "Да. За тяжёлую работу - маленькая зарплата. Таковы правила.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я работал весь день... А денег так мало.",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "Не нравится? Можешь уйти. Рабочих много.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Нет, останусь. Нужны деньги.",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "Хорошо. Завтра приходи снова.",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "После работы рабочие собираются в углу цеха.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Несколько мужиков сидят за столом, играют в карты.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Рабочие играют в карты...",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Эй, новичок! Идёшь играть?",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Карты? Я не очень умею...",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Ничего страшного! Простая игра - 21. Научим!",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Давай, садись! Развлечёмся после работы.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Хм... Может, стоит попробовать?",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Ладно, почему бы и нет.",
+						"type": "dialogue"
+					},
+					{
+						"text": "Отлично! Садись!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"card_worker"
+						],
+						"name": "unlock",
+						"type": "command"
+					},
+					{
+						"text": "=== ИГРА В КАРТЫ ===",
+						"type": "dialogue"
+					},
+					{
+						"text": "Рабочие объясняют правила: нужно набрать 21 очко или максимально близко.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Понял. Попробую.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"card_game"
+						],
+						"name": "minigame",
+						"type": "command"
+					},
+					{
+						"text": "Игра завершена.",
+						"type": "dialogue"
+					},
+					{
+						"condition": "card_game_won>=1",
+						"else": [
+							{
+								"character": "danila",
+								"mood": "thinking_factory",
+								"side": "left",
+								"text": "Проиграл... Но было интересно.",
+								"type": "dialogue"
+							},
+							{
+								"text": "Ничего страшного! В следующий раз повезёт!",
+								"type": "dialogue"
+							},
+							{
+								"text": "Главное - научился. Завтра сыграем ещё!",
+								"type": "dialogue"
+							},
+							{
+								"character": "danila",
+								"mood": "thinking_factory",
+								"side": "left",
+								"text": "Спасибо, ребята. Научили.",
+								"type": "dialogue"
+							},
+							{
+								"text": "Всегда пожалуйста! Мы тут часто играем после смены.",
+								"type": "dialogue"
+							}
+						],
+						"then": [
+							{
+								"character": "danila",
+								"mood": "tired_but_happy_factory",
+								"side": "left",
+								"text": "Выиграл! Неплохо получилось!",
+								"type": "dialogue"
+							},
+							{
+								"text": "Молодец, новичок! Неплохо играешь!",
+								"type": "dialogue"
+							},
+							{
+								"text": "Да, для первого раза - отлично!",
+								"type": "dialogue"
+							},
+							{
+								"character": "danila",
+								"mood": "thinking_factory",
+								"side": "left",
+								"text": "Спасибо, ребята. Было интересно.",
+								"type": "dialogue"
+							},
+							{
+								"text": "Завтра снова сыграем, если хочешь.",
+								"type": "dialogue"
+							},
+							{
+								"character": "danila",
+								"mood": "tired_but_happy_factory",
+								"side": "left",
+								"text": "Конечно! Буду рад.",
+								"type": "dialogue"
+							}
+						],
+						"type": "if"
+					},
+					{
+						"text": "Рабочие продолжают играть, а ты идёшь домой.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "tired_but_happy_factory",
+						"side": "left",
+						"text": "Хорошие ребята. Может, здесь будет не так одиноко...",
+						"type": "dialogue"
+					}
+				],
+				"text": "Согласиться и сыграть"
+			},
+			{
+				"children": [
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Спасибо за приглашение, но я устал. Может, в другой раз?",
+						"type": "dialogue"
+					},
+					{
+						"text": "Понятно. Ничего страшного.",
+						"type": "dialogue"
+					},
+					{
+						"text": "Если захочешь - мы всегда здесь после смены.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"mood": "thinking_factory",
+						"side": "left",
+						"text": "Спасибо. Увидимся завтра.",
+						"type": "dialogue"
+					},
+					{
+						"text": "Ты уходишь, а рабочие продолжают играть.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Вежливо отказаться"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Недели работы на заводе. Каждый день - тяжёлый труд.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я устал. Очень устал.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Но я выжил. Заработал немного денег. Научился терпению.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Это было тяжело. Но я справился.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": [
+			"warsaw_metro"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Метро. Ежедневные поездки. Куда? Зачем?",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я не знал, куда иду.",
+		"type": "dialogue"
+	},
+	{
+		"character": "Но что-то внутри говорило",
+		"text": "твоя судьба ещё не написана.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Однажды, в вагоне метро, он увидел плакат.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Школа офицеров польской разведки.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Сердце забилось чаще. Это было оно.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Судьба дала мне шанс.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": [
+			"officer_school"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Экзамены. Тренировки. Жесткая дисциплина.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я был готов. Готов ко всему.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Сирота, который вырос на улицах, стал одним из лучших.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Они научили меня быть невидимым. Собирать информацию. Действовать.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Но главное - они дали мне цель. Принадлежность.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я больше не был один.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Годы обучения пролетели быстро.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "И вот я здесь. Агент. Готов к миссии.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "За Польшу. За свою страну.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"card_danila"
+		],
+		"name": "unlock",
+		"type": "command"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": [
+			"polish_home"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "...",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Глаза медленно открываются.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Где я?",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Знакомая комната. Свой дом в Варшаве.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Всё это было... воспоминанием?",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Голова всё ещё болит. Но теперь ясно.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Завтра начинается миссия. В Россию. В Обоянь.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Шесть месяцев под прикрытием. Шесть месяцев опасности.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Но я готов. Я всегда был готов.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Воспоминания вернули мне силу. Напоминали, кто я.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Сирота, который стал агентом. Который выжил.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "И который выживет снова.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	}
+]

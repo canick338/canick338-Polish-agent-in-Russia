@@ -34,6 +34,7 @@ class DialogueTree:
 ## Base type for all other node types below.
 class BaseNode:
 	var next: int
+	var event: Dictionary = {} # Stores "signal": name, "args": [...]
 
 	func _init(_next: int) -> void:
 		self.next = _next

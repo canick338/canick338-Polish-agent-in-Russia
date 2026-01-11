@@ -1,0 +1,55 @@
+[
+	{
+		"args": [
+			"good_ending"
+		],
+		"name": "mark",
+		"type": "command"
+	},
+	{
+		"args": [
+			"polish_home",
+			"fade_in"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"text": "Железнодорожная станция Обояни. Неделя спустя.",
+		"type": "dialogue"
+	},
+	{
+		"animation": "enter",
+		"character": "marek",
+		"mood": "neutral",
+		"side": "left",
+		"text": "Миссия выполнена. Информация получена.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "thinking",
+		"text": "Никто ничего не заподозрил... Или почти никто.",
+		"type": "dialogue"
+	},
+	{
+		"animation": "enter",
+		"character": "anna",
+		"mood": "happy",
+		"side": "right",
+		"text": "Марек! Вы уже уезжаете?",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "happy",
+		"text": "Да, Анна. Дела завершены. Пора возвращаться.",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"mood": "sad",
+		"text": "Жаль... Было приятно познакомиться.",
+		"type": "dialogue"
+	}
+]

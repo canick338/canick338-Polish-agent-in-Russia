@@ -1,0 +1,528 @@
+[
+	{
+		"args": [
+			"start_act3"
+		],
+		"name": "mark",
+		"type": "command"
+	},
+	{
+		"args": [
+			"polish_home",
+			"fade_in"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"text": "На следующий день. Ваш номер в гостинице.",
+		"type": "dialogue"
+	},
+	{
+		"animation": "enter",
+		"character": "marek",
+		"mood": "thinking",
+		"side": "left",
+		"text": "Информации пока мало. Нужно быть активнее...",
+		"type": "dialogue"
+	},
+	{
+		"text": "Внезапно раздается стук в дверь. Настойчивый.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "surprised",
+		"text": "Кто там?",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"mood": "neutral",
+		"text": "Майор Волков, ФСБ. Откройте, пожалуйста.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "worried",
+		"text": "(Чёрт! ФСБ!)",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"text": "Вы открываете дверь, стараясь выглядеть спокойно.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Открыть спокойно"
+			},
+			{
+				"children": [
+					{
+						"text": "Вы быстро прячете оборудование, но это занимает время.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Попытаться спрятать оборудование"
+			},
+			{
+				"children": [
+					{
+						"text": "Вы открываете сразу, не давая повода для подозрений.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Открыть сразу же"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"animation": "enter",
+		"character": "volkov",
+		"mood": "serious",
+		"side": "right",
+		"text": "Добрый день, господин Ковальски.",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"mood": "neutral",
+		"text": "Проверка документов у иностранных граждан. Обычная процедура.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "neutral",
+		"text": "Конечно, вот мой паспорт.",
+		"type": "dialogue"
+	},
+	{
+		"text": "Майор Волков внимательно изучает документы.",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"mood": "thinking",
+		"text": "Польский бизнесмен... Интересно.",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"mood": "neutral",
+		"text": "И что вас привело в наш маленький город?",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Я изучаю возможности для инвестиций в российские регионы.",
+						"type": "dialogue"
+					},
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "Обоянь показалась перспективной из-за местного производства.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "suspicious",
+						"text": "Перспективной? Обоянь?",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Рассказать легенду подробно"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Деловая поездка. Изучаю регион.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "neutral",
+						"text": "Понятно.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Ответить коротко"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "Устал от больших городов. Решил посмотреть провинцию.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "suspicious",
+						"text": "Странный выбор для бизнесмена...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Попытаться отшутиться"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "volkov",
+		"mood": "thinking",
+		"text": "С кем вы здесь уже познакомились?",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "С Анной из администрации, с Димой в баре...",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "neutral",
+						"text": "Понятно. Быстро осваиваетесь.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Назвать всех"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Пока ни с кем особо. Только приехал.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "suspicious",
+						"text": "Странно... Мне сказали что вас видели в баре...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"20"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Сказать что ни с кем"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Только в администрации регистрировался.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "neutral",
+						"text": "Хорошо.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Только с администрацией"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "volkov",
+		"mood": "serious",
+		"text": "Господин Ковальски, у меня к вам личный вопрос...",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"mood": "thinking",
+		"text": "Вы не задавали много вопросов о заводе?",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Нет, почему вы спрашиваете?",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "suspicious",
+						"text": "Просто проверяю. Это стратегический объект.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Отрицать"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Интересовался, как бизнесмен. Хотел узнать о местной промышленности.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "serious",
+						"text": "Понятно. Но знайте - завод под особым контролем.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Признаться частично"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "confused",
+						"text": "А что не так? Я просто бизнесмен.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "neutral",
+						"text": "Ничего не так. Просто предупреждаю.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Попросить объяснений"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "volkov",
+		"mood": "neutral",
+		"text": "Что ж, спасибо за ответы. Документы в порядке.",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"mood": "serious",
+		"text": "Приятного пребывания в Обояни, господин Ковальски.",
+		"type": "dialogue"
+	},
+	{
+		"text": "Майор уходит.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "worried",
+		"text": "Это плохо. Очень плохо...",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "thinking",
+		"text": "Он явно что-то подозревает. Нужно решать...",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "serious",
+						"text": "Нет, я не могу сдаться. Буду осторожнее.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"mission_status",
+							"continue"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"act3_continue"
+						],
+						"name": "jump",
+						"type": "command"
+					}
+				],
+				"text": "Продолжить миссию осторожно"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "worried",
+						"text": "Может, пора уезжать? Риск слишком велик...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"mission_status",
+							"retreat"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"act3_escape"
+						],
+						"name": "jump",
+						"type": "command"
+					}
+				],
+				"text": "Подумать о побеге"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "thinking",
+						"text": "Нужно связаться с центром и доложить ситуацию.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"mission_status",
+							"report"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"act3_contact"
+						],
+						"name": "jump",
+						"type": "command"
+					}
+				],
+				"text": "Связаться с центром"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"args": [
+			"act3_continue"
+		],
+		"name": "mark",
+		"type": "command"
+	},
+	{
+		"text": "Вы решаете продолжить миссию, но быть максимально осторожным.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	}
+]

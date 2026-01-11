@@ -1,0 +1,562 @@
+[
+	{
+		"args": [
+			"start_act2"
+		],
+		"name": "mark",
+		"type": "command"
+	},
+	{
+		"args": [
+			"polish_home",
+			"fade_in"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"text": "Местный бар 'У Михалыча'. Вечер, здесь собираются рабочие с завода.",
+		"type": "dialogue"
+	},
+	{
+		"text": "Вы входите в бар. Несколько местных мужчин играют в домино.",
+		"type": "dialogue"
+	},
+	{
+		"animation": "enter",
+		"character": "marek",
+		"mood": "neutral",
+		"side": "left",
+		"text": "Добрый вечер...",
+		"type": "dialogue"
+	},
+	{
+		"text": "Некоторые оборачиваются и смотрят на вас.",
+		"type": "dialogue"
+	},
+	{
+		"animation": "enter",
+		"character": "dima",
+		"mood": "happy",
+		"side": "right",
+		"text": "О! Марек! Привет! Пришёл всё-таки!",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "happy",
+		"text": "Привет, Дима! Решил, что пропущу по пиву.",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"mood": "happy",
+		"text": "Правильно! Михалыч, два пива!",
+		"type": "dialogue"
+	},
+	{
+		"text": "Бармен наливает пиво.",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"mood": "neutral",
+		"text": "Так что, как впечатления от Обояни?",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "Интересный город. Тихо, спокойно. Люди дружелюбные.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "happy",
+						"text": "Вот-вот! Хоть и маленький, зато свой!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Интересный город"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Честно говоря, слишком тихо. Привык к большим городам.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Ну да, мы провинция... Зато спокойно живём.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Слишком тихо для меня"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Холодно очень. У нас в Польше теплее.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "laugh",
+						"text": "Ха! Это ещё не холодно! Вот в январе приезжай!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Холодно здесь"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "dima",
+		"mood": "thinking",
+		"text": "Слушай, а чем ты вообще занимаешься? Говорил что бизнесмен?",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "neutral",
+		"text": "Да, ищу возможности для инвестиций.",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"mood": "neutral",
+		"text": "А что тебя в Обояни интересует? У нас тут только завод и всё...",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Собственно, завод меня и интересует. Что там производят?",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "suspicious",
+						"text": "Хм... А ты вроде бизнесмен? Разве не должен был заранее узнать?",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Ну, делают там всякое... Оборудование разное.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Именно завод меня и интересует"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Изучаю регион в целом. Хочу понять, есть ли перспективы.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Ну, завод у нас главный. Я там работаю охранником.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Изучаю регион в целом"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "Пока просто знакомлюсь с городом и людьми.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "happy",
+						"text": "Правильно! Без спешки. Город наш хороший, люди добрые.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Просто знакомлюсь с городом"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"text": "К вам подходит ещё один мужчина.",
+		"type": "dialogue"
+	},
+	{
+		"animation": "enter",
+		"character": "stranger",
+		"mood": "neutral",
+		"side": "right",
+		"text": "Новый что ли?",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"mood": "neutral",
+		"text": "Да, это Марек, из Польши приехал. Марек, это Серёга, тоже на заводе работает.",
+		"type": "dialogue"
+	},
+	{
+		"character": "serega",
+		"mood": "neutral",
+		"text": "Из Польши? Далеко забрался.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "neutral",
+		"text": "Ну да, по работе приходится ездить.",
+		"type": "dialogue"
+	},
+	{
+		"character": "serega",
+		"mood": "thinking",
+		"text": "И что, правда что у вас там в Европе зарплаты большие?",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Ну, в среднем да, получше.",
+						"type": "dialogue"
+					},
+					{
+						"character": "serega",
+						"mood": "neutral",
+						"text": "Везёт вам...",
+						"type": "dialogue"
+					},
+					{
+						"text": "Серёга продолжает пить пиво.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Да, получше чем здесь"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Не такие уж и большие. Жизнь дорогая, налоги высокие.",
+						"type": "dialogue"
+					},
+					{
+						"character": "serega",
+						"mood": "neutral",
+						"text": "Да везде одинаково наверное...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_local",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Не такие большие, как думают"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "По-разному. Зависит от специальности.",
+						"type": "dialogue"
+					},
+					{
+						"character": "serega",
+						"mood": "neutral",
+						"text": "Понятно.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Зависит от работы"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "dima",
+		"mood": "happy",
+		"text": "Давай ещё по пиву! За знакомство!",
+		"type": "dialogue"
+	},
+	{
+		"text": "Официант приносит ещё пива.",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"text": "Вы выпиваете пиво залпом, как делают местные.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "laugh",
+						"text": "О! Молодец! Уже как свой!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Выпить залпом (по-русски)"
+			},
+			{
+				"children": [
+					{
+						"text": "Вы пьёте медленно, смакуя.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Что, не привык крепко пить?",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Пить медленно"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Спасибо, но мне хватит. Завтра дела.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "disappointed",
+						"text": "Эх, слабак! Ладно, как хочешь.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Отказаться от следующей кружки"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"text": "Вечер продолжается. Дима явно пьянеет.",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"mood": "drunk",
+		"text": "Слушай, Марек... А ты же бизнесмен... Может деньги подкинешь?",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Вот, держи немного.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "happy",
+						"text": "Спасибо, друг! Ты хороший!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Дать денег"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Извини, но я не даю деньги в долг.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "sad",
+						"text": "Ладно... Понимаю.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Отказать"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "thinking",
+						"text": "Слушай, а если я дам тебе денег, расскажешь про завод?",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "suspicious",
+						"text": "Что? Зачем тебе про завод?",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"20"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Предложить сделку"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"text": "Вечер подходит к концу.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "neutral",
+		"text": "Пора мне идти. Было приятно.",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"mood": "happy",
+		"text": "И тебе! Заходи ещё!",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	}
+]

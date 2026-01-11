@@ -5,6 +5,7 @@ extends Node
 signal scene_finished
 signal restart_requested
 signal transition_finished
+signal scene_event(event_name, args)
 
 const KEY_END_OF_SCENE := -1
 const KEY_RESTART_SCENE := -2
@@ -69,6 +70,14 @@ func run_scene(start_key: int = 0) -> void:
 				character.id = "narrator"
 				character.display_name = ""
 				character.images = {"neutral": null}
+
+		# Emit event if present
+		if node.event and not node.event.is_empty():
+			var evt_name = node.event.get("name", "")
+			var evt_args = node.event.get("args", [])
+			if evt_name != "":
+				print("ScenePlayer emitting event: ", evt_name, evt_args)
+				scene_event.emit(evt_name, evt_args)
 
 		if node is SceneTranspiler.BackgroundCommandNode:
 			var bg: Background = ResourceDB.get_background(node.background)
@@ -219,6 +228,35 @@ func run_scene(start_key: int = 0) -> void:
 func load_scene(dialogue: SceneTranspiler.DialogueTree) -> void:
 	# The main script
 	_scene_data = dialogue.nodes
+	_current_node_index = dialogue.index # Start at the beginning? No, typically 0/start_key
+
+func load_scene_from_file(path: String) -> void:
+	var dialogue_tree: SceneTranspiler.DialogueTree = null
+	
+	if path.ends_with(".json"):
+		print("Loading JSON scene: " + path)
+		var loader = JSONDialogueLoader.new()
+		dialogue_tree = loader.load_scene(path)
+	elif path.ends_with(".txt"):
+		print("Loading TXT scene: " + path)
+		var file = FileAccess.open(path, FileAccess.READ)
+		if file:
+			var content = file.get_as_text()
+			var lexer = SceneLexer.new()
+			var parser = SceneParser.new()
+			var transpiler = SceneTranspiler.new()
+			
+			var tokens = lexer.tokenize(content)
+			var ast = parser.parse(tokens)
+			dialogue_tree = transpiler.transpile(ast, 0)
+		else:
+			push_error("Failed to open file: " + path)
+			return
+	
+	if dialogue_tree:
+		load_scene(dialogue_tree)
+	else:
+		push_error("Failed to load scene from: " + path)
 
 
 func get_current_position() -> int:
@@ -438,6 +476,28 @@ func _evaluate_condition(condition: SceneParser.BaseExpression, variables_list: 
 	if not condition:
 		return false
 	
+	# RAW STRING CONDITION (from JSON)
+	if condition.type == "RAW_STRING":
+		var condition_str = str(condition.value)
+		
+		# OPTIMIZED EXPRESSION EVALUATION
+		var expression = Expression.new()
+		var input_names = variables_list.keys()
+		var input_values = variables_list.values()
+		
+		var error = expression.parse(condition_str, input_names)
+		if error != OK:
+			push_error("Expression parse error: " + expression.get_error_text() + " in " + condition_str)
+			return false
+			
+		var result = expression.execute(input_values, self)
+		if expression.has_execute_failed():
+			push_error("Expression execution failed: " + condition_str)
+			return false
+			
+		print("ScenePlayer EVAL RESULT (Optimized): ", result)
+		return bool(result)
+
 	# Если условие - массив выражений (например, ["factory_jam_labeled", ">=", "15"])
 	if condition.value is Array:
 		var expressions = condition.value

@@ -1,0 +1,50 @@
+[
+	{
+		"type": "dialogue",
+		"character": "danila",
+		"mood": "happy",
+		"text": "Привет, начальник! Как дела?"
+	},
+	{
+		"type": "dialogue",
+		"character": "boss_of_factory",
+		"mood": "angry",
+		"text": "Не до разговоров! Срочный заказ!"
+	},
+	{
+		"type": "command",
+		"name": "minigame",
+		"args": ["factory_jam"]
+	},
+	{
+		"type": "dialogue",
+		"character": "danila",
+		"mood": "thinking_factory",
+		"text": "Фух... Вроде закончил."
+	},
+	{
+		"type": "if",
+		"condition": "factory_jam_result_v2 >= 20",
+		"then": [
+			{
+				"type": "dialogue",
+				"character": "boss_of_factory",
+				"mood": "happy",
+				"text": "Молодец! Держи премию."
+			},
+			{
+				"type": "command",
+				"name": "set",
+				"args": ["money", 100]
+			}
+		],
+		"else": [
+			{
+				"type": "dialogue",
+				"character": "boss_of_factory",
+				"mood": "angry",
+				"text": "Ужасно! Ты уволен!"
+			}
+		]
+	}
+]

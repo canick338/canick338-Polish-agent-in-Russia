@@ -1,0 +1,209 @@
+[
+	{
+		"args": [
+			"polish_home",
+			"fade_in"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"text": "Небольшое казино в российской глубинке. Холодный февральский вечер.",
+		"type": "dialogue"
+	},
+	{
+		"text": "Марек Ковальски, польский агент под прикрытием, сидит за игровым автоматом.",
+		"type": "dialogue"
+	},
+	{
+		"animation": "enter",
+		"character": "marek",
+		"mood": "neutral",
+		"side": "left",
+		"text": "Так... Нужно влиться в местную атмосферу...",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"mood": "thinking",
+		"text": "Эта миссия не должна быть сложной. Просто собрать информацию и уехать.",
+		"type": "dialogue"
+	},
+	{
+		"text": "После игры к вам подходит местный житель.",
+		"type": "dialogue"
+	},
+	{
+		"animation": "enter",
+		"character": "dima",
+		"mood": "happy",
+		"side": "right",
+		"text": "Эй, приятель! Новенький в городе?",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Да, я бизнесмен из Польши. Марек меня зовут.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Поляк? Во дела! Редко у нас поляки бывают.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "happy",
+						"text": "Дима я, приятно познакомиться!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Да, приехал по делам"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Проездом просто. Останусь ненадолго.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "suspicious",
+						"text": "Странно... Кто ж через Обоянь проездом едет?",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Просто проездом"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "angry",
+						"text": "Извини, но это мои дела.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "angry",
+						"text": "Ого, какой важный! Ладно, извини что побеспокоил.",
+						"type": "dialogue"
+					},
+					{
+						"text": "Дмитрий уходит, бросая на вас недовольный взгляд.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Это не твое дело"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "dima",
+		"mood": "happy",
+		"text": "Слушай, пошли в бар? Расскажешь про Польшу, я про наш город!",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "С удовольствием! Веди.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"bar_scene"
+						],
+						"name": "jump",
+						"type": "command"
+					}
+				],
+				"text": "Хорошая идея!"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Спасибо, но я устал с дороги. Может, как-нибудь потом?",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Ну ладно, понимаю. Увидимся!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"0"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Не сегодня, устал"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "marek",
+		"mood": "thinking",
+		"text": "Первый контакт... Надеюсь, я не наделал ошибок.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	}
+]
