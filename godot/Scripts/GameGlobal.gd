@@ -11,19 +11,19 @@ signal money_changed(new_amount)
 # Формат: "id": { properties }
 const CARD_DATABASE = {
 	"card_danila": {
-		"name": "Данила",
+		"name": "CHAR_DANILA",
 		"description": "Агент польской разведки под прикрытием. Прошел жесткую школу выживания на улицах Варшавы. Его цель — проникнуть на завод и выяснить правду.",
 		"texture_path": "res://Characters/Danila/danila_thinking.png", # Using neutral/thinking as main portrait
 		"unlock_type": "event"
 	},
 	"card_bronislav": {
-		"name": "Бронислав",
+		"name": "CHAR_BOSS",
 		"description": "Начальник завода. Жесткий, подозрительный и не терпящий ошибок. Ходят слухи, что он замешан в темных делах.",
 		"texture_path": "res://Characters/boss_of_factory/boss_of_factory.png",
 		"unlock_type": "event"
 	},
 	"card_worker": {
-		"name": "Рабочий",
+		"name": "CHAR_WORKER",
 		"description": "Типичный трудяга завода. Любит поиграть в карты после смены и пожаловаться на жизнь. Может знать больше, чем говорит.",
 		"texture_path": "res://Characters/Worker/worker_neutral.png",
 		"unlock_type": "event"
@@ -40,12 +40,41 @@ var save_data = {
 # Путь к файлу сохранения
 const SAVE_PATH = "user://savegame.dat"
 
+# Путь к файлу настроек
+const SETTINGS_PATH = "user://settings.cfg"
+
 # Авто-загрузка при старте
 func _ready():
-	# DON'T auto-load on startup - it bypasses main menu!
+	# Apply settings on game launch (Volume, Fullscreen, Language)
+	apply_settings()
+	
+	# DON'T auto-load savegame on startup - it bypasses main menu!
 	# Only load when explicitly requested
 	pass
 	# load_game()
+
+func apply_settings() -> void:
+	var config = ConfigFile.new()
+	var err = config.load(SETTINGS_PATH)
+	
+	# 1. Language
+	var locale = config.get_value("localization", "current_locale", "ru") # Default to Russian if not set
+	TranslationServer.set_locale(locale)
+	print("Applied Locale: ", locale)
+	
+	# 2. Audio
+	var master_vol = config.get_value("audio", "master_volume", 1.0)
+	var bus_idx = AudioServer.get_bus_index("Master")
+	if bus_idx != -1:
+		AudioServer.set_bus_volume_db(bus_idx, linear_to_db(master_vol))
+	
+	# 3. Display
+	var is_fullscreen = config.get_value("display", "fullscreen", false)
+	if is_fullscreen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
 
 # === УПРАВЛЕНИЕ ДЕНЬГАМИ ===
 # (Обертки для удобства, работают с save_data)

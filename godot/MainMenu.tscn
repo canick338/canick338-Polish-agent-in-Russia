@@ -199,7 +199,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
-text = "НАЧАТЬ ИГРУ"
+text = "UI_MAIN_START"
 
 [node name="LoadButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
@@ -209,7 +209,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
-text = "ЗАГРУЗИТЬ"
+text = "UI_MAIN_LOAD"
 
 [node name="CollectionButton" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 60)
@@ -218,7 +218,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
-text = "ДОСЬЕ"
+text = "UI_MAIN_COLLECTION"
 
 [node name="OptionsButton" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 60)
@@ -227,7 +227,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
-text = "НАСТРОЙКИ"
+text = "UI_MAIN_SETTINGS"
 
 [node name="ExitButton" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 60)
@@ -236,4 +236,4 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
-text = "ВЫХОД"
+text = "UI_MAIN_EXIT"

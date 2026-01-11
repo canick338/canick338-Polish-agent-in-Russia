@@ -8,44 +8,45 @@
 	},
 	{
 		"args": [
-			"polish_home",
-			"fade_in"
+			"polish_home"
 		],
 		"name": "background",
 		"type": "command"
 	},
 	{
+		"character": "",
 		"text": "На следующий день. Ваш номер в гостинице.",
+		"translation_key": "ACT3_DANGER_32c0c9a6",
 		"type": "dialogue"
 	},
 	{
-		"animation": "enter",
 		"character": "marek",
-		"mood": "thinking",
-		"side": "left",
 		"text": "Информации пока мало. Нужно быть активнее...",
+		"translation_key": "ACT3_DANGER_44b6d516",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Внезапно раздается стук в дверь. Настойчивый.",
+		"translation_key": "ACT3_DANGER_9c7934f6",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "surprised",
 		"text": "Кто там?",
+		"translation_key": "ACT3_DANGER_4659116e",
 		"type": "dialogue"
 	},
 	{
 		"character": "volkov",
-		"mood": "neutral",
 		"text": "Майор Волков, ФСБ. Откройте, пожалуйста.",
+		"translation_key": "ACT3_DANGER_9555c0cd",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "worried",
 		"text": "(Чёрт! ФСБ!)",
+		"translation_key": "ACT3_DANGER_b65f82a3",
 		"type": "dialogue"
 	},
 	{
@@ -105,39 +106,39 @@
 		"type": "choice"
 	},
 	{
-		"animation": "enter",
 		"character": "volkov",
-		"mood": "serious",
-		"side": "right",
 		"text": "Добрый день, господин Ковальски.",
+		"translation_key": "ACT3_DANGER_e1607cd1",
 		"type": "dialogue"
 	},
 	{
 		"character": "volkov",
-		"mood": "neutral",
 		"text": "Проверка документов у иностранных граждан. Обычная процедура.",
+		"translation_key": "ACT3_DANGER_dc5ddc00",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "neutral",
 		"text": "Конечно, вот мой паспорт.",
+		"translation_key": "ACT3_DANGER_07f3b67c",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Майор Волков внимательно изучает документы.",
+		"translation_key": "ACT3_DANGER_f7425003",
 		"type": "dialogue"
 	},
 	{
 		"character": "volkov",
-		"mood": "thinking",
 		"text": "Польский бизнесмен... Интересно.",
+		"translation_key": "ACT3_DANGER_fb275640",
 		"type": "dialogue"
 	},
 	{
 		"character": "volkov",
-		"mood": "neutral",
 		"text": "И что вас привело в наш маленький город?",
+		"translation_key": "ACT3_DANGER_c54918ff",
 		"type": "dialogue"
 	},
 	{
@@ -228,8 +229,8 @@
 	},
 	{
 		"character": "volkov",
-		"mood": "thinking",
 		"text": "С кем вы здесь уже познакомились?",
+		"translation_key": "ACT3_DANGER_4cd757df",
 		"type": "dialogue"
 	},
 	{
@@ -306,14 +307,14 @@
 	},
 	{
 		"character": "volkov",
-		"mood": "serious",
 		"text": "Господин Ковальски, у меня к вам личный вопрос...",
+		"translation_key": "ACT3_DANGER_3336d932",
 		"type": "dialogue"
 	},
 	{
 		"character": "volkov",
-		"mood": "thinking",
 		"text": "Вы не задавали много вопросов о заводе?",
+		"translation_key": "ACT3_DANGER_8b8a0756",
 		"type": "dialogue"
 	},
 	{
@@ -398,30 +399,32 @@
 	},
 	{
 		"character": "volkov",
-		"mood": "neutral",
 		"text": "Что ж, спасибо за ответы. Документы в порядке.",
+		"translation_key": "ACT3_DANGER_44983841",
 		"type": "dialogue"
 	},
 	{
 		"character": "volkov",
-		"mood": "serious",
 		"text": "Приятного пребывания в Обояни, господин Ковальски.",
+		"translation_key": "ACT3_DANGER_089fd877",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Майор уходит.",
+		"translation_key": "ACT3_DANGER_b17f6445",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "worried",
 		"text": "Это плохо. Очень плохо...",
+		"translation_key": "ACT3_DANGER_7fc140ee",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "thinking",
 		"text": "Он явно что-то подозревает. Нужно решать...",
+		"translation_key": "ACT3_DANGER_548d0c33",
 		"type": "dialogue"
 	},
 	{
@@ -515,7 +518,9 @@
 		"type": "command"
 	},
 	{
+		"character": "",
 		"text": "Вы решаете продолжить миссию, но быть максимально осторожным.",
+		"translation_key": "ACT3_DANGER_7340697d",
 		"type": "dialogue"
 	},
 	{

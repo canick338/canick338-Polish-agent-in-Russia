@@ -121,8 +121,22 @@ func run_scene(start_key: int = 0) -> void:
 			# Для строк без персонажа используем narrator (пустое имя)
 			var display_name = ""
 			if "character" in node and node.character != "" and character:
-				display_name = character.display_name if character else "Unknown"
-			_text_box.display(node.line, display_name)
+				display_name = tr(character.display_name) if character else "Unknown"
+			
+			var text_to_show = node.line
+			if "translation_key" in node and node.translation_key != "":
+				var translated = tr(node.translation_key)
+				
+				# DEBUG LOCALIZATION
+				print("LOCALE: ", TranslationServer.get_locale(), " | KEY: ", node.translation_key, " | TR: ", translated)
+				
+				# Only use translation if it returns something different from the key
+				if translated != node.translation_key:
+					text_to_show = translated
+				else:
+					print("MISSING TRANSLATION for: ", node.translation_key)
+			
+			_text_box.display(text_to_show, display_name)
 			await _text_box.next_requested
 			key = node.next
 

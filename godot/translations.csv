@@ -1,0 +1,211 @@
+﻿keys,ru,en,pl
+ACT1_ARRIVAL_fce8e3ab,"Следующее утро. Обоянь, небольшой город в Курской области.","hello I like sex",kurwa
+ACT1_ARRIVAL_0421edfb,"Серое небо, заснеженные улицы, старые советские здания.",,
+ACT1_ARRIVAL_b3c5f166,"Итак, я здесь. Город небольшой, все друг друга знают...",,
+ACT1_ARRIVAL_014f37cb,"Нужно быть осторожным. Моя легенда - польский бизнесмен.",,
+ACT1_ARRIVAL_72d91adb,"Сначала нужно зарегистрироваться в местной администрации.",,
+ACT1_ARRIVAL_099537d2,"Здание местной администрации. Типичный советский интерьер.",,
+ACT1_ARRIVAL_d39cb88c,"Добрый день! Чем могу помочь?",,
+ACT1_ARRIVAL_37f60a97,"Здравствуйте! Я приехал по делам, хотел бы зарегистрироваться.",,
+ACT1_ARRIVAL_a0f00eef,"Конечно! Вы откуда приехали?",,
+ACT1_ARRIVAL_d6b6309f,"Из Польши. Я бизнесмен, интересуюсь инвестициями в регион.",,
+ACT1_ARRIVAL_c2d73c09,"Из Польши? Ого! У нас редко иностранцы бывают.",,
+ACT1_ARRIVAL_8baea42b,"Паспорт, пожалуйста.",,
+ACT1_ARRIVAL_9ba98347,"Вы протягиваете поддельный польский паспорт.",,
+ACT1_ARRIVAL_1d402b4e,"Марек Ковальски... Хорошо.",,
+ACT1_ARRIVAL_579e858f,"А что именно вас интересует в нашем городе?",,
+ACT1_ARRIVAL_b2d51c71,"Вот ваша регистрация. Где планируете остановиться?",,
+ACT1_ARRIVAL_8503c859,"Есть ли здесь гостиница?",,
+ACT1_ARRIVAL_85e03a0c,"Есть одна, на центральной улице. Называется 'Обоянь'.",,
+ACT1_ARRIVAL_6a10c97c,"Если что-то понадобится, обращайтесь! Я Анна, кстати.",,
+ACT1_ARRIVAL_65022feb,"Приятно познакомиться, Анна. Спасибо за помощь!",,
+ACT1_ARRIVAL_a9082c1a,"Анна улыбается и возвращается к своим делам.",,
+ACT1_ARRIVAL_633a46ea,"Номер в гостинице 'Обоянь'. Скромно, но чисто.",,
+ACT1_ARRIVAL_d66e0822,"Так, теперь можно начинать работу.",,
+ACT1_ARRIVAL_da948a02,"Нужно собрать информацию о заводе, но делать это осторожно.",,
+ACT1_ARRIVAL_e656b0c7,"Вы достаете специальное оборудование из чемодана.",,
+ACT1_ARRIVAL_9e8de531,"Связь с центром работает. Хорошо.",,
+ACT1_ARRIVAL_7c0c8b0b,"Внезапно в дверь стучат.",,
+ACT1_ARRIVAL_4659116e,"Кто там?",,
+ACT1_ARRIVAL_234cc126,"За дверью незнакомый мужской голос.",,
+ACT1_ARRIVAL_1f3cdb39,"Охрана гостиницы. Проверка документов.",,
+ACT1_ARRIVAL_61c6bf1a,"Сейчас...",,
+ACT1_ARRIVAL_ab0ca334,"Нужно быть осторожнее. За мной уже следят?",,
+ACT1_ARRIVAL_9b40a7f7,"Наступает вечер. Пора действовать.",,
+ACT2_INFILTRATION_284fff84,"Местный бар 'У Михалыча'. Вечер, здесь собираются рабочие с завода.",,
+ACT2_INFILTRATION_9d53e5a9,"Вы входите в бар. Несколько местных мужчин играют в домино.",,
+ACT2_INFILTRATION_7a42b4f3,"Добрый вечер...",,
+ACT2_INFILTRATION_0f8633e0,"Некоторые оборачиваются и смотрят на вас.",,
+ACT2_INFILTRATION_43032fbf,"О! Марек! Привет! Пришёл всё-таки!",,
+ACT2_INFILTRATION_fb4335af,"Привет, Дима! Решил, что пропущу по пиву.",,
+ACT2_INFILTRATION_9c4dc658,"Правильно! Михалыч, два пива!",,
+ACT2_INFILTRATION_9a7304c7,"Бармен наливает пиво.",,
+ACT2_INFILTRATION_fc9abea8,"Так что, как впечатления от Обояни?",,
+ACT2_INFILTRATION_e36ba3c8,"Слушай, а чем ты вообще занимаешься? Говорил что бизнесмен?",,
+ACT2_INFILTRATION_41f854e6,"Да, ищу возможности для инвестиций.",,
+ACT2_INFILTRATION_df4e5666,"А что тебя в Обояни интересует? У нас тут только завод и всё...",,
+ACT2_INFILTRATION_23d2ca05,"К вам подходит ещё один мужчина.",,
+ACT2_INFILTRATION_302b829d,"Новый что ли?",,
+ACT2_INFILTRATION_978071e5,"Да, это Марек, из Польши приехал. Марек, это Серёга, тоже на заводе работает.",,
+ACT2_INFILTRATION_90b3d149,"Из Польши? Далеко забрался.",,
+ACT2_INFILTRATION_5fb75bdf,"Ну да, по работе приходится ездить.",,
+ACT2_INFILTRATION_014cb7b7,"И что, правда что у вас там в Европе зарплаты большие?",,
+ACT2_INFILTRATION_0740dd7e,"Давай ещё по пиву! За знакомство!",,
+ACT2_INFILTRATION_819151a1,"Официант приносит ещё пива.",,
+ACT2_INFILTRATION_cf29a2e1,"Вечер продолжается. Дима явно пьянеет.",,
+ACT2_INFILTRATION_a088445d,"Слушай, Марек... А ты же бизнесмен... Может деньги подкинешь?",,
+ACT2_INFILTRATION_6f1e6ae8,"Вечер подходит к концу.",,
+ACT2_INFILTRATION_6a5d3e18,"Пора мне идти. Было приятно.",,
+ACT2_INFILTRATION_02d23ed0,"И тебе! Заходи ещё!",,
+ACT3_DANGER_32c0c9a6,"На следующий день. Ваш номер в гостинице.",,
+ACT3_DANGER_44b6d516,"Информации пока мало. Нужно быть активнее...",,
+ACT3_DANGER_9c7934f6,"Внезапно раздается стук в дверь. Настойчивый.",,
+ACT3_DANGER_4659116e,"Кто там?",,
+ACT3_DANGER_9555c0cd,"Майор Волков, ФСБ. Откройте, пожалуйста.",,
+ACT3_DANGER_b65f82a3,"(Чёрт! ФСБ!)",,
+ACT3_DANGER_e1607cd1,"Добрый день, господин Ковальски.",,
+ACT3_DANGER_dc5ddc00,"Проверка документов у иностранных граждан. Обычная процедура.",,
+ACT3_DANGER_07f3b67c,"Конечно, вот мой паспорт.",,
+ACT3_DANGER_f7425003,"Майор Волков внимательно изучает документы.",,
+ACT3_DANGER_fb275640,"Польский бизнесмен... Интересно.",,
+ACT3_DANGER_c54918ff,"И что вас привело в наш маленький город?",,
+ACT3_DANGER_4cd757df,"С кем вы здесь уже познакомились?",,
+ACT3_DANGER_3336d932,"Господин Ковальски, у меня к вам личный вопрос...",,
+ACT3_DANGER_8b8a0756,"Вы не задавали много вопросов о заводе?",,
+ACT3_DANGER_44983841,"Что ж, спасибо за ответы. Документы в порядке.",,
+ACT3_DANGER_089fd877,"Приятного пребывания в Обояни, господин Ковальски.",,
+ACT3_DANGER_b17f6445,"Майор уходит.",,
+ACT3_DANGER_7fc140ee,"Это плохо. Очень плохо...",,
+ACT3_DANGER_548d0c33,"Он явно что-то подозревает. Нужно решать...",,
+ACT3_DANGER_7340697d,"Вы решаете продолжить миссию, но быть максимально осторожным.",,
+ENDINGS_b761056c,"Железнодорожная станция Обояни. Неделя спустя.",,
+ENDINGS_6b8b2125,"Миссия выполнена. Информация получена.",,
+ENDINGS_75271366,"Никто ничего не заподозрил... Или почти никто.",,
+ENDINGS_77545daa,"Марек! Вы уже уезжаете?",,
+ENDINGS_6de3a143,"Да, Анна. Дела завершены. Пора возвращаться.",,
+ENDINGS_aa848ae1,"Жаль... Было приятно познакомиться.",,
+EXAMPLE_FORMAT_77a22697,"Привет, начальник! Как дела?",,
+EXAMPLE_FORMAT_735c3f65,"Не до разговоров! Срочный заказ!",,
+EXAMPLE_FORMAT_52c28d96,"Фух... Вроде закончил.",,
+MASTER_SCENARIO_1271f0b3,"Февраль 2024 года. Россия, Курская область.",,
+MASTER_SCENARIO_53d12cf5,"Город Обоянь - маленький провинциальный городок в российской глубинке.",,
+MASTER_SCENARIO_2d407ab3,"Марек Ковальски, агент польской разведки, прибывает сюда под видом бизнесмена.",,
+MASTER_SCENARIO_8a53bd9a,"Его цель - собрать информацию о местном заводе.",,
+MASTER_SCENARIO_63dbb9fc,"Но в маленьком городе, где все знают друг друга, оставаться незамеченным непросто...",,
+MASTER_SCENARIO_e250061f,"После игры в местном казино Марек понимает - нужно быть осторожным.",,
+MASTER_SCENARIO_5ce6f784,"Здесь чужих сразу замечают...",,
+MASTER_SCENARIO_113cbc62,"ПРИБЫТИЕ ===",,
+MASTER_SCENARIO_6b072705,"ВХОЖДЕНИЕ В ДОВЕРИЕ ===",,
+MASTER_SCENARIO_29516928,"ОПАСНОСТЬ РАСКРЫТИЯ ===",,
+MASTER_SCENARIO_665e1fd1,"=== ФИНАЛ ===",,
+PREQUEL_DANILA_f3df94d4,"...","...","..."
+PREQUEL_DANILA_df33b71a,"Голова раскалывается. Где я?","My head is splitting. Where am I?","Głowa mi pęka. Gdzie ja jestem?"
+PREQUEL_DANILA_b30325ee,"Что это было?","What was that?","Co to było?"
+PREQUEL_DANILA_3960214c,"Воспоминания... Они возвращаются.","Memories... They are returning.","Wspomnienia... Wracają."
+PREQUEL_DANILA_8e52eb1b,"Варшава. 1990-е годы жёсткий секс.","Warsaw. 1990s.","Warszawa. Lata 90."
+PREQUEL_DANILA_a5ef0a29,"Маленький мальчик. Без родителей. Без дома.","A little boy. No parents. No home.","Mały chłopiec. Bez rodziców. Bez domu."
+PREQUEL_DANILA_5e5d421a,"Я помню... Детский дом родной.","I remember... The orphanage.","Pamiętam... Sierociniec."
+PREQUEL_DANILA_d800e6f5,"Холодные стены. Пустые коридоры. Одиночество.","Cold walls. Empty corridors. Loneliness.","Zimne ściany. Puste korytarze. Samotność."
+PREQUEL_DANILA_7e460f83,"Никто не хотел меня забрать.","Nobody wanted to take me.","Nikt nie chciał mnie zabrać."
+PREQUEL_DANILA_d8a5d98b,"Годы шли. Мальчик рос.","Years passed. The boy grew.","Mijały lata. Chłopiec rósł."
+PREQUEL_DANILA_0d54321b,"Но одиночество оставалось. Всегда.","But the loneliness remained. Always.","Ale samotność pozostała. Zawsze."
+PREQUEL_DANILA_f344c335,"Подростковые годы. Улицы Варшавы стали домом.","Teenage years. The streets of Warsaw became home.","Lata nastoletnie. Ulice Warszawy stały się domem."
+PREQUEL_DANILA_f1a2f018,"Нужно было выживать.","Had to survive.","Trzeba było przetrwać."
+PREQUEL_DANILA_7775ee27,"Подработки. Мелкие дела. Иногда не совсем законные.","Odd jobs. Petty crimes. Sometimes illegal.","Dorywcze prace. Drobne sprawy. Czasem nie do końca legalne."
+PREQUEL_DANILA_3f5051d6,"Я научился быть незаметным. Наблюдать. Запоминать.","I learned to be invisible. To observe. To remember.","Nauczyłem się być niewidzialnym. Obserwować. Zapamiętywać."
+PREQUEL_DANILA_aa25a2e3,"Люди проходили мимо. Никто не замечал маленького сироту.","People passed by. No one noticed the little orphan.","Ludzie przechodzili obok. Nikt nie zauważał małej sieroty."
+PREQUEL_DANILA_e076a004,"Но я выжил. Выжил сам.","But I survived. I survived alone.","Ale przeżyłem. Przeżyłem sam."
+PREQUEL_DANILA_b0a48009,"Однажды он увидел объявление.","One day he saw an ad.","Pewnego dnia zobaczył ogłoszenie."
+PREQUEL_DANILA_fc5f4c79,"Завод. Нужны рабочие. Без опыта.","Factory. Workers needed. No experience.","Fabryka. Potrzebni robotnicy. Bez doświadczenia."
+PREQUEL_DANILA_6fbdafcf,"Это был шанс. Легальная работа. Деньги.","It was a chance. Legal work. Money.","To była szansa. Legalna praca. Pieniądze."
+PREQUEL_DANILA_59c75719,"Я подал заявление.","I applied.","Złożyłem podanie."
+PREQUEL_DANILA_85d393b9,"Первый день на заводе.","First day at the factory.","Pierwszy dzień w fabryce."
+PREQUEL_DANILA_f6345a1a,"Так, новичок! Меня зовут Бронислав. Я начальник.","So, rookie! My name is Bronislav. I'm the boss.","Więc, nowicjusz! Mam na imię Bronisław. Jestem szefem."
+PREQUEL_DANILA_dbfa87df,"Данила. Рад работать.","Danila. Glad to work here.","Daniła. Cieszę się, że mogę tu pracować."
+PREQUEL_DANILA_d8ab6e0f,"Хорошо. У нас три задания. Расфасовка, варка и работа в павильде.","Good. We have three tasks. Packing, Boiling, and Pawild.","Dobrze. Mamy trzy zadania. Pakowanie, gotowanie i praca w pawilonie."
+PREQUEL_DANILA_22d6890c,"Выполнишь всё - получишь зарплату. Не справишься - уходи.","Do it all - get paid. Fail - leave.","Zrobisz wszystko - dostaniesz wypłatę. Nie dasz rady - odchodzisz."
+PREQUEL_DANILA_c97f749d,"Понял. Начну с расфасовки.","Got it. I'll start with packing.","Zrozumiałem. Zacznę od pakowania."
+PREQUEL_DANILA_edc2daa9,"РАСФАСОВКА ===","PACKING ===","PAKOWANIE ==="
+PREQUEL_DANILA_1a165197,"Перед тобой конвейер. Нужно быстро расфасовывать продукцию.","Conveyor belt in front of you. Need to pack quickly.","Przed tobą taśmociąg. Musisz szybko pakować produkty."
+PREQUEL_DANILA_31365b7b,"Это... сложнее, чем я думал.","This is... harder than I thought.","To... trudniejsze niż myślałem."
+PREQUEL_DANILA_a310d660,"У тебя 30 секунд. Наклей наклейки минимум на 20 банок. Начинай!","You have 30 seconds. Stick labels on at least 20 jars. Start!","Masz 30 sekund. Naklej naklejki na co najmniej 20 słoików. Start!"
+PREQUEL_DANILA_5549f7d4,"Мини-игра завершена.","Minigame finished.","Minigra zakończona."
+PREQUEL_DANILA_71fd34ca,"Фух... Вроде закончил. Счет: [factory_jam_result_v2]. Надеюсь, этого хватит.","Phew... Seem to be done. Score: [factory_jam_result_v2]. Hope it's enough.","Uff... Chyba skończyłem. Wynik: [factory_jam_result_v2]. Mam nadzieję, że wystarczy."
+PREQUEL_DANILA_42bf5cb2,"ВАРКА ===","BOILING ===","GOTOWANIE ==="
+PREQUEL_DANILA_220ad716,"Теперь варка. Следи за температурой и временем.","Now boiling. Watch the temperature and time.","Teraz gotowanie. Pilnuj temperatury i czasu."
+PREQUEL_DANILA_0730fc21,"Перед тобой огромные котлы. Нужно варить продукцию по рецепту.","Huge vats before you. Product must be cooked by recipe.","Przed tobą wielkie kotły. Trzeba gotować produkt według przepisu."
+PREQUEL_DANILA_9907956d,"Температура... Время... Всё нужно контролировать.","Temperature... Time... Everything must be controlled.","Temperatura... Czas... Wszystko trzeba kontrolować."
+PREQUEL_DANILA_ab9b045d,"ПАВИЛЬД ===","PAWILD ===","PAWILON ==="
+PREQUEL_DANILA_83d7e2a9,"Последнее задание. Работа в павильде. Тяжёлая работа.","Last task. Work in Pawild. Heavy work.","Ostatnie zadanie. Praca w pawilonie. Ciężka praca."
+PREQUEL_DANILA_b2cba11a,"Павильд - это огромный склад. Нужно переносить тяжёлые ящики.","Pawild is a huge warehouse. Need to move heavy crates.","Pawilon to ogromny magazyn. Trzeba przenosić ciężkie skrzynie."
+PREQUEL_DANILA_37b3a397,"Это... очень тяжело.","This is... very heavy.","To... bardzo ciężkie."
+PREQUEL_DANILA_b674c174,"Все задания выполнены.","All tasks completed.","Wszystkie zadania wykonane."
+PREQUEL_DANILA_2a20868f,"Хорошо. Ты справился. Вот твоя зарплата.","Good. You managed. Here is your pay.","Dobrze. Poradziłeś sobie. Oto twoja wypłata."
+PREQUEL_DANILA_7fae0cae,"Начальник протягивает тебе маленькую пачку денег.","The boss hands you a small wad of cash.","Szef wręcza ci mały plik pieniędzy."
+PREQUEL_DANILA_27f3e35a,"Это... всё?","Is this... it?","To... wszystko?"
+PREQUEL_DANILA_9fc2340f,"Да. За тяжёлую работу - маленькая зарплата. Таковы правила.","Yes. Heavy work - small pay. Those are the rules.","Tak. Za ciężką pracę - mała wypłata. Takie są zasady."
+PREQUEL_DANILA_51f820bf,"Я работал весь день... А денег так мало.","I worked all day... And so little money.","Pracowałem cały dzień... A pieniędzy tak mało."
+PREQUEL_DANILA_2ac500dd,"Не нравится? Можешь уйти. Рабочих много.","Don't like it? You can leave. Lots of workers.","Nie podoba się? Możesz odejść. Robotników jest wielu."
+PREQUEL_DANILA_33bd70d2,"Нет, останусь. Нужны деньги.","No, I'll stay. Need the money.","Nie, zostanę. Potrzebuję pieniędzy."
+PREQUEL_DANILA_0cd17900,"Хорошо. Завтра приходи снова.","Good. Come again tomorrow.","Dobrze. Przyjdź znowu jutro."
+PREQUEL_DANILA_5679cee9,,,
+PREQUEL_DANILA_01b18447,"После работы рабочие собираются в углу цеха.","After work, workers gather in the corner of the shop.","Po pracy robotnicy zbierają się w kącie hali."
+PREQUEL_DANILA_4f1678a0,"Несколько мужиков сидят за столом, играют в карты.","A few men sit at a table, playing cards.","Kilku mężczyzn siedzi przy stole, grają w karty."
+PREQUEL_DANILA_f6f3657c,"Рабочие играют в карты...","Workers playing cards...","Robotnicy grają w karty..."
+PREQUEL_DANILA_b773babd,"Эй, новичок! Идёшь играть?","Hey, rookie! Coming to play?","Hej, nowicjusz! Idziesz grać?"
+PREQUEL_DANILA_b0af8cbb,"Карты? Я не очень умею...","Cards? I'm not very good...","Karty? Nie bardzo umiem..."
+PREQUEL_DANILA_3ed84028,"Ничего страшного! Простая игра - 21. Научим!","No problem! Simple game - 21. We'll teach you!","Nic nie szkodzi! Prosta gra - 21. Nauczymy cię!"
+PREQUEL_DANILA_039ba583,"Давай, садись! Развлечёмся после работы.","Come on, sit down! Let's have fun after work.","Dawaj, siadaj! Rozerwiemy się po pracy."
+PREQUEL_DANILA_1135807b,"Хм... Может, стоит попробовать?","Hmm... Maybe I should try?","Hm... Może warto spróbować?"
+PREQUEL_DANILA_1bef9a54,"Недели работы на заводе. Каждый день - тяжёлый труд.","Weeks of work at the factory. Every day - hard labor.","Tygodnie pracy w fabryce. Każdy dzień - ciężka praca."
+PREQUEL_DANILA_c170181f,"Я устал. Очень устал.","I'm tired. Very tired.","Jestem zmęczony. Bardzo zmęczony."
+PREQUEL_DANILA_829a073c,"Но я выжил. Заработал немного денег. Научился терпению.","But I survived. Earned some money. Learned patience.","Ale przeżyłem. Zarobiłem trochę pieniędzy. Nauczyłem się cierpliwości."
+PREQUEL_DANILA_f18bf475,"Это было тяжело. Но я справился.","It was hard. But I managed.","Było ciężko. Ale dałem radę."
+PREQUEL_DANILA_644f7cba,"Метро. Ежедневные поездки. Куда? Зачем?","Metro. Daily trips. Where? Why?","Metro. Codzienne podróże. Dokąd? Po co?"
+PREQUEL_DANILA_6a912cb9,"Я не знал, куда иду.","I didn't know where I was going.","Nie wiedziałem, dokąd idę."
+PREQUEL_DANILA_4d5492d2,"твоя судьба ещё не написана.","Your destiny is not written yet.","Twój los nie jest jeszcze zapisany."
+PREQUEL_DANILA_b4b163b4,"Однажды, в вагоне метро, он увидел плакат.","One day, in a subway car, he saw a poster.","Pewnego dnia, w wagonie metra, zobaczył plakat."
+PREQUEL_DANILA_d377a286,"Школа офицеров польской разведки.","School for Polish Intelligence Officers.","Szkoła Oficerów Wywiadu."
+PREQUEL_DANILA_6b7c367f,"Сердце забилось чаще. Это было оно.","Heart beat faster. This was it.","Serce zabiło szybciej. To było to."
+PREQUEL_DANILA_07a25e85,"Судьба дала мне шанс.","Fate gave me a chance.","Los dał mi szansę."
+PREQUEL_DANILA_c1119399,"Экзамены. Тренировки. Жесткая дисциплина.","Exams. Training. Strict discipline.","Egzaminy. Treningi. Ścisła dyscyplina."
+PREQUEL_DANILA_d71aef30,"Я был готов. Готов ко всему.","I was ready. Ready for anything.","Byłem gotowy. Gotowy na wszystko."
+PREQUEL_DANILA_f9d35e4f,"Сирота, который вырос на улицах, стал одним из лучших.","The orphan raised on the streets became one of the best.","Sierota, która dorastała na ulicach, stała się jedną z najlepszych."
+PREQUEL_DANILA_634d9d77,"Они научили меня быть невидимым. Собирать информацию. Действовать.","They taught me to be invisible. Collect info. Act.","Nauczyli mnie być niewidzialnym. Zbierać informacje. Działać."
+PREQUEL_DANILA_392639ea,"Но главное - они дали мне цель. Принадлежность.","But most importantly - they gave me a purpose. Belonging.","Ale najważniejsze - dali mi cel. Przynależność."
+PREQUEL_DANILA_a3c94ddf,"Я больше не был один.","I was no longer alone.","Nie byłem już sam."
+PREQUEL_DANILA_3f970d9b,"Годы обучения пролетели быстро.","Years of training flew by.","Lata nauki minęły szybko."
+PREQUEL_DANILA_1e532c7c,"И вот я здесь. Агент. Готов к миссии.","And here I am. Agent. Ready for mission.","I oto jestem. Agent. Gotowy do misji."
+PREQUEL_DANILA_234495e2,"За Польшу. За свою страну.","For Poland. For my country.","Za Polskę. Za mój kraj."
+PREQUEL_DANILA_e8703b02,"Глаза медленно открываются.","Eyes slowly open.","Oczy otwierają się powoli."
+PREQUEL_DANILA_6a72d708,"Где я?","Where am I?","Gdzie ja jestem?"
+PREQUEL_DANILA_0ae99878,"Знакомая комната. Свой дом в Варшаве.","Familiar room. My home in Warsaw.","Znajomy pokój. Mój dom w Warszawie."
+PREQUEL_DANILA_9c7fb04c,"Всё это было... воспоминанием?","Was all this... a memory?","Czy to wszystko było... wspomnieniem?"
+PREQUEL_DANILA_cf586478,"Голова всё ещё болит. Но теперь ясно.","Head still hurts. But now it's clear.","Głowa wciąż boli. Ale teraz wszystko jasne."
+PREQUEL_DANILA_0b001eea,"Завтра начинается миссия. В Россию. В Обоянь.","Mission starts tomorrow. To Russia. To Oboyan.","Jutro zaczyna się misja. Do Rosji. Do Obojania."
+PREQUEL_DANILA_153f3288,"Шесть месяцев под прикрытием. Шесть месяцев опасности.","Six months undercover. Six months of danger.","Sześć miesięcy pod przykrywką. Sześć miesięcy niebezpieczeństwa."
+PREQUEL_DANILA_ae5d0ae9,"Но я готов. Я всегда был готов.","But I am ready. I was always ready.","Ale jestem gotowy. Zawsze byłem gotowy."
+PREQUEL_DANILA_8deeebc9,"Воспоминания вернули мне силу. Напоминали, кто я.","Memories brought back my strength. Reminded me who I am.","Wspomnienia przywróciły mi siłę. Przypomniały, kim jestem."
+PREQUEL_DANILA_bf7e4106,"Сирота, который стал агентом. Который выжил.","Orphan who became an agent. Who survived.","Sierota, która została agentem. Która przeżyła."
+PREQUEL_DANILA_242127c4,"И который выживет снова.","And who will survive again.","I która przeżyje znowu."
+PROLOGUE_687fd6b0,"Небольшое казино в российской глубинке. Холодный февральский вечер.",,
+PROLOGUE_2dc2286e,"Марек Ковальски, польский агент под прикрытием, сидит за игровым автоматом.",,
+PROLOGUE_425d1810,"Так... Нужно влиться в местную атмосферу...",,
+PROLOGUE_cfb1f240,"Эта миссия не должна быть сложной. Просто собрать информацию и уехать.",,
+PROLOGUE_f7aad293,"После игры к вам подходит местный житель.",,
+PROLOGUE_da5eb8d6,"Эй, приятель! Новенький в городе?",,
+PROLOGUE_9a18dc9d,"Слушай, пошли в бар? Расскажешь про Польшу, я про наш город!",,
+PROLOGUE_3a9a8dd9,"Первый контакт... Надеюсь, я не наделал ошибок.",,
+UI_MAIN_TITLE,"Polish Spy Incident","Polish Spy Incident","Polski Incydent Szpiegowski"
+UI_MAIN_START,НАЧАТЬ ИГРУ,START GAME,ROZPOCZNIJ GRĘ
+UI_MAIN_LOAD,ЗАГРУЗИТЬ,LOAD GAME,WCZYTAJ GRĘ
+UI_MAIN_COLLECTION,ДОСЬЕ,DOSSIER,AKTA
+UI_MAIN_SETTINGS,НАСТРОЙКИ,SETTINGS,USTAWIENIA
+UI_MAIN_EXIT,ВЫХОД,EXIT,WYJŚCIE
+UI_SETTINGS_LANGUAGE,Язык,Language,Język
+CHAR_DANILA,Данила,Danila,Daniła
+CHAR_BOSS,Начальник завода,Factory Boss,Kierownik Fabryki
+CHAR_WORKER,Рабочий,Worker,Robotnik
+UI_SETTINGS_VOLUME,Громкость,Volume,Głośność
+UI_SETTINGS_FULLSCREEN,"На весь экран",Fullscreen,"Pełny ekran"
+UI_SETTINGS_BACK,НАЗАД,BACK,WSTECZ

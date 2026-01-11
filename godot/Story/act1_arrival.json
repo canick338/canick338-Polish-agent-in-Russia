@@ -8,104 +8,106 @@
 	},
 	{
 		"args": [
-			"polish_home",
-			"fade_in"
+			"polish_home"
 		],
 		"name": "background",
 		"type": "command"
 	},
 	{
+		"character": "",
 		"text": "Следующее утро. Обоянь, небольшой город в Курской области.",
+		"translation_key": "ACT1_ARRIVAL_fce8e3ab",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Серое небо, заснеженные улицы, старые советские здания.",
+		"translation_key": "ACT1_ARRIVAL_0421edfb",
 		"type": "dialogue"
 	},
 	{
-		"animation": "enter",
 		"character": "marek",
-		"mood": "neutral",
-		"side": "left",
 		"text": "Итак, я здесь. Город небольшой, все друг друга знают...",
+		"translation_key": "ACT1_ARRIVAL_b3c5f166",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "thinking",
 		"text": "Нужно быть осторожным. Моя легенда - польский бизнесмен.",
+		"translation_key": "ACT1_ARRIVAL_014f37cb",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "neutral",
 		"text": "Сначала нужно зарегистрироваться в местной администрации.",
+		"translation_key": "ACT1_ARRIVAL_72d91adb",
 		"type": "dialogue"
 	},
 	{
 		"args": [
-			"polish_home",
-			"fade_in"
+			"polish_home"
 		],
 		"name": "background",
 		"type": "command"
 	},
 	{
+		"character": "",
 		"text": "Здание местной администрации. Типичный советский интерьер.",
+		"translation_key": "ACT1_ARRIVAL_099537d2",
 		"type": "dialogue"
 	},
 	{
-		"animation": "enter",
 		"character": "anna",
-		"mood": "neutral",
-		"side": "right",
 		"text": "Добрый день! Чем могу помочь?",
+		"translation_key": "ACT1_ARRIVAL_d39cb88c",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "neutral",
 		"text": "Здравствуйте! Я приехал по делам, хотел бы зарегистрироваться.",
+		"translation_key": "ACT1_ARRIVAL_37f60a97",
 		"type": "dialogue"
 	},
 	{
 		"character": "anna",
-		"mood": "happy",
 		"text": "Конечно! Вы откуда приехали?",
+		"translation_key": "ACT1_ARRIVAL_a0f00eef",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "neutral",
 		"text": "Из Польши. Я бизнесмен, интересуюсь инвестициями в регион.",
+		"translation_key": "ACT1_ARRIVAL_d6b6309f",
 		"type": "dialogue"
 	},
 	{
 		"character": "anna",
-		"mood": "surprised",
 		"text": "Из Польши? Ого! У нас редко иностранцы бывают.",
+		"translation_key": "ACT1_ARRIVAL_c2d73c09",
 		"type": "dialogue"
 	},
 	{
 		"character": "anna",
-		"mood": "neutral",
 		"text": "Паспорт, пожалуйста.",
+		"translation_key": "ACT1_ARRIVAL_8baea42b",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Вы протягиваете поддельный польский паспорт.",
+		"translation_key": "ACT1_ARRIVAL_9ba98347",
 		"type": "dialogue"
 	},
 	{
 		"character": "anna",
-		"mood": "neutral",
 		"text": "Марек Ковальски... Хорошо.",
+		"translation_key": "ACT1_ARRIVAL_1d402b4e",
 		"type": "dialogue"
 	},
 	{
 		"character": "anna",
-		"mood": "thinking",
 		"text": "А что именно вас интересует в нашем городе?",
+		"translation_key": "ACT1_ARRIVAL_579e858f",
 		"type": "dialogue"
 	},
 	{
@@ -204,96 +206,105 @@
 	},
 	{
 		"character": "anna",
-		"mood": "happy",
 		"text": "Вот ваша регистрация. Где планируете остановиться?",
+		"translation_key": "ACT1_ARRIVAL_b2d51c71",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "neutral",
 		"text": "Есть ли здесь гостиница?",
+		"translation_key": "ACT1_ARRIVAL_8503c859",
 		"type": "dialogue"
 	},
 	{
 		"character": "anna",
-		"mood": "neutral",
 		"text": "Есть одна, на центральной улице. Называется 'Обоянь'.",
+		"translation_key": "ACT1_ARRIVAL_85e03a0c",
 		"type": "dialogue"
 	},
 	{
 		"character": "anna",
-		"mood": "happy",
 		"text": "Если что-то понадобится, обращайтесь! Я Анна, кстати.",
+		"translation_key": "ACT1_ARRIVAL_6a10c97c",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "happy",
 		"text": "Приятно познакомиться, Анна. Спасибо за помощь!",
+		"translation_key": "ACT1_ARRIVAL_65022feb",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Анна улыбается и возвращается к своим делам.",
+		"translation_key": "ACT1_ARRIVAL_a9082c1a",
 		"type": "dialogue"
 	},
 	{
 		"args": [
-			"polish_home",
-			"fade_in"
+			"polish_home"
 		],
 		"name": "background",
 		"type": "command"
 	},
 	{
+		"character": "",
 		"text": "Номер в гостинице 'Обоянь'. Скромно, но чисто.",
+		"translation_key": "ACT1_ARRIVAL_633a46ea",
 		"type": "dialogue"
 	},
 	{
-		"animation": "enter",
 		"character": "marek",
-		"mood": "neutral",
-		"side": "left",
 		"text": "Так, теперь можно начинать работу.",
+		"translation_key": "ACT1_ARRIVAL_d66e0822",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "thinking",
 		"text": "Нужно собрать информацию о заводе, но делать это осторожно.",
+		"translation_key": "ACT1_ARRIVAL_da948a02",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Вы достаете специальное оборудование из чемодана.",
+		"translation_key": "ACT1_ARRIVAL_e656b0c7",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "neutral",
 		"text": "Связь с центром работает. Хорошо.",
+		"translation_key": "ACT1_ARRIVAL_9e8de531",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Внезапно в дверь стучат.",
+		"translation_key": "ACT1_ARRIVAL_7c0c8b0b",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "surprised",
 		"text": "Кто там?",
+		"translation_key": "ACT1_ARRIVAL_4659116e",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "За дверью незнакомый мужской голос.",
+		"translation_key": "ACT1_ARRIVAL_234cc126",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Охрана гостиницы. Проверка документов.",
+		"translation_key": "ACT1_ARRIVAL_1f3cdb39",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "neutral",
 		"text": "Сейчас...",
+		"translation_key": "ACT1_ARRIVAL_61c6bf1a",
 		"type": "dialogue"
 	},
 	{
@@ -368,12 +379,14 @@
 	},
 	{
 		"character": "marek",
-		"mood": "thinking",
 		"text": "Нужно быть осторожнее. За мной уже следят?",
+		"translation_key": "ACT1_ARRIVAL_ab0ca334",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Наступает вечер. Пора действовать.",
+		"translation_key": "ACT1_ARRIVAL_9b40a7f7",
 		"type": "dialogue"
 	},
 	{

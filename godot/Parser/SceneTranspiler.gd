@@ -49,6 +49,7 @@ class DialogueNode:
 	var expression: String
 	var animation: String
 	var side: String
+	var translation_key: String = ""
 
 	func _init(_next: int, _line: String) -> void:
 		super(next)

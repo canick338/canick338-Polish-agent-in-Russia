@@ -1,44 +1,45 @@
 [
 	{
 		"args": [
-			"polish_home",
-			"fade_in"
+			"polish_home"
 		],
 		"name": "background",
 		"type": "command"
 	},
 	{
+		"character": "",
 		"text": "Небольшое казино в российской глубинке. Холодный февральский вечер.",
+		"translation_key": "PROLOGUE_687fd6b0",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Марек Ковальски, польский агент под прикрытием, сидит за игровым автоматом.",
+		"translation_key": "PROLOGUE_2dc2286e",
 		"type": "dialogue"
 	},
 	{
-		"animation": "enter",
 		"character": "marek",
-		"mood": "neutral",
-		"side": "left",
 		"text": "Так... Нужно влиться в местную атмосферу...",
+		"translation_key": "PROLOGUE_425d1810",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "thinking",
 		"text": "Эта миссия не должна быть сложной. Просто собрать информацию и уехать.",
+		"translation_key": "PROLOGUE_cfb1f240",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "После игры к вам подходит местный житель.",
+		"translation_key": "PROLOGUE_f7aad293",
 		"type": "dialogue"
 	},
 	{
-		"animation": "enter",
 		"character": "dima",
-		"mood": "happy",
-		"side": "right",
 		"text": "Эй, приятель! Новенький в городе?",
+		"translation_key": "PROLOGUE_da5eb8d6",
 		"type": "dialogue"
 	},
 	{
@@ -133,8 +134,8 @@
 	},
 	{
 		"character": "dima",
-		"mood": "happy",
 		"text": "Слушай, пошли в бар? Расскажешь про Польшу, я про наш город!",
+		"translation_key": "PROLOGUE_9a18dc9d",
 		"type": "dialogue"
 	},
 	{
@@ -195,8 +196,8 @@
 	},
 	{
 		"character": "marek",
-		"mood": "thinking",
 		"text": "Первый контакт... Надеюсь, я не наделал ошибок.",
+		"translation_key": "PROLOGUE_3a9a8dd9",
 		"type": "dialogue"
 	},
 	{

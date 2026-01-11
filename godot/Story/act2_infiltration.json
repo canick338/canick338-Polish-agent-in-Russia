@@ -8,60 +8,63 @@
 	},
 	{
 		"args": [
-			"polish_home",
-			"fade_in"
+			"polish_home"
 		],
 		"name": "background",
 		"type": "command"
 	},
 	{
+		"character": "",
 		"text": "Местный бар 'У Михалыча'. Вечер, здесь собираются рабочие с завода.",
+		"translation_key": "ACT2_INFILTRATION_284fff84",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Вы входите в бар. Несколько местных мужчин играют в домино.",
+		"translation_key": "ACT2_INFILTRATION_9d53e5a9",
 		"type": "dialogue"
 	},
 	{
-		"animation": "enter",
 		"character": "marek",
-		"mood": "neutral",
-		"side": "left",
 		"text": "Добрый вечер...",
+		"translation_key": "ACT2_INFILTRATION_7a42b4f3",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Некоторые оборачиваются и смотрят на вас.",
+		"translation_key": "ACT2_INFILTRATION_0f8633e0",
 		"type": "dialogue"
 	},
 	{
-		"animation": "enter",
 		"character": "dima",
-		"mood": "happy",
-		"side": "right",
 		"text": "О! Марек! Привет! Пришёл всё-таки!",
+		"translation_key": "ACT2_INFILTRATION_43032fbf",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "happy",
 		"text": "Привет, Дима! Решил, что пропущу по пиву.",
+		"translation_key": "ACT2_INFILTRATION_fb4335af",
 		"type": "dialogue"
 	},
 	{
 		"character": "dima",
-		"mood": "happy",
 		"text": "Правильно! Михалыч, два пива!",
+		"translation_key": "ACT2_INFILTRATION_9c4dc658",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Бармен наливает пиво.",
+		"translation_key": "ACT2_INFILTRATION_9a7304c7",
 		"type": "dialogue"
 	},
 	{
 		"character": "dima",
-		"mood": "neutral",
 		"text": "Так что, как впечатления от Обояни?",
+		"translation_key": "ACT2_INFILTRATION_fc9abea8",
 		"type": "dialogue"
 	},
 	{
@@ -146,20 +149,20 @@
 	},
 	{
 		"character": "dima",
-		"mood": "thinking",
 		"text": "Слушай, а чем ты вообще занимаешься? Говорил что бизнесмен?",
+		"translation_key": "ACT2_INFILTRATION_e36ba3c8",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "neutral",
 		"text": "Да, ищу возможности для инвестиций.",
+		"translation_key": "ACT2_INFILTRATION_41f854e6",
 		"type": "dialogue"
 	},
 	{
 		"character": "dima",
-		"mood": "neutral",
 		"text": "А что тебя в Обояни интересует? У нас тут только завод и всё...",
+		"translation_key": "ACT2_INFILTRATION_df4e5666",
 		"type": "dialogue"
 	},
 	{
@@ -249,39 +252,39 @@
 		"type": "choice"
 	},
 	{
+		"character": "",
 		"text": "К вам подходит ещё один мужчина.",
+		"translation_key": "ACT2_INFILTRATION_23d2ca05",
 		"type": "dialogue"
 	},
 	{
-		"animation": "enter",
 		"character": "stranger",
-		"mood": "neutral",
-		"side": "right",
 		"text": "Новый что ли?",
+		"translation_key": "ACT2_INFILTRATION_302b829d",
 		"type": "dialogue"
 	},
 	{
 		"character": "dima",
-		"mood": "neutral",
 		"text": "Да, это Марек, из Польши приехал. Марек, это Серёга, тоже на заводе работает.",
+		"translation_key": "ACT2_INFILTRATION_978071e5",
 		"type": "dialogue"
 	},
 	{
 		"character": "serega",
-		"mood": "neutral",
 		"text": "Из Польши? Далеко забрался.",
+		"translation_key": "ACT2_INFILTRATION_90b3d149",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "neutral",
 		"text": "Ну да, по работе приходится ездить.",
+		"translation_key": "ACT2_INFILTRATION_5fb75bdf",
 		"type": "dialogue"
 	},
 	{
 		"character": "serega",
-		"mood": "thinking",
 		"text": "И что, правда что у вас там в Европе зарплаты большие?",
+		"translation_key": "ACT2_INFILTRATION_014cb7b7",
 		"type": "dialogue"
 	},
 	{
@@ -354,12 +357,14 @@
 	},
 	{
 		"character": "dima",
-		"mood": "happy",
 		"text": "Давай ещё по пиву! За знакомство!",
+		"translation_key": "ACT2_INFILTRATION_0740dd7e",
 		"type": "dialogue"
 	},
 	{
+		"character": "",
 		"text": "Официант приносит ещё пива.",
+		"translation_key": "ACT2_INFILTRATION_819151a1",
 		"type": "dialogue"
 	},
 	{
@@ -447,13 +452,15 @@
 		"type": "choice"
 	},
 	{
+		"character": "",
 		"text": "Вечер продолжается. Дима явно пьянеет.",
+		"translation_key": "ACT2_INFILTRATION_cf29a2e1",
 		"type": "dialogue"
 	},
 	{
 		"character": "dima",
-		"mood": "drunk",
 		"text": "Слушай, Марек... А ты же бизнесмен... Может деньги подкинешь?",
+		"translation_key": "ACT2_INFILTRATION_a088445d",
 		"type": "dialogue"
 	},
 	{
@@ -537,19 +544,21 @@
 		"type": "choice"
 	},
 	{
+		"character": "",
 		"text": "Вечер подходит к концу.",
+		"translation_key": "ACT2_INFILTRATION_6f1e6ae8",
 		"type": "dialogue"
 	},
 	{
 		"character": "marek",
-		"mood": "neutral",
 		"text": "Пора мне идти. Было приятно.",
+		"translation_key": "ACT2_INFILTRATION_6a5d3e18",
 		"type": "dialogue"
 	},
 	{
 		"character": "dima",
-		"mood": "happy",
 		"text": "И тебе! Заходи ещё!",
+		"translation_key": "ACT2_INFILTRATION_02d23ed0",
 		"type": "dialogue"
 	},
 	{

@@ -6,6 +6,9 @@ extends Control
 @onready var refresh_btn: Button = $HSplitContainer/FilePanel/RefreshButton
 @onready var save_btn: Button = $HSplitContainer/GraphPanel/Toolbar/SaveButton
 @onready var add_node_btn: MenuButton = $HSplitContainer/GraphPanel/Toolbar/AddNodeButton
+# We need to add the Export Button dynamically or assume it exists. 
+# Since I can't edit the Tscn easily here without coordinate guessing, I'll add it via code to the Toolbar HBox.
+var export_csv_btn: Button
 
 var current_file_path: String = ""
 var save_popup: AcceptDialog
@@ -23,6 +26,13 @@ func _ready():
 	file_tree.item_selected.connect(_on_file_selected)
 	save_btn.pressed.connect(_save_current_file)
 	add_node_btn.get_popup().id_pressed.connect(_on_add_node_pressed)
+	
+	# Create Export CSV Button programmatically
+	export_csv_btn = Button.new()
+	export_csv_btn.text = "Export Translations (CSV)"
+	# Add to the same container as save_btn (Toolbar)
+	save_btn.get_parent().add_child(export_csv_btn)
+	export_csv_btn.pressed.connect(_export_translations_to_csv)
 	
 	# Setup Add Node Menu
 	var popup = add_node_btn.get_popup()
@@ -347,10 +357,12 @@ func _save_current_file():
 					else:
 						dialogue_text = parts[0].strip_edges()
 						
+						
 					final_json_array.append({
 						"type": "dialogue",
 						"character": char_name,
-						"text": dialogue_text
+						"text": dialogue_text,
+						"translation_key": _generate_translation_key(char_name, dialogue_text)
 					})
 
 		# CASE 2: Editable Command (Regenerate)
@@ -394,4 +406,81 @@ func _save_current_file():
 		push_error("Failed to save file: " + current_file_path)
 		if save_popup:
 			save_popup.dialog_text = "FAILED to save file!"
+			save_popup.popup_centered()
+
+func _generate_translation_key(char_name: String, text: String) -> String:
+	# Generate a unique key based on content.
+	# Format: FILE_PREFIX_MD5
+	# We use current filename as prefix to avoid collisions between files with same text.
+	var prefix = current_file_path.get_file().get_basename().to_upper()
+	var content = char_name + ":" + text
+	var hash_str = content.md5_text().substr(0, 8) # 8 chars is enough for short collisions usually
+	return prefix + "_" + hash_str
+
+func _export_translations_to_csv():
+	var dir = DirAccess.open("res://Story")
+	if not dir: return
+	
+	var all_keys = {} # key -> text
+	
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	while file_name != "":
+		# Scan all JSONs
+		if not dir.current_is_dir() and file_name.ends_with(".json") and file_name != "translations.csv":
+			var path = "res://Story/" + file_name
+			var f = FileAccess.open(path, FileAccess.READ)
+			if f:
+				var json = JSON.new()
+				if json.parse(f.get_as_text()) == OK and json.data is Array:
+					for item in json.data:
+						# Ensure item is dictionary
+						if item is Dictionary and "translation_key" in item and "text" in item:
+							all_keys[item.translation_key] = item.text
+		file_name = dir.get_next()
+	
+	# Write to CSV
+	# Format: keys, ru, en
+	# Write to CSV
+	# Format: keys, ru, en, pl
+	var csv_path = "res://translations.csv"
+	
+	var preserved_en = {} # key -> text
+	var preserved_pl = {} # key -> text
+	
+	if FileAccess.file_exists(csv_path):
+		var csv_file = FileAccess.open(csv_path, FileAccess.READ)
+		if csv_file:
+			while not csv_file.eof_reached():
+				# Use standard comma for Godot compatibility
+				var line = csv_file.get_csv_line()
+				if line.size() >= 1:
+					var k = line[0]
+					if k == "keys": continue
+					
+					if line.size() >= 3:
+						preserved_en[k] = line[2]
+					if line.size() >= 4:
+						preserved_pl[k] = line[3]
+		else:
+			print("Warning: Could not read existing CSV (maybe locked by Excel?): ", csv_path)
+	
+	var out = FileAccess.open(csv_path, FileAccess.WRITE)
+	if out:
+		# Write UTF-8 BOM for Excel compatibility
+		out.store_buffer(PackedByteArray([0xEF, 0xBB, 0xBF]))
+		
+		# Now support RU, EN, PL (Use semicolon delimiter)
+		out.store_csv_line(["keys", "ru", "en", "pl"])
+		
+		for key in all_keys:
+			var ru = all_keys[key]
+			var en = preserved_en.get(key, "")
+			var pl = preserved_pl.get(key, "")
+			
+			out.store_csv_line([key, ru, en, pl])
+		out.close()
+		
+		if save_popup:
+			save_popup.dialog_text = "Key Export Complete!\nkeys: " + str(all_keys.size())
 			save_popup.popup_centered()

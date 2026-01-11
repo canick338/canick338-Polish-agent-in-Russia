@@ -9,21 +9,25 @@
 	{
 		"character": "",
 		"text": "...",
+		"translation_key": "PREQUEL_DANILA_f3df94d4",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Голова раскалывается. Где я?",
+		"translation_key": "PREQUEL_DANILA_df33b71a",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Что это было?",
+		"translation_key": "PREQUEL_DANILA_b30325ee",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Воспоминания... Они возвращаются.",
+		"translation_key": "PREQUEL_DANILA_3960214c",
 		"type": "dialogue"
 	},
 	{
@@ -43,36 +47,43 @@
 	{
 		"character": "",
 		"text": "Варшава. 1990-е годы жёсткий секс.",
+		"translation_key": "PREQUEL_DANILA_8e52eb1b",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Маленький мальчик. Без родителей. Без дома.",
+		"translation_key": "PREQUEL_DANILA_a5ef0a29",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Я помню... Детский дом родной.",
+		"translation_key": "PREQUEL_DANILA_5e5d421a",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Холодные стены. Пустые коридоры. Одиночество.",
+		"translation_key": "PREQUEL_DANILA_d800e6f5",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Никто не хотел меня забрать.",
+		"translation_key": "PREQUEL_DANILA_7e460f83",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Годы шли. Мальчик рос.",
+		"translation_key": "PREQUEL_DANILA_d8a5d98b",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Но одиночество оставалось. Всегда.",
+		"translation_key": "PREQUEL_DANILA_0d54321b",
 		"type": "dialogue"
 	},
 	{
@@ -92,31 +103,37 @@
 	{
 		"character": "",
 		"text": "Подростковые годы. Улицы Варшавы стали домом.",
+		"translation_key": "PREQUEL_DANILA_f344c335",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Нужно было выживать.",
+		"translation_key": "PREQUEL_DANILA_f1a2f018",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Подработки. Мелкие дела. Иногда не совсем законные.",
+		"translation_key": "PREQUEL_DANILA_7775ee27",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Я научился быть незаметным. Наблюдать. Запоминать.",
+		"translation_key": "PREQUEL_DANILA_3f5051d6",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Люди проходили мимо. Никто не замечал маленького сироту.",
+		"translation_key": "PREQUEL_DANILA_aa25a2e3",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Но я выжил. Выжил сам.",
+		"translation_key": "PREQUEL_DANILA_e076a004",
 		"type": "dialogue"
 	},
 	{
@@ -136,21 +153,25 @@
 	{
 		"character": "",
 		"text": "Однажды он увидел объявление.",
+		"translation_key": "PREQUEL_DANILA_b0a48009",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Завод. Нужны рабочие. Без опыта.",
+		"translation_key": "PREQUEL_DANILA_fc5f4c79",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Это был шанс. Легальная работа. Деньги.",
+		"translation_key": "PREQUEL_DANILA_6fbdafcf",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Я подал заявление.",
+		"translation_key": "PREQUEL_DANILA_59c75719",
 		"type": "dialogue"
 	},
 	{
@@ -170,11 +191,13 @@
 	{
 		"character": "",
 		"text": "Первый день на заводе.",
+		"translation_key": "PREQUEL_DANILA_85d393b9",
 		"type": "dialogue"
 	},
 	{
 		"character": "boss_of_factory",
 		"text": "Так, новичок! Меня зовут Бронислав. Я начальник.",
+		"translation_key": "PREQUEL_DANILA_f6345a1a",
 		"type": "dialogue"
 	},
 	{
@@ -187,41 +210,49 @@
 	{
 		"character": "danila",
 		"text": "Данила. Рад работать.",
+		"translation_key": "PREQUEL_DANILA_dbfa87df",
 		"type": "dialogue"
 	},
 	{
 		"character": "boss_of_factory",
 		"text": "Хорошо. У нас три задания. Расфасовка, варка и работа в павильде.",
+		"translation_key": "PREQUEL_DANILA_d8ab6e0f",
 		"type": "dialogue"
 	},
 	{
 		"character": "boss_of_factory",
 		"text": "Выполнишь всё - получишь зарплату. Не справишься - уходи.",
+		"translation_key": "PREQUEL_DANILA_22d6890c",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Понял. Начну с расфасовки.",
+		"translation_key": "PREQUEL_DANILA_c97f749d",
 		"type": "dialogue"
 	},
 	{
 		"character": "=== МИНИ-ИГРА",
 		"text": "РАСФАСОВКА ===",
+		"translation_key": "PREQUEL_DANILA_edc2daa9",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Перед тобой конвейер. Нужно быстро расфасовывать продукцию.",
+		"translation_key": "PREQUEL_DANILA_1a165197",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Это... сложнее, чем я думал.",
+		"translation_key": "PREQUEL_DANILA_31365b7b",
 		"type": "dialogue"
 	},
 	{
 		"character": "boss_of_factory",
 		"text": "У тебя 30 секунд. Наклей наклейки минимум на 20 банок. Начинай!",
+		"translation_key": "PREQUEL_DANILA_a310d660",
 		"type": "dialogue"
 	},
 	{
@@ -234,11 +265,13 @@
 	{
 		"character": "",
 		"text": "Мини-игра завершена.",
+		"translation_key": "PREQUEL_DANILA_5549f7d4",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Фух... Вроде закончил. Счет: [factory_jam_result_v2]. Надеюсь, этого хватит.",
+		"translation_key": "PREQUEL_DANILA_71fd34ca",
 		"type": "dialogue"
 	},
 	{
@@ -364,21 +397,25 @@
 	{
 		"character": "=== МИНИ-ИГРА",
 		"text": "ВАРКА ===",
+		"translation_key": "PREQUEL_DANILA_42bf5cb2",
 		"type": "dialogue"
 	},
 	{
 		"character": "boss_of_factory",
 		"text": "Теперь варка. Следи за температурой и временем.",
+		"translation_key": "PREQUEL_DANILA_220ad716",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Перед тобой огромные котлы. Нужно варить продукцию по рецепту.",
+		"translation_key": "PREQUEL_DANILA_0730fc21",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Температура... Время... Всё нужно контролировать.",
+		"translation_key": "PREQUEL_DANILA_9907956d",
 		"type": "dialogue"
 	},
 	{
@@ -509,21 +546,25 @@
 	{
 		"character": "=== МИНИ-ИГРА",
 		"text": "ПАВИЛЬД ===",
+		"translation_key": "PREQUEL_DANILA_ab9b045d",
 		"type": "dialogue"
 	},
 	{
 		"character": "boss_of_factory",
 		"text": "Последнее задание. Работа в павильде. Тяжёлая работа.",
+		"translation_key": "PREQUEL_DANILA_83d7e2a9",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Павильд - это огромный склад. Нужно переносить тяжёлые ящики.",
+		"translation_key": "PREQUEL_DANILA_b2cba11a",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Это... очень тяжело.",
+		"translation_key": "PREQUEL_DANILA_37b3a397",
 		"type": "dialogue"
 	},
 	{
@@ -633,91 +674,109 @@
 	{
 		"character": "",
 		"text": "Все задания выполнены.",
+		"translation_key": "PREQUEL_DANILA_b674c174",
 		"type": "dialogue"
 	},
 	{
 		"character": "boss_of_factory",
 		"text": "Хорошо. Ты справился. Вот твоя зарплата.",
+		"translation_key": "PREQUEL_DANILA_2a20868f",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Начальник протягивает тебе маленькую пачку денег.",
+		"translation_key": "PREQUEL_DANILA_7fae0cae",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Это... всё?",
+		"translation_key": "PREQUEL_DANILA_27f3e35a",
 		"type": "dialogue"
 	},
 	{
 		"character": "boss_of_factory",
 		"text": "Да. За тяжёлую работу - маленькая зарплата. Таковы правила.",
+		"translation_key": "PREQUEL_DANILA_9fc2340f",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Я работал весь день... А денег так мало.",
+		"translation_key": "PREQUEL_DANILA_51f820bf",
 		"type": "dialogue"
 	},
 	{
 		"character": "boss_of_factory",
 		"text": "Не нравится? Можешь уйти. Рабочих много.",
+		"translation_key": "PREQUEL_DANILA_2ac500dd",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Нет, останусь. Нужны деньги.",
+		"translation_key": "PREQUEL_DANILA_33bd70d2",
 		"type": "dialogue"
 	},
 	{
 		"character": "boss_of_factory",
 		"text": "Хорошо. Завтра приходи снова.",
+		"translation_key": "PREQUEL_DANILA_0cd17900",
 		"type": "dialogue"
 	},
 	{
 		"character": "boss_of_factory",
 		"text": "",
+		"translation_key": "PREQUEL_DANILA_5679cee9",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "После работы рабочие собираются в углу цеха.",
+		"translation_key": "PREQUEL_DANILA_01b18447",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Несколько мужиков сидят за столом, играют в карты.",
+		"translation_key": "PREQUEL_DANILA_4f1678a0",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Рабочие играют в карты...",
+		"translation_key": "PREQUEL_DANILA_f6f3657c",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Эй, новичок! Идёшь играть?",
+		"translation_key": "PREQUEL_DANILA_b773babd",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Карты? Я не очень умею...",
+		"translation_key": "PREQUEL_DANILA_b0af8cbb",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Ничего страшного! Простая игра - 21. Научим!",
+		"translation_key": "PREQUEL_DANILA_3ed84028",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Давай, садись! Развлечёмся после работы.",
+		"translation_key": "PREQUEL_DANILA_039ba583",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Хм... Может, стоит попробовать?",
+		"translation_key": "PREQUEL_DANILA_1135807b",
 		"type": "dialogue"
 	},
 	{
@@ -893,21 +952,25 @@
 	{
 		"character": "",
 		"text": "Недели работы на заводе. Каждый день - тяжёлый труд.",
+		"translation_key": "PREQUEL_DANILA_1bef9a54",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Я устал. Очень устал.",
+		"translation_key": "PREQUEL_DANILA_c170181f",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Но я выжил. Заработал немного денег. Научился терпению.",
+		"translation_key": "PREQUEL_DANILA_829a073c",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Это было тяжело. Но я справился.",
+		"translation_key": "PREQUEL_DANILA_f18bf475",
 		"type": "dialogue"
 	},
 	{
@@ -927,36 +990,43 @@
 	{
 		"character": "",
 		"text": "Метро. Ежедневные поездки. Куда? Зачем?",
+		"translation_key": "PREQUEL_DANILA_644f7cba",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Я не знал, куда иду.",
+		"translation_key": "PREQUEL_DANILA_6a912cb9",
 		"type": "dialogue"
 	},
 	{
 		"character": "Но что-то внутри говорило",
 		"text": "твоя судьба ещё не написана.",
+		"translation_key": "PREQUEL_DANILA_4d5492d2",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Однажды, в вагоне метро, он увидел плакат.",
+		"translation_key": "PREQUEL_DANILA_b4b163b4",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Школа офицеров польской разведки.",
+		"translation_key": "PREQUEL_DANILA_d377a286",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Сердце забилось чаще. Это было оно.",
+		"translation_key": "PREQUEL_DANILA_6b7c367f",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Судьба дала мне шанс.",
+		"translation_key": "PREQUEL_DANILA_07a25e85",
 		"type": "dialogue"
 	},
 	{
@@ -976,46 +1046,55 @@
 	{
 		"character": "",
 		"text": "Экзамены. Тренировки. Жесткая дисциплина.",
+		"translation_key": "PREQUEL_DANILA_c1119399",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Я был готов. Готов ко всему.",
+		"translation_key": "PREQUEL_DANILA_d71aef30",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Сирота, который вырос на улицах, стал одним из лучших.",
+		"translation_key": "PREQUEL_DANILA_f9d35e4f",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Они научили меня быть невидимым. Собирать информацию. Действовать.",
+		"translation_key": "PREQUEL_DANILA_634d9d77",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Но главное - они дали мне цель. Принадлежность.",
+		"translation_key": "PREQUEL_DANILA_392639ea",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Я больше не был один.",
+		"translation_key": "PREQUEL_DANILA_a3c94ddf",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Годы обучения пролетели быстро.",
+		"translation_key": "PREQUEL_DANILA_3f970d9b",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "И вот я здесь. Агент. Готов к миссии.",
+		"translation_key": "PREQUEL_DANILA_1e532c7c",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "За Польшу. За свою страну.",
+		"translation_key": "PREQUEL_DANILA_234495e2",
 		"type": "dialogue"
 	},
 	{
@@ -1042,61 +1121,73 @@
 	{
 		"character": "",
 		"text": "...",
+		"translation_key": "PREQUEL_DANILA_f3df94d4",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Глаза медленно открываются.",
+		"translation_key": "PREQUEL_DANILA_e8703b02",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Где я?",
+		"translation_key": "PREQUEL_DANILA_6a72d708",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Знакомая комната. Свой дом в Варшаве.",
+		"translation_key": "PREQUEL_DANILA_0ae99878",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Всё это было... воспоминанием?",
+		"translation_key": "PREQUEL_DANILA_9c7fb04c",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Голова всё ещё болит. Но теперь ясно.",
+		"translation_key": "PREQUEL_DANILA_cf586478",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Завтра начинается миссия. В Россию. В Обоянь.",
+		"translation_key": "PREQUEL_DANILA_0b001eea",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Шесть месяцев под прикрытием. Шесть месяцев опасности.",
+		"translation_key": "PREQUEL_DANILA_153f3288",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Но я готов. Я всегда был готов.",
+		"translation_key": "PREQUEL_DANILA_ae5d0ae9",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "Воспоминания вернули мне силу. Напоминали, кто я.",
+		"translation_key": "PREQUEL_DANILA_8deeebc9",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
 		"text": "Сирота, который стал агентом. Который выжил.",
+		"translation_key": "PREQUEL_DANILA_bf7e4106",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
 		"text": "И который выживет снова.",
+		"translation_key": "PREQUEL_DANILA_242127c4",
 		"type": "dialogue"
 	},
 	{
