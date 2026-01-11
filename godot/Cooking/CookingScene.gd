@@ -5,9 +5,15 @@ signal cooking_finished(score: int)
 # === CONFIGURATION ===
 const MAX_TEMP: float = 100.0
 const MIN_TEMP: float = 0.0
-const GREEN_ZONE_MIN: float = 40.0
-const GREEN_ZONE_MAX: float = 70.0
-var DANGER_ZONE_MIN: float = 90.0
+var GREEN_ZONE_MIN: float = 40.0
+var GREEN_ZONE_MAX: float = 70.0
+var DANGER_ZONE_MIN: float = 95.0
+
+# Dynamic Mechanics
+var _green_zone_center: float = 55.0
+var _green_zone_width: float = 30.0 # Wider target (was 20)
+var _time_elapsed: float = 0.0
+var _turbulence_timer: float = 0.0
 
 
 
@@ -27,6 +33,7 @@ var _is_stirring: bool = false
 var _is_active: bool = false
 var _heating_modifier: float = 1.0
 var _input_locked: bool = false
+var _start_warmup: float = 0.0 # Grace period at start
 var _score: int = 0
 
 # Ingredient Requests
@@ -63,6 +70,17 @@ func _exit_tree():
 func _process(delta):
 	# print("CookingScene: process active? ", _is_active) # Too spammy
 	if not _is_active: return
+	
+	if _start_warmup > 0:
+		_start_warmup -= delta
+		if _start_warmup <= 0:
+			status_label.text = "Удерживай температуру в ЗЕЛЕНОЙ ЗОНЕ!"
+		else:
+			_update_visuals() # Ensure visuals are correct during warmup
+			return # Skip logic updates during warmup
+	
+	_time_elapsed += delta
+	# Drift removed as per user request - static zone
 	
 	_update_temperature(delta)
 	_update_progress(delta)
@@ -180,7 +198,8 @@ func _apply_ingredient_effect(type: String):
 			_temperature -= 5.0
 		"Сахар":
 			status_label.text = "Сахар добавлен."
-			_progress += 5.0
+			# No progress bonus, strictly zone-based now
+			# _progress += 5.0
 		_:
 			status_label.text = "Ингредиент добавлен."
 
@@ -188,28 +207,66 @@ func _update_visuals():
 	heat_slider.value = _temperature
 	progress_bar.value = _progress
 	
+	# Visual feedback for filling
+	if _temperature >= GREEN_ZONE_MIN and _temperature <= GREEN_ZONE_MAX:
+		progress_bar.modulate = Color(0.5, 1.0, 0.5) # Glowing Green
+		progress_bar.scale = Vector2(1.02, 1.02) # Slight pulse hint, better handled in _process or animation but this works for now
+	else:
+		progress_bar.modulate = Color.WHITE
+		progress_bar.scale = Vector2.ONE
+	
 	# Pot color interpolation
 	var color_start = Color(0.4, 0.2, 0.0) # Muddy brown
 	var color_end = Color(0.0, 1.0, 1.0) # Glowing cyan
 	var t = _progress / TOTAL_PROGRESS_REQD
 	pot_visual.modulate = color_start.lerp(color_end, t)
+	
+	# Update Green Zone Visuals
+	# Slider is 500px tall. Value 100 is Top (y=0). Value 0 is Bottom (y=500).
+	# Top Offset = (100 - MAX) / 100 * 500
+	# Bottom Offset = (100 - MIN) / 100 * 500 - 500 (since checking from top parent? No, standard rect offsets)
+	# Easier: top is (1.0 - MAX/100) * height. bottom is (1.0 - MIN/100) * height - height (relative to bottom anchor)
+	# Actually let's just use absolute pixels relative to top (0) since anchors are full stretch?
+	# Wait, check tscn: anchors 15 (full rect) for GreenZone inside Slider?
+	# No, GreenZone is child of HeatSlider.
+	# Top Offset = (100 - MAX) / 100 * 500
+	# Bottom Offset = (100 - MIN) / 100 * 500 - 500 
+	
+	# Assuming HeatSlider is 500px height fixed.
+	var info = heat_slider.size.y # Should be 500
+	var top_y = (1.0 - (GREEN_ZONE_MAX / 100.0)) * info
+	var bot_y = (1.0 - (GREEN_ZONE_MIN / 100.0)) * info
+	
+	# Setting margins/offsets
+	green_zone_rect.offset_top = top_y
+	green_zone_rect.offset_bottom = bot_y - info # offset_bottom is relative to bottom edge, so negative
 
 func _start_game():
 	# Load balance
+	# Force hardcoded values to bypass potential Autoload caching issues in running game
 	if "GameGlobal" in get_node("/root") and GameGlobal.COOKING_BALANCE:
-		var b = GameGlobal.COOKING_BALANCE
-		BASE_HEATING_RATE = b.get("heating_rate", 5.0)
-		COOLING_RATE = b.get("cooling_rate", 40.0)
-		PROGRESS_RATE = b.get("progress_rate", 10.0)
-		TOTAL_PROGRESS_REQD = b.get("total_progress", 100.0)
-		INGREDIENT_TIMEOUT = b.get("ingredient_timeout", 8.0)
+		pass
+		# var b = GameGlobal.COOKING_BALANCE
+		# BASE_HEATING_RATE = b.get("heating_rate", 5.0)
+		# COOLING_RATE = b.get("cooling_rate", 40.0)
+		# PROGRESS_RATE = b.get("progress_rate", 10.0)
+		# TOTAL_PROGRESS_REQD = b.get("total_progress", 100.0)
+		# INGREDIENT_TIMEOUT = b.get("ingredient_timeout", 8.0)
+		
+	# HARDCODED EXTREME VALUES (As per latest request)
+	BASE_HEATING_RATE = 7.0
+	COOLING_RATE = 18.0 # Adjusted for heating 7
+	PROGRESS_RATE = 3.4 # Requested speed
+	TOTAL_PROGRESS_REQD = 100.0
+	INGREDIENT_TIMEOUT = 8.0
 
 	_is_active = true
 	_score = 0
 	_progress = 0
-	_temperature = 50.0 # Start safely
+	_temperature = 20.0 # Start much safely (was 50.0)
+	_start_warmup = 2.0 # Give 2 seconds to prepare
 	_ingredient_timer = 2.0
-	status_label.text = "Удерживай температуру в ЗЕЛЕНОЙ ЗОНЕ!"
+	status_label.text = "Приготовься..."
 	
 	# Apply Story Choice Modifiers
 	if has_node("/root/Variables"):
@@ -226,12 +283,9 @@ func _start_game():
 			INGREDIENT_TIMEOUT *= 1.5 # More time to add ingredients
 			DANGER_ZONE_MIN = 95.0 # Wider green/safe zone (effectively)
 			status_label.text += "\n(Режим: Осторожный)"
-		elif style == "fast":
-			BASE_HEATING_RATE *= 2.0 # Much faster heat
-			PROGRESS_RATE *= 1.5 # Faster progress
-			INGREDIENT_TIMEOUT *= 0.7 # Hurry up!
-			DANGER_ZONE_MIN = 85.0 # Danger comes sooner
-			status_label.text += "\n(Режим: Рискованный)"
+		else:
+			status_label.text += "\n(Режим: По инструкции)"
+
 
 func _fail_game(reason: String):
 	_is_active = false
