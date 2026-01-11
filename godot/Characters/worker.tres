@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Character" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Characters/Character.gd" id="1"]
+[ext_resource type="Texture2D" path="res://Characters/worker_neutral.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "worker"
+display_name = "CHAR_WORKER"
+bio = "Обычный рабочий завода."
+age = 30
+default_image = "neutral"
+images = {
+"neutral": ExtResource("2")
+}

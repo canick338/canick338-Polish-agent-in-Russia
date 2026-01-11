@@ -15,7 +15,7 @@ var save_popup: AcceptDialog
 var file_dialog: EditorFileDialog
 
 # Cache for resources
-var _character_ids: Array = []
+var _character_data: Dictionary = {} # id -> { path, moods: [] }
 var _background_ids: Array = []
 
 func _ready():
@@ -68,7 +68,7 @@ func _ready():
 	_refresh_file_list()
 
 func _scan_resources():
-	_character_ids.clear()
+	_character_data.clear()
 	_background_ids.clear()
 	
 	# Scan Characters
@@ -78,12 +78,23 @@ func _scan_resources():
 		var file = char_dir.get_next()
 		while file != "":
 			if (file.ends_with(".tres") or file.ends_with(".res")) and not char_dir.current_is_dir():
-				# Assuming ID is basename for now, or we could load resource. 
-				# Loading is safer but slower. Let's use basename which matches ID convention usually.
 				var id = file.get_basename()
-				_character_ids.append(id)
+				var path = "res://Characters/" + file
+				
+				# Load resource to get moods
+				# Note: Loading all resources might be slow if there are hundreds, but for now it's fine.
+				var res = load(path)
+				var moods = []
+				if res and "images" in res:
+					moods = res.images.keys()
+				
+				_character_data[id] = {
+					"path": path,
+					"moods": moods
+				}
 			file = char_dir.get_next()
-	_character_ids.sort()
+	
+	# Add manual list if scanning failed somehow or to ensure defaults
 	
 	# Scan Backgrounds
 	var bg_dir = DirAccess.open("res://Backgrounds")
@@ -97,7 +108,7 @@ func _scan_resources():
 			file = bg_dir.get_next()
 	_background_ids.sort()
 	
-	print("Scanned Resources: ", _character_ids.size(), " Characters, ", _background_ids.size(), " Backgrounds.")
+	print("Scanned Resources: ", _character_data.size(), " Characters, ", _background_ids.size(), " Backgrounds.")
 
 func _refresh_file_list():
 	file_tree.clear()
@@ -274,7 +285,7 @@ func _create_dialogue_block_node(items: Array) -> GraphNode:
 	vbox.add_child(lines_container)
 	
 	# Function to add a single dialogue row
-	var add_row_func = func(char_id: String, text: String):
+	var add_row_func = func(char_id: String, text: String, mood: String = ""):
 		var row = HBoxContainer.new()
 		row.set_meta("is_dialogue_row", true)
 		
@@ -288,16 +299,19 @@ func _create_dialogue_block_node(items: Array) -> GraphNode:
 		# CHARACTER DROPDOWN
 		var char_opt = OptionButton.new()
 		char_opt.name = "Char"
-		char_opt.custom_minimum_size.x = 100
-		char_opt.add_item("...", 0)
+		char_opt.custom_minimum_size.x = 120
+		char_opt.add_item("Select Char...", 0)
+		
+		var char_ids = _character_data.keys()
+		char_ids.sort()
+		
 		var sel_idx = 0
-		for i in range(_character_ids.size()):
-			char_opt.add_item(_character_ids[i], i + 1)
-			if _character_ids[i] == char_id:
+		for i in range(char_ids.size()):
+			char_opt.add_item(char_ids[i], i + 1)
+			if char_ids[i] == char_id:
 				sel_idx = i + 1
 		
 		if sel_idx == 0 and char_id != "":
-			# Custom character
 			char_opt.add_item(char_id, 999)
 			char_opt.selected = char_opt.item_count - 1
 			char_opt.set_meta("custom_char", char_id)
@@ -305,6 +319,60 @@ func _create_dialogue_block_node(items: Array) -> GraphNode:
 			char_opt.selected = sel_idx
 			
 		row.add_child(char_opt)
+		
+		# MOOD DROPDOWN (Dynamic)
+		var mood_opt = OptionButton.new()
+		mood_opt.name = "Mood"
+		mood_opt.custom_minimum_size.x = 100
+		mood_opt.clip_text = true
+		
+		# Function to update moods
+		var update_moods = func(selected_char_id):
+			mood_opt.clear()
+			mood_opt.add_item("neutral (default)", 0) # Always have default
+			mood_opt.set_meta("custom_mood", "")
+			
+			if _character_data.has(selected_char_id):
+				var moods_list = _character_data[selected_char_id].moods
+				for m in moods_list:
+					if m != "neutral": # Don't duplicate default if possible, or just add all
+						mood_opt.add_item(m)
+			
+			# If we have a current mood set that fits, select it
+			# If custom mood was passed (not in list), add it?
+			if mood != "" and mood != "neutral":
+				var found = false
+				for i in range(mood_opt.item_count):
+					if mood_opt.get_item_text(i) == mood:
+						mood_opt.selected = i
+						found = true
+						break
+				if not found:
+					mood_opt.add_item(mood + "*", 999)
+					mood_opt.selected = mood_opt.item_count - 1
+					mood_opt.set_meta("custom_mood", mood)
+			else:
+				mood_opt.selected = 0
+		
+		# Connect Char Change
+		char_opt.item_selected.connect(func(idx):
+			var selected_id = ""
+			if idx > 0:
+				selected_id = char_opt.get_item_text(idx)
+				if idx == 999: selected_id = char_opt.get_meta("custom_char") # Logic for custom needs care
+			update_moods.call(selected_id)
+		)
+		
+		# Initial update
+		var init_char = ""
+		if sel_idx > 0 and sel_idx != 999: # Standard
+			init_char = char_ids[sel_idx - 1]
+		elif char_id != "":
+			init_char = char_id
+			
+		update_moods.call(init_char)
+		
+		row.add_child(mood_opt)
 		
 		# TEXT EDIT
 		var text_edit = LineEdit.new()
@@ -318,10 +386,10 @@ func _create_dialogue_block_node(items: Array) -> GraphNode:
 		
 	# Populate existing
 	for item in items:
-		add_row_func.call(item.get("character", ""), item.get("text", ""))
+		add_row_func.call(item.get("character", ""), item.get("text", ""), item.get("mood", ""))
 		
 	# Connect Add Button
-	add_line_btn.pressed.connect(func(): add_row_func.call("", ""))
+	add_line_btn.pressed.connect(func(): add_row_func.call("", "", ""))
 	
 	if node.has_signal("close_request"):
 		node.close_request.connect(func(): _delete_node(node))
@@ -534,13 +602,38 @@ func _save_current_file():
 						if text_edit:
 							text_line = text_edit.text.strip_edges()
 							
+						# Extract Mood
+						var mood_opt = row.find_child("Mood", true, false)
+						var mood = ""
+						if mood_opt:
+							if mood_opt.selected >= 0:
+								# If custom mood
+								if mood_opt.selected == mood_opt.item_count - 1 and mood_opt.has_meta("custom_mood"):
+									mood = mood_opt.get_meta("custom_mood")
+									if mood == "": # If custom mood is explicitly empty? Unlikely.
+										# Fallback to text if needed, or if it's the "Custom*" item
+										var txt = mood_opt.get_item_text(mood_opt.selected)
+										if txt.ends_with("*"):
+											mood = txt.left(-1)
+								else:
+									var txt = mood_opt.get_item_text(mood_opt.selected)
+									# Handle "neutral (default)" or similar mapping
+									if "default" in txt:
+										mood = "neutral"
+									else:
+										mood = txt
+							
 						if text_line != "":
-							final_json_array.append({
+							var node_data = {
 								"type": "dialogue",
 								"character": char_id,
 								"text": text_line,
 								"translation_key": _generate_translation_key(char_id, text_line)
-							})
+							}
+							if mood != "" and mood != "neutral":
+								node_data["mood"] = mood
+								
+							final_json_array.append(node_data)
 
 		# CASE 2: Editable Command (Regenerate)
 		elif meta_type == "command":
