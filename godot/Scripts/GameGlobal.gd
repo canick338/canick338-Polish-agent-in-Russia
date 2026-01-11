@@ -30,6 +30,16 @@ const CARD_DATABASE = {
 	}
 }
 
+const COOKING_BALANCE = {
+	"heating_rate": 5.0,
+	"cooling_rate": 40.0,
+	"progress_rate": 10.0,
+	"total_progress": 100.0,
+	"ingredient_timeout": 8.0,
+	"twist_fire_heat_mult": 4.0,
+	"twist_ice_freeze_time": 2.0
+}
+
 # === СОСТОЯНИЕ ИГРЫ ===
 # Переменные, которые мы сохраняем
 var save_data = {

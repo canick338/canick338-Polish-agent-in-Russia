@@ -20,6 +20,7 @@ const CUTSCENE_PLAYER := preload("res://Cutscenes/CutscenePlayer.tscn")
 const FACTORY_JAM_SCENE := preload("res://Factory/FactoryJamScene.tscn")
 const CARD_GAME_SCENE := preload("res://CardGame/CardGameScene.tscn")
 const CINEMATIC_LAYER_SCENE := preload("res://Cinematic/CinematicLayer.tscn")
+const COOKING_SCENE := preload("res://Cooking/CookingScene.tscn")
 
 var _scene_data := {}
 var _cutscene_player: Control = null
@@ -48,24 +49,37 @@ func run_scene(start_key: int = 0) -> void:
 		_current_node_index = key  # Update position tracker
 		# Проверяем, что key валидный
 		if not _scene_data.has(key):
-			push_error("Invalid key in scene data: %d (scene has %d nodes)" % [key, _scene_data.size()])
+			push_error("Invalid key in scene data: %d (scene has %d nodes). Ending scene." % [key, _scene_data.size()])
 			break
 		
 		var node: SceneTranspiler.BaseNode = _scene_data[key]
-		print("Processing node at key %d: type=%s, next=%d" % [key, node.get_class(), node.next])
-		var character: Character = (
-			ResourceDB.get_character(node.character)
-			if "character" in node and node.character != ""
-			else ResourceDB.get_narrator()
-		)
+		print("Processing node at key %d: type=%s (Script: %s), next=%d" % [key, node.get_class(), node.get_script().resource_path.get_file() if node.get_script() else "Native", node.next])
+		
+		# Debug for Minigame Node
+		if node is SceneTranspiler.MinigameCommandNode:
+			print(">>> FOUND MINIGAME NODE! Name: ", node.minigame_name)
+			
+		var character: Character = null
+		if "character" in node and node.character != "":
+			if node.character.begins_with("==="):
+				# System message or separator, not a real character
+				character = null
+			else:
+				character = ResourceDB.get_character(node.character)
+		else:
+			character = ResourceDB.get_narrator()
 		
 		# Проверка на null персонажа
 		if not character:
 			var char_id = node.character if "character" in node and node.character != "" else "narrator"
-			push_error("Character not found: " + char_id)
-			character = ResourceDB.get_narrator()  # Fallback на narrator
+			
+			# Don't error on system messages
+			if not char_id.begins_with("==="):
+				push_error("Character not found: " + char_id)
+				character = ResourceDB.get_narrator()  # Fallback на narrator
+			
 			# Если narrator тоже не найден, создаем минимальный fallback
-			if not character:
+			if not character and not char_id.begins_with("==="):
 				push_error("Narrator not found! Creating fallback character.")
 				# Создаем минимальный Character ресурс программно
 				character = Character.new()
@@ -82,14 +96,22 @@ func run_scene(start_key: int = 0) -> void:
 				scene_event.emit(evt_name, evt_args)
 
 		if node is SceneTranspiler.BackgroundCommandNode:
-			var bg: Background = ResourceDB.get_background(node.background)
-			if bg and bg.texture:
+			if node.background == "black":
 				if _background:
-					_background.texture = bg.texture
-				else:
-					push_error("Background node not ready!")
+					_background.texture = null
+					# Ensure it looks black (if behind is black)
+					# Or we could have a black resource.
+					# For now, null texture usually means transparent/black depending on setup.
+					print("Background set to black (cleared).")
 			else:
-				push_error("Background not found: " + node.background)
+				var bg: Background = ResourceDB.get_background(node.background)
+				if bg and bg.texture:
+					if _background:
+						_background.texture = bg.texture
+					else:
+						push_error("Background node not ready!")
+				else:
+					push_error("Background not found: " + node.background)
 			
 			# Handle transition if specified
 			if "transition" in node and node.transition != "" and TRANSITIONS.has(node.transition):
@@ -358,11 +380,17 @@ func _play_minigame(minigame_name: String) -> void:
 	"""Проиграть мини-игру"""
 	match minigame_name:
 		"factory_jam", "jam_factory", "расфасовка":
+			print("ScenePlayer: Matched factory_jam")
 			await _play_factory_jam_game()
 		"card_game", "cards", "карты", "21", "очки":
+			print("ScenePlayer: Matched card_game")
 			await _play_card_game()
+		"cooking", "varka", "варка":
+			print("ScenePlayer: Matched cooking")
+			await _play_cooking_game()
 		_:
 			push_error("Unknown minigame: " + minigame_name)
+			print("ScenePlayer: Unknown minigame name: ", minigame_name)
 
 
 func _play_factory_jam_game() -> void:
@@ -550,7 +578,64 @@ func _on_card_game_finished(player_won: bool, player_score: int, dealer_score: i
 	# Можно сохранить результат в переменные, если нужно
 	Variables.add_variable("card_game_won", 1 if player_won else 0)
 	Variables.add_variable("card_game_player_score", player_score)
+	Variables.add_variable("card_game_player_score", player_score)
 	Variables.add_variable("card_game_dealer_score", dealer_score)
+
+
+func _play_cooking_game() -> void:
+	"""Проиграть мини-игру ВАРКА"""
+	print("ScenePlayer: Starting Cooking Game...")
+	if _minigame_instance:
+		print("ScenePlayer WARNING: _minigame_instance is not null! Cleaning up...")
+		_minigame_instance.queue_free()
+		_minigame_instance = null
+		
+	if not _minigame_instance and COOKING_SCENE:
+		print("ScenePlayer: Instantiating Cooking Scene...")
+		_minigame_instance = COOKING_SCENE.instantiate()
+		if _minigame_instance:
+			print("ScenePlayer: Adding Cooking Scene to tree...")
+			add_child(_minigame_instance)
+			print("ScenePlayer: Cooking Scene added.")
+		else:
+			push_error("ScenePlayer: Failed to instantiate COOKING_SCENE (null result).")
+	
+	if not _minigame_instance:
+		push_error("Failed to create CookingScene instance. COOKING_SCENE resource: " + str(COOKING_SCENE))
+		return
+	
+	# Connect signal
+	if _minigame_instance.has_signal("cooking_finished"):
+		if _minigame_instance.cooking_finished.is_connected(_on_cooking_game_finished):
+			_minigame_instance.cooking_finished.disconnect(_on_cooking_game_finished)
+		_minigame_instance.cooking_finished.connect(_on_cooking_game_finished)
+	
+	# Hide VN UI
+	print("ScenePlayer: Hiding UI...")
+	if _text_box: _text_box.hide()
+	if _character_displayer: _character_displayer.hide()
+	
+	# Wait for finish
+	print("ScenePlayer: Waiting for cooking_finished signal...")
+	await _minigame_instance.cooking_finished
+	print("ScenePlayer: Cooking Game Finished Signal Received.")
+	
+	# Cleanup
+	if _minigame_instance:
+		_minigame_instance.queue_free()
+		_minigame_instance = null
+	
+	# Restore UI
+	if _text_box: 
+		_text_box.show()
+		await get_tree().process_frame
+	if _character_displayer: 
+		_character_displayer.show()
+		await get_tree().process_frame
+
+func _on_cooking_game_finished(score: int) -> void:
+	print("Cooking game finished! Score: ", score)
+	Variables.add_variable("cooking_score", score)
 
 
 func _evaluate_condition(condition: SceneParser.BaseExpression, variables_list: Dictionary) -> bool:

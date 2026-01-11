@@ -1,0 +1,299 @@
+[gd_scene load_steps=5 format=3 uid="uid://cookingscene_advanced"]
+
+[ext_resource type="Script" path="res://Cooking/CookingScene.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://iconplaceholder" path="res://icon.png" id="2_icon"]
+[ext_resource type="Script" path="res://Cooking/Pot.gd" id="3_pot_script"]
+[ext_resource type="PackedScene" uid="uid://ingredient_item" path="res://Cooking/Ingredient.tscn" id="4_ingredient"]
+[ext_resource type="Texture2D" uid="uid://factory_bg_cook" path="res://Factory/background_for_the_minigame_factory_jar.png" id="5_bg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_timer_red"]
+bg_color = Color(0.9, 0.1, 0.1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="CookingScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="GameArea" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Pot" type="TextureRect" parent="GameArea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_icon")
+expand_mode = 1
+script = ExtResource("3_pot_script")
+
+
+
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HeatSlider" type="VSlider" parent="UI"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -250.0
+offset_right = -40.0
+offset_bottom = 250.0
+grow_horizontal = 0
+grow_vertical = 2
+max_value = 100.0
+value = 50.0
+editable = false
+scrollable = false
+
+[node name="GreenZone" type="ColorRect" parent="UI/HeatSlider"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 150.0
+offset_bottom = -300.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0, 0.8, 0.2, 0.4)
+
+[node name="DangerIndicator" type="ColorRect" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 0.2)
+mouse_filter = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 50.0
+offset_right = 300.0
+offset_bottom = 90.0
+grow_horizontal = 2
+max_value = 100.0
+
+[node name="StatusLabel" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 110.0
+offset_right = 200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "Статус..."
+horizontal_alignment = 1
+
+[node name="MoneyPanel" type="PanelContainer" parent="UI"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 70.0
+
+[node name="HBox" type="HBoxContainer" parent="UI/MoneyPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/MoneyPanel/HBox"]
+layout_mode = 2
+text = "Деньги:"
+
+[node name="MoneyValue" type="Label" parent="UI/MoneyPanel/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="IngredientRequestLabel" type="Label" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 160.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 28
+text = "Добавьте: ..."
+horizontal_alignment = 1
+
+[node name="TimerBar" type="ProgressBar" parent="UI/IngredientRequestLabel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = 5.0
+offset_right = 100.0
+offset_bottom = 20.0
+grow_horizontal = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_timer_red")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="StirButton" type="Button" parent="UI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -150.0
+offset_right = 120.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "МЕШАТЬ!"
+
+[node name="IngredientsShelf" type="HBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -150.0
+offset_right = 550.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Ing_Fire" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
+layout_mode = 2
+ingredient_name = "Огненный корень"
+
+[node name="Label" type="Label" parent="UI/IngredientsShelf/Ing_Fire"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Огонь"
+horizontal_alignment = 1
+
+[node name="Ing_Ice" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
+layout_mode = 2
+ingredient_name = "Ледяная пыль"
+
+[node name="Label" type="Label" parent="UI/IngredientsShelf/Ing_Ice"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Лед"
+horizontal_alignment = 1
+
+[node name="Ing_Salt" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
+layout_mode = 2
+ingredient_name = "Соль"
+
+[node name="Label" type="Label" parent="UI/IngredientsShelf/Ing_Salt"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Соль"
+horizontal_alignment = 1
+
+[node name="Ing_Sugar" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
+layout_mode = 2
+ingredient_name = "Сахар"
+
+[node name="Label" type="Label" parent="UI/IngredientsShelf/Ing_Sugar"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Сахар"
+horizontal_alignment = 1
+
+[connection signal="button_down" from="UI/StirButton" to="." method="_on_stir_button_down"]
+[connection signal="button_up" from="UI/StirButton" to="." method="_on_stir_button_up"]

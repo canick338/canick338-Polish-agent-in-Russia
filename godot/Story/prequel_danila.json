@@ -237,12 +237,6 @@
 		"type": "dialogue"
 	},
 	{
-		"character": "=== МИНИ-ИГРА",
-		"text": "РАСФАСОВКА ===",
-		"translation_key": "PREQUEL_DANILA_edc2daa9",
-		"type": "dialogue"
-	},
-	{
 		"character": "",
 		"text": "Перед тобой конвейер. Нужно быстро расфасовывать продукцию.",
 		"translation_key": "PREQUEL_DANILA_1a165197",
@@ -275,15 +269,15 @@
 	},
 	{
 		"character": "danila",
-		"text": "Фух... Вроде закончил. Счет: [factory_jam_result_v2]. Надеюсь, этого хватит.",
+		"text": "Фух... Вроде закончил. Счет: [factory_jam_final_score]. Надеюсь, этого хватит.",
 		"translation_key": "PREQUEL_DANILA_71fd34ca",
 		"type": "dialogue"
 	},
 	{
-		"condition": "factory_jam_result_v2>=20",
+		"condition": "factory_jam_final_score>=20",
 		"elif": [
 			{
-				"condition": "factory_jam_result_v2>=8",
+				"condition": "factory_jam_final_score>=8",
 				"then": [
 					{
 						"character": "danila",
@@ -400,12 +394,6 @@
 		"type": "if"
 	},
 	{
-		"character": "=== МИНИ-ИГРА",
-		"text": "ВАРКА ===",
-		"translation_key": "PREQUEL_DANILA_42bf5cb2",
-		"type": "dialogue"
-	},
-	{
 		"character": "boss_of_factory",
 		"text": "Теперь варка. Следи за температурой и временем.",
 		"translation_key": "PREQUEL_DANILA_220ad716",
@@ -428,17 +416,18 @@
 			{
 				"children": [
 					{
+						"args": [
+							"cooking_style",
+							"normal"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
 						"character": "danila",
 						"mood": "thinking_factory",
 						"side": "left",
 						"text": "Нужно внимательно читать инструкцию.",
-						"type": "dialogue"
-					},
-					{
-						"character": "danila",
-						"mood": "serious",
-						"side": "left",
-						"text": "Следую рецепту точно.",
 						"type": "dialogue"
 					},
 					{
@@ -449,18 +438,11 @@
 						"type": "dialogue"
 					},
 					{
-						"character": "danila",
-						"mood": "serious",
-						"side": "left",
-						"text": "Спасибо.",
-						"type": "dialogue"
-					},
-					{
-						"character": "danila",
-						"mood": "tired_at_factory",
-						"side": "left",
-						"text": "Ещё одно задание...",
-						"type": "dialogue"
+						"args": [
+							"cooking"
+						],
+						"name": "minigame",
+						"type": "command"
 					}
 				],
 				"text": "Строго следовать инструкции"
@@ -468,17 +450,18 @@
 			{
 				"children": [
 					{
+						"args": [
+							"cooking_style",
+							"fast"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
 						"character": "danila",
 						"mood": "thinking_factory",
 						"side": "left",
 						"text": "Попробую ускорить процесс.",
-						"type": "dialogue"
-					},
-					{
-						"character": "danila",
-						"mood": "sad_factory",
-						"side": "left",
-						"text": "Что-то идёт не так...",
 						"type": "dialogue"
 					},
 					{
@@ -492,15 +475,15 @@
 						"character": "danila",
 						"mood": "sad_factory",
 						"side": "left",
-						"text": "Извините, исправлю.",
+						"text": "Извините, сейчас исправлю... (Режим: Рискованный)",
 						"type": "dialogue"
 					},
 					{
-						"character": "danila",
-						"mood": "tired_at_factory",
-						"side": "left",
-						"text": "Это сложнее, чем я думал...",
-						"type": "dialogue"
+						"args": [
+							"cooking"
+						],
+						"name": "minigame",
+						"type": "command"
 					}
 				],
 				"text": "Импровизировать и ускорить процесс"
@@ -508,17 +491,18 @@
 			{
 				"children": [
 					{
-						"character": "danila",
-						"mood": "thinking_factory",
-						"side": "left",
-						"text": "Спрошу у опытных рабочих.",
-						"type": "dialogue"
+						"args": [
+							"cooking_style",
+							"safe"
+						],
+						"name": "set",
+						"type": "command"
 					},
 					{
 						"character": "danila",
 						"mood": "thinking_factory",
 						"side": "left",
-						"text": "Они помогают мне.",
+						"text": "Спрошу у опытных рабочих.",
 						"type": "dialogue"
 					},
 					{
@@ -532,21 +516,51 @@
 						"character": "danila",
 						"mood": "thinking_factory",
 						"side": "left",
-						"text": "Спасибо за помощь.",
+						"text": "Они помогли мне всё сделать.",
 						"type": "dialogue"
 					},
 					{
-						"character": "danila",
-						"mood": "tired_at_factory",
-						"side": "left",
-						"text": "Хорошо, что помогли.",
-						"type": "dialogue"
+						"args": [
+							"cooking_score",
+							100
+						],
+						"name": "set",
+						"type": "command"
 					}
 				],
 				"text": "Спросить совета у опытных рабочих"
 			}
 		],
 		"type": "choice"
+	},
+	{
+		"character": "danila",
+		"mood": "thinking_factory",
+		"side": "left",
+		"text": "Варка завершена. Фух...",
+		"type": "dialogue"
+	},
+	{
+		"condition": "cooking_score>=50",
+		"type": "if",
+		"then": [
+			{
+				"character": "boss_of_factory",
+				"mood": "happy",
+				"side": "right",
+				"text": "Отлично сварил! То что нужно.",
+				"type": "dialogue"
+			}
+		],
+		"else": [
+			{
+				"character": "boss_of_factory",
+				"mood": "angry",
+				"side": "right",
+				"text": "Это что за помои? Переделывай!",
+				"type": "dialogue"
+			}
+		]
 	},
 	{
 		"character": "=== МИНИ-ИГРА",
@@ -799,10 +813,6 @@
 						],
 						"name": "unlock",
 						"type": "command"
-					},
-					{
-						"text": "=== ИГРА В КАРТЫ ===",
-						"type": "dialogue"
 					},
 					{
 						"text": "Рабочие объясняют правила: нужно набрать 21 очко или максимально близко.",

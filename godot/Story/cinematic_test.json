@@ -1,183 +1,183 @@
 [
-    {
-        "type": "command",
-        "name": "background",
-        "args": [
+	{
+		"type": "command",
+		"name": "background",
+		"args": [
             "factory_inside"
-        ]
-    },
-    {
-        "type": "dialogue",
-        "text": "Финальный тест системы Cinematic (v2).",
-        "character": "danila",
-        "mood": "neutral",
-        "side": "left"
-    },
-    {
-        "type": "command",
-        "name": "cinematic",
-        "args": [
-            "res://Backgrounds/Factory/factory_inside_location.png",
-            "pan_right",
-            3.0
-        ]
-    },
-    {
-        "type": "dialogue",
-        "text": "1. Панорама (Pan Right)",
-        "character": "danila",
-        "mood": "neutral",
-        "side": "left"
-    },
-    {
-        "type": "command",
-        "name": "cinematic",
-        "args": [
-            "res://Characters/Danila/danila_happy.png",
-            "bounce",
-            0
-        ]
-    },
-    {
-        "type": "dialogue",
-        "text": "2. Радость (Bounce Idle)",
-        "character": "danila",
-        "mood": "happy",
-        "side": "left"
-    },
-    {
-        "type": "command",
-        "name": "cinematic",
-        "args": [
-            "res://Characters/Danila/danila_surprised.png",
-            "wiggle",
-            0
-        ]
-    },
-    {
-        "type": "dialogue",
-        "text": "3. Игривость (Wiggle Idle)",
-        "character": "danila",
-        "mood": "surprised",
-        "side": "left"
-    },
-    {
-        "type": "command",
-        "name": "cinematic",
-        "args": [
-            "res://Characters/Danila/danila_tired_at_factory.png",
-            "breathing",
-            0
-        ]
-    },
-    {
-        "type": "dialogue",
-        "text": "4. Усталость (Breathing Idle)",
-        "character": "danila",
-        "mood": "tired_at_factory",
-        "side": "left"
-    },
-    {
-        "type": "command",
-        "name": "cinematic",
-        "args": [
-            "res://Characters/Danila/danila_determined_fabric.png",
-            "zoom_in",
-            2.0
-        ]
-    },
-    {
-        "type": "dialogue",
-        "text": "5. Решимость (Zoom In)",
-        "character": "danila",
-        "mood": "determined",
-        "side": "left"
-    },
-    {
-        "type": "command",
-        "name": "cinematic",
-        "args": [
-            "res://Characters/Danila/danila_nervous_fabric.png",
-            "heartbeat",
-            0
-        ]
-    },
-    {
-        "type": "dialogue",
-        "text": "6. Напряжение (Heartbeat)",
-        "character": "danila",
-        "mood": "nervous",
-        "side": "left"
-    },
-    {
-        "type": "command",
-        "name": "cinematic",
-        "args": [
-            "res://Characters/Danila/danila_cry.png",
-            "sepia",
-            1.0
-        ]
-    },
-    {
-        "type": "dialogue",
-        "text": "7. Воспоминание (Sepia)",
-        "character": "danila",
-        "mood": "cry",
-        "side": "left"
-    },
-    {
-        "type": "command",
-        "name": "cinematic",
-        "args": [
-            "res://Characters/Danila/danila_cry.png",
-            "danger",
-            0.5
-        ]
-    },
-    {
-        "type": "dialogue",
-        "text": "8. ОПАСНОСТЬ (Danger)",
-        "character": "danila",
-        "mood": "cry",
-        "side": "left"
-    },
-    {
-        "type": "command",
-        "name": "cinematic",
-        "args": [
-            "res://Characters/Danila/danila_cry.png",
-            "flash_black",
-            0.1
-        ]
-    },
-    {
-        "type": "dialogue",
-        "text": "9. Удар (Flash Black)",
-        "character": "danila",
-        "mood": "cry",
-        "side": "left"
-    },
-    {
-        "type": "command",
-        "name": "cinematic",
-        "args": [
-            "res://Characters/Danila/danila_cry.png",
-            "impact",
-            0
-        ]
-    },
-    {
-        "type": "dialogue",
-        "text": "10. СТОЛКНОВЕНИЕ! (Impact)",
-        "character": "danila",
-        "mood": "cry",
-        "side": "left"
-    },
-    {
-        "type": "dialogue",
-        "text": "Тест завершен.",
-        "character": "danila",
-        "mood": "neutral",
-        "side": "left"
-    }
+		]
+	},
+	{
+		"type": "dialogue",
+		"text": "Финальный тест системы Cinematic (v2).",
+		"character": "danila",
+		"mood": "neutral",
+		"side": "left"
+	},
+	{
+		"type": "command",
+		"name": "cinematic",
+		"args": [
+			"res://Backgrounds/Factory/factory_inside_location.png",
+			"pan_right",
+			3.0
+		]
+	},
+	{
+		"type": "dialogue",
+		"text": "1. Панорама (Pan Right)",
+		"character": "danila",
+		"mood": "neutral",
+		"side": "left"
+	},
+	{
+		"type": "command",
+		"name": "cinematic",
+		"args": [
+			"res://Characters/Danila/danila_happy.png",
+			"bounce",
+			0
+		]
+	},
+	{
+		"type": "dialogue",
+		"text": "2. Радость (Bounce Idle)",
+		"character": "danila",
+		"mood": "happy",
+		"side": "left"
+	},
+	{
+		"type": "command",
+		"name": "cinematic",
+		"args": [
+			"res://Characters/Danila/danila_surprised.png",
+			"wiggle",
+			0
+		]
+	},
+	{
+		"type": "dialogue",
+		"text": "3. Игривость (Wiggle Idle)",
+		"character": "danila",
+		"mood": "surprised",
+		"side": "left"
+	},
+	{
+		"type": "command",
+		"name": "cinematic",
+		"args": [
+			"res://Characters/Danila/danila_tired_at_factory.png",
+			"breathing",
+			0
+		]
+	},
+	{
+		"type": "dialogue",
+		"text": "4. Усталость (Breathing Idle)",
+		"character": "danila",
+		"mood": "tired_at_factory",
+		"side": "left"
+	},
+	{
+		"type": "command",
+		"name": "cinematic",
+		"args": [
+			"res://Characters/Danila/danila_determined_fabric.png",
+			"zoom_in",
+			2.0
+		]
+	},
+	{
+		"type": "dialogue",
+		"text": "5. Решимость (Zoom In)",
+		"character": "danila",
+		"mood": "determined",
+		"side": "left"
+	},
+	{
+		"type": "command",
+		"name": "cinematic",
+		"args": [
+			"res://Characters/Danila/danila_nervous_fabric.png",
+			"heartbeat",
+			0
+		]
+	},
+	{
+		"type": "dialogue",
+		"text": "6. Напряжение (Heartbeat)",
+		"character": "danila",
+		"mood": "nervous",
+		"side": "left"
+	},
+	{
+		"type": "command",
+		"name": "cinematic",
+		"args": [
+			"res://Characters/Danila/danila_cry.png",
+			"sepia",
+			1.0
+		]
+	},
+	{
+		"type": "dialogue",
+		"text": "7. Воспоминание (Sepia)",
+		"character": "danila",
+		"mood": "cry",
+		"side": "left"
+	},
+	{
+		"type": "command",
+		"name": "cinematic",
+		"args": [
+			"res://Characters/Danila/danila_cry.png",
+			"danger",
+			0.5
+		]
+	},
+	{
+		"type": "dialogue",
+		"text": "8. ОПАСНОСТЬ (Danger)",
+		"character": "danila",
+		"mood": "cry",
+		"side": "left"
+	},
+	{
+		"type": "command",
+		"name": "cinematic",
+		"args": [
+			"res://Characters/Danila/danila_cry.png",
+			"flash_black",
+			0.1
+		]
+	},
+	{
+		"type": "dialogue",
+		"text": "9. Удар (Flash Black)",
+		"character": "danila",
+		"mood": "cry",
+		"side": "left"
+	},
+	{
+		"type": "command",
+		"name": "cinematic",
+		"args": [
+			"res://Characters/Danila/danila_cry.png",
+			"impact",
+			0
+		]
+	},
+	{
+		"type": "dialogue",
+		"text": "10. СТОЛКНОВЕНИЕ! (Impact)",
+		"character": "danila",
+		"mood": "cry",
+		"side": "left"
+	},
+	{
+		"type": "dialogue",
+		"text": "Тест завершен.",
+		"character": "danila",
+		"mood": "neutral",
+		"side": "left"
+	}
 ]

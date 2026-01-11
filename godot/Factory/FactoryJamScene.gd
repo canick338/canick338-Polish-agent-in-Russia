@@ -72,7 +72,7 @@ func _ready() -> void:
 	
 	# Reset global variable to ensure no stale high scores affect dialogue
 	if has_node("/root/Variables"):
-		get_node("/root/Variables").add_variable("factory_jam_result_v2", 0)
+		get_node("/root/Variables").add_variable("factory_jam_final_score", 0)
 		
 	_start_game()
 
@@ -178,8 +178,8 @@ func _end_game() -> void:
 	
 	# Sync with Story Variables
 	if has_node("/root/Variables"):
-		get_node("/root/Variables").add_variable("factory_jam_result_v2", _score)
-		print("FactoryJam: Saved score to Variables as 'factory_jam_result_v2': %d" % _score)
+		get_node("/root/Variables").add_variable("factory_jam_final_score", _score)
+		print("FactoryJam: Saved score to Variables as 'factory_jam_final_score': %d" % _score)
 		
 	print("FactoryJam: Emitting finished signal with Score: %d" % _score)
 	factory_game_finished.emit(_score, _score, MAX_LIVES - _lives)
