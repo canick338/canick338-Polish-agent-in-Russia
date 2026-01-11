@@ -430,8 +430,35 @@ func _create_graph_node(item: Dictionary) -> GraphNode:
 					node.set_meta("command_type", "background")
 					
 					# Background ID Dropdown
-					var dropdown = _create_dropdown_property("Background ID:", _background_ids, args[0] if args.size() > 0 else "", "Arg0")
-					vbox.add_child(dropdown)
+					var dropdown_hbox = _create_dropdown_property("Background ID:", _background_ids, args[0] if args.size() > 0 else "", "Arg0")
+					vbox.add_child(dropdown_hbox)
+					var dropdown = dropdown_hbox.get_child(1) # OptionButton
+					
+					# Custom Path Picker (Hidden by default unless custom is selected)
+					var custom_picker = _create_file_picker_property("Custom Path:", args[0] if args.size() > 0 else "", EditorFileDialog.FILE_MODE_OPEN_FILE, ["*.png", "*.jpg", "*.jpeg", "*.webp"], "Arg0_Custom")
+					vbox.add_child(custom_picker)
+					
+					# Logic to show/hide picker
+					var update_picker_vis = func(idx):
+						custom_picker.visible = (idx == 0)
+					
+					dropdown.item_selected.connect(update_picker_vis)
+					
+					# Initial State Logic
+					var current_val = args[0] if args.size() > 0 else ""
+					if current_val != "" and not current_val in _background_ids:
+						# It's a custom path
+						dropdown.selected = 0
+						custom_picker.visible = true
+						# StartLine of picker is set by creating it with current_val
+					else:
+						# It's an ID or empty
+						custom_picker.visible = (dropdown.selected == 0)
+						# If it matches an ID, dropdown handles selection automatically in create_dropdown_property
+						if dropdown.selected > 0:
+							# Clear custom picker text to avoid confusion handled on save? 
+							# No, keep it as is, save logic decides.
+							pass
 					
 				"cinematic":
 					node.title = "Cinematic Event"
@@ -648,7 +675,21 @@ func _save_current_file():
 				var args = []
 				
 				# Helper to extract value from any control type (LineEdit or OptionButton)
+				# UPDATED: Handles Custom Fallback for Backgrounds
 				var get_val = func(arg_name):
+					# Special Case for Background Arg0
+					if cmd_type == "background" and arg_name == "Arg0":
+						var opt = node.find_child("Arg0", true, false)
+						if opt and opt is OptionButton:
+							if opt.selected > 0:
+								return opt.get_item_text(opt.selected)
+							else:
+								# Custom selected, get from Arg0_Custom
+								var cust = node.find_child("Arg0_Custom", true, false)
+								if cust and cust is LineEdit:
+									return cust.text
+						return ""
+						
 					var control = node.find_child(arg_name, true, false)
 					if control:
 						if control is LineEdit:
@@ -668,6 +709,8 @@ func _save_current_file():
 				if arg0 != null: args.append(arg0)
 				if arg1 != null: args.append(arg1)
 				if arg2 != null: args.append(arg2)
+				
+				# Clean trailing empty args? No, keep index.
 				
 				final_json_array.append({
 					"type": "command",
