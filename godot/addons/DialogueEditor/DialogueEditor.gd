@@ -427,16 +427,14 @@ func _create_graph_node(item: Dictionary) -> GraphNode:
 					node.title = "Change Background"
 					node.set_meta("command_type", "background")
 					
-					# Use Dropdown for Background IDs instead of manual path
+					# Background ID Dropdown
 					var dropdown = _create_dropdown_property("Background ID:", _background_ids, args[0] if args.size() > 0 else "", "Arg0")
 					vbox.add_child(dropdown)
 					
-					# Optional Transition
-					var trans_edit = LineEdit.new()
-					trans_edit.name = "Arg1"
-					trans_edit.placeholder_text = "Transition (optional)"
-					trans_edit.text = args[1] if args.size() > 1 else ""
-					vbox.add_child(trans_edit)
+					# Transition Dropdown
+					var transitions = ["fade_in", "fade_out"]
+					var trans_dd = _create_dropdown_property("Transition:", transitions, args[1] if args.size() > 1 else "", "Arg1")
+					vbox.add_child(trans_dd)
 					
 				"cinematic":
 					node.title = "Cinematic Event"
