@@ -16,7 +16,31 @@ func get_narrator() -> Character:
 
 
 func get_background(background_id: String) -> Background:
-	return _backgrounds.get(background_id)
+	if _backgrounds.has(background_id):
+		return _backgrounds[background_id]
+	
+	# Fallback: check if it is a raw path to an image
+	if background_id.begins_with("res://") or (background_id.find("/") > -1 and (background_id.ends_with(".png") or background_id.ends_with(".jpg") or background_id.ends_with(".webp"))):
+		var path = background_id
+		if not path.begins_with("res://"):
+			# Try to resolve relative path if possible, or assume it is absolute from project root??
+			# ScenePlayer usually resolves it, but if it came here as relative, we might need to fix it.
+			# But best to rely on caller providing good path. 
+			# Let's check for file existence via load
+			if not FileAccess.file_exists("res://" + path):
+				pass # Keep original
+			else:
+				path = "res://" + path
+				
+		if ResourceLoader.exists(path):
+			var texture = load(path)
+			if texture is Texture2D:
+				var bg = Background.new()
+				bg.id = "custom_" + path.get_file()
+				bg.texture = texture
+				return bg
+				
+	return null
 
 
 ## Finds and loads resources of a given type in `directory_path`.
