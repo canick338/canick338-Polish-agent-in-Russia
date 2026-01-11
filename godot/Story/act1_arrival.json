@@ -1,0 +1,399 @@
+[
+	{
+		"args": [
+			"start_act1"
+		],
+		"name": "mark",
+		"type": "command"
+	},
+	{
+		"args": [
+			"polish_home"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Следующее утро. Обоянь, небольшой город в Курской области.",
+		"translation_key": "ACT1_ARRIVAL_fce8e3ab",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Серое небо, заснеженные улицы, старые советские здания.",
+		"translation_key": "ACT1_ARRIVAL_0421edfb",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Итак, я здесь. Город небольшой, все друг друга знают...",
+		"translation_key": "ACT1_ARRIVAL_b3c5f166",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Нужно быть осторожным. Моя легенда - польский бизнесмен.",
+		"translation_key": "ACT1_ARRIVAL_014f37cb",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Сначала нужно зарегистрироваться в местной администрации.",
+		"translation_key": "ACT1_ARRIVAL_72d91adb",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"polish_home"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Здание местной администрации. Типичный советский интерьер.",
+		"translation_key": "ACT1_ARRIVAL_099537d2",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"text": "Добрый день! Чем могу помочь?",
+		"translation_key": "ACT1_ARRIVAL_d39cb88c",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Здравствуйте! Я приехал по делам, хотел бы зарегистрироваться.",
+		"translation_key": "ACT1_ARRIVAL_37f60a97",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"text": "Конечно! Вы откуда приехали?",
+		"translation_key": "ACT1_ARRIVAL_a0f00eef",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Из Польши. Я бизнесмен, интересуюсь инвестициями в регион.",
+		"translation_key": "ACT1_ARRIVAL_d6b6309f",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"text": "Из Польши? Ого! У нас редко иностранцы бывают.",
+		"translation_key": "ACT1_ARRIVAL_c2d73c09",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"text": "Паспорт, пожалуйста.",
+		"translation_key": "ACT1_ARRIVAL_8baea42b",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Вы протягиваете поддельный польский паспорт.",
+		"translation_key": "ACT1_ARRIVAL_9ba98347",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"text": "Марек Ковальски... Хорошо.",
+		"translation_key": "ACT1_ARRIVAL_1d402b4e",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"text": "А что именно вас интересует в нашем городе?",
+		"translation_key": "ACT1_ARRIVAL_579e858f",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Слышал, у вас есть крупный завод. Интересуюсь возможностями сотрудничества.",
+						"type": "dialogue"
+					},
+					{
+						"character": "anna",
+						"mood": "suspicious",
+						"text": "Завод? Хм... Обычно представители приходят через официальные каналы...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"20"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"character": "anna",
+						"mood": "neutral",
+						"text": "Ну ладно, вам нужно будет связаться с дирекцией напрямую.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Интересуюсь местным производством"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "Хочу узнать больше о регионе в целом. Культура, экономика, люди...",
+						"type": "dialogue"
+					},
+					{
+						"character": "anna",
+						"mood": "happy",
+						"text": "О, как интересно! Рада, что кто-то интересуется нашим городом!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"friendship_anna",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Просто изучаю регион"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Просто ищу новые возможности для бизнеса. Может быть, ваш город подходит.",
+						"type": "dialogue"
+					},
+					{
+						"character": "anna",
+						"mood": "neutral",
+						"text": "Понятно. Что ж, надеюсь, вам понравится Обоянь!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Ищу новые возможности"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "anna",
+		"text": "Вот ваша регистрация. Где планируете остановиться?",
+		"translation_key": "ACT1_ARRIVAL_b2d51c71",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Есть ли здесь гостиница?",
+		"translation_key": "ACT1_ARRIVAL_8503c859",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"text": "Есть одна, на центральной улице. Называется 'Обоянь'.",
+		"translation_key": "ACT1_ARRIVAL_85e03a0c",
+		"type": "dialogue"
+	},
+	{
+		"character": "anna",
+		"text": "Если что-то понадобится, обращайтесь! Я Анна, кстати.",
+		"translation_key": "ACT1_ARRIVAL_6a10c97c",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Приятно познакомиться, Анна. Спасибо за помощь!",
+		"translation_key": "ACT1_ARRIVAL_65022feb",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Анна улыбается и возвращается к своим делам.",
+		"translation_key": "ACT1_ARRIVAL_a9082c1a",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"polish_home"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Номер в гостинице 'Обоянь'. Скромно, но чисто.",
+		"translation_key": "ACT1_ARRIVAL_633a46ea",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Так, теперь можно начинать работу.",
+		"translation_key": "ACT1_ARRIVAL_d66e0822",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Нужно собрать информацию о заводе, но делать это осторожно.",
+		"translation_key": "ACT1_ARRIVAL_da948a02",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Вы достаете специальное оборудование из чемодана.",
+		"translation_key": "ACT1_ARRIVAL_e656b0c7",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Связь с центром работает. Хорошо.",
+		"translation_key": "ACT1_ARRIVAL_9e8de531",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Внезапно в дверь стучат.",
+		"translation_key": "ACT1_ARRIVAL_7c0c8b0b",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Кто там?",
+		"translation_key": "ACT1_ARRIVAL_4659116e",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "За дверью незнакомый мужской голос.",
+		"translation_key": "ACT1_ARRIVAL_234cc126",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Охрана гостиницы. Проверка документов.",
+		"translation_key": "ACT1_ARRIVAL_1f3cdb39",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Сейчас...",
+		"translation_key": "ACT1_ARRIVAL_61c6bf1a",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"text": "Вы быстро прячете оборудование и открываете дверь.",
+						"type": "dialogue"
+					},
+					{
+						"text": "Охранник проверяет документы и уходит.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Открыть сразу"
+			},
+			{
+				"children": [
+					{
+						"text": "Вы тщательно прячете всё оборудование.",
+						"type": "dialogue"
+					},
+					{
+						"text": "Охранник ждёт долго, это выглядит подозрительно.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Спрятать всё тщательно, потом открыть"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Извините, я занят. Можно позже?",
+						"type": "dialogue"
+					},
+					{
+						"text": "Это вызывает подозрения...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"20"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Сказать что занят"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "marek",
+		"text": "Нужно быть осторожнее. За мной уже следят?",
+		"translation_key": "ACT1_ARRIVAL_ab0ca334",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Наступает вечер. Пора действовать.",
+		"translation_key": "ACT1_ARRIVAL_9b40a7f7",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	}
+]

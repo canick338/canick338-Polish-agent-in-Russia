@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcsrhxgshc0kc"]
+[gd_scene load_steps=8 format=3 uid="uid://dcsrhxgshc0kc"]
 
 [ext_resource type="Script" uid="uid://d1kbspolp5h11" path="res://Factory/FactoryJamScene.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dx82vjbaw0gn7" path="res://Factory/chibi_danila_left_up_basket_minigame.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://br00sotc27nqt" path="res://Factory/chibi_danila_left_down_basket_minigame.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://deolpguxaa4pu" path="res://Factory/chibi_danila_right_up_basket_minigame.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://dkqga4h0h52nx" path="res://Factory/chibi_danila_right_down_basket_minigame.png" id="6"]
-[ext_resource type="Texture2D" uid="uid://bgfacjar00001" path="res://Factory/background_for_the_minigame_factory_jar.png" id="7"]
+[ext_resource type="Texture2D" uid="uid://8gdu1gq6dnye" path="res://Factory/background_for_the_minigame_factory_jar.png" id="7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_info"]
 bg_color = Color(0.1, 0.1, 0.1, 0.8)

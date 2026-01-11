@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/DialogueEditor/DialogueEditor.gd" id="1_script"]
+
+[node name="DialogueEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_script")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 200
+
+[node name="FilePanel" type="VBoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HSplitContainer/FilePanel"]
+layout_mode = 2
+text = "Story Files"
+horizontal_alignment = 1
+
+[node name="RefreshButton" type="Button" parent="HSplitContainer/FilePanel"]
+layout_mode = 2
+text = "Refresh"
+
+[node name="FileTree" type="Tree" parent="HSplitContainer/FilePanel"]
+layout_mode = 2
+size_flags_vertical = 3
+hide_root = true
+
+[node name="GraphPanel" type="VBoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="Toolbar" type="HBoxContainer" parent="HSplitContainer/GraphPanel"]
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="HSplitContainer/GraphPanel/Toolbar"]
+layout_mode = 2
+text = "Save JSON"
+
+[node name="AddNodeButton" type="MenuButton" parent="HSplitContainer/GraphPanel/Toolbar"]
+layout_mode = 2
+text = "Add Node"
+item_count = 3
+popup/item_0/text = "Dialogue"
+popup/item_0/id = 0
+popup/item_1/text = "Command"
+popup/item_1/id = 1
+popup/item_2/text = "Choice"
+popup/item_2/id = 2
+
+[node name="GraphEdit" type="GraphEdit" parent="HSplitContainer/GraphPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+right_disconnects = true

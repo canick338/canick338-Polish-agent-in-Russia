@@ -1,0 +1,210 @@
+[
+	{
+		"args": [
+			"polish_home"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Небольшое казино в российской глубинке. Холодный февральский вечер.",
+		"translation_key": "PROLOGUE_687fd6b0",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Марек Ковальски, польский агент под прикрытием, сидит за игровым автоматом.",
+		"translation_key": "PROLOGUE_2dc2286e",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Так... Нужно влиться в местную атмосферу...",
+		"translation_key": "PROLOGUE_425d1810",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Эта миссия не должна быть сложной. Просто собрать информацию и уехать.",
+		"translation_key": "PROLOGUE_cfb1f240",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "После игры к вам подходит местный житель.",
+		"translation_key": "PROLOGUE_f7aad293",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"text": "Эй, приятель! Новенький в городе?",
+		"translation_key": "PROLOGUE_da5eb8d6",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Да, я бизнесмен из Польши. Марек меня зовут.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Поляк? Во дела! Редко у нас поляки бывают.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "happy",
+						"text": "Дима я, приятно познакомиться!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Да, приехал по делам"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Проездом просто. Останусь ненадолго.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "suspicious",
+						"text": "Странно... Кто ж через Обоянь проездом едет?",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Просто проездом"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "angry",
+						"text": "Извини, но это мои дела.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "angry",
+						"text": "Ого, какой важный! Ладно, извини что побеспокоил.",
+						"type": "dialogue"
+					},
+					{
+						"text": "Дмитрий уходит, бросая на вас недовольный взгляд.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Это не твое дело"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "dima",
+		"text": "Слушай, пошли в бар? Расскажешь про Польшу, я про наш город!",
+		"translation_key": "PROLOGUE_9a18dc9d",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "С удовольствием! Веди.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"bar_scene"
+						],
+						"name": "jump",
+						"type": "command"
+					}
+				],
+				"text": "Хорошая идея!"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Спасибо, но я устал с дороги. Может, как-нибудь потом?",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Ну ладно, понимаю. Увидимся!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"0"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Не сегодня, устал"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "marek",
+		"text": "Первый контакт... Надеюсь, я не наделал ошибок.",
+		"translation_key": "PROLOGUE_3a9a8dd9",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	}
+]

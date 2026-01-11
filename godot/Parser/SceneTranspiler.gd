@@ -34,6 +34,7 @@ class DialogueTree:
 ## Base type for all other node types below.
 class BaseNode:
 	var next: int
+	var event: Dictionary = {} # Stores "signal": name, "args": [...]
 
 	func _init(_next: int) -> void:
 		self.next = _next
@@ -48,6 +49,7 @@ class DialogueNode:
 	var expression: String
 	var animation: String
 	var side: String
+	var translation_key: String = ""
 
 	func _init(_next: int, _line: String) -> void:
 		super(next)
@@ -201,6 +203,21 @@ class UnlockCommandNode:
 	func _init(_next: int, _card_id: String) -> void:
 		super(_next)
 		self.card_id = _card_id
+
+
+## Node type for cinematic CG events
+class CinematicCommandNode:
+	extends BaseNode
+	
+	var image_path: String
+	var effect: String
+	var duration: float
+	
+	func _init(_next: int, _image_path: String) -> void:
+		super(_next)
+		self.image_path = _image_path
+		self.effect = ""
+		self.duration = 0.0
 
 
 ## Takes in a syntax tree from the SceneParser and turns it into a
@@ -450,6 +467,32 @@ func _transpile_command(dialogue_tree: DialogueTree, expression: SceneParser.Bas
 			push_error("UNLOCK command requires a card_id argument")
 		else:
 			command_node = UnlockCommandNode.new(dialogue_tree.index + 1, card_id)
+
+	elif expression.value == SceneLexer.BUILT_IN_COMMANDS.CINEMATIC:
+		if expression.arguments.size() < 1:
+			push_error("CINEMATIC command requires at least 1 argument: image path")
+			return null
+		
+		var image_path: String = _get_argument_value(expression.arguments[0], "")
+		# Обработка путей (аналогично Cutscenes)
+		if not image_path.begins_with("res://"):
+			# Если путь не абсолютный, предполагаем папку Story/CG/ или просто res://
+			# Для надежности оставим как есть, пользователь должен указывать полный путь или относительный
+			# Но часто удобно писать просто имя файла
+			if not "/" in image_path:
+				image_path = "res://Story/CG/" + image_path
+		
+		command_node = CinematicCommandNode.new(dialogue_tree.index + 1, image_path)
+		
+		if expression.arguments.size() > 1:
+			command_node.effect = _get_argument_value(expression.arguments[1], "")
+		
+		if expression.arguments.size() > 2:
+			var dur = _get_argument_value(expression.arguments[2], "0.0")
+			if dur is String:
+				command_node.duration = float(dur)
+			elif dur is float or dur is int:
+				command_node.duration = float(dur)
 
 	else:
 		push_error("Unrecognized command type `%s`" % expression.value)

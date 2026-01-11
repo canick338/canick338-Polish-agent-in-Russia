@@ -1,0 +1,571 @@
+[
+	{
+		"args": [
+			"start_act2"
+		],
+		"name": "mark",
+		"type": "command"
+	},
+	{
+		"args": [
+			"polish_home"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Местный бар 'У Михалыча'. Вечер, здесь собираются рабочие с завода.",
+		"translation_key": "ACT2_INFILTRATION_284fff84",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Вы входите в бар. Несколько местных мужчин играют в домино.",
+		"translation_key": "ACT2_INFILTRATION_9d53e5a9",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Добрый вечер...",
+		"translation_key": "ACT2_INFILTRATION_7a42b4f3",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Некоторые оборачиваются и смотрят на вас.",
+		"translation_key": "ACT2_INFILTRATION_0f8633e0",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"text": "О! Марек! Привет! Пришёл всё-таки!",
+		"translation_key": "ACT2_INFILTRATION_43032fbf",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Привет, Дима! Решил, что пропущу по пиву.",
+		"translation_key": "ACT2_INFILTRATION_fb4335af",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"text": "Правильно! Михалыч, два пива!",
+		"translation_key": "ACT2_INFILTRATION_9c4dc658",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Бармен наливает пиво.",
+		"translation_key": "ACT2_INFILTRATION_9a7304c7",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"text": "Так что, как впечатления от Обояни?",
+		"translation_key": "ACT2_INFILTRATION_fc9abea8",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "Интересный город. Тихо, спокойно. Люди дружелюбные.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "happy",
+						"text": "Вот-вот! Хоть и маленький, зато свой!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Интересный город"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Честно говоря, слишком тихо. Привык к большим городам.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Ну да, мы провинция... Зато спокойно живём.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Слишком тихо для меня"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Холодно очень. У нас в Польше теплее.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "laugh",
+						"text": "Ха! Это ещё не холодно! Вот в январе приезжай!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Холодно здесь"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "dima",
+		"text": "Слушай, а чем ты вообще занимаешься? Говорил что бизнесмен?",
+		"translation_key": "ACT2_INFILTRATION_e36ba3c8",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Да, ищу возможности для инвестиций.",
+		"translation_key": "ACT2_INFILTRATION_41f854e6",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"text": "А что тебя в Обояни интересует? У нас тут только завод и всё...",
+		"translation_key": "ACT2_INFILTRATION_df4e5666",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Собственно, завод меня и интересует. Что там производят?",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "suspicious",
+						"text": "Хм... А ты вроде бизнесмен? Разве не должен был заранее узнать?",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Ну, делают там всякое... Оборудование разное.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Именно завод меня и интересует"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Изучаю регион в целом. Хочу понять, есть ли перспективы.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Ну, завод у нас главный. Я там работаю охранником.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Изучаю регион в целом"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "Пока просто знакомлюсь с городом и людьми.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "happy",
+						"text": "Правильно! Без спешки. Город наш хороший, люди добрые.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Просто знакомлюсь с городом"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "",
+		"text": "К вам подходит ещё один мужчина.",
+		"translation_key": "ACT2_INFILTRATION_23d2ca05",
+		"type": "dialogue"
+	},
+	{
+		"character": "stranger",
+		"text": "Новый что ли?",
+		"translation_key": "ACT2_INFILTRATION_302b829d",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"text": "Да, это Марек, из Польши приехал. Марек, это Серёга, тоже на заводе работает.",
+		"translation_key": "ACT2_INFILTRATION_978071e5",
+		"type": "dialogue"
+	},
+	{
+		"character": "serega",
+		"text": "Из Польши? Далеко забрался.",
+		"translation_key": "ACT2_INFILTRATION_90b3d149",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Ну да, по работе приходится ездить.",
+		"translation_key": "ACT2_INFILTRATION_5fb75bdf",
+		"type": "dialogue"
+	},
+	{
+		"character": "serega",
+		"text": "И что, правда что у вас там в Европе зарплаты большие?",
+		"translation_key": "ACT2_INFILTRATION_014cb7b7",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Ну, в среднем да, получше.",
+						"type": "dialogue"
+					},
+					{
+						"character": "serega",
+						"mood": "neutral",
+						"text": "Везёт вам...",
+						"type": "dialogue"
+					},
+					{
+						"text": "Серёга продолжает пить пиво.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Да, получше чем здесь"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Не такие уж и большие. Жизнь дорогая, налоги высокие.",
+						"type": "dialogue"
+					},
+					{
+						"character": "serega",
+						"mood": "neutral",
+						"text": "Да везде одинаково наверное...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_local",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Не такие большие, как думают"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "По-разному. Зависит от специальности.",
+						"type": "dialogue"
+					},
+					{
+						"character": "serega",
+						"mood": "neutral",
+						"text": "Понятно.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Зависит от работы"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "dima",
+		"text": "Давай ещё по пиву! За знакомство!",
+		"translation_key": "ACT2_INFILTRATION_0740dd7e",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Официант приносит ещё пива.",
+		"translation_key": "ACT2_INFILTRATION_819151a1",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"text": "Вы выпиваете пиво залпом, как делают местные.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "laugh",
+						"text": "О! Молодец! Уже как свой!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Выпить залпом (по-русски)"
+			},
+			{
+				"children": [
+					{
+						"text": "Вы пьёте медленно, смакуя.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "neutral",
+						"text": "Что, не привык крепко пить?",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Пить медленно"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Спасибо, но мне хватит. Завтра дела.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "disappointed",
+						"text": "Эх, слабак! Ладно, как хочешь.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Отказаться от следующей кружки"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "",
+		"text": "Вечер продолжается. Дима явно пьянеет.",
+		"translation_key": "ACT2_INFILTRATION_cf29a2e1",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"text": "Слушай, Марек... А ты же бизнесмен... Может деньги подкинешь?",
+		"translation_key": "ACT2_INFILTRATION_a088445d",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Вот, держи немного.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "happy",
+						"text": "Спасибо, друг! Ты хороший!",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Дать денег"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Извини, но я не даю деньги в долг.",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "sad",
+						"text": "Ладно... Понимаю.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"friendship_dima",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Отказать"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "thinking",
+						"text": "Слушай, а если я дам тебе денег, расскажешь про завод?",
+						"type": "dialogue"
+					},
+					{
+						"character": "dima",
+						"mood": "suspicious",
+						"text": "Что? Зачем тебе про завод?",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"20"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Предложить сделку"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "",
+		"text": "Вечер подходит к концу.",
+		"translation_key": "ACT2_INFILTRATION_6f1e6ae8",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Пора мне идти. Было приятно.",
+		"translation_key": "ACT2_INFILTRATION_6a5d3e18",
+		"type": "dialogue"
+	},
+	{
+		"character": "dima",
+		"text": "И тебе! Заходи ещё!",
+		"translation_key": "ACT2_INFILTRATION_02d23ed0",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	}
+]

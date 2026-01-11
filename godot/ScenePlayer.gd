@@ -5,6 +5,7 @@ extends Node
 signal scene_finished
 signal restart_requested
 signal transition_finished
+signal scene_event(event_name, args)
 
 const KEY_END_OF_SCENE := -1
 const KEY_RESTART_SCENE := -2
@@ -18,10 +19,12 @@ const TRANSITIONS := {
 const CUTSCENE_PLAYER := preload("res://Cutscenes/CutscenePlayer.tscn")
 const FACTORY_JAM_SCENE := preload("res://Factory/FactoryJamScene.tscn")
 const CARD_GAME_SCENE := preload("res://CardGame/CardGameScene.tscn")
+const CINEMATIC_LAYER_SCENE := preload("res://Cinematic/CinematicLayer.tscn")
 
 var _scene_data := {}
 var _cutscene_player: Control = null
 var _minigame_instance: Control = null
+var _cinematic_layer: Control = null
 var _current_node_index := 0  # Track current position for save/load
 
 @onready var _text_box := $TextBox
@@ -70,6 +73,14 @@ func run_scene(start_key: int = 0) -> void:
 				character.display_name = ""
 				character.images = {"neutral": null}
 
+		# Emit event if present
+		if node.event and not node.event.is_empty():
+			var evt_name = node.event.get("name", "")
+			var evt_args = node.event.get("args", [])
+			if evt_name != "":
+				print("ScenePlayer emitting event: ", evt_name, evt_args)
+				scene_event.emit(evt_name, evt_args)
+
 		if node is SceneTranspiler.BackgroundCommandNode:
 			var bg: Background = ResourceDB.get_background(node.background)
 			if bg and bg.texture:
@@ -112,8 +123,22 @@ func run_scene(start_key: int = 0) -> void:
 			# Для строк без персонажа используем narrator (пустое имя)
 			var display_name = ""
 			if "character" in node and node.character != "" and character:
-				display_name = character.display_name if character else "Unknown"
-			_text_box.display(node.line, display_name)
+				display_name = tr(character.display_name) if character else "Unknown"
+			
+			var text_to_show = node.line
+			if "translation_key" in node and node.translation_key != "":
+				var translated = tr(node.translation_key)
+				
+				# DEBUG LOCALIZATION
+				print("LOCALE: ", TranslationServer.get_locale(), " | KEY: ", node.translation_key, " | TR: ", translated)
+				
+				# Only use translation if it returns something different from the key
+				if translated != node.translation_key:
+					text_to_show = translated
+				else:
+					print("MISSING TRANSLATION for: ", node.translation_key)
+			
+			_text_box.display(text_to_show, display_name)
 			await _text_box.next_requested
 			key = node.next
 
@@ -161,6 +186,11 @@ func run_scene(start_key: int = 0) -> void:
 		# Unlock Card/Dossier
 		elif node is SceneTranspiler.UnlockCommandNode:
 			GameGlobal.unlock_card(node.card_id)
+			key = node.next
+
+		# Cinematic CG
+		elif node is SceneTranspiler.CinematicCommandNode:
+			await _play_cinematic(node)
 			key = node.next
 
 		# Choices.
@@ -219,6 +249,35 @@ func run_scene(start_key: int = 0) -> void:
 func load_scene(dialogue: SceneTranspiler.DialogueTree) -> void:
 	# The main script
 	_scene_data = dialogue.nodes
+	_current_node_index = dialogue.index # Start at the beginning? No, typically 0/start_key
+
+func load_scene_from_file(path: String) -> void:
+	var dialogue_tree: SceneTranspiler.DialogueTree = null
+	
+	if path.ends_with(".json"):
+		print("Loading JSON scene: " + path)
+		var loader = JSONDialogueLoader.new()
+		dialogue_tree = loader.load_scene(path)
+	elif path.ends_with(".txt"):
+		print("Loading TXT scene: " + path)
+		var file = FileAccess.open(path, FileAccess.READ)
+		if file:
+			var content = file.get_as_text()
+			var lexer = SceneLexer.new()
+			var parser = SceneParser.new()
+			var transpiler = SceneTranspiler.new()
+			
+			var tokens = lexer.tokenize(content)
+			var ast = parser.parse(tokens)
+			dialogue_tree = transpiler.transpile(ast, 0)
+		else:
+			push_error("Failed to open file: " + path)
+			return
+	
+	if dialogue_tree:
+		load_scene(dialogue_tree)
+	else:
+		push_error("Failed to load scene from: " + path)
 
 
 func get_current_position() -> int:
@@ -368,7 +427,68 @@ func _play_factory_jam_game() -> void:
 
 
 # ... (card game logic omitted) ...
+	# Money is also awarded by the mini-game scene.
 
+
+func _play_cinematic(node: SceneTranspiler.CinematicCommandNode) -> void:
+	"""Plays a cinematic effect on the Cinematic Layer."""
+	# 1. Instantiate layer if needed
+	if not _cinematic_layer:
+		_cinematic_layer = CINEMATIC_LAYER_SCENE.instantiate()
+		# Add BEHIND the text box but ABOVE the background
+		# Assuming textbox is high in z-index or last in tree.
+		# Let's add it before textbox to be safe
+		add_child(_cinematic_layer)
+		# Move to be before textbox if possible, or just add.
+		# TextureRects draw order depends on tree order.
+		if _text_box:
+			move_child(_cinematic_layer, _text_box.get_index())
+	
+	if not _cinematic_layer.visible:
+		_cinematic_layer.show()
+	
+	# 2. Show Image
+	if node.image_path != "":
+		_cinematic_layer.show_image(node.image_path)
+	
+	# 3. Apply Effect (Idle/Action)
+	if node.effect != "":
+		# Check if it's a movement command (zoom/pan) or idle
+		
+		# --- Idle Effects ---
+		if node.effect in ["breathing", "shake", "handheld", "heartbeat", "wiggle", "bounce"]:
+			_cinematic_layer.start_idle(node.effect)
+			
+		# --- Camera Moves ---
+		elif node.effect == "zoom_in":
+			_cinematic_layer.move_camera(1.3, Vector2.ZERO, node.duration)
+		elif node.effect == "zoom_out":
+			_cinematic_layer.move_camera(1.0, Vector2.ZERO, node.duration)
+		elif node.effect == "pan_right":
+			_cinematic_layer.move_camera(1.2, Vector2(-100, 0), node.duration)
+		elif node.effect == "pan_left":
+			_cinematic_layer.move_camera(1.2, Vector2(100, 0), node.duration)
+			
+		# --- Mood / Atmosphere ---
+		elif node.effect in ["sepia", "night", "danger", "bw", "dark", "normal"]:
+			_cinematic_layer.apply_mood(node.effect, 1.0)
+			
+		# --- Flash Effects ---
+		elif node.effect.begins_with("flash"):
+			var color = "white"
+			if "red" in node.effect: color = "red"
+			elif "black" in node.effect: color = "black"
+			_cinematic_layer.trigger_flash(color, 0.5)
+
+		# --- Action Effects ---
+		elif node.effect == "impact":
+			_cinematic_layer.trigger_impact(1.0)
+			
+	# 4. Wait duration if specified (blocking)
+	
+	# 4. Wait duration if specified (blocking)
+	if node.duration > 0.0:
+		await get_tree().create_timer(node.duration).timeout
 
 func _on_factory_game_finished(score: int, jars_labeled: int, jars_missed: int) -> void:
 	"""Мини-игра закончена"""
@@ -438,6 +558,28 @@ func _evaluate_condition(condition: SceneParser.BaseExpression, variables_list: 
 	if not condition:
 		return false
 	
+	# RAW STRING CONDITION (from JSON)
+	if condition.type == "RAW_STRING":
+		var condition_str = str(condition.value)
+		
+		# OPTIMIZED EXPRESSION EVALUATION
+		var expression = Expression.new()
+		var input_names = variables_list.keys()
+		var input_values = variables_list.values()
+		
+		var error = expression.parse(condition_str, input_names)
+		if error != OK:
+			push_error("Expression parse error: " + expression.get_error_text() + " in " + condition_str)
+			return false
+			
+		var result = expression.execute(input_values, self)
+		if expression.has_execute_failed():
+			push_error("Expression execution failed: " + condition_str)
+			return false
+			
+		print("ScenePlayer EVAL RESULT (Optimized): ", result)
+		return bool(result)
+
 	# Если условие - массив выражений (например, ["factory_jam_labeled", ">=", "15"])
 	if condition.value is Array:
 		var expressions = condition.value

@@ -1,0 +1,55 @@
+[
+	{
+		"character": "danila",
+		"text": "Привет, начальник! Как дела?",
+		"translation_key": "EXAMPLE_FORMAT_77a22697",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "Не до разговоров! Срочный заказ!",
+		"translation_key": "EXAMPLE_FORMAT_735c3f65",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"factory_jam"
+		],
+		"name": "minigame",
+		"type": "command"
+	},
+	{
+		"character": "danila",
+		"text": "Фух... Вроде закончил.",
+		"translation_key": "EXAMPLE_FORMAT_52c28d96",
+		"type": "dialogue"
+	},
+	{
+		"condition": "factory_jam_result_v2 >= 20",
+		"else": [
+			{
+				"character": "boss_of_factory",
+				"mood": "angry",
+				"text": "Ужасно! Ты уволен!",
+				"type": "dialogue"
+			}
+		],
+		"then": [
+			{
+				"character": "boss_of_factory",
+				"mood": "happy",
+				"text": "Молодец! Держи премию.",
+				"type": "dialogue"
+			},
+			{
+				"args": [
+					"money",
+					100.0
+				],
+				"name": "set",
+				"type": "command"
+			}
+		],
+		"type": "if"
+	}
+]

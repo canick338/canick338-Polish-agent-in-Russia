@@ -1,0 +1,533 @@
+[
+	{
+		"args": [
+			"start_act3"
+		],
+		"name": "mark",
+		"type": "command"
+	},
+	{
+		"args": [
+			"polish_home"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "На следующий день. Ваш номер в гостинице.",
+		"translation_key": "ACT3_DANGER_32c0c9a6",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Информации пока мало. Нужно быть активнее...",
+		"translation_key": "ACT3_DANGER_44b6d516",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Внезапно раздается стук в дверь. Настойчивый.",
+		"translation_key": "ACT3_DANGER_9c7934f6",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Кто там?",
+		"translation_key": "ACT3_DANGER_4659116e",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"text": "Майор Волков, ФСБ. Откройте, пожалуйста.",
+		"translation_key": "ACT3_DANGER_9555c0cd",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "(Чёрт! ФСБ!)",
+		"translation_key": "ACT3_DANGER_b65f82a3",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"text": "Вы открываете дверь, стараясь выглядеть спокойно.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Открыть спокойно"
+			},
+			{
+				"children": [
+					{
+						"text": "Вы быстро прячете оборудование, но это занимает время.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Попытаться спрятать оборудование"
+			},
+			{
+				"children": [
+					{
+						"text": "Вы открываете сразу, не давая повода для подозрений.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Открыть сразу же"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "volkov",
+		"text": "Добрый день, господин Ковальски.",
+		"translation_key": "ACT3_DANGER_e1607cd1",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"text": "Проверка документов у иностранных граждан. Обычная процедура.",
+		"translation_key": "ACT3_DANGER_dc5ddc00",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Конечно, вот мой паспорт.",
+		"translation_key": "ACT3_DANGER_07f3b67c",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Майор Волков внимательно изучает документы.",
+		"translation_key": "ACT3_DANGER_f7425003",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"text": "Польский бизнесмен... Интересно.",
+		"translation_key": "ACT3_DANGER_fb275640",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"text": "И что вас привело в наш маленький город?",
+		"translation_key": "ACT3_DANGER_c54918ff",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Я изучаю возможности для инвестиций в российские регионы.",
+						"type": "dialogue"
+					},
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "Обоянь показалась перспективной из-за местного производства.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "suspicious",
+						"text": "Перспективной? Обоянь?",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Рассказать легенду подробно"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Деловая поездка. Изучаю регион.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "neutral",
+						"text": "Понятно.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Ответить коротко"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "happy",
+						"text": "Устал от больших городов. Решил посмотреть провинцию.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "suspicious",
+						"text": "Странный выбор для бизнесмена...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Попытаться отшутиться"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "volkov",
+		"text": "С кем вы здесь уже познакомились?",
+		"translation_key": "ACT3_DANGER_4cd757df",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "С Анной из администрации, с Димой в баре...",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "neutral",
+						"text": "Понятно. Быстро осваиваетесь.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Назвать всех"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Пока ни с кем особо. Только приехал.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "suspicious",
+						"text": "Странно... Мне сказали что вас видели в баре...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"20"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Сказать что ни с кем"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Только в администрации регистрировался.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "neutral",
+						"text": "Хорошо.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Только с администрацией"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "volkov",
+		"text": "Господин Ковальски, у меня к вам личный вопрос...",
+		"translation_key": "ACT3_DANGER_3336d932",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"text": "Вы не задавали много вопросов о заводе?",
+		"translation_key": "ACT3_DANGER_8b8a0756",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Нет, почему вы спрашиваете?",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "suspicious",
+						"text": "Просто проверяю. Это стратегический объект.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"10"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Отрицать"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "neutral",
+						"text": "Интересовался, как бизнесмен. Хотел узнать о местной промышленности.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "serious",
+						"text": "Понятно. Но знайте - завод под особым контролем.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"15"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Признаться частично"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "confused",
+						"text": "А что не так? Я просто бизнесмен.",
+						"type": "dialogue"
+					},
+					{
+						"character": "volkov",
+						"mood": "neutral",
+						"text": "Ничего не так. Просто предупреждаю.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"suspicion_level",
+							"5"
+						],
+						"name": "set",
+						"type": "command"
+					}
+				],
+				"text": "Попросить объяснений"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "volkov",
+		"text": "Что ж, спасибо за ответы. Документы в порядке.",
+		"translation_key": "ACT3_DANGER_44983841",
+		"type": "dialogue"
+	},
+	{
+		"character": "volkov",
+		"text": "Приятного пребывания в Обояни, господин Ковальски.",
+		"translation_key": "ACT3_DANGER_089fd877",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Майор уходит.",
+		"translation_key": "ACT3_DANGER_b17f6445",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Это плохо. Очень плохо...",
+		"translation_key": "ACT3_DANGER_7fc140ee",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Он явно что-то подозревает. Нужно решать...",
+		"translation_key": "ACT3_DANGER_548d0c33",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "serious",
+						"text": "Нет, я не могу сдаться. Буду осторожнее.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"mission_status",
+							"continue"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"act3_continue"
+						],
+						"name": "jump",
+						"type": "command"
+					}
+				],
+				"text": "Продолжить миссию осторожно"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "worried",
+						"text": "Может, пора уезжать? Риск слишком велик...",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"mission_status",
+							"retreat"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"act3_escape"
+						],
+						"name": "jump",
+						"type": "command"
+					}
+				],
+				"text": "Подумать о побеге"
+			},
+			{
+				"children": [
+					{
+						"character": "marek",
+						"mood": "thinking",
+						"text": "Нужно связаться с центром и доложить ситуацию.",
+						"type": "dialogue"
+					},
+					{
+						"args": [
+							"mission_status",
+							"report"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"act3_contact"
+						],
+						"name": "jump",
+						"type": "command"
+					}
+				],
+				"text": "Связаться с центром"
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"args": [
+			"act3_continue"
+		],
+		"name": "mark",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Вы решаете продолжить миссию, но быть максимально осторожным.",
+		"translation_key": "ACT3_DANGER_7340697d",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	}
+]

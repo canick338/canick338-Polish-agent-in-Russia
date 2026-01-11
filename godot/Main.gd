@@ -25,6 +25,9 @@ var transpiler := SceneTranspiler.new()
 func _ready() -> void:
 	# Сначала показываем главное меню
 	show_main_menu()
+	
+	# === TEСТ КИНЕМАТОГРАФИЧНОСТИ ===
+	#start_story_test("res://Story/cinematic_test.json")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -82,23 +85,47 @@ func _on_casino_finished(is_win: bool) -> void:
 
 func start_story() -> void:
 	"""Запустить сюжет игры"""
-	if not scripts.is_empty():
-		for script in scripts:
-			var text := lexer.read_file_content(script)
+	SCENES.clear()
+	
+	if scripts.is_empty():
+		# Fallback for testing if no scripts assigned, though production should have them.
+		# Or maybe we want to load specific test file?
+		# For now, let's keep the debug load if empty, OR just assume scripts are assigned.
+		print("No scripts assigned to Main. Using default Prequel.")
+		var loader = JSONDialogueLoader.new()
+		var tree = loader.load_scene("res://Story/prequel_danila.json")
+		if tree:
+			SCENES.append(tree)
+	else:
+		# Load all assigned scripts as JSON
+		var loader = JSONDialogueLoader.new()
+		for script_path in scripts:
+			# Replace .txt with .json
+			# (Assuming script_path is like "res://Story/prologue.txt")
+			var json_path = script_path.replace(".txt", ".json")
+			
+			if not FileAccess.file_exists(json_path):
+				print("JSON file not found: " + json_path)
+				# Fallback for legacy main_game_loop which might be renamed or missing
+				if "main_game_loop" in json_path:
+					json_path = "res://Story/master_scenario.json"
+					print("Fallback to: " + json_path)
+			
+			print("Loading scene from: " + json_path)
+			
+			var tree = loader.load_scene(json_path)
+			if tree:
+				# Ensure chain continuity handled by Player logic or manual link?
+				# The legacy code did: (dialogue.nodes[dialogue.index - 1] as SceneTranspiler.BaseNode).next = -1
+				SCENES.append(tree)
+			else:
+				push_error("Failed to load scene: " + json_path)
 
-			var tokens: Array = lexer.tokenize(text)
+	if SCENES.is_empty():
+		push_error("No scenes loaded!")
+		return
 
-			var tree: SceneParser.SyntaxTree = parser.parse(tokens)
-
-			var dialogue: SceneTranspiler.DialogueTree = transpiler.transpile(tree, 0)
-
-			# Make sure the scene is transitioned properly at the end of the script
-			if not dialogue.nodes[dialogue.index - 1] is SceneTranspiler.JumpCommandNode:
-				(dialogue.nodes[dialogue.index - 1] as SceneTranspiler.BaseNode).next = -1
-
-			SCENES.append(dialogue)
-
-		_play_scene(0)
+	_play_scene(0)
 
 
 func _play_scene(index: int, start_node: int = 0) -> void:
@@ -113,6 +140,18 @@ func _play_scene(index: int, start_node: int = 0) -> void:
 	_scene_player.scene_finished.connect(_on_ScenePlayer_scene_finished)
 	_scene_player.restart_requested.connect(_on_ScenePlayer_restart_requested)
 	_scene_player.run_scene(start_node)
+
+
+func start_story_test(path: String) -> void:
+	"""Helper to run a specific scene file directly for testing."""
+	SCENES.clear()
+	var loader = JSONDialogueLoader.new()
+	var tree = loader.load_scene(path)
+	if tree:
+		SCENES.append(tree)
+		_play_scene(0)
+	else:
+		push_error("Failed to load test scene: " + path)
 
 
 func get_current_state() -> Dictionary:

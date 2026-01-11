@@ -21,7 +21,7 @@
 [resource]
 script = ExtResource("1")
 id = "danila"
-display_name = "Данила"
+display_name = "CHAR_DANILA"
 bio = "Опытный агент польской разведки, работает под прикрытием бизнесмена из Варшавы. Хорошо владеет русским языком, но иногда совершает культурные ошибки."
 age = 35
 default_image = "neutral"

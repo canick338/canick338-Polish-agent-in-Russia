@@ -133,14 +133,34 @@ func _on_SkipButton_timer_ticked() -> void:
 func _substitute_variables(text_to_process: String) -> String:
 	var result = text_to_process
 	var regex = RegEx.new()
-	regex.compile("\\[([a-zA-Z0-9_]+)\\]")
+	# Matches [variable] or {variable}
+	regex.compile("(\\[([a-zA-Z0-9_]+)\\]|\\{([a-zA-Z0-9_]+)\\})")
 	
 	var matches = regex.search_all(text_to_process)
+	# Process matches in reverse order to avoid index issues if we were replacing by index,
+	# but replace() handles strings so order doesn't strictly matter unless nested (unlikely here)
 	for regex_match in matches:
-		var full_match = regex_match.get_string()
-		var var_name = regex_match.get_string(1)
+		var full_match = regex_match.get_string(0)
+		var var_name = regex_match.get_string(2) # Group 2 is [VAR] content
+		if var_name == "":
+			var_name = regex_match.get_string(3) # Group 3 is {VAR} content
 		
-		var val = Variables.get_stored_variables_list().get(var_name)
+		var val = null
+		
+		# 1. Check Dialogue Variables (Numbers/Flags)
+		val = Variables.get_stored_variables_list().get(var_name)
+		
+		# 2. Check GameGlobal Macros (Strings/Player Name/etc)
+		if val == null:
+			if var_name == "PLAYER_NAME":
+				# Assuming GameGlobal has this field or method
+				if "player_name" in GameGlobal:
+					val = GameGlobal.player_name
+				else:
+					val = "Danila" # Fallback
+			elif var_name in GameGlobal:
+				val = GameGlobal.get(var_name)
+				
 		if val != null:
 			result = result.replace(full_match, str(val))
 	

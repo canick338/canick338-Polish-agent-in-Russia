@@ -9,7 +9,7 @@
 [resource]
 script = ExtResource("1")
 id = "boss_of_factory"
-display_name = "Начальник завода"
+display_name = "CHAR_BOSS"
 bio = "Хитрый начальник завода, который всегда находит способ сэкономить на зарплатах рабочих."
 age = 50
 default_image = "neutral"

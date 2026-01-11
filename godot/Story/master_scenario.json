@@ -1,0 +1,96 @@
+[
+	{
+		"args": [
+			"game_start"
+		],
+		"name": "mark",
+		"type": "command"
+	},
+	{
+		"args": [
+			"black"
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Февраль 2024 года. Россия, Курская область.",
+		"translation_key": "MASTER_SCENARIO_1271f0b3",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Город Обоянь - маленький провинциальный городок в российской глубинке.",
+		"translation_key": "MASTER_SCENARIO_53d12cf5",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Марек Ковальски, агент польской разведки, прибывает сюда под видом бизнесмена.",
+		"translation_key": "MASTER_SCENARIO_2d407ab3",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Его цель - собрать информацию о местном заводе.",
+		"translation_key": "MASTER_SCENARIO_8a53bd9a",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Но в маленьком городе, где все знают друг друга, оставаться незамеченным непросто...",
+		"translation_key": "MASTER_SCENARIO_63dbb9fc",
+		"type": "dialogue"
+	},
+	{
+		"args": [
+			"fade_out"
+		],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": [
+			"after_casino"
+		],
+		"name": "mark",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "После игры в местном казино Марек понимает - нужно быть осторожным.",
+		"translation_key": "MASTER_SCENARIO_e250061f",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Здесь чужих сразу замечают...",
+		"translation_key": "MASTER_SCENARIO_5ce6f784",
+		"type": "dialogue"
+	},
+	{
+		"character": "=== АКТ 1",
+		"text": "ПРИБЫТИЕ ===",
+		"translation_key": "MASTER_SCENARIO_113cbc62",
+		"type": "dialogue"
+	},
+	{
+		"character": "=== АКТ 2",
+		"text": "ВХОЖДЕНИЕ В ДОВЕРИЕ ===",
+		"translation_key": "MASTER_SCENARIO_6b072705",
+		"type": "dialogue"
+	},
+	{
+		"character": "=== АКТ 3",
+		"text": "ОПАСНОСТЬ РАСКРЫТИЯ ===",
+		"translation_key": "MASTER_SCENARIO_29516928",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "=== ФИНАЛ ===",
+		"translation_key": "MASTER_SCENARIO_665e1fd1",
+		"type": "dialogue"
+	}
+]
