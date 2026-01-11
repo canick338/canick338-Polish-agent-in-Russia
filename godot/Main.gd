@@ -25,6 +25,9 @@ var transpiler := SceneTranspiler.new()
 func _ready() -> void:
 	# Сначала показываем главное меню
 	show_main_menu()
+	
+	# === TEСТ КИНЕМАТОГРАФИЧНОСТИ ===
+	#start_story_test("res://Story/cinematic_test.json")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -137,6 +140,18 @@ func _play_scene(index: int, start_node: int = 0) -> void:
 	_scene_player.scene_finished.connect(_on_ScenePlayer_scene_finished)
 	_scene_player.restart_requested.connect(_on_ScenePlayer_restart_requested)
 	_scene_player.run_scene(start_node)
+
+
+func start_story_test(path: String) -> void:
+	"""Helper to run a specific scene file directly for testing."""
+	SCENES.clear()
+	var loader = JSONDialogueLoader.new()
+	var tree = loader.load_scene(path)
+	if tree:
+		SCENES.append(tree)
+		_play_scene(0)
+	else:
+		push_error("Failed to load test scene: " + path)
 
 
 func get_current_state() -> Dictionary:

@@ -1,0 +1,26 @@
+scene_start
+
+danila neutral left "Тестируем новую систему кинематографичности..."
+
+# Test Zoom In (Ken Burns)
+cinematic "danilastay.png" "zoom_in" 3.0
+danila happy left "Ого, камера приближается! (Zoom In)"
+
+# Test Pan (Ken Burns)
+cinematic "danilastay.png" "pan_right" 3.0
+danila neutral left "Теперь панорама... (Pan Right)"
+
+# Test Breathing (Alive)
+cinematic "danilastay.png" "breathing" 0
+danila neutral left "Картинка дышит... (Idle Breathing)"
+
+# Test Shake (Nervous)
+cinematic "danilastay.png" "shake" 0
+danila scared left "Дрожит! (Idle Shake)"
+
+# Test Handheld
+cinematic "danilastay.png" "handheld" 0
+danila neutral left "Как будто снимают с рук... (Idle Handheld)"
+
+danila happy left "Система работает!"
+scene_end

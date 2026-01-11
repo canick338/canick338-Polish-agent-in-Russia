@@ -35,6 +35,13 @@ func _build_tree(data: Array) -> SceneTranspiler.DialogueTree:
 	
 	_process_block(data, tree)
 	
+	# Fix: Ensure the last node ends the scene instead of pointing to non-existent index
+	if tree.nodes.has(tree.index):
+		var last_node = tree.nodes[tree.index]
+		# Only change if it points to the immediate next (which doesn't exist)
+		if last_node.next == tree.index + 1:
+			last_node.next = -1 # KEY_END_OF_SCENE
+	
 	return tree
 
 func _process_block(block: Array, tree: SceneTranspiler.DialogueTree):
@@ -158,6 +165,27 @@ func _create_command_node(next_idx: int, data: Dictionary, tree: SceneTranspiler
 		"unlock":
 			var card_id = _clean_value(args[0]) if args.size() > 0 else ""
 			return SceneTranspiler.UnlockCommandNode.new(next_idx, card_id)
+
+		"cinematic":
+			if args.size() < 1:
+				push_error("Cinematic command requires image path")
+				return null
+			
+			var image_path = _clean_value(args[0])
+			# Аналогичная обработка путей как в текстовом парсере
+			if not image_path.begins_with("res://"):
+				if not "/" in image_path:
+					image_path = "res://Story/CG/" + image_path
+					
+			var node = SceneTranspiler.CinematicCommandNode.new(next_idx, image_path)
+			
+			if args.size() > 1:
+				node.effect = _clean_value(args[1])
+			if args.size() > 2:
+				node.duration = float(args[2])
+				
+			return node
+			
 			
 		_:
 			push_warning("Unknown command: " + name)

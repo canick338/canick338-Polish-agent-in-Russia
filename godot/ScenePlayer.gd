@@ -19,10 +19,12 @@ const TRANSITIONS := {
 const CUTSCENE_PLAYER := preload("res://Cutscenes/CutscenePlayer.tscn")
 const FACTORY_JAM_SCENE := preload("res://Factory/FactoryJamScene.tscn")
 const CARD_GAME_SCENE := preload("res://CardGame/CardGameScene.tscn")
+const CINEMATIC_LAYER_SCENE := preload("res://Cinematic/CinematicLayer.tscn")
 
 var _scene_data := {}
 var _cutscene_player: Control = null
 var _minigame_instance: Control = null
+var _cinematic_layer: Control = null
 var _current_node_index := 0  # Track current position for save/load
 
 @onready var _text_box := $TextBox
@@ -184,6 +186,11 @@ func run_scene(start_key: int = 0) -> void:
 		# Unlock Card/Dossier
 		elif node is SceneTranspiler.UnlockCommandNode:
 			GameGlobal.unlock_card(node.card_id)
+			key = node.next
+
+		# Cinematic CG
+		elif node is SceneTranspiler.CinematicCommandNode:
+			await _play_cinematic(node)
 			key = node.next
 
 		# Choices.
@@ -420,7 +427,68 @@ func _play_factory_jam_game() -> void:
 
 
 # ... (card game logic omitted) ...
+	# Money is also awarded by the mini-game scene.
 
+
+func _play_cinematic(node: SceneTranspiler.CinematicCommandNode) -> void:
+	"""Plays a cinematic effect on the Cinematic Layer."""
+	# 1. Instantiate layer if needed
+	if not _cinematic_layer:
+		_cinematic_layer = CINEMATIC_LAYER_SCENE.instantiate()
+		# Add BEHIND the text box but ABOVE the background
+		# Assuming textbox is high in z-index or last in tree.
+		# Let's add it before textbox to be safe
+		add_child(_cinematic_layer)
+		# Move to be before textbox if possible, or just add.
+		# TextureRects draw order depends on tree order.
+		if _text_box:
+			move_child(_cinematic_layer, _text_box.get_index())
+	
+	if not _cinematic_layer.visible:
+		_cinematic_layer.show()
+	
+	# 2. Show Image
+	if node.image_path != "":
+		_cinematic_layer.show_image(node.image_path)
+	
+	# 3. Apply Effect (Idle/Action)
+	if node.effect != "":
+		# Check if it's a movement command (zoom/pan) or idle
+		
+		# --- Idle Effects ---
+		if node.effect in ["breathing", "shake", "handheld", "heartbeat", "wiggle", "bounce"]:
+			_cinematic_layer.start_idle(node.effect)
+			
+		# --- Camera Moves ---
+		elif node.effect == "zoom_in":
+			_cinematic_layer.move_camera(1.3, Vector2.ZERO, node.duration)
+		elif node.effect == "zoom_out":
+			_cinematic_layer.move_camera(1.0, Vector2.ZERO, node.duration)
+		elif node.effect == "pan_right":
+			_cinematic_layer.move_camera(1.2, Vector2(-100, 0), node.duration)
+		elif node.effect == "pan_left":
+			_cinematic_layer.move_camera(1.2, Vector2(100, 0), node.duration)
+			
+		# --- Mood / Atmosphere ---
+		elif node.effect in ["sepia", "night", "danger", "bw", "dark", "normal"]:
+			_cinematic_layer.apply_mood(node.effect, 1.0)
+			
+		# --- Flash Effects ---
+		elif node.effect.begins_with("flash"):
+			var color = "white"
+			if "red" in node.effect: color = "red"
+			elif "black" in node.effect: color = "black"
+			_cinematic_layer.trigger_flash(color, 0.5)
+
+		# --- Action Effects ---
+		elif node.effect == "impact":
+			_cinematic_layer.trigger_impact(1.0)
+			
+	# 4. Wait duration if specified (blocking)
+	
+	# 4. Wait duration if specified (blocking)
+	if node.duration > 0.0:
+		await get_tree().create_timer(node.duration).timeout
 
 func _on_factory_game_finished(score: int, jars_labeled: int, jars_missed: int) -> void:
 	"""Мини-игра закончена"""
