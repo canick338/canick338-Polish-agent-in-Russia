@@ -60,6 +60,8 @@ func _ready():
 	popup.add_item("Set Variable", 12)
 	popup.add_item("Jump / Loop", 13)
 	popup.add_item("Wait", 14)
+	popup.add_item("Cinematic", 15)
+	popup.add_item("Transition", 16)
 	
 	# GraphEdit signals
 	graph_edit.connection_request.connect(_on_connection_request)
@@ -431,11 +433,6 @@ func _create_graph_node(item: Dictionary) -> GraphNode:
 					var dropdown = _create_dropdown_property("Background ID:", _background_ids, args[0] if args.size() > 0 else "", "Arg0")
 					vbox.add_child(dropdown)
 					
-					# Transition Dropdown
-					var transitions = ["fade_in", "fade_out"]
-					var trans_dd = _create_dropdown_property("Transition:", transitions, args[1] if args.size() > 1 else "", "Arg1")
-					vbox.add_child(trans_dd)
-					
 				"cinematic":
 					node.title = "Cinematic Event"
 					node.set_meta("command_type", "cinematic")
@@ -503,6 +500,14 @@ func _create_graph_node(item: Dictionary) -> GraphNode:
 					time_edit.name = "Arg0"
 					time_edit.text = args[0] if args.size() > 0 else "1.0"
 					vbox.add_child(time_edit)
+					
+				"transition":
+					node.title = "Transition Effect"
+					node.set_meta("command_type", "transition")
+					
+					var transitions = ["fade_in", "fade_out"]
+					var trans_dd = _create_dropdown_property("Effect:", transitions, args[0] if args.size() > 0 else "fade_in", "Arg0")
+					vbox.add_child(trans_dd)
 
 				_:
 					node.title = cmd_name.capitalize()
@@ -546,6 +551,8 @@ func _on_add_node_pressed(id):
 		12: template = {"type": "command", "name": "set", "args": ["variable_name", "value"]}
 		13: template = {"type": "command", "name": "jump", "args": ["target_label"]}
 		14: template = {"type": "command", "name": "wait", "args": ["1.0"]}
+		15: template = {"type": "command", "name": "cinematic", "args": ["image_path", "effect", "duration"]}
+		16: template = {"type": "command", "name": "transition", "args": ["fade_in"]}
 	
 	if id == 0:
 		var node = _create_dialogue_block_node([template])
@@ -637,7 +644,7 @@ func _save_current_file():
 		elif meta_type == "command":
 			var cmd_type = node.get_meta("command_type", "")
 			# Only reconstruct if we support editing perfectly
-			if cmd_type in ["background", "minigame", "set", "jump", "wait", "cinematic"]:
+			if cmd_type in ["background", "minigame", "set", "jump", "wait", "cinematic", "transition"]:
 				var args = []
 				
 				# Helper to extract value from any control type (LineEdit or OptionButton)
