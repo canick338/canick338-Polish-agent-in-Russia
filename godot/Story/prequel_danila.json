@@ -1,7 +1,8 @@
 [
 	{
 		"args": [
-			"polish_home"
+			"polish_home",
+			""
 		],
 		"name": "background",
 		"type": "command"
@@ -39,7 +40,8 @@
 	},
 	{
 		"args": [
-			"orphanhome"
+			"orphanhome",
+			""
 		],
 		"name": "background",
 		"type": "command"
@@ -57,9 +59,9 @@
 		"type": "dialogue"
 	},
 	{
-		"character": "danila",
+		"character": "boss_of_factory",
 		"text": "Я помню... Детский дом родной.",
-		"translation_key": "PREQUEL_DANILA_5e5d421a",
+		"translation_key": "PREQUEL_DANILA_d4a326af",
 		"type": "dialogue"
 	},
 	{
@@ -95,7 +97,8 @@
 	},
 	{
 		"args": [
-			"warsaw_street"
+			"warsaw_street",
+			""
 		],
 		"name": "background",
 		"type": "command"
@@ -145,7 +148,8 @@
 	},
 	{
 		"args": [
-			"factory_street"
+			"factory_street",
+			""
 		],
 		"name": "background",
 		"type": "command"
@@ -183,7 +187,8 @@
 	},
 	{
 		"args": [
-			"factory_inside"
+			"factory_inside",
+			""
 		],
 		"name": "background",
 		"type": "command"
@@ -726,12 +731,6 @@
 		"type": "dialogue"
 	},
 	{
-		"character": "boss_of_factory",
-		"text": "",
-		"translation_key": "PREQUEL_DANILA_5679cee9",
-		"type": "dialogue"
-	},
-	{
 		"character": "",
 		"text": "После работы рабочие собираются в углу цеха.",
 		"translation_key": "PREQUEL_DANILA_01b18447",
@@ -982,7 +981,8 @@
 	},
 	{
 		"args": [
-			"warsaw_metro"
+			"warsaw_metro",
+			""
 		],
 		"name": "background",
 		"type": "command"
@@ -1038,7 +1038,8 @@
 	},
 	{
 		"args": [
-			"officer_school"
+			"officer_school",
+			""
 		],
 		"name": "background",
 		"type": "command"
@@ -1113,7 +1114,8 @@
 	},
 	{
 		"args": [
-			"polish_home"
+			"polish_home",
+			""
 		],
 		"name": "background",
 		"type": "command"

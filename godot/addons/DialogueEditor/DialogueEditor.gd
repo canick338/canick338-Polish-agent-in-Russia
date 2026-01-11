@@ -12,6 +12,11 @@ var export_csv_btn: Button
 
 var current_file_path: String = ""
 var save_popup: AcceptDialog
+var file_dialog: EditorFileDialog
+
+# Cache for resources
+var _character_ids: Array = []
+var _background_ids: Array = []
 
 func _ready():
 	if not refresh_btn or not file_tree:
@@ -21,8 +26,19 @@ func _ready():
 	save_popup = AcceptDialog.new()
 	add_child(save_popup)
 	save_popup.title = "Dialogue Editor"
+	
+	# Create File Dialog for picking assets
+	file_dialog = EditorFileDialog.new()
+	add_child(file_dialog)
+	
+	# Scan resources initially
+	_scan_resources()
 		
 	refresh_btn.pressed.connect(_refresh_file_list)
+	# Also refresh resources when refreshing files
+	refresh_btn.pressed.connect(_scan_resources)
+	
+	file_tree.item_selected.connect(_on_file_selected)
 	file_tree.item_selected.connect(_on_file_selected)
 	save_btn.pressed.connect(_save_current_file)
 	add_node_btn.get_popup().id_pressed.connect(_on_add_node_pressed)
@@ -51,6 +67,38 @@ func _ready():
 	
 	_refresh_file_list()
 
+func _scan_resources():
+	_character_ids.clear()
+	_background_ids.clear()
+	
+	# Scan Characters
+	var char_dir = DirAccess.open("res://Characters")
+	if char_dir:
+		char_dir.list_dir_begin()
+		var file = char_dir.get_next()
+		while file != "":
+			if (file.ends_with(".tres") or file.ends_with(".res")) and not char_dir.current_is_dir():
+				# Assuming ID is basename for now, or we could load resource. 
+				# Loading is safer but slower. Let's use basename which matches ID convention usually.
+				var id = file.get_basename()
+				_character_ids.append(id)
+			file = char_dir.get_next()
+	_character_ids.sort()
+	
+	# Scan Backgrounds
+	var bg_dir = DirAccess.open("res://Backgrounds")
+	if bg_dir:
+		bg_dir.list_dir_begin()
+		var file = bg_dir.get_next()
+		while file != "":
+			if (file.ends_with(".tres") or file.ends_with(".res")) and not bg_dir.current_is_dir():
+				var id = file.get_basename()
+				_background_ids.append(id)
+			file = bg_dir.get_next()
+	_background_ids.sort()
+	
+	print("Scanned Resources: ", _character_ids.size(), " Characters, ", _background_ids.size(), " Backgrounds.")
+
 func _refresh_file_list():
 	file_tree.clear()
 	var root = file_tree.create_item()
@@ -64,6 +112,65 @@ func _refresh_file_list():
 				item.set_text(0, file_name)
 				item.set_metadata(0, "res://Story/" + file_name)
 			file_name = dir.get_next()
+
+# --- UI Helper Components ---
+func _create_dropdown_property(label_text: String, options: Array, current_val: String, node_name: String) -> HBoxContainer:
+	var hbox = HBoxContainer.new()
+	var label = Label.new()
+	label.text = label_text
+	hbox.add_child(label)
+	
+	var opt = OptionButton.new()
+	opt.name = node_name
+	opt.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
+	# Add empty/custom option
+	opt.add_item("[ Custom / None ]", 0)
+	var selected_idx = 0
+	
+	for i in range(options.size()):
+		opt.add_item(options[i], i + 1)
+		if options[i] == current_val:
+			selected_idx = i + 1
+			
+	opt.selected = selected_idx
+	hbox.add_child(opt)
+	return hbox
+
+func _create_file_picker_property(label_text: String, current_path: String, mode: EditorFileDialog.FileMode, filters: PackedStringArray, node_name: String) -> VBoxContainer:
+	var vbox = VBoxContainer.new()
+	var label = Label.new()
+	label.text = label_text
+	vbox.add_child(label)
+	
+	var hbox = HBoxContainer.new()
+	var line_edit = LineEdit.new()
+	line_edit.name = node_name
+	line_edit.text = current_path
+	line_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hbox.add_child(line_edit)
+	
+	var btn = Button.new()
+	btn.text = "..."
+	btn.pressed.connect(func():
+		file_dialog.file_mode = mode
+		file_dialog.filters = filters
+		file_dialog.current_path = line_edit.text
+		
+		# Disconnect old signals to avoid multiple connections if reused (though we create new btn here)
+		if file_dialog.file_selected.is_connected(_on_file_picked):
+			file_dialog.file_selected.disconnect(_on_file_picked)
+			
+		file_dialog.file_selected.connect(_on_file_picked.bind(line_edit))
+		file_dialog.popup_centered_ratio(0.6)
+	)
+	hbox.add_child(btn)
+	
+	vbox.add_child(hbox)
+	return vbox
+
+func _on_file_picked(path: String, target_line_edit: LineEdit):
+	target_line_edit.text = path
 
 func _on_file_selected():
 	var item = file_tree.get_selected()
@@ -149,26 +256,72 @@ func _create_dialogue_block_node(items: Array) -> GraphNode:
 	node.title = "Dialogue Scene"
 	node.set_slot(0, true, 0, Color.WHITE, true, 0, Color.WHITE)
 	node.set_meta("node_type", "dialogue_block")
+	node.resizable = true
 	
 	var vbox = VBoxContainer.new()
 	node.add_child(vbox)
 	
-	var text_edit = TextEdit.new()
-	text_edit.name = "Content"
-	text_edit.custom_minimum_size = Vector2(400, 300)
-	text_edit.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
+	# Header logic
+	var header_hbox = HBoxContainer.new()
+	var add_line_btn = Button.new()
+	add_line_btn.text = "+ Add Line"
+	header_hbox.add_child(add_line_btn)
+	vbox.add_child(header_hbox)
 	
-	var raw_text = ""
-	for item in items:
-		var char_name = item.get("character", "")
-		var line = item.get("text", "")
-		if char_name != "":
-			raw_text += char_name + ": " + line + "\n\n"
+	# Use VBoxContainer for rows
+	var lines_container = VBoxContainer.new()
+	lines_container.name = "Lines"
+	vbox.add_child(lines_container)
+	
+	# Function to add a single dialogue row
+	var add_row_func = func(char_id: String, text: String):
+		var row = HBoxContainer.new()
+		row.set_meta("is_dialogue_row", true)
+		
+		# DELETE BUTTON
+		var del_btn = Button.new()
+		del_btn.text = "X"
+		del_btn.modulate = Color(1, 0.6, 0.6)
+		del_btn.pressed.connect(func(): row.queue_free())
+		row.add_child(del_btn)
+		
+		# CHARACTER DROPDOWN
+		var char_opt = OptionButton.new()
+		char_opt.name = "Char"
+		char_opt.custom_minimum_size.x = 100
+		char_opt.add_item("...", 0)
+		var sel_idx = 0
+		for i in range(_character_ids.size()):
+			char_opt.add_item(_character_ids[i], i + 1)
+			if _character_ids[i] == char_id:
+				sel_idx = i + 1
+		
+		if sel_idx == 0 and char_id != "":
+			# Custom character
+			char_opt.add_item(char_id, 999)
+			char_opt.selected = char_opt.item_count - 1
+			char_opt.set_meta("custom_char", char_id)
 		else:
-			raw_text += line + "\n\n"
-	
-	text_edit.text = raw_text.strip_edges()
-	vbox.add_child(text_edit)
+			char_opt.selected = sel_idx
+			
+		row.add_child(char_opt)
+		
+		# TEXT EDIT
+		var text_edit = LineEdit.new()
+		text_edit.name = "Text"
+		text_edit.text = text
+		text_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		text_edit.custom_minimum_size.x = 200
+		row.add_child(text_edit)
+		
+		lines_container.add_child(row)
+		
+	# Populate existing
+	for item in items:
+		add_row_func.call(item.get("character", ""), item.get("text", ""))
+		
+	# Connect Add Button
+	add_line_btn.pressed.connect(func(): add_row_func.call("", ""))
 	
 	if node.has_signal("close_request"):
 		node.close_request.connect(func(): _delete_node(node))
@@ -205,26 +358,48 @@ func _create_graph_node(item: Dictionary) -> GraphNode:
 				"background":
 					node.title = "Change Background"
 					node.set_meta("command_type", "background")
-					var label = Label.new()
-					label.text = "Image Path:"
-					vbox.add_child(label)
 					
-					var path_edit = LineEdit.new()
-					path_edit.name = "Arg0"
-					path_edit.text = args[0] if args.size() > 0 else ""
-					vbox.add_child(path_edit)
+					# Use Dropdown for Background IDs instead of manual path
+					var dropdown = _create_dropdown_property("Background ID:", _background_ids, args[0] if args.size() > 0 else "", "Arg0")
+					vbox.add_child(dropdown)
 					
+					# Optional Transition
+					var trans_edit = LineEdit.new()
+					trans_edit.name = "Arg1"
+					trans_edit.placeholder_text = "Transition (optional)"
+					trans_edit.text = args[1] if args.size() > 1 else ""
+					vbox.add_child(trans_edit)
+					
+				"cinematic":
+					node.title = "Cinematic Event"
+					node.set_meta("command_type", "cinematic")
+					
+					# Image Path Picker
+					var picker = _create_file_picker_property("Image Path:", args[0] if args.size() > 0 else "", EditorFileDialog.FILE_MODE_OPEN_FILE, ["*.png", "*.jpg", "*.jpeg", "*.webp"], "Arg0")
+					vbox.add_child(picker)
+					
+					# Effect Dropdown
+					var effects = ["zoom_in", "pan_right", "breathing", "shake", "handheld", "heartbeat", "wiggle", "bounce", "impact", "flash_white", "flash_red", "sepia", "danger"]
+					var effect_dd = _create_dropdown_property("Effect:", effects, args[1] if args.size() > 1 else "", "Arg1")
+					vbox.add_child(effect_dd)
+					
+					# Duration
+					var dur_label = Label.new()
+					dur_label.text = "Duration/Intensity:"
+					vbox.add_child(dur_label)
+					var dur_edit = LineEdit.new()
+					dur_edit.name = "Arg2"
+					dur_edit.text = str(args[2]) if args.size() > 2 else "0"
+					vbox.add_child(dur_edit)
+
 				"minigame":
 					node.title = "Start Minigame"
 					node.set_meta("command_type", "minigame")
-					var label = Label.new()
-					label.text = "Game Name:"
-					vbox.add_child(label)
 					
-					var game_edit = LineEdit.new()
-					game_edit.name = "Arg0"
-					game_edit.text = args[0] if args.size() > 0 else ""
-					vbox.add_child(game_edit)
+					# Minigames Dropdown (Hardcoded for now + Scanned later?)
+					var games = ["factory_jam", "card_game"]
+					var game_dd = _create_dropdown_property("Game:", games, args[0] if args.size() > 0 else "", "Arg0")
+					vbox.add_child(game_dd)
 					
 				"set":
 					node.title = "Set Variable"
@@ -337,44 +512,64 @@ func _save_current_file():
 	for node in nodes_list:
 		var meta_type = node.get_meta("node_type", "generic")
 		
-		# CASE 1: Dialogue Block (Regenerate)
+		# CASE 1: Dialogue Block (Regenerate from Rows)
 		if meta_type == "dialogue_block":
-			var content_node = node.find_child("Content", true, false)
-			if content_node:
-				var text = content_node.text
-				var lines = text.split("\n")
-				for line in lines:
-					line = line.strip_edges()
-					if line == "": continue
-					
-					var parts = line.split(":", true, 1)
-					var char_name = ""
-					var dialogue_text = ""
-					
-					if parts.size() > 1:
-						char_name = parts[0].strip_edges()
-						dialogue_text = parts[1].strip_edges()
-					else:
-						dialogue_text = parts[0].strip_edges()
+			# Find the "Lines" container
+			var lines_container = node.find_child("Lines", true, false)
+			if lines_container:
+				for row in lines_container.get_children():
+					if row.has_meta("is_dialogue_row"):
+						var char_opt = row.find_child("Char", true, false)
+						var text_edit = row.find_child("Text", true, false)
 						
+						var char_id = ""
+						if char_opt:
+							if char_opt.selected > 0:
+								if char_opt.has_meta("custom_char") and char_opt.selected == char_opt.item_count - 1:
+									char_id = char_opt.get_meta("custom_char")
+								else:
+									char_id = char_opt.get_item_text(char_opt.selected)
 						
-					final_json_array.append({
-						"type": "dialogue",
-						"character": char_name,
-						"text": dialogue_text,
-						"translation_key": _generate_translation_key(char_name, dialogue_text)
-					})
+						var text_line = ""
+						if text_edit:
+							text_line = text_edit.text.strip_edges()
+							
+						if text_line != "":
+							final_json_array.append({
+								"type": "dialogue",
+								"character": char_id,
+								"text": text_line,
+								"translation_key": _generate_translation_key(char_id, text_line)
+							})
 
 		# CASE 2: Editable Command (Regenerate)
 		elif meta_type == "command":
 			var cmd_type = node.get_meta("command_type", "")
 			# Only reconstruct if we support editing perfectly
-			if cmd_type in ["background", "minigame", "set", "jump", "wait"]:
+			if cmd_type in ["background", "minigame", "set", "jump", "wait", "cinematic"]:
 				var args = []
-				var arg0 = node.find_child("Arg0", true, false)
-				var arg1 = node.find_child("Arg1", true, false)
-				if arg0: args.append(arg0.text)
-				if arg1: args.append(arg1.text)
+				
+				# Helper to extract value from any control type (LineEdit or OptionButton)
+				var get_val = func(arg_name):
+					var control = node.find_child(arg_name, true, false)
+					if control:
+						if control is LineEdit:
+							return control.text
+						elif control is OptionButton:
+							if control.selected > 0:
+								return control.get_item_text(control.selected)
+							# Return empty string or handle custom input? 
+							# For now dropdowns return text at index
+							return ""
+					return null
+
+				var arg0 = get_val.call("Arg0")
+				var arg1 = get_val.call("Arg1")
+				var arg2 = get_val.call("Arg2")
+				
+				if arg0 != null: args.append(arg0)
+				if arg1 != null: args.append(arg1)
+				if arg2 != null: args.append(arg2)
 				
 				final_json_array.append({
 					"type": "command",
