@@ -70,9 +70,7 @@ theme_override_constants/separation = 10
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="DetailContent" type="VBoxContainer" parent="MainLayout/DetailsPanel"]
-unique_name_in_owner = true
-visible = false
+[node name="ScrollDetail" type="ScrollContainer" parent="MainLayout/DetailsPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -83,16 +81,23 @@ offset_right = -20.0
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="DetailContent" type="VBoxContainer" parent="MainLayout/DetailsPanel/ScrollDetail"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 20
 
-[node name="DetailTexture" type="TextureRect" parent="MainLayout/DetailsPanel/DetailContent"]
+[node name="DetailTexture" type="TextureRect" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="DetailName" type="Label" parent="MainLayout/DetailsPanel/DetailContent"]
+[node name="DetailName" type="Label" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
@@ -100,13 +105,63 @@ theme_override_font_sizes/font_size = 42
 text = "Имя Персонажа"
 horizontal_alignment = 1
 
-[node name="DetailDesc" type="Label" parent="MainLayout/DetailsPanel/DetailContent"]
+[node name="DetailDesc" type="Label" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Описание..."
 horizontal_alignment = 1
 autowrap_mode = 2
+
+[node name="RelationshipContainer" type="VBoxContainer" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Title" type="Label" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent/RelationshipContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.690196, 0.768627, 0.870588, 1)
+theme_override_font_sizes/font_size = 24
+text = "Отношения"
+
+[node name="RelationshipLabel" type="RichTextLabel" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent/RelationshipContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 18
+text = "Мы встречались пару раз..."
+fit_content = true
+
+[node name="BioContainer" type="VBoxContainer" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Title" type="Label" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent/BioContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.690196, 0.768627, 0.870588, 1)
+theme_override_font_sizes/font_size = 24
+text = "Биография"
+
+[node name="BioLabel" type="RichTextLabel" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent/BioContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 18
+text = "Родился..."
+fit_content = true
+
+[node name="GalleryContainer" type="VBoxContainer" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent/GalleryContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.690196, 0.768627, 0.870588, 1)
+theme_override_font_sizes/font_size = 24
+text = "Галерея"
+
+[node name="GalleryGrid" type="HFlowContainer" parent="MainLayout/DetailsPanel/ScrollDetail/DetailContent/GalleryContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
 
 [node name="EmptyLabel" type="Label" parent="MainLayout/DetailsPanel"]
 unique_name_in_owner = true

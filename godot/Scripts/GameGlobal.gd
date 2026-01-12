@@ -13,19 +13,35 @@ const CARD_DATABASE = {
 	"card_danila": {
 		"name": "CHAR_DANILA",
 		"description": "Агент польской разведки под прикрытием. Прошел жесткую школу выживания на улицах Варшавы. Его цель — проникнуть на завод и выяснить правду.",
-		"texture_path": "res://Characters/Danila/danila_thinking.png", # Using neutral/thinking as main portrait
+		"texture_path": "res://Characters/Danila/Danil_stands_serious_pose.png",
+		"bio": "Данила вырос сиротой. Его детство прошло в интернатах и на улицах, где он научился драться, воровать и оставаться незамеченным. В 18 лет он был завербован разведкой, которая увидела в нём потенциал идеального 'призрака'. Обоянь — его первое крупное задание за границей.",
+		"relationships": "Мы пока мало знаем о его окружении, но он явно не доверяет никому, кроме себя. Отношения с заводом — чисто профессиональные, прикрытие работает.",
+		"gallery": [
+			"res://Characters/Danila/Danil_stands_serious_pose.png",
+			"res://Characters/Danila/danila_happy.png"
+		],
 		"unlock_type": "event"
 	},
 	"card_bronislav": {
 		"name": "CHAR_BOSS",
 		"description": "Начальник завода. Жесткий, подозрительный и не терпящий ошибок. Ходят слухи, что он замешан в темных делах.",
 		"texture_path": "res://Characters/boss_of_factory/boss_of_factory.png",
+		"bio": "Бронислав управляет заводом железной рукой уже 15 лет. Никто не знает, откуда он приехал, но его боятся все работники. Говорят, что у него есть связи с криминалом.",
+		"relationships": "Наше взаимодействие началось напряженно. Он сразу заметил новичка и дал понять, кто здесь главный. Нужно быть осторожным с ним.",
+		"gallery": [
+			"res://Characters/boss_of_factory/boss_of_factory.png"
+		],
 		"unlock_type": "event"
 	},
 	"card_worker": {
 		"name": "CHAR_WORKER",
 		"description": "Типичный трудяга завода. Любит поиграть в карты после смены и пожаловаться на жизнь. Может знать больше, чем говорит.",
 		"texture_path": "res://Characters/Worker/worker_neutral.png",
+		"bio": "Работает на заводе всю жизнь. Знает каждый винтик и каждый слух. Простой мужик, которого легко разговорить за кружкой пива, но его лояльность переменчива.",
+		"relationships": "Мы сыграли с ним в карты. Кажется, он начал нам доверять. Через него можно узнать много интересного о внутренней кухне завода.",
+		"gallery": [
+			"res://Characters/Worker/worker_neutral.png"
+		],
 		"unlock_type": "event"
 	}
 }
