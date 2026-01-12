@@ -40,7 +40,7 @@ var _score: int = 0
 var _ingredient_timer: float = 0.0
 var _current_requested_ingredient: String = ""
 var _current_ingredient_time_left: float = 0.0
-const INGREDIENTS = ["Огненный корень", "Ледяная пыль", "Соль", "Сахар"]
+const INGREDIENTS = ["Аджика", "Снег", "Лаврушка", "Сахар"]
 
 # === NODES ===
 @onready var heat_slider = $UI/HeatSlider
@@ -176,14 +176,14 @@ func _animate_pot_fail():
 
 func _apply_ingredient_effect(type: String):
 	match type:
-		"Огненный корень":
-			status_label.text = "ОГОНЬ! Нагрев усилен!"
+		"Аджика":
+			status_label.text = "АДЖИКА! Печет не по-детски!"
 			# Twist: Heat up much faster
 			_heating_modifier = 4.0 
 			await get_tree().create_timer(3.0).timeout
 			_heating_modifier = 1.0
-		"Ледяная пыль":
-			status_label.text = "ЛЕД! Управление замерзло!"
+		"Снег":
+			status_label.text = "СНЕГ! Руки замерзли!"
 			# Twist: Freeze controls
 			_input_locked = true
 			# Visual freeze feedback
@@ -192,16 +192,17 @@ func _apply_ingredient_effect(type: String):
 			await get_tree().create_timer(2.0).timeout
 			_input_locked = false
 			heat_slider.modulate = original_modulate
-		"Соль":
-			status_label.text = "Соль добавлена."
+		"Лаврушка":
+			status_label.text = "Лаврушка для аромата."
 			# Maybe slight temp reduction?
 			_temperature -= 5.0
 		"Сахар":
-			status_label.text = "Сахар добавлен."
-			# No progress bonus, strictly zone-based now
-			# _progress += 5.0
+			status_label.text = "Сахар. Сладкая жизнь."
+			_score += 10
 		_:
 			status_label.text = "Ингредиент добавлен."
+
+
 
 func _update_visuals():
 	heat_slider.value = _temperature

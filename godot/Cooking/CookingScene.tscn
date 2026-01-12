@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ingredient_item" path="res://Cooking/Ingredient.tscn" id="4_ingredient"]
 [ext_resource type="Texture2D" uid="uid://factory_bg_cook" path="res://Factory/Assets/background_for_the_minigame_cooking_jar_no_icon_2.png" id="5_bg"]
 [ext_resource type="Texture2D" uid="uid://boiler_top" path="res://Factory/Assets/boiler_top.png" id="6_boiler_top"]
+[ext_resource type="Texture2D" uid="uid://sugar_texture" path="res://Factory/Assets/sugar.png" id="7_sugar"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_timer_red"]
 bg_color = Color(0.9, 0.1, 0.1, 1)
@@ -339,7 +340,7 @@ offset_top = 0.0
 offset_right = 100.0
 offset_bottom = 0.0
 scale = Vector2(2.0, 2.0)
-ingredient_name = "Огненный корень"
+ingredient_name = "Аджика"
 
 [node name="Label" type="Label" parent="UI/IngredientsShelf/Ing_Fire"]
 layout_mode = 1
@@ -353,7 +354,7 @@ offset_top = -23.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "Огонь"
+text = "Аджика"
 horizontal_alignment = 1
 
 [node name="Ing_Ice" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
@@ -363,7 +364,7 @@ offset_top = 180.0
 offset_right = 0.0
 offset_bottom = 180.0
 scale = Vector2(2.0, 2.0)
-ingredient_name = "Ледяная пыль"
+ingredient_name = "Снег"
 
 [node name="Label" type="Label" parent="UI/IngredientsShelf/Ing_Ice"]
 layout_mode = 1
@@ -377,7 +378,7 @@ offset_top = -23.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "Лед"
+text = "Снег"
 horizontal_alignment = 1
 
 [node name="Ing_Salt" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
@@ -387,7 +388,7 @@ offset_top = 360.0
 offset_right = 0.0
 offset_bottom = 360.0
 scale = Vector2(2.0, 2.0)
-ingredient_name = "Соль"
+ingredient_name = "Лаврушка"
 
 [node name="Label" type="Label" parent="UI/IngredientsShelf/Ing_Salt"]
 layout_mode = 1
@@ -401,7 +402,7 @@ offset_top = -23.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "Соль"
+text = "Лавр"
 horizontal_alignment = 1
 
 [node name="Ing_Sugar" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
@@ -412,21 +413,9 @@ offset_right = 100.0
 offset_bottom = 540.0
 scale = Vector2(2.0, 2.0)
 ingredient_name = "Сахар"
+icon_texture = ExtResource("7_sugar")
 
-[node name="Label" type="Label" parent="UI/IngredientsShelf/Ing_Sugar"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -23.0
-offset_right = 20.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Сахар"
-horizontal_alignment = 1
+
 
 [connection signal="button_down" from="UI/StirButton" to="." method="_on_stir_button_down"]
 [connection signal="button_up" from="UI/StirButton" to="." method="_on_stir_button_up"]
