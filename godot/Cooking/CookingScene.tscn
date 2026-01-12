@@ -1,26 +1,40 @@
-[gd_scene load_steps=19 format=3 uid="uid://d3ytuegpnloas"]
+[gd_scene load_steps=20 format=3 uid="uid://d3ytuegpnloas"]
 
 [ext_resource type="Script" uid="uid://dvunjib2wp4lj" path="res://Cooking/CookingScene.gd" id="1_script"]
 [ext_resource type="Script" uid="uid://dan51y1esrmn2" path="res://Cooking/Pot.gd" id="3_pot_script"]
 [ext_resource type="PackedScene" path="res://Cooking/Ingredient.tscn" id="4_ingredient"]
 [ext_resource type="Texture2D" uid="uid://cj76vv4pgpuo3" path="res://Factory/Assets/background_for_the_minigame_cooking_jar_no_icon_2.png" id="5_bg"]
+[ext_resource type="Texture2D" uid="uid://bbatqeqy463rm" path="res://Factory/Assets/stick_for_boiler2.png" id="5_iqoyq"]
 [ext_resource type="Texture2D" uid="uid://cdfxk64eyf4my" path="res://Factory/Assets/spices.png" id="6_cta2u"]
 [ext_resource type="Texture2D" uid="uid://birolti7k035t" path="res://Factory/Assets/apples.png" id="7_iqoyq"]
 [ext_resource type="Texture2D" uid="uid://bqsv1byhxp418" path="res://Factory/Assets/sugar.png" id="7_sugar"]
 [ext_resource type="Texture2D" uid="uid://bw8qiufhn1xx7" path="res://Factory/Assets/boiler_contents.png" id="8_pot_contents"]
 
-[sub_resource type="Shader" id="Shader_oval_mask"]
+[sub_resource type="Shader" id="Shader_spin"]
 code = "shader_type canvas_item;
+uniform float angle = 0.0;
 
 void fragment() {
 	vec2 center = vec2(0.5, 0.5);
+	vec2 uv = UV - center;
+	float s = sin(angle);
+	float c = cos(angle);
+	// Basic rotation
+	vec2 new_uv = vec2(uv.x * c - uv.y * s, uv.x * s + uv.y * c) + center;
+	
+	// Check bounds to avoid artifacts if texture doesn't repeat/clamp properly (optional, usually texture repeats or clamps)
+	// For now just sample
+	COLOR = texture(TEXTURE, new_uv);
+    
+    // Oval Mask
 	if (distance(UV, center) > 0.5) {
 		COLOR.a = 0.0;
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pot_mask"]
-shader = SubResource("Shader_oval_mask")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pot_spin"]
+shader = SubResource("Shader_spin")
+shader_parameter/angle = 0.0
 
 [sub_resource type="ImageTexture" id="ImageTexture_invisible_grabber"]
 
@@ -112,32 +126,6 @@ shadow_color = Color(0, 0, 0, 0.3)
 shadow_size = 8
 shadow_offset = Vector2(0, 5)
 
-[sub_resource type="Shader" id="Shader_spin"]
-code = "shader_type canvas_item;
-uniform float angle = 0.0;
-
-void fragment() {
-	vec2 center = vec2(0.5, 0.5);
-	vec2 uv = UV - center;
-	float s = sin(angle);
-	float c = cos(angle);
-	// Basic rotation
-	vec2 new_uv = vec2(uv.x * c - uv.y * s, uv.x * s + uv.y * c) + center;
-	
-	// Check bounds to avoid artifacts if texture doesn't repeat/clamp properly (optional, usually texture repeats or clamps)
-	// For now just sample
-	COLOR = texture(TEXTURE, new_uv);
-    
-    // Oval Mask
-	if (distance(UV, center) > 0.5) {
-		COLOR.a = 0.0;
-	}
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pot_spin"]
-shader = SubResource("Shader_spin")
-shader_parameter/angle = 0.0
-
 [node name="CookingScene" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -168,7 +156,6 @@ grow_vertical = 2
 
 [node name="Pot" type="TextureRect" parent="GameArea"]
 material = SubResource("ShaderMaterial_pot_spin")
-
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -184,6 +171,26 @@ grow_vertical = 2
 texture = ExtResource("8_pot_contents")
 expand_mode = 1
 script = ExtResource("3_pot_script")
+
+[node name="Stick" type="TextureRect" parent="GameArea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -218.99988
+offset_top = -300.0
+offset_right = -171.63495
+offset_bottom = 124.100586
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.2
+scale = Vector2(0.8, 0.8)
+pivot_offset = Vector2(30, 50)
+texture = ExtResource("5_iqoyq")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 1
@@ -352,39 +359,39 @@ grow_vertical = 2
 
 [node name="Ing_Fire" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
 layout_mode = 1
-offset_left = 51.0
-offset_top = -32.0
-offset_right = 201.5
-offset_bottom = 48.0
+offset_left = 644.0
+offset_top = 328.0
+offset_right = 794.5
+offset_bottom = 408.0
 scale = Vector2(2, 2)
 texture = ExtResource("6_cta2u")
 ingredient_name = "Аджика"
 
 [node name="Ing_Ice" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
 layout_mode = 1
-offset_left = -64.0
-offset_top = 139.0
-offset_right = 16.0
-offset_bottom = 219.0
+offset_left = 592.0
+offset_top = 486.0
+offset_right = 672.0
+offset_bottom = 566.0
 scale = Vector2(2, 2)
 ingredient_name = "Снег"
 
 [node name="Ing_Salt" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
 layout_mode = 1
-offset_left = -117.0
-offset_top = 349.0
-offset_right = 0.0
-offset_bottom = 429.0
+offset_left = -72.0
+offset_top = 315.0
+offset_right = 45.0
+offset_bottom = 395.0
 scale = Vector2(2, 2)
 texture = ExtResource("7_iqoyq")
 ingredient_name = "Лаврушка"
 
 [node name="Ing_Sugar" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
 layout_mode = 1
-offset_left = 45.0
-offset_top = 505.0
-offset_right = 141.5
-offset_bottom = 601.0
+offset_left = 94.0
+offset_top = 479.0
+offset_right = 190.5
+offset_bottom = 575.0
 scale = Vector2(2, 2)
 texture = ExtResource("7_sugar")
 ingredient_name = "Сахар"

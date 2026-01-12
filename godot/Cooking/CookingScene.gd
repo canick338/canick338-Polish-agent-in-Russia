@@ -43,19 +43,49 @@ var _current_requested_ingredient: String = ""
 var _current_ingredient_time_left: float = 0.0
 const INGREDIENTS = ["Аджика", "Снег", "Лаврушка", "Сахар"]
 
+var _stick_initial_pos: Vector2 = Vector2.ZERO
+var _stick_initial_rot: float = 0.0
+var _stick_anchor_norm: Vector2 = Vector2.ZERO # Normalized offset from pot center (-1..1)
+
 # === NODES ===
 @onready var heat_slider = $UI/HeatSlider
 @onready var progress_bar = $UI/ProgressBar
 @onready var status_label = $UI/StatusLabel
 @onready var pot_visual = $GameArea/Pot
+@onready var stick_visual = $GameArea/Stick
 @onready var ingredient_label = $UI/IngredientRequestLabel
 @onready var ingredient_timer_bar = $UI/IngredientRequestLabel/TimerBar
 @onready var green_zone_rect = $UI/HeatSlider/GreenZone
 @onready var danger_indicator = $UI/DangerIndicator
+@onready var game_area = $GameArea
 @onready var money_label = $UI/MoneyPanel/HBox/MoneyValue
 
 func _ready():
 	print("CookingScene: _ready called")
+	if stick_visual:
+		_stick_initial_pos = stick_visual.position
+		_stick_initial_rot = stick_visual.rotation
+		
+		# Calculate normalized anchor position relative to Pot
+		if pot_visual:
+			var pot_center = pot_visual.position + pot_visual.size / 2.0
+			# Track the BOTTOM TIP of the stick, not the center
+			# Assuming stick texture is vertical and bottom is the stirrer
+			var stick_tip_offset = Vector2(stick_visual.size.x / 2.0, stick_visual.size.y)
+			var stick_tip_pos = _stick_initial_pos + stick_tip_offset
+			
+			var diff = stick_tip_pos - pot_center
+			
+			# Normalize against pot radius (half-size)
+			if pot_visual.size.x > 0 and pot_visual.size.y > 0:
+				_stick_anchor_norm = Vector2(diff.x / (pot_visual.size.x / 2.0), diff.y / (pot_visual.size.y / 2.0))
+				
+				# CLAMP to keep inside oval (0.9 margin)
+				if _stick_anchor_norm.length() > 0.9:
+					_stick_anchor_norm = _stick_anchor_norm.normalized() * 0.9
+			else:
+				_stick_anchor_norm = Vector2.ZERO
+	
 	_start_game()
 	_update_money_display()
 	if "GameGlobal" in get_node("/root"):
@@ -104,7 +134,61 @@ func _update_temperature(delta):
 		if _pot_rotation_angle > TAU:
 			_pot_rotation_angle -= TAU
 		if pot_visual.material:
+			# Pass positive angle to rotate texture Counter-Clockwise (or simple Other Way)
 			pot_visual.material.set_shader_parameter("angle", _pot_rotation_angle)
+	
+	# Update Stick Animation
+	if stick_visual and pot_visual:
+		if _is_stirring:
+			# Calculate rotated position based on initial UV offset
+			# We rotate the normalized vector, then scale back to pot dimensions
+			var pot_size = pot_visual.size
+			var pot_center = pot_visual.position + pot_size / 2.0
+			
+			# Rotation angle (must match shader direction)
+			# Shader uses _pot_rotation_angle directly now (Positive = CCW usually? user said matches)
+			# Let's assume positive angle rotates vector normally.
+			
+			var current_angle = _pot_rotation_angle
+			var cos_a = cos(current_angle)
+			var sin_a = sin(current_angle)
+			
+			# Rotate the initial normalized offset
+			# _stick_anchor_norm was calculated in _ready
+			var new_norm_x = _stick_anchor_norm.x * cos_a - _stick_anchor_norm.y * sin_a
+			var new_norm_y = _stick_anchor_norm.x * sin_a + _stick_anchor_norm.y * cos_a
+			
+			# Map back to screen space
+			var new_pos_relative = Vector2(new_norm_x * (pot_size.x / 2.0), new_norm_y * (pot_size.y / 2.0))
+			
+			# new_pos_relative is the new TIP position relative to pot center
+			var target_tip_pos = pot_center + new_pos_relative
+			
+			# We want to place the stick such that its bottom tip is at target_tip_pos
+			# Stick Pos = Tip Pos - Tip Offset
+			var stick_tip_offset = Vector2(stick_visual.size.x / 2.0, stick_visual.size.y)
+			stick_visual.position = target_tip_pos - stick_tip_offset
+			
+			# Wobble rotation
+			stick_visual.rotation = _stick_initial_rot + sin(current_angle * 3.0) * 0.1
+			
+		else:
+			# Idle pose - return to INITIAL
+			# Actually, if we want it "attached", does it return? 
+			# User: "stay in this place on the drawing".
+			# Implies it should stay where the texture stopped?
+			# "and synchronously move with it".
+			# If texture stops, stick stops there.
+			# But user also said "return to positions" in previous contexts? 
+			# Let's assume for now it stays "attached" meaning if we stop stirring, it stays at the current rotated pos?
+			# OR it returns to initial.
+			# "in preparatory time and during the game she was in one position" (Step 1346).
+			# Meaning: Idle position = Initial Position.
+			# So when stopping, we lerp back to Initial.
+			
+			var idle_time = Time.get_ticks_msec() / 1000.0
+			stick_visual.rotation = lerp(stick_visual.rotation, _stick_initial_rot + sin(idle_time)*0.05, delta * 2.0)
+			stick_visual.position = stick_visual.position.lerp(_stick_initial_pos, delta * 5.0)
 	
 	# Fail conditions
 	if _temperature >= 100.0:
