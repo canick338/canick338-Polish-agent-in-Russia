@@ -130,7 +130,7 @@ func _update_temperature(delta):
 	
 	# Update Pot Rotation Shader
 	if _is_stirring:
-		_pot_rotation_angle += delta * 1.5 # Slower rotation (was 5.0)
+		_pot_rotation_angle -= delta * 1.5 # Slower rotation (was 5.0)
 		if _pot_rotation_angle > TAU:
 			_pot_rotation_angle -= TAU
 		if pot_visual.material:
@@ -149,7 +149,7 @@ func _update_temperature(delta):
 			# Shader uses _pot_rotation_angle directly now (Positive = CCW usually? user said matches)
 			# Let's assume positive angle rotates vector normally.
 			
-			var current_angle = _pot_rotation_angle
+			var current_angle = -_pot_rotation_angle
 			var cos_a = cos(current_angle)
 			var sin_a = sin(current_angle)
 			

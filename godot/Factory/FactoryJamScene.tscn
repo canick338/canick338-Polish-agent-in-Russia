@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dcsrhxgshc0kc"]
+[gd_scene load_steps=8 format=3 uid="uid://bmcluobyiwday"]
 
 [ext_resource type="Script" uid="uid://d1kbspolp5h11" path="res://Factory/FactoryJamScene.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dx82vjbaw0gn7" path="res://Factory/chibi_danila_left_up_basket_minigame.png" id="3"]
