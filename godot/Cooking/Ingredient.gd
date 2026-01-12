@@ -14,6 +14,7 @@ func _get_drag_data(at_position):
 	var preview = TextureRect.new()
 	preview.texture = texture
 	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	preview.size = Vector2(60, 60)
 	preview.modulate.a = 0.8
 	

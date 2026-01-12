@@ -35,6 +35,7 @@ var _heating_modifier: float = 1.0
 var _input_locked: bool = false
 var _start_warmup: float = 0.0 # Grace period at start
 var _score: int = 0
+var _pot_rotation_angle: float = 0.0 # For shader rotation
 
 # Ingredient Requests
 var _ingredient_timer: float = 0.0
@@ -96,6 +97,14 @@ func _update_temperature(delta):
 		_temperature += current_heating * delta
 		
 	_temperature = clamp(_temperature, MIN_TEMP, MAX_TEMP)
+	
+	# Update Pot Rotation Shader
+	if _is_stirring:
+		_pot_rotation_angle += delta * 1.5 # Slower rotation (was 5.0)
+		if _pot_rotation_angle > TAU:
+			_pot_rotation_angle -= TAU
+		if pot_visual.material:
+			pot_visual.material.set_shader_parameter("angle", _pot_rotation_angle)
 	
 	# Fail conditions
 	if _temperature >= 100.0:
@@ -216,11 +225,8 @@ func _update_visuals():
 		progress_bar.modulate = Color.WHITE
 		progress_bar.scale = Vector2.ONE
 	
-	# Pot color interpolation
-	var color_start = Color(0.4, 0.2, 0.0) # Muddy brown
-	var color_end = Color(0.0, 1.0, 1.0) # Glowing cyan
-	var t = _progress / TOTAL_PROGRESS_REQD
-	pot_visual.modulate = color_start.lerp(color_end, t)
+	# Pot color interpolation removed as per request
+	pot_visual.modulate = Color.WHITE
 	
 	# Update Green Zone Visuals
 	# Slider is 500px tall. Value 100 is Top (y=0). Value 0 is Bottom (y=500).
