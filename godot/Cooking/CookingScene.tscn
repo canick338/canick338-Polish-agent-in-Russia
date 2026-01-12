@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d3ytuegpnloas"]
+[gd_scene load_steps=21 format=3 uid="uid://d3ytuegpnloas"]
 
 [ext_resource type="Script" uid="uid://dvunjib2wp4lj" path="res://Cooking/CookingScene.gd" id="1_script"]
 [ext_resource type="Script" uid="uid://dan51y1esrmn2" path="res://Cooking/Pot.gd" id="3_pot_script"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://birolti7k035t" path="res://Factory/Assets/apples.png" id="7_iqoyq"]
 [ext_resource type="Texture2D" uid="uid://bqsv1byhxp418" path="res://Factory/Assets/sugar.png" id="7_sugar"]
 [ext_resource type="Texture2D" uid="uid://bw8qiufhn1xx7" path="res://Factory/Assets/boiler_contents.png" id="8_pot_contents"]
+[ext_resource type="Texture2D" uid="uid://yvp1ete3brxm" path="res://Factory/Assets/berries.png" id="9_berries"]
+[ext_resource type="FontFile" uid="uid://montserrat_font" path="res://Theme/Montserrat-ExtraBold.ttf" id="10_font"]
 
 [sub_resource type="Shader" id="Shader_spin"]
 code = "shader_type canvas_item;
@@ -74,8 +76,29 @@ corner_radius_bottom_left = 20
 shadow_color = Color(0.2, 1, 0.4, 0.4)
 shadow_size = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_timer_bg"]
+bg_color = Color(0.2, 0.2, 0.2, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_timer_red"]
-bg_color = Color(0.9, 0.1, 0.1, 1)
+bg_color = Color(1, 0.3, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -110,6 +133,34 @@ corner_radius_bottom_left = 30
 shadow_color = Color(0, 0, 0, 0.1)
 shadow_size = 2
 shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prog_bg"]
+bg_color = Color(0.15, 0.15, 0.15, 0.9)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prog_fill"]
+bg_color = Color(0, 0.8, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1, 1, 0.3, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stir_hover"]
 bg_color = Color(0.35, 0.65, 0.35, 1)
@@ -179,10 +230,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -300.0
-offset_right = -112.0
-offset_bottom = 124.100586
+offset_left = -293.0
+offset_top = -373.0
+offset_right = -245.0
+offset_bottom = 51.099976
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.2
@@ -258,6 +309,13 @@ offset_top = 50.0
 offset_right = 300.0
 offset_bottom = 90.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 0.5)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("10_font")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/background = SubResource("StyleBoxFlat_prog_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_prog_fill")
 
 [node name="StatusLabel" type="Label" parent="UI"]
 layout_mode = 1
@@ -269,7 +327,11 @@ offset_top = 110.0
 offset_right = 200.0
 offset_bottom = 150.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("10_font")
+theme_override_font_sizes/font_size = 28
 text = "Статус..."
 horizontal_alignment = 1
 
@@ -305,7 +367,10 @@ offset_right = 200.0
 offset_bottom = 200.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 0, 1)
-theme_override_font_sizes/font_size = 28
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("10_font")
+theme_override_font_sizes/font_size = 32
 text = "Добавьте: ..."
 horizontal_alignment = 1
 
@@ -322,6 +387,7 @@ offset_right = 100.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_timer_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_timer_red")
 max_value = 1.0
 value = 1.0
@@ -340,6 +406,14 @@ offset_right = 120.0
 offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 1, 0.2, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("10_font")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_stir_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_stir_pressed")
@@ -357,43 +431,48 @@ offset_right = 750.0
 offset_bottom = 300.0
 grow_vertical = 2
 
-[node name="Ing_Fire" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
+[node name="Ing_Spices" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
 layout_mode = 1
-offset_left = 644.0
-offset_top = 328.0
-offset_right = 794.5
-offset_bottom = 408.0
+offset_left = -188.0
+offset_top = 298.0
+offset_right = 20.0
+offset_bottom = 421.5
 scale = Vector2(2, 2)
 texture = ExtResource("6_cta2u")
-ingredient_name = "Аджика"
+stretch_mode = 0
+ingredient_name = "Пряности"
 
-[node name="Ing_Ice" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
+[node name="Ing_Berries" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
 layout_mode = 1
-offset_left = 592.0
-offset_top = 486.0
-offset_right = 672.0
-offset_bottom = 566.0
+offset_left = 474.0
+offset_top = 448.0
+offset_right = 607.0
+offset_bottom = 561.0
 scale = Vector2(2, 2)
-ingredient_name = "Снег"
+texture = ExtResource("9_berries")
+stretch_mode = 0
+ingredient_name = "Ягоды"
 
-[node name="Ing_Salt" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
+[node name="Ing_Apples" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
 layout_mode = 1
-offset_left = -72.0
-offset_top = 315.0
-offset_right = 45.0
-offset_bottom = 395.0
+offset_left = 128.0
+offset_top = 464.0
+offset_right = 266.5
+offset_bottom = 560.5
 scale = Vector2(2, 2)
 texture = ExtResource("7_iqoyq")
-ingredient_name = "Лаврушка"
+stretch_mode = 0
+ingredient_name = "Яблоки"
 
 [node name="Ing_Sugar" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]
 layout_mode = 1
-offset_left = 94.0
-offset_top = 479.0
-offset_right = 190.5
-offset_bottom = 575.0
+offset_left = 678.0
+offset_top = 294.0
+offset_right = 801.0
+offset_bottom = 409.5
 scale = Vector2(2, 2)
 texture = ExtResource("7_sugar")
+stretch_mode = 0
 ingredient_name = "Сахар"
 icon_texture = ExtResource("7_sugar")
 

@@ -9,4 +9,5 @@ offset_right = 80.0
 offset_bottom = 80.0
 texture = ExtResource("2_icon")
 expand_mode = 1
+stretch_mode = 5
 script = ExtResource("1_script")

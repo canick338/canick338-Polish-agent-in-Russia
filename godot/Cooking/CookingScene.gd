@@ -41,7 +41,8 @@ var _pot_rotation_angle: float = 0.0 # For shader rotation
 var _ingredient_timer: float = 0.0
 var _current_requested_ingredient: String = ""
 var _current_ingredient_time_left: float = 0.0
-const INGREDIENTS = ["Аджика", "Снег", "Лаврушка", "Сахар"]
+const INGREDIENTS = ["Пряности", "Ягоды", "Яблоки", "Сахар"]
+
 
 var _stick_initial_pos: Vector2 = Vector2.ZERO
 var _stick_initial_rot: float = 0.0
@@ -64,17 +65,24 @@ func _ready():
 	print("CookingScene: _ready called")
 	if stick_visual:
 		_stick_initial_pos = stick_visual.position
+		stick_visual.position = _stick_initial_pos
 		_stick_initial_rot = stick_visual.rotation
 		
 		# Calculate normalized anchor position relative to Pot
 		if pot_visual:
-			var pot_center = pot_visual.position + pot_visual.size / 2.0
+			# Shift center down by 10px and right by 10px (Total) as requested
+			var pot_center = pot_visual.position + pot_visual.size / 2.0 + Vector2(10, 10)
 			# Track the BOTTOM TIP of the stick, not the center
 			# Assuming stick texture is vertical and bottom is the stirrer
 			var stick_tip_offset = Vector2(stick_visual.size.x / 2.0, stick_visual.size.y)
 			var stick_tip_pos = _stick_initial_pos + stick_tip_offset
 			
 			var diff = stick_tip_pos - pot_center
+			
+			# Reduce radius by 130 pixels (100 + 30)
+			var len = diff.length()
+			if len > 130.0:
+				diff = diff.normalized() * (len - 130.0)
 			
 			# Normalize against pot radius (half-size)
 			if pot_visual.size.x > 0 and pot_visual.size.y > 0:
@@ -143,7 +151,8 @@ func _update_temperature(delta):
 			# Calculate rotated position based on initial UV offset
 			# We rotate the normalized vector, then scale back to pot dimensions
 			var pot_size = pot_visual.size
-			var pot_center = pot_visual.position + pot_size / 2.0
+			# Shift center down by 10px and right by 10px (Total) as requested
+			var pot_center = pot_visual.position + pot_visual.size / 2.0 + Vector2(10, 10)
 			
 			# Rotation angle (must match shader direction)
 			# Shader uses _pot_rotation_angle directly now (Positive = CCW usually? user said matches)
@@ -186,8 +195,8 @@ func _update_temperature(delta):
 			# Meaning: Idle position = Initial Position.
 			# So when stopping, we lerp back to Initial.
 			
-			var idle_time = Time.get_ticks_msec() / 1000.0
-			stick_visual.rotation = lerp(stick_visual.rotation, _stick_initial_rot + sin(idle_time)*0.05, delta * 2.0)
+			# Return to initial (Static, no wobble)
+			stick_visual.rotation = lerp_angle(stick_visual.rotation, _stick_initial_rot, delta * 5.0)
 			stick_visual.position = stick_visual.position.lerp(_stick_initial_pos, delta * 5.0)
 	
 	# Fail conditions
@@ -267,27 +276,26 @@ func _animate_pot_fail():
 	tween.tween_property(pot_visual, "position", pot_visual.position - Vector2(10, 0), 0.05)
 	tween.tween_property(pot_visual, "position", pot_visual.position, 0.05)
 
+
+
 func _apply_ingredient_effect(type: String):
 	match type:
-		"Аджика":
-			status_label.text = "АДЖИКА! Печет не по-детски!"
+		"Пряности":
+			status_label.text = "ПРЯНОСТИ! Жгучий вкус!"
 			# Twist: Heat up much faster
 			_heating_modifier = 4.0 
 			await get_tree().create_timer(3.0).timeout
 			_heating_modifier = 1.0
-		"Снег":
-			status_label.text = "СНЕГ! Руки замерзли!"
-			# Twist: Freeze controls
-			_input_locked = true
-			# Visual freeze feedback
-			var original_modulate = heat_slider.modulate
-			heat_slider.modulate = Color.CYAN
-			await get_tree().create_timer(2.0).timeout
-			_input_locked = false
-			heat_slider.modulate = original_modulate
-		"Лаврушка":
-			status_label.text = "Лаврушка для аромата."
-			# Maybe slight temp reduction?
+		"Ягоды":
+			status_label.text = "ЯГОДЫ! Лесной вкус!"
+			# Berries effect: Score bonus + Small visual bounce
+			_score += 100
+			# removed input lock
+		"Яблоки":
+			status_label.text = "ЯБЛОКИ! Витамины!"
+			# Apples effect: maybe just score or standard?
+			# Lavrushka reduced temp. Let's make Apples do something else or same.
+			# "Slight temp reduction" fits apples too (cooling)?
 			_temperature -= 5.0
 		"Сахар":
 			status_label.text = "Сахар. Сладкая жизнь."
