@@ -58,10 +58,27 @@ func _ready():
 	# Apply settings on game launch (Volume, Fullscreen, Language)
 	apply_settings()
 	
-	# DON'T auto-load savegame on startup - it bypasses main menu!
-	# Only load when explicitly requested
-	pass
-	# load_game()
+	# Load ONLY persistent data (Unlocks, Money) for the Main Menu.
+	# We perform a "partial load" so we don't accidentally resume the story loop.
+	load_persistent_data_only()
+
+func load_persistent_data_only() -> void:
+	"""Loads only global state (Unlocks, Money) without restoring scene position."""
+	var path = get_save_path(0)
+	if not FileAccess.file_exists(path):
+		return
+	
+	var file = FileAccess.open(path, FileAccess.READ)
+	if file:
+		var json = JSON.new()
+		var parse_result = json.parse(file.get_as_text())
+		if parse_result == OK:
+			var loaded_data = json.get_data()
+			# Restore only meta-progression
+			if "money" in loaded_data: save_data["money"] = int(loaded_data["money"])
+			if "unlocked_cards" in loaded_data: save_data["unlocked_cards"] = loaded_data["unlocked_cards"]
+			print("Persistent data loaded (Money, Cards).")
+
 
 func apply_settings() -> void:
 	var config = ConfigFile.new()

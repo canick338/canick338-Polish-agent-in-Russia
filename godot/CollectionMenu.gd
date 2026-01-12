@@ -37,7 +37,7 @@ func _update_list():
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		
 		if is_unlocked:
-			btn.text = "   " + data["name"]
+			btn.text = "   " + tr(data["name"])
 			btn.pressed.connect(_on_character_selected.bind(card_id))
 		else:
 			btn.text = "   ???"
@@ -49,8 +49,8 @@ func _on_character_selected(card_id):
 	var data = GameGlobal.CARD_DATABASE[card_id]
 	
 	detail_tex.texture = load(data["texture_path"])
-	detail_name.text = data["name"]
-	detail_desc.text = data.get("description", "Нет описания.")
+	detail_name.text = tr(data["name"])
+	detail_desc.text = tr(data.get("description", "Нет описания."))
 	
 	detail_content.visible = true
 	empty_label.visible = false
