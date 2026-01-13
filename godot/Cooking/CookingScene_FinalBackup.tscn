@@ -1,16 +1,16 @@
-[gd_scene load_steps=25 format=3 uid="uid://d3ytuegpnloas"]
+[gd_scene load_steps=21 format=3 uid="uid://bawoox88ceydx"]
 
 [ext_resource type="Script" uid="uid://dvunjib2wp4lj" path="res://Cooking/CookingScene.gd" id="1_script"]
 [ext_resource type="Script" uid="uid://dan51y1esrmn2" path="res://Cooking/Pot.gd" id="3_pot_script"]
 [ext_resource type="PackedScene" path="res://Cooking/Ingredient.tscn" id="4_ingredient"]
 [ext_resource type="Texture2D" uid="uid://cj76vv4pgpuo3" path="res://Factory/Assets/background_for_the_minigame_cooking_jar_no_icon_2.png" id="5_bg"]
-[ext_resource type="Texture2D" uid="uid://bxb7rgumxcedp" path="res://Factory/Assets/stick_for_boiler2.png" id="5_iqoyq"]
-[ext_resource type="Texture2D" uid="uid://bb47106utxis2" path="res://Factory/Assets/spices.png" id="6_cta2u"]
-[ext_resource type="Texture2D" uid="uid://di8oah1pkymm3" path="res://Factory/Assets/apples.png" id="7_iqoyq"]
+[ext_resource type="Texture2D" uid="uid://bbatqeqy463rm" path="res://Factory/Assets/stick_for_boiler2.png" id="5_iqoyq"]
+[ext_resource type="Texture2D" uid="uid://cdfxk64eyf4my" path="res://Factory/Assets/spices.png" id="6_cta2u"]
+[ext_resource type="Texture2D" uid="uid://birolti7k035t" path="res://Factory/Assets/apples.png" id="7_iqoyq"]
 [ext_resource type="Texture2D" uid="uid://bqsv1byhxp418" path="res://Factory/Assets/sugar.png" id="7_sugar"]
 [ext_resource type="Texture2D" uid="uid://bw8qiufhn1xx7" path="res://Factory/Assets/boiler_contents.png" id="8_pot_contents"]
 [ext_resource type="Texture2D" uid="uid://yvp1ete3brxm" path="res://Factory/Assets/berries.png" id="9_berries"]
-[ext_resource type="FontFile" uid="uid://bijargpv0txdf" path="res://Theme/Montserrat-ExtraBold.ttf" id="10_font"]
+[ext_resource type="FontFile" uid="uid://montserrat_font" path="res://Theme/Montserrat-ExtraBold.ttf" id="10_font"]
 
 [sub_resource type="Shader" id="Shader_spin"]
 code = "shader_type canvas_item;
@@ -76,34 +76,6 @@ corner_radius_bottom_left = 20
 shadow_color = Color(0.2, 1, 0.4, 0.4)
 shadow_size = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prog_bg"]
-bg_color = Color(0.15, 0.15, 0.15, 0.9)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-expand_margin_left = 3.0
-expand_margin_top = 3.0
-expand_margin_right = 3.0
-expand_margin_bottom = 3.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prog_fill"]
-bg_color = Color(0, 0.8, 0.1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.1, 1, 0.3, 0.5)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_timer_bg"]
 bg_color = Color(0.2, 0.2, 0.2, 0.8)
 border_width_left = 2
@@ -162,6 +134,34 @@ shadow_color = Color(0, 0, 0, 0.1)
 shadow_size = 2
 shadow_offset = Vector2(0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prog_bg"]
+bg_color = Color(0.15, 0.15, 0.15, 0.9)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prog_fill"]
+bg_color = Color(0, 0.8, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1, 1, 0.3, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stir_hover"]
 bg_color = Color(0.35, 0.65, 0.35, 1)
 border_width_left = 4
@@ -196,7 +196,6 @@ grow_vertical = 2
 texture = ExtResource("5_bg")
 expand_mode = 1
 stretch_mode = 6
-metadata/_edit_lock_ = true
 
 [node name="GameArea" type="Control" parent="."]
 layout_mode = 1
@@ -205,7 +204,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_lock_ = true
 
 [node name="Pot" type="TextureRect" parent="GameArea"]
 material = SubResource("ShaderMaterial_pot_spin")
@@ -409,9 +407,9 @@ offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.2, 1, 0.2, 1)
 theme_override_constants/outline_size = 10
@@ -424,13 +422,10 @@ text = "МЕШАТЬ!"
 
 [node name="IngredientsShelf" type="Control" parent="UI"]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 550.0
-offset_top = -300.0
-offset_right = 750.0
-offset_bottom = 300.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Ing_Spices" parent="UI/IngredientsShelf" instance=ExtResource("4_ingredient")]

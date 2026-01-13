@@ -59,6 +59,11 @@ func _connect_signals():
 		exit_button.pressed.connect(_on_exit_pressed)
 		exit_button.mouse_entered.connect(_on_button_hover.bind(exit_button))
 		
+	var exit_overlay = $ExitConfirmationOverlay
+	if exit_overlay:
+		exit_overlay.confirmed.connect(_on_confirm_exit_pressed)
+		exit_overlay.cancelled.connect(_on_cancel_exit_pressed)
+		
 	# Character interactivity
 	if danila_texture:
 		danila_texture.mouse_entered.connect(_on_character_hover.bind(danila_texture, danila_highlight, true))
@@ -123,8 +128,16 @@ func _on_settings_back():
 	$VBoxContainer.visible = true
 
 func _on_exit_pressed():
-	exit_requested.emit()
+	# exit_requested.emit() # Optional if we still want to signal
+	$ExitConfirmationOverlay.visible = true
+	$VBoxContainer.visible = false # Hide main buttons
+
+func _on_confirm_exit_pressed():
 	get_tree().quit()
+
+func _on_cancel_exit_pressed():
+	$ExitConfirmationOverlay.visible = false
+	$VBoxContainer.visible = true # Show main buttons
 
 func _on_button_hover(btn: Button):
 	# Small pop effect

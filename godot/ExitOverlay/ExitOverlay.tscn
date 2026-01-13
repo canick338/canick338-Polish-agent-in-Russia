@@ -1,0 +1,122 @@
+[gd_scene load_steps=7 format=3 uid="uid://dt2vp7yddc7f3"]
+
+[ext_resource type="Script" uid="uid://barxek6plx3rc" path="res://ExitOverlay/ExitOverlay.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://c2eexfl581kyx" path="res://Backgrounds/exit_background_2.png" id="2_bg"]
+[ext_resource type="FontFile" uid="uid://bijargpv0txdf" path="res://Theme/Montserrat-ExtraBold.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://dnbbhrn4htx02" path="res://Backgrounds/exit_frame.png" id="4_frame"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.15, 0.1, 0.05, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.8, 0.6, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 10.0
+expand_margin_right = 10.0
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 5
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.25, 0.2, 0.1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.8, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 12.0
+expand_margin_right = 12.0
+shadow_color = Color(1, 0.6, 0.1, 0.4)
+shadow_size = 15
+
+[node name="ExitOverlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+metadata/_edit_lock_ = true
+
+[node name="ExitBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -400.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ButtonsBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 319.0
+offset_top = 669.0
+offset_right = 959.0
+offset_bottom = 869.0
+theme_override_constants/separation = 20
+
+[node name="ConfirmExitButton" type="Button" parent="ButtonsBox"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.8, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "ВЫХОД"
+metadata/_edit_lock_ = true
+
+[node name="CancelExitButton" type="Button" parent="ButtonsBox"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.8, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "ОТМЕНА"
+
+[node name="ExitFrame" type="Sprite2D" parent="."]
+position = Vector2(648, 745.00006)
+scale = Vector2(1.17, 1.13)
+texture = ExtResource("4_frame")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+offset_left = 123.0
+offset_top = 251.0
+offset_right = 1220.0
+offset_bottom = 378.0
+theme_override_colors/font_color = Color(1, 0.9, 0.6, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 60
+text = "Ты действительно хочешь уйти?"
+horizontal_alignment = 1
+vertical_alignment = 1
