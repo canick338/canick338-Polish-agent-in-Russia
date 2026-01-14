@@ -67,16 +67,16 @@ stretch_mode = 6
 [node name="LeavesContainer" type="Node2D" parent="."]
 
 [node name="Leaves1" type="CPUParticles2D" parent="LeavesContainer"]
-position = Vector2(1400, -100)
+position = Vector2(-188, 92)
 amount = 16
 texture = ExtResource("5_leaves1")
 lifetime = 6.0
 preprocess = 5.0
 emission_shape = 2
 emission_sphere_radius = 1.0
-direction = Vector2(-1, 0.4)
+direction = Vector2(1, 0.4)
 spread = 60.0
-gravity = Vector2(-30, 60)
+gravity = Vector2(30, 60)
 initial_velocity_min = 150.0
 initial_velocity_max = 300.0
 angular_velocity_min = -100.0
@@ -87,16 +87,16 @@ scale_amount_min = 0.15
 scale_amount_max = 0.25
 
 [node name="Leaves2" type="CPUParticles2D" parent="LeavesContainer"]
-position = Vector2(1400, -100)
+position = Vector2(-188, 92)
 amount = 14
 texture = ExtResource("6_leaves2")
 lifetime = 7.0
 preprocess = 5.0
 emission_shape = 2
 emission_sphere_radius = 1.0
-direction = Vector2(-1, 0.3)
+direction = Vector2(1, 0.3)
 spread = 50.0
-gravity = Vector2(-35, 55)
+gravity = Vector2(35, 55)
 initial_velocity_min = 160.0
 initial_velocity_max = 320.0
 angular_velocity_min = -120.0
@@ -107,16 +107,16 @@ scale_amount_min = 0.18
 scale_amount_max = 0.28
 
 [node name="Leaves3" type="CPUParticles2D" parent="LeavesContainer"]
-position = Vector2(1400, -100)
+position = Vector2(-188, 92)
 amount = 12
 texture = ExtResource("7_leaves3")
 lifetime = 8.0
 preprocess = 5.0
 emission_shape = 2
 emission_sphere_radius = 1.0
-direction = Vector2(-1, 0.2)
+direction = Vector2(1, 0.2)
 spread = 55.0
-gravity = Vector2(-25, 65)
+gravity = Vector2(25, 65)
 initial_velocity_min = 140.0
 initial_velocity_max = 280.0
 angular_velocity_min = -90.0
@@ -127,15 +127,15 @@ scale_amount_min = 0.12
 scale_amount_max = 0.22
 
 [node name="Leaves4" type="CPUParticles2D" parent="LeavesContainer"]
-position = Vector2(1400, -100)
+position = Vector2(-188, 92)
 amount = 10
 texture = ExtResource("8_leaves4")
 lifetime = 9.0
 preprocess = 5.0
 emission_shape = 2
 emission_sphere_radius = 1.0
-direction = Vector2(-1, 0.5)
-gravity = Vector2(-40, 50)
+direction = Vector2(1, 0.5)
+gravity = Vector2(40, 50)
 initial_velocity_min = 180.0
 initial_velocity_max = 350.0
 angular_velocity_min = -150.0
@@ -165,7 +165,7 @@ theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-text = "ВЫХОД"
+text = "ДА"
 metadata/_edit_lock_ = true
 
 [node name="CancelExitButton" type="Button" parent="ButtonsBox"]
@@ -180,7 +180,7 @@ theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-text = "ОТМЕНА"
+text = "НЕТ, Я ОСТАНУСЬ"
 
 [node name="ExitFrame" type="Sprite2D" parent="."]
 position = Vector2(648, 745.00006)
