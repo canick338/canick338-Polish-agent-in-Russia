@@ -64,7 +64,6 @@ var save_data = {
 }
 
 # Путь к файлу сохранения
-const SAVE_PATH = "user://savegame.dat"
 
 # Путь к файлу настроек
 const SETTINGS_PATH = "user://settings.cfg"
@@ -120,10 +119,6 @@ func apply_settings() -> void:
 
 
 # === УПРАВЛЕНИЕ ДЕНЬГАМИ ===
-# (Обертки для удобства, работают с save_data)
-# Static функции убраны, чтобы работать с экземпляром (Autoload сам является экземпляром)
-# Но для совместимости оставим static-like доступ через GameGlobal.property, если бы это был класс.
-# В Godot Autoload - это Node. Обращаемся к нему по имени.
 
 var player_money: int:
 	get: return save_data["money"]
@@ -156,8 +151,6 @@ func unlock_card(card_id: String):
 		card_unlocked.emit(card_id)
 
 
-
-# === СИСТЕМА СОХРАНЕНИЙ ===
 
 # === СИСТЕМА СОХРАНЕНИЙ ===
 

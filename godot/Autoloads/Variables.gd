@@ -49,12 +49,19 @@ func get_stored_variables_list() -> Dictionary:
 	# Return the in-memory cache directly
 	return _variables_cache
 
-
-# Used to evaluate the variables' values
+# Safely converts a string value to the appropriate type
 func _evaluate(input):
-	var script = GDScript.new()
-	script.set_source_code("func eval():\n\treturn " + input)
-	script.reload()
-	var obj = RefCounted.new()
-	obj.set_script(script)
-	return obj.eval()
+	var s = str(input).strip_edges()
+	
+	# Boolean
+	if s == "true": return true
+	if s == "false": return false
+	
+	# Integer
+	if s.is_valid_int(): return int(s)
+	
+	# Float
+	if s.is_valid_float(): return float(s)
+	
+	# Fallback: return as string
+	return s

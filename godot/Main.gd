@@ -6,28 +6,19 @@ extends Node
 const SCENE_PLAYER := preload("res://ScenePlayer.tscn")
 const SLOT_MACHINE_SCENE := preload("res://Casino/SlotMachineScene.tscn")
 const MAIN_MENU_SCENE := preload("res://MainMenu.tscn")
+const PAUSE_MENU_SCENE := preload("res://PauseMenu.tscn")
 
 var SCENES := []
-
-const PAUSE_MENU_SCENE := preload("res://PauseMenu.tscn")
 
 var _current_index := -1
 var _scene_player: ScenePlayer
 var _casino_instance: Control = null
 var _main_menu_instance: Control = null
-# var _casino_shown: bool = false # Removed unused variable warning if any
-
-var lexer := SceneLexer.new()
-var parser := SceneParser.new()
-var transpiler := SceneTranspiler.new()
 
 
 func _ready() -> void:
 	# Сначала показываем главное меню
 	show_main_menu()
-	
-	# === TEСТ КИНЕМАТОГРАФИЧНОСТИ ===
-	#start_story_test("res://Story/cinematic_test.json")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

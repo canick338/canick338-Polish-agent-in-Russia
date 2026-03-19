@@ -53,7 +53,7 @@ func _load_resources(directory_path: String, check_type_function: String) -> Dic
 
 	var resources := {}
 
-	directory.list_dir_begin() # TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
+	directory.list_dir_begin()
 	var filename = directory.get_next()
 	while filename != "":
 		if filename.ends_with(".tres"):

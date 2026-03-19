@@ -114,9 +114,9 @@ func _on_slot_pressed(slot_id):
 			# Success - game state is now restored
 			get_tree().paused = false  # Unpause if we were paused
 			
-			# Close this menu and any parent pause menu
+			# Close the parent PauseMenu if present
 			var parent = get_parent()
-			if parent and parent.has_method("queue_free"):
+			if parent is Control and parent.get_script() and parent != get_tree().root:
 				parent.queue_free()
 			queue_free()
 

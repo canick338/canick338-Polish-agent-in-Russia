@@ -1,6 +1,5 @@
 extends Control
 
-const MAIN_MENU_SCENE = "res://MainMenu.tscn"
 const SAVE_LOAD_SCENE = preload("res://SaveLoadMenu.tscn")
 
 func _ready():
