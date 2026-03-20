@@ -162,12 +162,14 @@ func run_scene(start_key: int = 0) -> void:
 					print("MISSING TRANSLATION for: ", node.translation_key)
 			
 			_text_box.display(text_to_show, display_name)
+			AudioManager.play_event("text_appear")
 			await _text_box.next_requested
 			key = node.next
 
 		# Transition animation.
 		elif node is SceneTranspiler.TransitionCommandNode:
 			if node.transition != "":
+				AudioManager.play_event("transition_fade")
 				call(TRANSITIONS[node.transition])
 				await self.transition_finished
 			key = node.next
@@ -197,6 +199,7 @@ func run_scene(start_key: int = 0) -> void:
 		# Manage variables
 		elif node is SceneTranspiler.SetCommandNode:
 			if node.symbol == "system_pass_time":
+				AudioManager.play_event("time_pass")
 				var time = Variables.get_variable("current_time")
 				time += int(node.value)
 				if time >= 4:
@@ -207,6 +210,7 @@ func run_scene(start_key: int = 0) -> void:
 				Variables.add_variable("current_time", time)
 				
 			elif node.symbol == "system_sleep":
+				AudioManager.play_event("sleep")
 				# Sleep resets time to morning (0) and proceeds to next day.
 				var day = Variables.get_variable("current_day")
 				if day == 0: day = 1
@@ -227,6 +231,7 @@ func run_scene(start_key: int = 0) -> void:
 
 		# Unlock Card/Dossier
 		elif node is SceneTranspiler.UnlockCommandNode:
+			AudioManager.play_event("unlock")
 			GameGlobal.unlock_card(node.card_id)
 			key = node.next
 
@@ -245,9 +250,11 @@ func run_scene(start_key: int = 0) -> void:
 			await get_tree().process_frame
 			await get_tree().process_frame
 
+			AudioManager.play_event("choice_appear")
 			_text_box.display_choice(node.choices)
 
 			key = await _text_box.choice_made
+			AudioManager.play_event("choice_select")
 
 			if key == KEY_RESTART_SCENE:
 				restart_requested.emit()
@@ -298,6 +305,7 @@ func load_scene_from_file(path: String) -> void:
 	
 	if path.ends_with(".json"):
 		print("Loading JSON scene: " + path)
+		AudioManager.play_scene_bgm(path)
 		var loader = JSONDialogueLoader.new()
 		dialogue_tree = loader.load_scene(path)
 	elif path.ends_with(".txt"):

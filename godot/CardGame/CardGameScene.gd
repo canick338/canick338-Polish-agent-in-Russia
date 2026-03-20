@@ -51,7 +51,8 @@ signal card_game_finished(player_won: bool, player_score: int, dealer_score: int
 
 # Звуки
 var card_sound: AudioStreamPlayer
-var coin_sound: AudioStreamPlayer
+var chip_sound: AudioStreamPlayer
+var card_slide_sound: AudioStreamPlayer
 
 var loans_taken: int = 0
 const MAX_LOANS: int = 1
@@ -303,11 +304,26 @@ func _load_worker_assets():
 		tex_worker_smug = load(WORKER_PATH + "worker_smug.png")
 
 func _setup_audio():
+	# Card placement sounds from the boardgame pack
 	card_sound = AudioStreamPlayer.new()
 	card_sound.name = "CardSound"
 	add_child(card_sound)
 	if ResourceLoader.exists("res://boardgamePackAsset/Bonus/cardPlace1.ogg"):
 		card_sound.stream = load("res://boardgamePackAsset/Bonus/cardPlace1.ogg")
+	
+	# Chip sounds for bets and wins
+	chip_sound = AudioStreamPlayer.new()
+	chip_sound.name = "ChipSound"
+	add_child(chip_sound)
+	if ResourceLoader.exists("res://boardgamePackAsset/Bonus/chipsCollide1.ogg"):
+		chip_sound.stream = load("res://boardgamePackAsset/Bonus/chipsCollide1.ogg")
+	
+	# Card slide for busts and losses
+	card_slide_sound = AudioStreamPlayer.new()
+	card_slide_sound.name = "CardSlideSound"
+	add_child(card_slide_sound)
+	if ResourceLoader.exists("res://boardgamePackAsset/Bonus/cardSlide1.ogg"):
+		card_slide_sound.stream = load("res://boardgamePackAsset/Bonus/cardSlide1.ogg")
 
 func start_betting_phase():
 	game_state = "betting"
@@ -441,6 +457,7 @@ func _on_bet_pressed(btn: Button):
 	
 	if amount > 0 and GameGlobal.remove_money(amount):
 		current_bet = amount
+		if chip_sound and chip_sound.stream: chip_sound.play()
 		_start_first_round_of_match()
 
 
@@ -634,6 +651,7 @@ func _on_hit_pressed():
 	await get_tree().create_timer(0.3).timeout
 	
 	if player_score > 21:
+		if card_slide_sound and card_slide_sound.stream: card_slide_sound.play()
 		_process_round_result("player_bust")
 	else:
 		hit_button.disabled = false
@@ -699,10 +717,12 @@ func _process_round_result(result_code: String):
 	
 	if round_winner == "player":
 		player_match_wins += 1
+		if chip_sound and chip_sound.stream: chip_sound.play()
 		_set_danila_emotion(TEX_DANI_HAPPY)
 		_set_worker_emotion(tex_worker_angry)
 	elif round_winner == "dealer":
 		dealer_match_wins += 1
+		if card_slide_sound and card_slide_sound.stream: card_slide_sound.play()
 		_set_danila_emotion(TEX_DANI_SORRY)
 		_set_worker_emotion(tex_worker_happy)
 	else:
@@ -728,11 +748,13 @@ func _finish_match(player_won_match: bool):
 	new_game_button.visible = true
 	
 	if player_won_match:
+		if chip_sound and chip_sound.stream: chip_sound.play()
 		status_label.text = "ПОБЕДА В МАТЧЕ! ВЫ ЗАБИРАЕТЕ КУШ!"
 		GameGlobal.add_money(current_bet * 2)
 		_set_danila_emotion(TEX_DANI_HAPPY)
 		_set_worker_emotion(tex_worker_angry)
 	else:
+		if card_slide_sound and card_slide_sound.stream: card_slide_sound.play()
 		status_label.text = "ПОРАЖЕНИЕ В МАТЧЕ. ДЕНЬГИ УШЛИ."
 		_set_danila_emotion(TEX_DANI_SAD)
 		_set_worker_emotion(tex_worker_smug)

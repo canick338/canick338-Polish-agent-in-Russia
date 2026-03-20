@@ -85,6 +85,7 @@ func _on_spin_started():
 	"""Началось вращение - запустить анимацию"""
 	is_spinning = true
 	spin_button.disabled = true
+	AudioManager.play_event("minigame_start")
 	update_message("Крутится...")
 	
 	# Запустить вращение для всех барабанов
@@ -113,6 +114,7 @@ func _on_reel_stopped(reel_index: int, result: int):
 	var stop_tween = create_tween()
 	stop_tween.tween_property(reel, "position:y", original_pos.y - 15, 0.1)
 	stop_tween.tween_property(reel, "position:y", original_pos.y, 0.1)
+	AudioManager.play_event("card_deal")
 
 func _on_game_finished(is_win: bool):
 	"""Игра закончена"""
@@ -124,9 +126,11 @@ func _on_game_finished(is_win: bool):
 	
 	# Показать результат
 	if is_win:
+		AudioManager.play_event("match_victory")
 		update_message("ДЖЕКПОТ! ТРИ ТОПОРА! 🎉🎉🎉")
 		animate_win()
 	else:
+		AudioManager.play_event("round_lose")
 		update_message("Не повезло! Попробуйте еще раз!")
 	
 	# Переход к сюжету через небольшую задержку (вне зависимости от результата)

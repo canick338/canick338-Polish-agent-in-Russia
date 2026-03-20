@@ -551,10 +551,8 @@ func _open_radio() -> void:
 	_clear_content()
 	
 	if not radio_player:
-		radio_player = AudioStreamPlayer.new()
-		radio_player.bus = "Music"
+		radio_player = AudioManager.get_radio_player()
 		radio_player.finished.connect(_on_radio_track_finished)
-		add_child(radio_player)
 	
 	var scroll = ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -667,7 +665,7 @@ func _open_radio() -> void:
 			
 			radio_playlist.clear()
 			radio_track_idx = 0
-			radio_player.stop()
+			AudioManager.stop_radio()
 			
 			var d = DirAccess.open(st["folder"])
 			if d:
@@ -704,7 +702,7 @@ func _open_radio() -> void:
 	off_btn.add_theme_stylebox_override("normal", off_style)
 	off_btn.pressed.connect(func():
 		current_station = -1
-		radio_player.stop()
+		AudioManager.stop_radio()
 		_open_radio()
 	)
 	vbox.add_child(off_btn)
@@ -727,8 +725,7 @@ func _play_radio_track() -> void:
 		radio_playlist.shuffle()
 	var track_path = radio_playlist[radio_track_idx]
 	if ResourceLoader.exists(track_path):
-		radio_player.stream = load(track_path)
-		radio_player.play()
+		AudioManager.play_radio(track_path)
 	else:
 		radio_track_idx += 1
 		if radio_track_idx < radio_playlist.size():

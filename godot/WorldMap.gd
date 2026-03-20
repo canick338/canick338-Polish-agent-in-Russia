@@ -1088,66 +1088,34 @@ func _process(delta: float) -> void:
 func _update_weather_visuals(_time_idx: int) -> void:
 	pass  # Now handled entirely by _process()
 
-# === BACKGROUND MUSIC SYSTEM ===
-var _map_music_player: AudioStreamPlayer = null
-var _map_music_playlist: Array[String] = []
-var _map_music_idx: int = 0
-
-const MAP_MUSIC_FOLDER = "res://Assets/Audio/Music/WorldMap"
+# === BACKGROUND MUSIC (via AudioManager) ===
+const LOCATION_MUSIC = {
+	"warsaw_center": "res://Assets/Audio/Music/WorldMap",
+	"oboyan_center": "res://Assets/Audio/Music/WorldMap",
+}
 
 func _start_map_music() -> void:
-	if _map_music_player:
-		return  # Already playing
+	var music_folder = LOCATION_MUSIC.get(current_location_id, "res://Assets/Audio/Music/WorldMap")
 	
-	# Scan folder for tracks
-	_map_music_playlist.clear()
-	var d = DirAccess.open(MAP_MUSIC_FOLDER)
-	if d:
-		d.list_dir_begin()
-		var file = d.get_next()
-		while file != "":
-			if not d.current_is_dir() and not file.begins_with("."):
-				var clean = file.replace(".import", "").replace(".remap", "")
-				if clean.ends_with(".ogg") or clean.ends_with(".mp3") or clean.ends_with(".wav"):
-					var full_path = MAP_MUSIC_FOLDER + "/" + clean
-					if not _map_music_playlist.has(full_path):
-						_map_music_playlist.append(full_path)
-			file = d.get_next()
-	
-	if _map_music_playlist.is_empty():
+	# Scan folder for first available track
+	var d = DirAccess.open(music_folder)
+	if not d:
 		return
 	
-	_map_music_playlist.shuffle()
-	_map_music_idx = 0
+	var tracks: Array[String] = []
+	d.list_dir_begin()
+	var file = d.get_next()
+	while file != "":
+		if not d.current_is_dir() and not file.begins_with("."):
+			var clean = file.replace(".import", "").replace(".remap", "")
+			if clean.ends_with(".ogg") or clean.ends_with(".mp3") or clean.ends_with(".wav"):
+				var full_path = music_folder + "/" + clean
+				if not tracks.has(full_path):
+					tracks.append(full_path)
+		file = d.get_next()
 	
-	_map_music_player = AudioStreamPlayer.new()
-	_map_music_player.bus = "Music"
-	_map_music_player.volume_db = -10.0
-	_map_music_player.finished.connect(_on_map_music_finished)
-	add_child(_map_music_player)
-	
-	_play_next_map_track()
-
-func _play_next_map_track() -> void:
-	if _map_music_playlist.is_empty() or not _map_music_player:
+	if tracks.is_empty():
 		return
-	if _map_music_idx >= _map_music_playlist.size():
-		_map_music_idx = 0
-		_map_music_playlist.shuffle()
 	
-	var track = _map_music_playlist[_map_music_idx]
-	if ResourceLoader.exists(track):
-		_map_music_player.stream = load(track)
-		# Fade in
-		_map_music_player.volume_db = -40.0
-		_map_music_player.play()
-		var tw = create_tween()
-		tw.tween_property(_map_music_player, "volume_db", -10.0, 2.0)
-		print("🎵 Playing: ", track.get_file())
-	else:
-		_map_music_idx += 1
-		_play_next_map_track()
-
-func _on_map_music_finished() -> void:
-	_map_music_idx += 1
-	_play_next_map_track()
+	tracks.shuffle()
+	AudioManager.play_bgm(tracks[0])

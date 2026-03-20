@@ -158,6 +158,7 @@ func _start_game() -> void:
 	_active_jars.clear()
 	_current_spawn_interval = SPAWN_INTERVAL_START
 	_update_ui()
+	AudioManager.play_event("minigame_start")
 	print("FactoryJam: Started")
 
 func _end_game() -> void:
@@ -165,6 +166,7 @@ func _end_game() -> void:
 	_state = GameState.FINISHED
 	
 	print("FactoryJam: Game Over. Score: %d" % _score)
+	AudioManager.play_event("match_defeat" if _score < MIN_SCORE_TO_PAY else "match_victory")
 	
 	_ui_game_over.visible = true
 	
@@ -257,11 +259,13 @@ func _remove_jar(jar: JarData) -> void:
 func _on_catch(jar: JarData) -> void:
 	if jar.is_bad:
 		# Caught Bad = Penalty
+		AudioManager.play_event("ingredient_wrong")
 		_modify_lives(-1)
 		_show_popup(jar.node.position, "-1 ЖИЗНЬ", Color.RED)
 		_input_cooldown = 0.5 # Stun
 	else:
 		# Caught Good = Score
+		AudioManager.play_event("ingredient_drop")
 		_score += 1
 		_update_ui()
 		_show_popup(jar.node.position, "+1", Color.GREEN)
@@ -273,6 +277,7 @@ func _on_miss(jar: JarData) -> void:
 		pass
 	else:
 		# Missed Good = Penalty
+		AudioManager.play_event("cook_fail")
 		_modify_lives(-1)
 		_show_popup(jar.node.position, "РАЗБИЛ!", Color.RED)
 

@@ -201,8 +201,10 @@ func _update_temperature(delta):
 	
 	# Fail conditions
 	if _temperature >= 100.0:
+		AudioManager.play_event("cook_fail")
 		_fail_game("КОТЕЛ ВЗОРВАЛСЯ!")
 	elif _temperature <= 0.0:
+		AudioManager.play_event("cook_fail")
 		_fail_game("ВАРЕВО ОСТЫЛО!")
 
 func _update_progress(delta):
@@ -211,10 +213,14 @@ func _update_progress(delta):
 		_progress += PROGRESS_RATE * delta
 		_score += int(delta * 10) 
 		if _progress >= TOTAL_PROGRESS_REQD:
+			AudioManager.play_event("cook_win")
 			_win_game()
 	
 	# Danger zone warning
-	danger_indicator.visible = (_temperature > DANGER_ZONE_MIN)
+	var in_danger = _temperature > DANGER_ZONE_MIN
+	danger_indicator.visible = in_danger
+	if in_danger and int(Time.get_ticks_msec()) % 1000 < 50:
+		AudioManager.play_event("temp_warning")
 
 func _update_ingredients(delta):
 	if _current_requested_ingredient == "":
@@ -241,10 +247,12 @@ func _request_ingredient():
 	ingredient_label.text = "Добавьте: " + _current_requested_ingredient
 	ingredient_label.visible = true
 	ingredient_timer_bar.value = 1.0
+	AudioManager.play_event("ingredient_request")
 
 func _on_stir_button_down():
 	if not _input_locked:
 		_is_stirring = true
+		AudioManager.play_event("cook_stir")
 
 func _on_stir_button_up():
 	_is_stirring = false
@@ -253,6 +261,7 @@ func _on_stir_button_up():
 func on_ingredient_dropped(type: String):
 	if type == _current_requested_ingredient:
 		_score += 50
+		AudioManager.play_event("ingredient_drop")
 		_apply_ingredient_effect(type)
 		_current_requested_ingredient = ""
 		ingredient_label.visible = false
@@ -260,6 +269,7 @@ func on_ingredient_dropped(type: String):
 		_animate_pot_success()
 	else:
 		_score -= 20
+		AudioManager.play_event("ingredient_wrong")
 		status_label.text = "Не тот ингредиент!"
 		_animate_pot_fail()
 

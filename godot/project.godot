@@ -21,6 +21,7 @@ ResourceDB="*res://Autoloads/ResourceDB.gd"
 Variables="*res://Autoloads/Variables.gd"
 GameGlobal="*res://Scripts/GameGlobal.gd"
 NotificationLayer="*res://NotificationLayer.tscn"
+AudioManager="*res://Autoloads/AudioManager.gd"
 
 [debug]
 
