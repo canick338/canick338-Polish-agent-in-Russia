@@ -75,14 +75,14 @@ text = "Штаб-квартира"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TimeLabel" type="Label" parent="UI/TopMargin/TopBar/CenterInfo"]
+[node name="TimeLabel" type="RichTextLabel" parent="UI/TopMargin/TopBar/CenterInfo"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.9, 1, 1)
-theme_override_font_sizes/font_size = 18
-text = "День 1 - Утро"
-horizontal_alignment = 1
-vertical_alignment = 1
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 0
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
 
 [node name="PhoneButton" type="Button" parent="UI/TopMargin/TopBar"]
 unique_name_in_owner = true

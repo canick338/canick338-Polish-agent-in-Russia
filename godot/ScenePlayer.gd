@@ -674,7 +674,11 @@ func _evaluate_condition(condition: SceneParser.BaseExpression, variables_list: 
 		
 		# OPTIMIZED EXPRESSION EVALUATION
 		var expression = Expression.new()
-		var input_names = variables_list.keys()
+		var input_names_arr = variables_list.keys()
+		var input_names = PackedStringArray()
+		for n in input_names_arr:
+			input_names.append(str(n))
+		
 		var input_values = variables_list.values()
 		
 		var error = expression.parse(condition_str, input_names)
