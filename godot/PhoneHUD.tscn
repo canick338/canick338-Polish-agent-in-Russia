@@ -108,8 +108,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RightSpacer" type="Control" parent="BezelPanel/Margin/VBox/TopBar"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 40)
 layout_mode = 2
+visible = false
 
 [node name="TopSpacer" type="Control" parent="BezelPanel/Margin/VBox"]
 unique_name_in_owner = true

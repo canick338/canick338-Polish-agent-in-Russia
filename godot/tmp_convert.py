@@ -20,7 +20,7 @@ def add_corners(im, rad):
     return im
 
 base_dir = "c:/Users/rushe/OneDrive/Desktop/Code/godot-2d-visual-novel-main/godot/Assets/Textures/Phone"
-files = ['icon_bank', 'icon_gov', 'icon_mail', 'icon_shop']
+files = ['icon_bank', 'icon_gov', 'icon_mail', 'icon_shop', 'icon_radio', 'icon_games']
 
 for f in files:
     jpg_path = os.path.join(base_dir, f + ".jpg")

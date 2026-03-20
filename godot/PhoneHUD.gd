@@ -7,6 +7,7 @@ extends CanvasLayer
 @onready var content_area: Control = %ContentArea
 @onready var header_label: Label = %HeaderLabel
 @onready var back_btn: Button = %BackButton
+@onready var right_spacer: Control = %RightSpacer
 
 var _current_app: String = ""
 
@@ -45,6 +46,7 @@ func _go_home() -> void:
 func _build_home_screen() -> void:
 	_current_app = ""
 	if back_btn: back_btn.visible = false
+	if right_spacer: right_spacer.visible = false
 	
 	# Update header with time
 	var day = Variables.get_variable("current_day")
@@ -69,12 +71,14 @@ func _build_home_screen() -> void:
 	# Add apps to home screen
 	if apps_grid:
 		_add_app_button("res://Assets/Textures/Phone/icon_shop.png", "Магазин", "_open_shop", apps_grid)
+		_add_app_button("res://Assets/Textures/Phone/icon_games.png", "Игры", "_open_games", apps_grid)
 	
 	# Add apps to the bottom dock
 	if dock_grid:
 		_add_app_button("res://Assets/Textures/Phone/icon_mail.png", "Инфо", "_open_notifications", dock_grid)
 		_add_app_button("res://Assets/Textures/Phone/icon_bank.png", "Bank", "_open_bank", dock_grid)
 		_add_app_button("res://Assets/Textures/Phone/icon_gov.png", "ePUAP", "_open_gov_services", dock_grid)
+		_add_app_button("res://Assets/Textures/Phone/icon_radio.png", "Радио", "_open_radio", dock_grid)
 
 func _add_app_button(icon_path: String, label_text: String, callback: String, parent_node: Node) -> void:
 	var vbox = VBoxContainer.new()
@@ -120,6 +124,7 @@ func _show_app_header(title: String) -> void:
 	_current_app = title
 	if header_label: header_label.text = title
 	if back_btn: back_btn.visible = true
+	if right_spacer: right_spacer.visible = true
 	if apps_grid:
 		for child in apps_grid.get_children():
 			child.queue_free()
@@ -133,6 +138,8 @@ func _open_notifications() -> void:
 	
 	var scroll = ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	var vbox = VBoxContainer.new()
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vbox.add_theme_constant_override("separation", 12)
@@ -464,3 +471,189 @@ func _open_shop() -> void:
 		vbox.add_child(item_panel)
 	
 	content_area.add_child(vbox)
+
+# ========================
+# 🎮 GAMES APP
+# ========================
+func _open_games() -> void:
+	_show_app_header("Игры")
+	_clear_content()
+	
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 20)
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	var lbl = Label.new()
+	lbl.text = "Раздел Игр пока в разработке.\nСкоро появятся новые развлечения!"
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lbl.add_theme_font_size_override("font_size", 16)
+	lbl.add_theme_color_override("font_color", Color(0.6, 0.6, 0.65))
+	
+	vbox.add_child(lbl)
+	content_area.add_child(vbox)
+
+# ========================
+# 📻 RADIO APP
+# ========================
+var radio_player: AudioStreamPlayer
+var current_station: int = -1
+
+func _open_radio() -> void:
+	_show_app_header("Радио")
+	_clear_content()
+	
+	if not radio_player:
+		radio_player = AudioStreamPlayer.new()
+		radio_player.bus = "Music"
+		add_child(radio_player)
+	
+	var scroll = ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 24)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
+	# The Digital Display
+	var display_panel = PanelContainer.new()
+	var screen_style = StyleBoxFlat.new()
+	screen_style.bg_color = Color(0.04, 0.08, 0.04, 1.0)
+	screen_style.corner_radius_top_left = 16
+	screen_style.corner_radius_top_right = 16
+	screen_style.corner_radius_bottom_left = 16
+	screen_style.corner_radius_bottom_right = 16
+	screen_style.border_width_left = 2
+	screen_style.border_width_right = 2
+	screen_style.border_width_top = 2
+	screen_style.border_width_bottom = 2
+	screen_style.border_color = Color(0.1, 0.3, 0.1)
+	screen_style.content_margin_left = 20
+	screen_style.content_margin_right = 20
+	screen_style.content_margin_top = 25
+	screen_style.content_margin_bottom = 25
+	display_panel.add_theme_stylebox_override("panel", screen_style)
+	
+	var display_vbox = VBoxContainer.new()
+	display_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	display_vbox.add_theme_constant_override("separation", 2)
+	
+	var now_playing_lbl = Label.new()
+	now_playing_lbl.text = "СЕЙЧАС ИГРАЕТ"
+	now_playing_lbl.add_theme_font_size_override("font_size", 12)
+	now_playing_lbl.add_theme_color_override("font_color", Color(0.2, 0.6, 0.2))
+	now_playing_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	display_vbox.add_child(now_playing_lbl)
+	
+	var stations = [
+		{"name": "FM 104.2", "desc": "Ретро Волна", "id": 0, "file": "res://Assets/Audio/Radio/music.ogg", "color": Color(0.9, 0.3, 0.5)},
+		{"name": "AM 99.0", "desc": "Подкаст-студия", "id": 1, "file": "res://Assets/Audio/Radio/podcast.ogg", "color": Color(0.3, 0.6, 0.9)},
+		{"name": "FM 88.5", "desc": "Классика", "id": 2, "file": "res://Assets/Audio/Radio/classic.ogg", "color": Color(0.8, 0.7, 0.2)},
+		{"name": "FM 101.4", "desc": "Новости Варшавы", "id": 3, "file": "res://Assets/Audio/Radio/news.ogg", "color": Color(0.4, 0.8, 0.4)},
+	]
+	
+	var freq_lbl = Label.new()
+	freq_lbl.text = "ВЫКЛ"
+	for st in stations:
+		if current_station == st["id"]:
+			freq_lbl.text = st["name"]
+	
+	freq_lbl.name = "FreqLabel"
+	freq_lbl.add_theme_font_size_override("font_size", 42)
+	freq_lbl.add_theme_color_override("font_color", Color(0.3, 1.0, 0.4))
+	freq_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	display_vbox.add_child(freq_lbl)
+	display_panel.add_child(display_vbox)
+	vbox.add_child(display_panel)
+	
+	var stations_vbox = VBoxContainer.new()
+	stations_vbox.add_theme_constant_override("separation", 12)
+	
+	for st in stations:
+		var btn = Button.new()
+		btn.custom_minimum_size = Vector2(0, 65)
+		
+		var bstyle = StyleBoxFlat.new()
+		bstyle.bg_color = Color(0.2, 0.25, 0.35, 1.0) if current_station == st["id"] else Color(0.12, 0.15, 0.2, 0.8)
+		bstyle.corner_radius_top_left = 12
+		bstyle.corner_radius_top_right = 12
+		bstyle.corner_radius_bottom_left = 12
+		bstyle.corner_radius_bottom_right = 12
+		bstyle.border_width_left = 6
+		bstyle.border_color = st["color"]
+		btn.add_theme_stylebox_override("normal", bstyle)
+		
+		# Inner layout overriding normal button text
+		var margin = MarginContainer.new()
+		margin.set_anchors_preset(Control.PRESET_FULL_RECT)
+		margin.add_theme_constant_override("margin_left", 16)
+		margin.add_theme_constant_override("margin_right", 16)
+		margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
+		var inner_hbox = HBoxContainer.new()
+		inner_hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
+		var name_lbl = Label.new()
+		name_lbl.text = st["name"]
+		name_lbl.add_theme_font_size_override("font_size", 18)
+		name_lbl.add_theme_color_override("font_color", Color(1, 1, 1))
+		name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		name_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		
+		var desc_lbl = Label.new()
+		desc_lbl.text = st["desc"]
+		desc_lbl.add_theme_font_size_override("font_size", 13)
+		desc_lbl.add_theme_color_override("font_color", Color(0.6, 0.7, 0.8))
+		desc_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		
+		inner_hbox.add_child(name_lbl)
+		inner_hbox.add_child(desc_lbl)
+		margin.add_child(inner_hbox)
+		btn.add_child(margin)
+		
+		btn.pressed.connect(func():
+			current_station = st["id"]
+			freq_lbl.text = st["name"]
+			_open_radio() # Refresh UI to show selected state
+			
+			if st["file"] != "":
+				if FileAccess.file_exists(st["file"]):
+					radio_player.stream = load(st["file"])
+					radio_player.play()
+				else:
+					radio_player.stop()
+					freq_lbl.text = "ШУМ..."
+		)
+		stations_vbox.add_child(btn)
+	
+	vbox.add_child(stations_vbox)
+	
+	var off_btn = Button.new()
+	off_btn.text = "Выключить приёмник"
+	off_btn.custom_minimum_size = Vector2(0, 50)
+	var off_style = StyleBoxFlat.new()
+	off_style.bg_color = Color(0.6, 0.2, 0.2, 0.8)
+	off_style.corner_radius_top_left = 8
+	off_style.corner_radius_top_right = 8
+	off_style.corner_radius_bottom_left = 8
+	off_style.corner_radius_bottom_right = 8
+	off_btn.add_theme_stylebox_override("normal", off_style)
+	off_btn.pressed.connect(func():
+		current_station = -1
+		radio_player.stop()
+		_open_radio()
+	)
+	vbox.add_child(off_btn)
+	
+	var info_lbl = Label.new()
+	info_lbl.text = "Настройте файлы в godot/Assets/Audio/Radio/\n(music.ogg, podcast.ogg, classic.ogg, news.ogg)"
+	info_lbl.add_theme_font_size_override("font_size", 11)
+	info_lbl.add_theme_color_override("font_color", Color(0.4, 0.4, 0.45))
+	info_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	info_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vbox.add_child(info_lbl)
+	
+	scroll.add_child(vbox)
+	content_area.add_child(scroll)
