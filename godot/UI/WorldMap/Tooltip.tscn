@@ -1,0 +1,137 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://UI/WorldMap/Tooltip.gd" id="1_i3nwq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lvjib"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.85, 0.1, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gum8q"]
+bg_color = Color(0.1, 0.1, 0.1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8jwrd"]
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 4
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nphi4"]
+content_margin_left = 6.0
+content_margin_right = 6.0
+bg_color = Color(0.95, 0.8, 0.2, 1)
+skew = Vector2(0.1, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhyto"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+bg_color = Color(0.95, 0.8, 0.2, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[node name="TooltipP5" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_i3nwq")
+
+[node name="@PanelContainer@6" type="PanelContainer" parent="."]
+layout_mode = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lvjib")
+
+[node name="@VBoxContainer@7" type="VBoxContainer" parent="@PanelContainer@6"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="PortraitContainer" type="PanelContainer" parent="@PanelContainer@6/@VBoxContainer@7"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gum8q")
+
+[node name="Portrait" type="TextureRect" parent="@PanelContainer@6/@VBoxContainer@7/PortraitContainer"]
+custom_minimum_size = Vector2(250, 140)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="@PanelContainer@14" type="PanelContainer" parent="@PanelContainer@6/@VBoxContainer@7"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8jwrd")
+
+[node name="@VBoxContainer@13" type="VBoxContainer" parent="@PanelContainer@6/@VBoxContainer@7/@PanelContainer@14"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="@PanelContainer@6/@VBoxContainer@7/@PanelContainer@14/@VBoxContainer@13"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "TITLE"
+
+[node name="@HBoxContainer@12" type="HBoxContainer" parent="@PanelContainer@6/@VBoxContainer@7/@PanelContainer@14/@VBoxContainer@13"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="@PanelContainer@9" type="PanelContainer" parent="@PanelContainer@6/@VBoxContainer@7/@PanelContainer@14/@VBoxContainer@13/@HBoxContainer@12"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nphi4")
+
+[node name="@Label@8" type="Label" parent="@PanelContainer@6/@VBoxContainer@7/@PanelContainer@14/@VBoxContainer@13/@HBoxContainer@12/@PanelContainer@9"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 22
+text = "!"
+
+[node name="Desc" type="Label" parent="@PanelContainer@6/@VBoxContainer@7/@PanelContainer@14/@VBoxContainer@13/@HBoxContainer@12"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "Description here"
+autowrap_mode = 3
+
+[node name="@PanelContainer@11" type="PanelContainer" parent="@PanelContainer@6/@VBoxContainer@7/@PanelContainer@14/@VBoxContainer@13/@HBoxContainer@12"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fhyto")
+
+[node name="@Label@10" type="Label" parent="@PanelContainer@6/@VBoxContainer@7/@PanelContainer@14/@VBoxContainer@13/@HBoxContainer@12/@PanelContainer@11"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "GO"
+
+[node name="@ColorRect@15" type="ColorRect" parent="@PanelContainer@6/@VBoxContainer@7/@PanelContainer@14"]
+z_index = -1
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.85, 0.1, 0.2, 1)

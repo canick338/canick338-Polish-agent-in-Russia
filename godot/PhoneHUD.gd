@@ -16,13 +16,18 @@ func _ready() -> void:
 	if back_btn:
 		back_btn.pressed.connect(_go_home)
 		back_btn.visible = false
-	
 	# Slide in
 	panel.position.y = 1080
 	var tw = create_tween()
 	tw.tween_property(panel, "position:y", 180, 0.5).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
 	
 	_build_home_screen()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		if panel.position.y < 500: # only if it's fully or mostly on screen
+			hide_phone()
+		get_viewport().set_input_as_handled()
 
 func toggle() -> void:
 	if visible:

@@ -12,6 +12,9 @@ var _tooltip_title: Label
 var _tooltip_desc: Label
 var _hovered_node_data: Dictionary = {}
 
+var custom_tooltip_loaded: bool = false
+var _custom_tooltip_node: Control = null
+
 @onready var map_background: TextureRect = $MapBackground
 @onready var nodes_container: Control = $MapNodes
 @onready var location_label: Label = %LocationLabel
@@ -36,6 +39,8 @@ func _ready() -> void:
 	if get_node_or_null("%ToggleSidePanelButton"):
 		%ToggleSidePanelButton.pressed.connect(_toggle_side_panel)
 	
+	_generate_tscn_files_once()
+	
 	_create_tooltip_ui()
 	_refresh_map()
 	_update_side_panel_locations()
@@ -59,6 +64,18 @@ func _run_map_tutorial() -> void:
 		scene_requested.emit(tutorial_path)
 
 func _create_tooltip_ui() -> void:
+	var custom_tt_path = "res://UI/WorldMap/Tooltip.tscn"
+	if ResourceLoader.exists(custom_tt_path):
+		var tt_packed = load(custom_tt_path)
+		if tt_packed:
+			_custom_tooltip_node = tt_packed.instantiate()
+			_custom_tooltip_node.name = "CustomTooltipRoot"
+			_custom_tooltip_node.visible = false
+			_custom_tooltip_node.z_index = 100
+			add_child(_custom_tooltip_node)
+			custom_tooltip_loaded = true
+			return
+			
 	_tooltip_root = Control.new()
 	_tooltip_root.name = "TooltipRoot"
 	_tooltip_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -362,8 +379,14 @@ func set_location(loc_id: String) -> void:
 	_refresh_map()
 
 func _refresh_map() -> void:
+	var preplaced_nodes = []
 	for child in nodes_container.get_children():
-		child.queue_free()
+		# Preserve nodes that the user placed manually in the inspector
+		if child.has_method("setup") or child.name.begins_with("MapNode"):
+			preplaced_nodes.append(child)
+			child.visible = false # hide them initially, show only if unlocked
+		else:
+			child.queue_free()
 	
 	# Map background color
 	if current_location_id == "warsaw_center":
@@ -433,7 +456,37 @@ void fragment() {
 	if loc_data.has("nodes"):
 		for node in loc_data["nodes"]:
 			if _check_requirements(node.get("requires", [])):
-				_create_map_node(node)
+				var nid = node.get("id", "")
+				var existing_node = null
+				
+				# Check if the user placed this node manually in the scene
+				for pn in preplaced_nodes:
+					var ed_id = pn.get("location_id") if "location_id" in pn else ""
+					if ed_id == nid or pn.name.to_lower().ends_with(nid.to_lower()):
+						existing_node = pn
+						break
+				
+				if existing_node:
+					existing_node.visible = true
+					var chibi_id = node.get("chibi", "")
+					var tex_path = _get_chibi_texture(chibi_id)
+					existing_node.setup(node, tex_path)
+					
+					# Connect manually placed node signals
+					if not existing_node.node_clicked.is_connected(_on_node_clicked):
+						existing_node.node_clicked.connect(_on_node_clicked)
+						existing_node.node_hovered.connect(_on_node_hovered)
+						existing_node.node_unhovered.connect(_hide_tooltip)
+				else:
+					# Fallback logic: auto-create the node like before
+					_create_map_node(node)
+
+func _on_node_clicked(scene_path: String) -> void:
+	_hide_tooltip()
+	scene_requested.emit(scene_path)
+
+func _on_node_hovered(title: String, desc: String, icon: String, pos: Vector2, chibi_id: String, chibi_path: String) -> void:
+	_show_tooltip(title, desc, icon, pos, chibi_id)
 
 func _check_requirements(reqs: Array) -> bool:
 	for req in reqs:
@@ -448,15 +501,35 @@ func _check_requirements(reqs: Array) -> bool:
 	return true
 
 func _create_map_node(data: Dictionary) -> void:
-	# Container for icon + label
+	var chibi_id = data.get("chibi", "")
+	var tex_path = _get_chibi_texture(chibi_id)
+	var pos_data = data.get("position", {"x": 0, "y": 0})
+	var icon_size := Vector2(100, 100)
+	var target_pos = Vector2(pos_data.get("x", 0), pos_data.get("y", 0)) - icon_size / 2
+	
+	# Сначала проверяем, создал ли пользователь свою сцену
+	var custom_node_path = "res://UI/WorldMap/MapNode.tscn"
+	if ResourceLoader.exists(custom_node_path):
+		var custom_packed = load(custom_node_path)
+		if custom_packed:
+			var node = custom_packed.instantiate()
+			node.position = target_pos
+			node.setup(data, tex_path)
+			
+			node.node_clicked.connect(_on_node_clicked)
+			node.node_hovered.connect(_on_node_hovered)
+			node.node_unhovered.connect(_hide_tooltip)
+			
+			nodes_container.add_child(node)
+			return # Пропускаем программную генерацию
+			
+	# Container for icon + label (Fallback)
 	var container = Control.new()
 	container.name = "Node_" + data.get("id", "unknown")
 	
 	var node_name = data.get("name", "???").to_upper()
 	var node_desc = data.get("description", "")
 	var node_icon = data.get("icon", "📍")
-	var chibi_id = data.get("chibi", "")
-	var icon_size := Vector2(100, 100)
 	
 	# --- Background Badge (Stylized Comic Box) ---
 	var shadow_badge = Panel.new()
@@ -493,7 +566,6 @@ func _create_map_node(data: Dictionary) -> void:
 	container.add_child(badge)
 	
 	# Portrait / Icon inside Badge
-	var tex_path = _get_chibi_texture(chibi_id)
 	var has_tex = ResourceLoader.exists(tex_path)
 	if has_tex:
 		var tex = TextureRect.new()
@@ -571,8 +643,7 @@ func _create_map_node(data: Dictionary) -> void:
 	container.add_child(btn)
 	
 	# Position
-	var pos_data = data.get("position", {"x": 0, "y": 0})
-	container.position = Vector2(pos_data.get("x", 0), pos_data.get("y", 0)) - icon_size / 2
+	container.position = target_pos
 	
 	# Bobbing animation
 	var base_y = container.position.y
@@ -589,10 +660,17 @@ func _create_map_node(data: Dictionary) -> void:
 	nodes_container.add_child(container)
 
 func _show_tooltip(title: String, desc: String, icon: String, pos: Vector2, chibi_id: String = "") -> void:
+	var tex_path = _get_chibi_texture(chibi_id)
+	
+	if custom_tooltip_loaded and _custom_tooltip_node:
+		_custom_tooltip_node.show_info(title, desc, chibi_id, tex_path)
+		_custom_tooltip_node.global_position = pos - Vector2(120, 180) # смещение над узлом
+		return
+		
 	if not _tooltip_root: return
 	_tooltip_title.text = title
 	_tooltip_desc.text = desc if desc != "" else "Нет задач."
-	var tex_path = _get_chibi_texture(chibi_id)
+	
 	if chibi_id != "" and ResourceLoader.exists(tex_path):
 		_tooltip_portrait.texture = load(tex_path)
 		_tooltip_portrait_panel.visible = true
@@ -603,8 +681,227 @@ func _show_tooltip(title: String, desc: String, icon: String, pos: Vector2, chib
 	_tooltip_root.visible = true
 
 func _hide_tooltip() -> void:
+	if custom_tooltip_loaded and _custom_tooltip_node:
+		_custom_tooltip_node.hide_info()
+		return
+		
 	if _tooltip_root:
 		_tooltip_root.visible = false
+
+func _set_owner_recursive(node: Node, new_owner: Node) -> void:
+	if node != new_owner:
+		node.owner = new_owner
+	for child in node.get_children():
+		_set_owner_recursive(child, new_owner)
+
+func _generate_tscn_files_once() -> void:
+	var dir = DirAccess.open("res://")
+	if not dir.dir_exists("UI/WorldMap"):
+		dir.make_dir_recursive("UI/WorldMap")
+	
+	# --- MAP NODE ---
+	var m_path = "res://UI/WorldMap/MapNode.tscn"
+	if not FileAccess.file_exists(m_path):
+		var root = Control.new()
+		root.name = "MapNode"
+		
+		var shadow_badge = Panel.new()
+		shadow_badge.name = "ShadowBadge"
+		var sb_style = StyleBoxFlat.new()
+		sb_style.bg_color = Color.BLACK
+		shadow_badge.add_theme_stylebox_override("panel", sb_style)
+		shadow_badge.size = Vector2(80, 80)
+		shadow_badge.rotation_degrees = -8
+		shadow_badge.position = Vector2(0, -56)
+		shadow_badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		root.add_child(shadow_badge)
+		
+		var badge = Panel.new()
+		badge.name = "Badge"
+		var b_style = StyleBoxFlat.new()
+		b_style.bg_color = Color(0.85, 0.15, 0.25)
+		b_style.border_width_left = 4; b_style.border_width_top = 4; b_style.border_width_right = 4; b_style.border_width_bottom = 4
+		b_style.border_color = Color.WHITE
+		badge.add_theme_stylebox_override("panel", b_style)
+		badge.size = Vector2(80, 80)
+		badge.rotation_degrees = 4
+		badge.position = Vector2(0, -60)
+		badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		root.add_child(badge)
+		
+		var tex = TextureRect.new()
+		tex.name = "Portrait"
+		tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		tex.size = Vector2(70, 70)
+		tex.position = Vector2(5, -15)
+		tex.rotation_degrees = -4
+		tex.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		badge.add_child(tex)
+		
+		var lbl_panel = PanelContainer.new()
+		var l_style = StyleBoxFlat.new()
+		l_style.bg_color = Color.WHITE
+		l_style.border_width_left = 4; l_style.border_width_top = 4; l_style.border_width_right = 4; l_style.border_width_bottom = 4
+		l_style.border_color = Color.BLACK
+		l_style.content_margin_left = 12; l_style.content_margin_right = 12; l_style.content_margin_top = 4; l_style.content_margin_bottom = 4
+		if "skew" in l_style: l_style.skew = Vector2(0.15, 0.0)
+		lbl_panel.add_theme_stylebox_override("panel", l_style)
+		lbl_panel.position = Vector2(-30, 25)
+		lbl_panel.rotation_degrees = -3
+		lbl_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
+		var name_lbl = Label.new()
+		name_lbl.name = "NameLabel"
+		name_lbl.text = "LOCAL"
+		name_lbl.add_theme_font_size_override("font_size", 18)
+		name_lbl.add_theme_color_override("font_color", Color.BLACK)
+		lbl_panel.add_child(name_lbl)
+		root.add_child(lbl_panel)
+		
+		var btn = Button.new()
+		btn.name = "Button"
+		btn.flat = true
+		btn.size = Vector2(160, 140)
+		btn.position = Vector2(-30, -70)
+		btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		root.add_child(btn)
+		
+		var script_path = "res://UI/WorldMap/MapNode.gd"
+		if ResourceLoader.exists(script_path):
+			root.set_script(load(script_path))
+			
+		_set_owner_recursive(root, root)
+		var packed = PackedScene.new()
+		packed.pack(root)
+		ResourceSaver.save(packed, m_path)
+		
+	# --- GENERATE TOOLTIP ---
+	var t_path = "res://UI/WorldMap/Tooltip.tscn"
+	if not FileAccess.file_exists(t_path):
+		var root = Control.new()
+		root.name = "TooltipP5"
+		root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
+		var main_bg = PanelContainer.new()
+		main_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var main_style = StyleBoxFlat.new()
+		main_style.bg_color = Color.BLACK 
+		main_style.border_width_left = 6; main_style.border_width_top = 6; main_style.border_width_right = 6; main_style.border_width_bottom = 6
+		main_style.border_color = Color(0.85, 0.1, 0.2) 
+		main_style.content_margin_left = 4; main_style.content_margin_right = 4; main_style.content_margin_top = 4; main_style.content_margin_bottom = 4
+		main_bg.add_theme_stylebox_override("panel", main_style)
+		root.add_child(main_bg)
+		
+		var vbox = VBoxContainer.new()
+		vbox.add_theme_constant_override("separation", 0)
+		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		main_bg.add_child(vbox)
+		
+		var _tooltip_portrait_panel = PanelContainer.new()
+		_tooltip_portrait_panel.name = "PortraitContainer"
+		_tooltip_portrait_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var p_style = StyleBoxFlat.new()
+		p_style.bg_color = Color(0.1, 0.1, 0.1)
+		_tooltip_portrait_panel.add_theme_stylebox_override("panel", p_style)
+		
+		var _tooltip_portrait = TextureRect.new()
+		_tooltip_portrait.name = "Portrait"
+		_tooltip_portrait.custom_minimum_size = Vector2(250, 140)
+		_tooltip_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		_tooltip_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		_tooltip_portrait_panel.add_child(_tooltip_portrait)
+		vbox.add_child(_tooltip_portrait_panel)
+		
+		var text_panel = PanelContainer.new()
+		text_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var t_style = StyleBoxFlat.new()
+		t_style.bg_color = Color.WHITE
+		t_style.border_width_left = 3; t_style.border_width_top = 4; t_style.border_width_right = 3; t_style.border_width_bottom = 3
+		t_style.border_color = Color.BLACK
+		t_style.content_margin_left = 12; t_style.content_margin_right = 12; t_style.content_margin_top = 10; t_style.content_margin_bottom = 10
+		text_panel.add_theme_stylebox_override("panel", t_style)
+		
+		var inner_v = VBoxContainer.new()
+		inner_v.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var _tooltip_title = Label.new()
+		_tooltip_title.name = "Title"
+		_tooltip_title.text = "TITLE"
+		_tooltip_title.add_theme_font_size_override("font_size", 20)
+		_tooltip_title.add_theme_color_override("font_color", Color.BLACK)
+		inner_v.add_child(_tooltip_title)
+		
+		var hbox = HBoxContainer.new()
+		hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		hbox.add_theme_constant_override("separation", 12)
+		
+		var icon_panel = PanelContainer.new()
+		icon_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var i_style = StyleBoxFlat.new()
+		i_style.bg_color = Color(0.95, 0.8, 0.2)
+		i_style.border_width_left = 3; i_style.border_width_top = 3; i_style.border_width_right = 3; i_style.border_width_bottom = 3
+		i_style.border_color = Color.BLACK
+		if "skew" in i_style: i_style.skew = Vector2(0.1, 0.0)
+		i_style.content_margin_left = 6; i_style.content_margin_right = 6
+		icon_panel.add_theme_stylebox_override("panel", i_style)
+		icon_panel.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		var icon_lbl = Label.new()
+		icon_lbl.text = "!"
+		icon_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		icon_lbl.add_theme_font_size_override("font_size", 22)
+		icon_lbl.add_theme_color_override("font_color", Color.BLACK)
+		icon_panel.add_child(icon_lbl)
+		hbox.add_child(icon_panel)
+		
+		var _tooltip_desc = Label.new()
+		_tooltip_desc.name = "Desc"
+		_tooltip_desc.text = "Description here"
+		_tooltip_desc.add_theme_font_size_override("font_size", 16)
+		_tooltip_desc.add_theme_color_override("font_color", Color.BLACK)
+		_tooltip_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_tooltip_desc.custom_minimum_size = Vector2(160, 0)
+		_tooltip_desc.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_tooltip_desc.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		hbox.add_child(_tooltip_desc)
+		
+		var go_panel = PanelContainer.new()
+		go_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var go_style = StyleBoxFlat.new()
+		go_style.bg_color = Color(0.95, 0.8, 0.2)
+		go_style.border_width_left = 4; go_style.border_width_top = 4; go_style.border_width_right = 4; go_style.border_width_bottom = 4
+		go_style.border_color = Color.BLACK
+		go_style.content_margin_left = 12; go_style.content_margin_right = 12
+		go_panel.add_theme_stylebox_override("panel", go_style)
+		go_panel.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		var go_lbl = Label.new()
+		go_lbl.text = "GO"
+		go_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		go_lbl.add_theme_color_override("font_color", Color.BLACK)
+		go_lbl.add_theme_font_size_override("font_size", 20)
+		go_panel.add_child(go_lbl)
+		hbox.add_child(go_panel)
+		
+		inner_v.add_child(hbox)
+		text_panel.add_child(inner_v)
+		vbox.add_child(text_panel)
+		
+		var tail = ColorRect.new()
+		tail.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		tail.color = Color(0.85, 0.1, 0.2)
+		tail.size = Vector2(40, 40)
+		tail.rotation_degrees = 45
+		tail.position = Vector2(160, -20)
+		tail.z_index = -1
+		text_panel.add_child(tail)
+		
+		var script_path = "res://UI/WorldMap/Tooltip.gd"
+		if ResourceLoader.exists(script_path):
+			root.set_script(load(script_path))
+			
+		_set_owner_recursive(root, root)
+		var packed = PackedScene.new()
+		packed.pack(root)
+		ResourceSaver.save(packed, t_path)
 
 func _update_side_panel_locations() -> void:
 	if not location_buttons_container: return

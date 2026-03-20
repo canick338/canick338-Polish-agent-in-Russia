@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://uktstnt15yle"]
 
-[ext_resource type="Script" path="res://WorldMap.gd" id="1"]
+[ext_resource type="Script" uid="uid://d00fqb3t3882t" path="res://WorldMap.gd" id="1"]
+[ext_resource type="PackedScene" path="res://UI/WorldMap/MapNode.tscn" id="2_node"]
 
 [node name="WorldMap" type="Control"]
 layout_mode = 3
@@ -36,6 +37,87 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="MapNode_streets" parent="MapNodes" instance=ExtResource("2_node")]
+layout_mode = 1
+offset_left = 750.0
+offset_top = 450.0
+offset_right = 750.0
+offset_bottom = 450.0
+location_id = "streets"
+
+[node name="MapNode_home" parent="MapNodes" instance=ExtResource("2_node")]
+layout_mode = 1
+offset_left = 156.0
+offset_top = 960.0
+offset_right = 156.0
+offset_bottom = 960.0
+location_id = "home"
+
+[node name="MapNode_home_finale" parent="MapNodes" instance=ExtResource("2_node")]
+visible = false
+layout_mode = 1
+offset_left = 150.0
+offset_top = 650.0
+offset_right = 150.0
+offset_bottom = 650.0
+location_id = "home_finale"
+
+[node name="MapNode_factory" parent="MapNodes" instance=ExtResource("2_node")]
+layout_mode = 1
+offset_left = 1600.0
+offset_top = 720.0
+offset_right = 1600.0
+offset_bottom = 720.0
+location_id = "factory"
+
+[node name="MapNode_casino" parent="MapNodes" instance=ExtResource("2_node")]
+layout_mode = 1
+offset_left = 1484.0
+offset_top = 472.0
+offset_right = 1484.0
+offset_bottom = 472.0
+location_id = "casino"
+
+[node name="MapNode_academy" parent="MapNodes" instance=ExtResource("2_node")]
+layout_mode = 1
+offset_left = 1290.0
+offset_top = 168.0
+offset_right = 1290.0
+offset_bottom = 168.0
+location_id = "academy"
+
+[node name="MapNode_hq" parent="MapNodes" instance=ExtResource("2_node")]
+layout_mode = 1
+offset_left = 1394.0
+offset_top = 172.0
+offset_right = 1394.0
+offset_bottom = 172.0
+location_id = "hq"
+
+[node name="MapNode_pizzeria" parent="MapNodes" instance=ExtResource("2_node")]
+layout_mode = 1
+offset_left = 1150.0
+offset_top = 600.0
+offset_right = 1150.0
+offset_bottom = 600.0
+location_id = "pizzeria"
+
+[node name="MapNode_jewish_shop" parent="MapNodes" instance=ExtResource("2_node")]
+layout_mode = 1
+offset_left = 350.0
+offset_top = 350.0
+offset_right = 350.0
+offset_bottom = 350.0
+location_id = "jewish_shop"
+
+[node name="MapNode_briefing_room" parent="MapNodes" instance=ExtResource("2_node")]
+layout_mode = 1
+offset_left = 910.0
+offset_top = 490.0
+offset_right = 910.0
+offset_bottom = 490.0
+location_id = "briefing_room"
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 10
@@ -78,11 +160,11 @@ vertical_alignment = 1
 [node name="TimeLabel" type="RichTextLabel" parent="UI/TopMargin/TopBar/CenterInfo"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
 bbcode_enabled = true
 fit_content = true
 autowrap_mode = 0
-theme_override_font_sizes/normal_font_size = 20
-theme_override_font_sizes/bold_font_size = 20
 
 [node name="PhoneButton" type="Button" parent="UI/TopMargin/TopBar"]
 unique_name_in_owner = true
@@ -93,10 +175,10 @@ text = "📱 ТЕЛЕФОН"
 
 [node name="SidePanel" type="PanelContainer" parent="UI"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
 offset_left = -300.0
 offset_top = 100.0
 offset_bottom = 1000.0
-custom_minimum_size = Vector2(300, 0)
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/SidePanel"]
 layout_mode = 2
