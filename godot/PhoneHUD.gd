@@ -499,6 +499,8 @@ func _open_games() -> void:
 # ========================
 var radio_player: AudioStreamPlayer
 var current_station: int = -1
+var radio_playlist: Array[String] = []
+var radio_track_idx: int = 0
 
 func _open_radio() -> void:
 	_show_app_header("Радио")
@@ -507,6 +509,7 @@ func _open_radio() -> void:
 	if not radio_player:
 		radio_player = AudioStreamPlayer.new()
 		radio_player.bus = "Music"
+		radio_player.finished.connect(_on_radio_track_finished)
 		add_child(radio_player)
 	
 	var scroll = ScrollContainer.new()
@@ -548,10 +551,10 @@ func _open_radio() -> void:
 	display_vbox.add_child(now_playing_lbl)
 	
 	var stations = [
-		{"name": "FM 104.2", "desc": "Ретро Волна", "id": 0, "file": "res://Assets/Audio/Radio/music.ogg", "color": Color(0.9, 0.3, 0.5)},
-		{"name": "AM 99.0", "desc": "Подкаст-студия", "id": 1, "file": "res://Assets/Audio/Radio/podcast.ogg", "color": Color(0.3, 0.6, 0.9)},
-		{"name": "FM 88.5", "desc": "Классика", "id": 2, "file": "res://Assets/Audio/Radio/classic.ogg", "color": Color(0.8, 0.7, 0.2)},
-		{"name": "FM 101.4", "desc": "Новости Варшавы", "id": 3, "file": "res://Assets/Audio/Radio/news.ogg", "color": Color(0.4, 0.8, 0.4)},
+		{"name": "FM 104.2", "desc": "Ретро Волна", "id": 0, "folder": "res://Assets/Audio/Radio/Retro", "color": Color(0.9, 0.3, 0.5)},
+		{"name": "AM 99.0", "desc": "Подкаст-студия", "id": 1, "folder": "res://Assets/Audio/Radio/Podcast", "color": Color(0.3, 0.6, 0.9)},
+		{"name": "FM 88.5", "desc": "Классика", "id": 2, "folder": "res://Assets/Audio/Radio/Classic", "color": Color(0.8, 0.7, 0.2)},
+		{"name": "FM 101.4", "desc": "Новости Варшавы", "id": 3, "folder": "res://Assets/Audio/Radio/News", "color": Color(0.4, 0.8, 0.4)},
 	]
 	
 	var freq_lbl = Label.new()
@@ -618,13 +621,28 @@ func _open_radio() -> void:
 			freq_lbl.text = st["name"]
 			_open_radio() # Refresh UI to show selected state
 			
-			if st["file"] != "":
-				if FileAccess.file_exists(st["file"]):
-					radio_player.stream = load(st["file"])
-					radio_player.play()
-				else:
-					radio_player.stop()
-					freq_lbl.text = "ШУМ..."
+			radio_playlist.clear()
+			radio_track_idx = 0
+			radio_player.stop()
+			
+			var d = DirAccess.open(st["folder"])
+			if d:
+				d.list_dir_begin()
+				var file = d.get_next()
+				while file != "":
+					if not d.current_is_dir() and not file.begins_with("."):
+						var clean_file = file.replace(".import", "").replace(".remap", "")
+						if clean_file.ends_with(".ogg") or clean_file.ends_with(".mp3") or clean_file.ends_with(".wav"):
+							var full_path = st["folder"] + "/" + clean_file
+							if not radio_playlist.has(full_path):
+								radio_playlist.append(full_path)
+					file = d.get_next()
+			
+			if radio_playlist.size() > 0:
+				radio_playlist.shuffle()
+				_play_radio_track()
+			else:
+				freq_lbl.text = "ШУМ..."
 		)
 		stations_vbox.add_child(btn)
 	
@@ -648,7 +666,7 @@ func _open_radio() -> void:
 	vbox.add_child(off_btn)
 	
 	var info_lbl = Label.new()
-	info_lbl.text = "Настройте файлы в godot/Assets/Audio/Radio/\n(music.ogg, podcast.ogg, classic.ogg, news.ogg)"
+	info_lbl.text = "Закиньте сколько угодно музыки (.ogg) в папки\nAssets/Audio/Radio/ (Retro, Podcast, Classic, News)"
 	info_lbl.add_theme_font_size_override("font_size", 11)
 	info_lbl.add_theme_color_override("font_color", Color(0.4, 0.4, 0.45))
 	info_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -657,3 +675,22 @@ func _open_radio() -> void:
 	
 	scroll.add_child(vbox)
 	content_area.add_child(scroll)
+
+func _play_radio_track() -> void:
+	if radio_playlist.is_empty(): return
+	if radio_track_idx >= radio_playlist.size():
+		radio_track_idx = 0
+		radio_playlist.shuffle()
+	var track_path = radio_playlist[radio_track_idx]
+	if ResourceLoader.exists(track_path):
+		radio_player.stream = load(track_path)
+		radio_player.play()
+	else:
+		radio_track_idx += 1
+		if radio_track_idx < radio_playlist.size():
+			_play_radio_track()
+
+func _on_radio_track_finished() -> void:
+	if current_station != -1 and radio_playlist.size() > 0:
+		radio_track_idx += 1
+		_play_radio_track()
