@@ -1,0 +1,17 @@
+[
+	{
+		"character": "Марек",
+		"text": "День окончен. Пора отдохнуть и собраться с силами.",
+		"type": "dialogue"
+	},
+	{
+		"name": "set",
+		"args": ["system_sleep", 1],
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "*Вы поспали. Наступил следующий день!*",
+		"type": "dialogue"
+	}
+]

@@ -1,0 +1,168 @@
+[
+	{
+		"args": ["polish_home", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "...",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Голова раскалывается. Где я?",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Что это было?",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Воспоминания... Они возвращаются.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["fade_out"],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": ["orphanhome", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Варшава. 1990-е годы.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Маленький мальчик. Без родителей. Без дома.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я помню... Детский дом родной.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Холодные стены. Пустые коридоры. Одиночество.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Никто не хотел меня забрать.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Годы шли. Мальчик рос.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Но одиночество оставалось. Всегда.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["fade_out"],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": ["warsaw_street", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Подростковые годы. Улицы Варшавы стали домом.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Нужно было выживать.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Подработки. Мелкие дела. Иногда не совсем законные.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я научился быть незаметным. Наблюдать. Запоминать.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Люди проходили мимо. Никто не замечал маленького сироту.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Но я выжил. Выжил сам.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["fade_out"],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": ["factory_street", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Однажды я увидел потрёпанное объявление на столбе.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Завод. Нужны рабочие. Без опыта.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Это был шанс. Легальная работа. Деньги.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я подал заявление.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Данила решился. Теперь нужно добраться до завода.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Ладно... Где-то тут должна быть карта города.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["prologue_act", 1],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["warsaw_prologue_stage", 1],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["system_pass_time", 1],
+		"name": "set",
+		"type": "command"
+	}
+]
+

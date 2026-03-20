@@ -1,4 +1,4 @@
-﻿keys,ru,en,pl
+keys,ru,en,pl
 ACT1_ARRIVAL_fce8e3ab,"Следующее утро. Обоянь, небольшой город в Курской области.","hello I like sex",kurwa
 ACT1_ARRIVAL_0421edfb,"Серое небо, заснеженные улицы, старые советские здания.",,
 ACT1_ARRIVAL_b3c5f166,"Итак, я здесь. Город небольшой, все друг друга знают...",,
@@ -130,7 +130,7 @@ PREQUEL_DANILA_1a165197,"Перед тобой конвейер. Нужно бы
 PREQUEL_DANILA_31365b7b,"Это... сложнее, чем я думал.","This is... harder than I thought.","To... trudniejsze niż myślałem."
 PREQUEL_DANILA_a310d660,"У тебя 30 секунд. Наклей наклейки минимум на 20 банок. Начинай!","You have 30 seconds. Stick labels on at least 20 jars. Start!","Masz 30 sekund. Naklej naklejki na co najmniej 20 słoików. Start!"
 PREQUEL_DANILA_5549f7d4,"Мини-игра завершена.","Minigame finished.","Minigra zakończona."
-PREQUEL_DANILA_71fd34ca,"Фух... Вроде закончил. Счет: [factory_jam_result_v2]. Надеюсь, этого хватит.","Phew... Seem to be done. Score: [factory_jam_result_v2]. Hope it's enough.","Uff... Chyba skończyłem. Wynik: [factory_jam_result_v2]. Mam nadzieję, że wystarczy."
+PREQUEL_DANILA_71fd34ca,"Фух... Вроде закончил. Счет: [factory_jam_final_score]. Надеюсь, этого хватит.","Phew... Seem to be done. Score: [factory_jam_final_score]. Hope it's enough.","Uff... Chyba skończyłem. Wynik: [factory_jam_final_score]. Mam nadzieję, że wystarczy."
 PREQUEL_DANILA_42bf5cb2,"ВАРКА ===","BOILING ===","GOTOWANIE ==="
 PREQUEL_DANILA_220ad716,"Теперь варка. Следи за температурой и временем.","Now boiling. Watch the temperature and time.","Teraz gotowanie. Pilnuj temperatury i czasu."
 PREQUEL_DANILA_0730fc21,"Перед тобой огромные котлы. Нужно варить продукцию по рецепту.","Huge vats before you. Product must be cooked by recipe.","Przed tobą wielkie kotły. Trzeba gotować produkt według przepisu."

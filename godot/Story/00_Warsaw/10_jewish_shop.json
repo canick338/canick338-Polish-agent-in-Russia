@@ -1,0 +1,143 @@
+[
+	{
+		"args": ["jewish_shop", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Еврейская лавка в старом городе. Запах специй и старых книг.",
+		"type": "dialogue"
+	},
+	{
+		"character": "shlomo",
+		"text": "А-а, молодой человек! Чего изволите?",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Мне нужен билет до Обояни и... документы. Меня направил генерал.",
+		"type": "dialogue"
+	},
+	{
+		"character": "shlomo",
+		"text": "Ой-вей, знаю-знаю. Генерал звонил. Всё готово, но... деньги вперёд, дорогой.",
+		"type": "dialogue"
+	},
+	{
+		"character": "shlomo",
+		"text": "500 злотых — и ты уедешь куда хочешь с чистым паспортом.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "У меня сейчас [money] злотых...",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"text": "Купить билет и паспорт (500 злотых)",
+				"children": [
+					{
+						"condition": "money>=500",
+						"type": "if",
+						"then": [
+							{
+								"character": "danila",
+								"text": "Вот, ровно 500.",
+								"type": "dialogue"
+							},
+							{
+								"character": "shlomo",
+								"text": "Прекрасно! Вот твой паспорт на имя Марек Ковальски. И билет на поезд до Обояни.",
+								"type": "dialogue"
+							},
+							{
+								"character": "shlomo",
+								"text": "Удачи, молодой человек. Береги себя в России.",
+								"type": "dialogue"
+							},
+							{
+								"args": ["money", "-500"],
+								"name": "set",
+								"type": "command"
+							},
+							{
+								"args": ["warsaw_ticket_bought", 1],
+								"name": "set",
+								"type": "command"
+							},
+							{
+								"character": "danila",
+								"text": "Спасибо, Шломо. Пора идти домой. Завтра — новая жизнь.",
+								"type": "dialogue"
+							}
+						],
+						"else": [
+							{
+								"character": "shlomo",
+								"text": "Ой, дорогой, у тебя не хватает! 500 злотых, ни копейкой меньше.",
+								"type": "dialogue"
+							},
+							{
+								"character": "shlomo",
+								"text": "Приходи, когда насобираешь. Я никуда не денусь.",
+								"type": "dialogue"
+							}
+						]
+					}
+				]
+			},
+			{
+				"text": "Купить энергетик (20 злотых)",
+				"children": [
+					{
+						"condition": "money>=20",
+						"type": "if",
+						"then": [
+							{
+								"character": "danila",
+								"text": "Дайте энергетик.",
+								"type": "dialogue"
+							},
+							{
+								"character": "shlomo",
+								"text": "Вот, держи. Бодрости тебе!",
+								"type": "dialogue"
+							},
+							{
+								"args": ["money", "-20"],
+								"name": "set",
+								"type": "command"
+							}
+						],
+						"else": [
+							{
+								"character": "shlomo",
+								"text": "Даже на напиток не хватает? Ой-вей...",
+								"type": "dialogue"
+							}
+						]
+					}
+				]
+			},
+			{
+				"text": "Уйти",
+				"children": [
+					{
+						"character": "danila",
+						"text": "Загляну позже.",
+						"type": "dialogue"
+					},
+					{
+						"character": "shlomo",
+						"text": "Буду ждать, дорогой!",
+						"type": "dialogue"
+					}
+				]
+			}
+		],
+		"type": "choice"
+	}
+]

@@ -1,0 +1,17 @@
+[
+	{
+		"character": "Командир",
+		"text": "Изучи досье и отправляйся на место. Как прибудешь — свяжемся.",
+		"type": "dialogue"
+	},
+	{
+		"character": "Марек",
+		"text": "Вас понял. Выдвигаюсь в Обоянь.",
+		"type": "dialogue"
+	},
+	{
+		"name": "set",
+		"args": ["warsaw_prologue_done", 1],
+		"type": "command"
+	}
+]

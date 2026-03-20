@@ -7,13 +7,13 @@ const SCENE_PLAYER := preload("res://ScenePlayer.tscn")
 const SLOT_MACHINE_SCENE := preload("res://Casino/SlotMachineScene.tscn")
 const MAIN_MENU_SCENE := preload("res://MainMenu.tscn")
 const PAUSE_MENU_SCENE := preload("res://PauseMenu.tscn")
+const WORLD_MAP_SCENE := preload("res://WorldMap.tscn")
 
-var SCENES := []
-
-var _current_index := -1
-var _scene_player: ScenePlayer
+var _current_scene_path: String = ""
+var _scene_player: ScenePlayer = null
 var _casino_instance: Control = null
 var _main_menu_instance: Control = null
+var _world_map_instance: Control = null
 
 
 func _ready() -> void:
@@ -59,7 +59,7 @@ func show_casino() -> void:
 			_casino_instance.casino_finished.connect(_on_casino_finished)
 	# Fallback if slot machine fails to load
 	else:
-		start_story()
+		show_world_map()
 
 func _on_casino_finished(is_win: bool) -> void:
 	"""Казино закончено - переход к сюжету"""
@@ -70,85 +70,60 @@ func _on_casino_finished(is_win: bool) -> void:
 		_casino_instance.queue_free()
 		_casino_instance = null
 	
-	# Загрузить и запустить сюжет
-	start_story()
+	# Загрузить хаб (карту)
+	show_world_map()
 
-
-func start_story() -> void:
-	"""Запустить сюжет игры"""
-	SCENES.clear()
+func show_world_map() -> void:
+	"""Показать глобальную карту (Hub) - Варшава (Пролог) или Обоянь"""
 	
-	if scripts.is_empty():
-		# Fallback for testing if no scripts assigned, though production should have them.
-		# Or maybe we want to load specific test file?
-		# For now, let's keep the debug load if empty, OR just assume scripts are assigned.
-		print("No scripts assigned to Main. Using default Prequel.")
-		var loader = JSONDialogueLoader.new()
-		var tree = loader.load_scene("res://Story/prequel_danila.json")
-		if tree:
-			SCENES.append(tree)
+	if _scene_player:
+		_scene_player.queue_free()
+		_scene_player = null
+		
+	if WORLD_MAP_SCENE:
+		_world_map_instance = WORLD_MAP_SCENE.instantiate()
+		add_child(_world_map_instance)
+		_world_map_instance.scene_requested.connect(_on_world_map_scene_requested)
 	else:
-		# Load all assigned scripts as JSON
-		var loader = JSONDialogueLoader.new()
-		for script_path in scripts:
-			# Replace .txt with .json
-			# (Assuming script_path is like "res://Story/prologue.txt")
-			var json_path = script_path.replace(".txt", ".json")
-			
-			if not FileAccess.file_exists(json_path):
-				print("JSON file not found: " + json_path)
-				# Fallback for legacy main_game_loop which might be renamed or missing
-				if "main_game_loop" in json_path:
-					json_path = "res://Story/master_scenario.json"
-					print("Fallback to: " + json_path)
-			
-			print("Loading scene from: " + json_path)
-			
-			var tree = loader.load_scene(json_path)
-			if tree:
-				# Ensure chain continuity handled by Player logic or manual link?
-				# The legacy code did: (dialogue.nodes[dialogue.index - 1] as SceneTranspiler.BaseNode).next = -1
-				SCENES.append(tree)
-			else:
-				push_error("Failed to load scene: " + json_path)
+		push_error("WorldMap scene not found!")
 
-	if SCENES.is_empty():
-		push_error("No scenes loaded!")
-		return
+func _on_world_map_scene_requested(path: String) -> void:
+	if _world_map_instance:
+		_world_map_instance.queue_free()
+		_world_map_instance = null
+		
+	_play_scene_from_path(path)
 
-	_play_scene(0)
-
-
-func _play_scene(index: int, start_node: int = 0) -> void:
-	_current_index = int(clamp(index, 0.0, SCENES.size() - 1))
+func _play_scene_from_path(path: String, start_node: int = 0) -> void:
+	_current_scene_path = path
 
 	if _scene_player:
 		_scene_player.queue_free()
 
 	_scene_player = SCENE_PLAYER.instantiate()
 	add_child(_scene_player)
-	_scene_player.load_scene(SCENES[_current_index])
-	_scene_player.scene_finished.connect(_on_ScenePlayer_scene_finished)
-	_scene_player.restart_requested.connect(_on_ScenePlayer_restart_requested)
-	_scene_player.run_scene(start_node)
+	
+	var loader = JSONDialogueLoader.new()
+	var tree = loader.load_scene(path)
+	if tree:
+		_scene_player.load_scene(tree)
+		_scene_player.scene_finished.connect(_on_ScenePlayer_scene_finished)
+		_scene_player.restart_requested.connect(_on_ScenePlayer_restart_requested)
+		_scene_player.run_scene(start_node)
+	else:
+		push_error("Failed to load scene from path: " + path)
+		show_world_map()
 
 
 func start_story_test(path: String) -> void:
 	"""Helper to run a specific scene file directly for testing."""
-	SCENES.clear()
-	var loader = JSONDialogueLoader.new()
-	var tree = loader.load_scene(path)
-	if tree:
-		SCENES.append(tree)
-		_play_scene(0)
-	else:
-		push_error("Failed to load test scene: " + path)
+	_play_scene_from_path(path)
 
 
 func get_current_state() -> Dictionary:
 	"""Returns current game state for saving."""
 	var state = {
-		"scene_index": _current_index,
+		"scene_path": _current_scene_path,
 		"node_index": 0
 	}
 	
@@ -160,15 +135,13 @@ func get_current_state() -> Dictionary:
 
 func load_from_state(state: Dictionary) -> void:
 	"""Restores game from saved state."""
-	# Ensure scenes are loaded
-	if SCENES.is_empty():
-		start_story()
-		await get_tree().process_frame
-	
-	var scene_idx = state.get("scene_index", 0)
+	var scene_path = state.get("scene_path", "")
 	var node_idx = state.get("node_index", 0)
 	
-	_play_scene(scene_idx, node_idx)
+	if scene_path != "":
+		_play_scene_from_path(scene_path, node_idx)
+	else:
+		show_world_map()
 
 
 func _on_main_menu_start_game() -> void:
@@ -190,19 +163,22 @@ func _on_main_menu_start_game() -> void:
 		print("Loading from saved position: scene=%d, node=%d" % [pending["scene_index"], pending["node_index"]])
 		
 		# Load the game
-		start_story()
 		await get_tree().process_frame
 		load_from_state(pending)
 	else:
-		# Normal new game start
-		show_casino()
+		# Normal new game start — begin with prologue dialogue, NOT the map
+		Variables.clear_all_variables()
+		if GameGlobal and GameGlobal.has_method("save_project_state"):
+			GameGlobal.save_data.clear()
+			GameGlobal.save_project_state()
+		# Play the intro streets scene first (orphanage flashback)
+		# The map will appear only after this scene finishes via _on_ScenePlayer_scene_finished
+		_play_scene_from_path("res://Story/00_Warsaw/01_intro_streets.json")
 
 func _on_ScenePlayer_scene_finished() -> void:
-	# If the scene that ended is the last scene, we're done playing the game.
-	if _current_index == SCENES.size() - 1:
-		return
-	_play_scene(_current_index + 1)
-
+	# Возвращаемся в хаб (Карту)
+	show_world_map()
 
 func _on_ScenePlayer_restart_requested() -> void:
-	_play_scene(_current_index)
+	if _current_scene_path != "":
+		_play_scene_from_path(_current_scene_path)

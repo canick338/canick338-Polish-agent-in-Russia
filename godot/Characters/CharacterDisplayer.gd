@@ -127,7 +127,8 @@ func display(character: Character, side: String = SIDE_LEFT, expression := "", a
 				# Запускаем эффекты "живости" для персонажа сразу
 				_start_idle_effects(sprite, side, expression)
 	else:
-		push_error("CharacterDisplayer.display: texture is null for expression: " + expression)
+		if expression != "":
+			push_error("CharacterDisplayer.display: texture is null for expression: " + expression)
 		sprite.hide()
 		_stop_idle_effects(side)
 

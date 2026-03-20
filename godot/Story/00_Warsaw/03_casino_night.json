@@ -1,0 +1,362 @@
+[
+    {
+        "character": "",
+        "text": "После работы рабочие собираются в углу цеха.",
+        "translation_key": "PREQUEL_DANILA_01b18447",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Несколько мужиков сидят за столом, играют в карты.",
+        "translation_key": "PREQUEL_DANILA_4f1678a0",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Рабочие играют в карты...",
+        "translation_key": "PREQUEL_DANILA_f6f3657c",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Эй, новичок! Идёшь играть?",
+        "translation_key": "PREQUEL_DANILA_b773babd",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Карты? Я не очень умею...",
+        "translation_key": "PREQUEL_DANILA_b0af8cbb",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Ничего страшного! Простая игра - 21. Научим!",
+        "translation_key": "PREQUEL_DANILA_3ed84028",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Давай, садись! Развлечёмся после работы.",
+        "translation_key": "PREQUEL_DANILA_039ba583",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Хм... Может, стоит попробовать?",
+        "translation_key": "PREQUEL_DANILA_1135807b",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "children": [
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Ладно, почему бы и нет.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "text": "Отлично! Садись!",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": [
+                            "card_worker"
+                        ],
+                        "name": "unlock",
+                        "type": "command"
+                    },
+                    {
+                        "text": "Рабочие объясняют правила: нужно набрать 21 очко или максимально близко.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Понял. Попробую.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": [
+                            "card_game"
+                        ],
+                        "name": "minigame",
+                        "type": "command"
+                    },
+                    {
+                        "text": "Игра завершена.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "condition": "card_game_won>=1",
+                        "else": [
+                            {
+                                "character": "danila",
+                                "mood": "thinking_factory",
+                                "side": "left",
+                                "text": "Проиграл... Но было интересно.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "text": "Ничего страшного! В следующий раз повезёт!",
+                                "type": "dialogue"
+                            },
+                            {
+                                "text": "Главное - научился. Завтра сыграем ещё!",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "danila",
+                                "mood": "thinking_factory",
+                                "side": "left",
+                                "text": "Спасибо, ребята. Научили.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "text": "Всегда пожалуйста! Мы тут часто играем после смены.",
+                                "type": "dialogue"
+                            }
+                        ],
+                        "then": [
+                            {
+                                "character": "danila",
+                                "mood": "tired_but_happy_factory",
+                                "side": "left",
+                                "text": "Выиграл! Неплохо получилось!",
+                                "type": "dialogue"
+                            },
+                            {
+                                "text": "Молодец, новичок! Неплохо играешь!",
+                                "type": "dialogue"
+                            },
+                            {
+                                "text": "Да, для первого раза - отлично!",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "danila",
+                                "mood": "thinking_factory",
+                                "side": "left",
+                                "text": "Спасибо, ребята. Было интересно.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "text": "Завтра снова сыграем, если хочешь.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "danila",
+                                "mood": "tired_but_happy_factory",
+                                "side": "left",
+                                "text": "Конечно! Буду рад.",
+                                "type": "dialogue"
+                            }
+                        ],
+                        "type": "if"
+                    },
+                    {
+                        "text": "Рабочие продолжают играть, а ты идёшь домой.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "tired_but_happy_factory",
+                        "side": "left",
+                        "text": "Хорошие ребята. Может, здесь будет не так одиноко...",
+                        "type": "dialogue"
+                    }
+                ],
+                "text": "Согласиться и сыграть"
+            },
+            {
+                "children": [
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Спасибо за приглашение, но я устал. Может, в другой раз?",
+                        "type": "dialogue"
+                    },
+                    {
+                        "text": "Понятно. Ничего страшного.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "text": "Если захочешь - мы всегда здесь после смены.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Спасибо. Увидимся завтра.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "text": "Ты уходишь, а рабочие продолжают играть.",
+                        "type": "dialogue"
+                    }
+                ],
+                "text": "Вежливо отказаться"
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "args": [
+            "fade_out"
+        ],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Недели работы на заводе. Каждый день - тяжёлый труд.",
+        "translation_key": "PREQUEL_DANILA_1bef9a54",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Я устал. Очень устал.",
+        "translation_key": "PREQUEL_DANILA_c170181f",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Но я выжил. Заработал немного денег. Научился терпению.",
+        "translation_key": "PREQUEL_DANILA_829a073c",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Это было тяжело. Но я справился.",
+        "translation_key": "PREQUEL_DANILA_f18bf475",
+        "type": "dialogue"
+    },
+    {
+        "args": [
+            "fade_out"
+        ],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": [
+            "warsaw_metro",
+            ""
+        ],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Метро. Ежедневные поездки. Куда? Зачем?",
+        "translation_key": "PREQUEL_DANILA_644f7cba",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Я не знал, куда иду.",
+        "translation_key": "PREQUEL_DANILA_6a912cb9",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Но что-то внутри говорило: твоя судьба ещё не написана.",
+        "translation_key": "PREQUEL_DANILA_4d5492d2",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Однажды, в вагоне метро, он увидел плакат.",
+        "translation_key": "PREQUEL_DANILA_b4b163b4",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Школа офицеров польской разведки.",
+        "translation_key": "PREQUEL_DANILA_d377a286",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Сердце забилось чаще. Это было оно.",
+        "translation_key": "PREQUEL_DANILA_6b7c367f",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Судьба дала мне шанс.",
+        "translation_key": "PREQUEL_DANILA_07a25e85",
+        "type": "dialogue"
+    },
+    {
+        "args": [
+            "fade_out"
+        ],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": [
+            "officer_school",
+            ""
+        ],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Экзамены. Тренировки. Жесткая дисциплина.",
+        "translation_key": "PREQUEL_DANILA_c1119399",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Я был готов. Готов ко всему.",
+        "translation_key": "PREQUEL_DANILA_d71aef30",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Сирота, который вырос на улицах, стал одним из лучших.",
+        "translation_key": "PREQUEL_DANILA_f9d35e4f",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Они научили меня быть невидимым. Собирать информацию. Действовать.",
+        "translation_key": "PREQUEL_DANILA_634d9d77",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Но главное - они дали мне цель. Принадлежность.",
+        "translation_key": "PREQUEL_DANILA_392639ea",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Я больше не был один.",
+        "translation_key": "PREQUEL_DANILA_a3c94ddf",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Годы обучения пролетели быстро.",
+        "translation_key": "PREQUEL_DANILA_3f970d9b",
+        "type": "dialogue"
+    },
+    {
+        "name": "set",
+        "args": [
+            "system_pass_time",
+            1
+        ],
+        "type": "command"
+    }
+]

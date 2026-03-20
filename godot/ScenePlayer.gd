@@ -49,7 +49,8 @@ func run_scene(start_key: int = 0) -> void:
 		_current_node_index = key  # Update position tracker
 		# Проверяем, что key валидный
 		if not _scene_data.has(key):
-			push_error("Invalid key in scene data: %d (scene has %d nodes). Ending scene." % [key, _scene_data.size()])
+			# В новом парсере блоки часто указывают на оригинальный индекс + 1, который может выходить за пределы
+			print("End of scene reached (key %d not found in %d nodes)." % [key, _scene_data.size()])
 			break
 		
 		var node: SceneTranspiler.BaseNode = _scene_data[key]
@@ -195,7 +196,26 @@ func run_scene(start_key: int = 0) -> void:
 
 		# Manage variables
 		elif node is SceneTranspiler.SetCommandNode:
-			Variables.add_variable(node.symbol, node.value)
+			if node.symbol == "system_pass_time":
+				var time = Variables.get_variable("current_time")
+				time += int(node.value)
+				if time >= 4:
+					time -= 4
+					var day = Variables.get_variable("current_day")
+					if day == 0: day = 1
+					Variables.add_variable("current_day", day + 1)
+				Variables.add_variable("current_time", time)
+				
+			elif node.symbol == "system_sleep":
+				# Sleep resets time to morning (0) and proceeds to next day.
+				var day = Variables.get_variable("current_day")
+				if day == 0: day = 1
+				Variables.add_variable("current_day", day + 1)
+				Variables.add_variable("current_time", 0)
+				
+			else:
+				Variables.add_variable(node.symbol, node.value)
+				
 			key = node.next
 
 		# Change to another scene
@@ -575,9 +595,14 @@ func _play_card_game() -> void:
 func _on_card_game_finished(player_won: bool, player_score: int, dealer_score: int) -> void:
 	"""Обработчик окончания карточной игры"""
 	print("Card game finished! Player won: ", player_won, " (Player: ", player_score, ", Dealer: ", dealer_score, ")")
-	# Можно сохранить результат в переменные, если нужно
-	Variables.add_variable("card_game_won", 1 if player_won else 0)
-	Variables.add_variable("card_game_player_score", player_score)
+	
+	if not player_won and player_score == 0 and dealer_score == 0:
+		Variables.add_variable("card_game_skipped", 1)
+		Variables.add_variable("card_game_won", 0)
+	else:
+		Variables.add_variable("card_game_skipped", 0)
+		Variables.add_variable("card_game_won", 1 if player_won else 0)
+		
 	Variables.add_variable("card_game_player_score", player_score)
 	Variables.add_variable("card_game_dealer_score", dealer_score)
 

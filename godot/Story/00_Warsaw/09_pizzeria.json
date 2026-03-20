@@ -1,0 +1,82 @@
+[
+	{
+		"args": ["pizzeria_inside", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Пиццерия «У Марио». Маленькое заведение в центре Варшавы.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Мне нужна подработка. Срочно.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Хозяин — толстый итальянец — смотрит на тебя.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "— Умеешь готовить пиццу?",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Научусь.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "— Ладно. Тесто, соус, начинка. Не напортачь.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Работа начинается. Нужно приготовить пиццу для клиентов.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Тесто... Раскатать... Соус... Сыр...",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Несколько часов тяжёлой работы у печи.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Фух... Руки горят от жара.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "— Неплохо, парень. Держи свои 60 злотых.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["money", "+60"],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"character": "danila",
+		"text": "Спасибо. Завтра тоже приду.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "— Двери всегда открыты, если руки не кривые.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["system_pass_time", 1],
+		"name": "set",
+		"type": "command"
+	}
+]

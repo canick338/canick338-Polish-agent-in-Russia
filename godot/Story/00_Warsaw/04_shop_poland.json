@@ -1,0 +1,125 @@
+[
+	{
+		"args": [
+			"street_shop",
+			""
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "danila",
+		"text": "Магазинчик «Жабка». Единственное место, где можно купить билет из этого клоаки.",
+		"type": "dialogue"
+	},
+	{
+		"character": "boss_of_factory",
+		"text": "Чего тебе, пацан? У тебя есть кэш?",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "У меня сейчас [money]$...",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"children": [
+					{
+						"condition": "money>=500",
+						"type": "if",
+						"then": [
+							{
+								"character": "danila",
+								"text": "Вот держи. Ровно 500.",
+								"type": "dialogue"
+							},
+							{
+								"character": "boss_of_factory",
+								"text": "Хе-хе, молодец. Вот твои новые документы и билет. Удачной дороги.",
+								"type": "dialogue"
+							},
+							{
+								"character": "danila",
+								"text": "Наконец-то... Нужно идти домой. Пора заканчивать с этим.",
+								"type": "dialogue"
+							},
+							{
+								"args": [
+									"money",
+									"-500"
+								],
+								"name": "set",
+								"type": "command"
+							},
+							{
+								"args": [
+									"warsaw_ticket_bought",
+									1
+								],
+								"name": "set",
+								"type": "command"
+							}
+						],
+						"else": [
+							{
+								"character": "boss_of_factory",
+								"text": "Шутишь? У тебя нет 500 баксов. Иди работай!",
+								"type": "dialogue"
+							}
+						]
+					}
+				],
+				"text": "Купить билеты и паспорта (500$)"
+			},
+			{
+				"children": [
+					{
+						"condition": "money>=20",
+						"type": "if",
+						"then": [
+							{
+								"character": "danila",
+								"text": "Дай энергетик.",
+								"type": "dialogue"
+							},
+							{
+								"args": [
+									"money",
+									"-20"
+								],
+								"name": "set",
+								"type": "command"
+							},
+							{
+								"character": "danila",
+								"text": "Уф... Сразу легче стало.",
+								"type": "dialogue"
+							}
+						],
+						"else": [
+							{
+								"character": "boss_of_factory",
+								"text": "Даже на газировку не хватает? Позорище.",
+								"type": "dialogue"
+							}
+						]
+					}
+				],
+				"text": "Купить Энергетик (20$)"
+			},
+			{
+				"children": [
+					{
+						"character": "danila",
+						"text": "Ничего, я просто зашёл посмотреть.",
+						"type": "dialogue"
+					}
+				],
+				"text": "Уйти"
+			}
+		],
+		"type": "choice"
+	}
+]

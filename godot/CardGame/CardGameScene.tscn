@@ -506,6 +506,7 @@ text = "ПОНЯЛ..."
 
 [node name="ExitButton" type="Button" parent="UI"]
 unique_name_in_owner = true
+z_index = 25
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -517,6 +518,7 @@ grow_horizontal = 0
 text = "ВЫЙТИ"
 
 [node name="SkipButton" type="Button" parent="UI"]
+z_index = 25
 visible = false
 anchors_preset = 1
 anchor_left = 1.0
@@ -526,7 +528,8 @@ offset_top = 20.0
 offset_right = -170.0
 offset_bottom = 60.0
 grow_horizontal = 0
-text = "ПРОПУСТИТЬ"
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+text = "УЙТИ"
 
 [node name="Decorations" type="Control" parent="."]
 layout_mode = 1

@@ -1010,8 +1010,8 @@
 		"type": "dialogue"
 	},
 	{
-		"character": "Но что-то внутри говорило",
-		"text": "твоя судьба ещё не написана.",
+		"character": "",
+		"text": "Но что-то внутри говорило: твоя судьба ещё не написана.",
 		"translation_key": "PREQUEL_DANILA_4d5492d2",
 		"type": "dialogue"
 	},
@@ -1207,6 +1207,14 @@
 			"fade_out"
 		],
 		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": [
+			"prologue_intro_done",
+			1
+		],
+		"name": "set",
 		"type": "command"
 	}
 ]

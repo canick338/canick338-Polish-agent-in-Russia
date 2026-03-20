@@ -1,0 +1,39 @@
+[
+	{
+		"args": ["fade_out"],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": ["polish_home", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Ещё один день закончен.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["system_sleep", 1],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"condition": "days_left>=1",
+		"type": "if",
+		"then": [
+			{
+				"args": ["days_left", "-1"],
+				"name": "set",
+				"type": "command"
+			},
+			{
+				"character": "danila",
+				"text": "Осталось дней: [days_left]...",
+				"type": "dialogue"
+			}
+		],
+		"else": []
+	}
+]

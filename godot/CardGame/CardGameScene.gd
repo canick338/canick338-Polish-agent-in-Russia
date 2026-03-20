@@ -2,7 +2,6 @@ extends Control
 ## Сцена карточной игры "21" (очки) с реакциями Данилы и Рабочего
 
 # UI ссылки
-# UI ссылки
 @onready var player_hand_container: HBoxContainer = %PlayerHand
 @onready var dealer_hand_container: HBoxContainer = %DealerHand
 @onready var player_score_label: Label = %PlayerScoreLabel
@@ -13,7 +12,7 @@ extends Control
 @onready var stand_button: TextureButton = %StandButton
 @onready var next_round_button: Button = %NextRoundButton
 @onready var new_game_button: Button = %NewGameButton
-@onready var skip_button: Button = $UI/SkipButton
+
 @onready var danila_portrait: TextureRect = $DanilaContainer/DanilaPortrait
 @onready var worker_portrait: TextureRect = $WorkerContainer/WorkerPortrait
 @onready var balance_label: Label = %BalanceLabel
@@ -41,7 +40,7 @@ var dealer_hand: Array[Card] = []
 var player_score: int = 0
 var dealer_score: int = 0
 var current_bet: int = 0
-var game_state: String = "betting" # betting, playing, match_ended
+var game_state: String = "intro" # intro, betting, playing, match_ended
 
 # Match System
 var player_match_wins: int = 0
@@ -62,7 +61,6 @@ func _ready():
 	_setup_audio()
 	
 	# Подключить кнопки игрового процесса
-	# Подключить кнопки игрового процесса
 	if hit_button: 
 		hit_button.pressed.connect(_on_hit_pressed)
 		_connect_button_animations(hit_button)
@@ -71,11 +69,14 @@ func _ready():
 		_connect_button_animations(stand_button)
 	if next_round_button: next_round_button.pressed.connect(_start_next_round)
 	if new_game_button: new_game_button.pressed.connect(_on_new_game_pressed)
-	if skip_button: skip_button.pressed.connect(_on_skip_pressed)
 	
-	# Кнопки меню
+	# Кнопки меню (IntroOverlay)
 	if %StartGameButton: %StartGameButton.pressed.connect(_on_intro_start_pressed)
-	if %ExitButton: %ExitButton.pressed.connect(func(): card_game_finished.emit(false, 0, 0)) # Выход
+	# ExitButton — выход из ИНТРО (с подтверждением)
+	if %ExitButton: %ExitButton.pressed.connect(_on_quit_pressed)
+	# SkipButton — выход ВО ВРЕМЯ игры (с подтверждением)
+	var skip_btn = get_node_or_null("UI/SkipButton")
+	if skip_btn: skip_btn.pressed.connect(_on_quit_pressed)
 	
 	# Подключить кнопки ставок
 	for btn in bets_hbox.get_children():
@@ -94,14 +95,172 @@ func _ready():
 	_set_danila_emotion(TEX_DANI_NEUTRAL)
 	_set_worker_emotion(tex_worker_neutral)
 	
-	# Показать интро
+	# Показать интро, скрыть игровые элементы
 	%IntroOverlay.visible = true
 	betting_overlay.visible = false
+	if skip_btn: skip_btn.visible = false  # Скрыта до начала игры
 	
 	# Clear editor placeholders
 	_clear_hand_containers()
+
+
+
+
+func _create_exit_overlay():
+	"""Создаёт оверлей подтверждения выхода."""
+	var overlay = PanelContainer.new()
+	overlay.name = "ExitOverlay"
+	overlay.z_index = 20
+	overlay.set_anchors_preset(Control.PRESET_CENTER)
+	overlay.custom_minimum_size = Vector2(500, 250)
+	overlay.offset_left = -250
+	overlay.offset_top = -125
+	overlay.offset_right = 250
+	overlay.offset_bottom = 125
+	overlay.visible = false
 	
-# ... (rest of the file until _on_beg_pressed)
+	# Стиль панели
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.08, 0.08, 0.08, 0.95)
+	style.corner_radius_top_left = 12
+	style.corner_radius_top_right = 12
+	style.corner_radius_bottom_right = 12
+	style.corner_radius_bottom_left = 12
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.border_color = Color(0.8, 0.6, 0.2, 0.8)
+	overlay.add_theme_stylebox_override("panel", style)
+	
+	var vbox = VBoxContainer.new()
+	vbox.name = "VBoxContainer"
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_theme_constant_override("separation", 15)
+	overlay.add_child(vbox)
+	
+	# Текст диалога
+	var dialog_label = Label.new()
+	dialog_label.name = "ExitDialogLabel"
+	dialog_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	dialog_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	dialog_label.add_theme_font_size_override("font_size", 18)
+	vbox.add_child(dialog_label)
+	
+	# Кнопки
+	var btn_box = HBoxContainer.new()
+	btn_box.alignment = BoxContainer.ALIGNMENT_CENTER
+	btn_box.add_theme_constant_override("separation", 20)
+	vbox.add_child(btn_box)
+	
+	var stay_btn = Button.new()
+	stay_btn.name = "StayButton"
+	stay_btn.text = "Остаться"
+	stay_btn.custom_minimum_size = Vector2(140, 45)
+	stay_btn.add_theme_font_size_override("font_size", 16)
+	stay_btn.pressed.connect(_on_exit_stay)
+	btn_box.add_child(stay_btn)
+	
+	var leave_btn = Button.new()
+	leave_btn.name = "LeaveButton"
+	leave_btn.text = "Уйти"
+	leave_btn.custom_minimum_size = Vector2(140, 45)
+	leave_btn.add_theme_font_size_override("font_size", 16)
+	leave_btn.add_theme_color_override("font_color", Color(1.0, 0.3, 0.3))
+	leave_btn.pressed.connect(_on_exit_confirm)
+	btn_box.add_child(leave_btn)
+	
+	
+	var ui_layer = get_node_or_null("UI")
+	if ui_layer:
+		ui_layer.add_child(overlay)
+	else:
+		add_child(overlay)
+
+
+func _on_quit_pressed():
+	"""Обработка нажатия кнопки выхода с учётом контекста."""
+	var ui_layer = get_node_or_null("UI")
+	var overlay = ui_layer.get_node_or_null("ExitOverlay") if ui_layer else get_node_or_null("ExitOverlay")
+	
+	# Создать оверлей если его нет
+	if not overlay:
+		_create_exit_overlay()
+		overlay = ui_layer.get_node_or_null("ExitOverlay") if ui_layer else get_node_or_null("ExitOverlay")
+	
+	var label: Label = null
+	
+	# Найти ExitDialogLabel в дереве
+	for child in overlay.get_children():
+		if child is VBoxContainer:
+			for sub in child.get_children():
+				if sub.name == "ExitDialogLabel":
+					label = sub
+					break
+	
+	if not label:
+		# Safety fallback — just quit
+		card_game_finished.emit(false, player_match_wins, dealer_match_wins)
+		return
+	
+	# Контекстный диалог
+	match game_state:
+		"intro":
+			label.text = "Данила: \"Некогда мне в карты играть.\"\n\nОтказаться от игры?"
+			_set_danila_emotion(TEX_DANI_NEUTRAL)
+		"playing":
+			# Середина раунда — нельзя просто уйти
+			label.text = "Рабочий: \"Хаха, сбежать решил? Давай хоть раунд доиграем!\"\n\nТочно хотите уйти посреди игры?"
+			_set_worker_emotion(tex_worker_smug)
+		"betting":
+			# Фаза ставок — можно уйти спокойно
+			if player_match_wins > dealer_match_wins:
+				label.text = "Данила: \"Надо уходить в нужный момент. Сегодня я в ударе!\"\n\nУйти победителем?"
+				_set_danila_emotion(TEX_DANI_HAPPY)
+			elif player_match_wins < dealer_match_wins:
+				label.text = "Данила: \"Не мой день сегодня...\"\n\nУйти из-за стола?"
+				_set_danila_emotion(TEX_DANI_SAD)
+			else:
+				label.text = "Данила: \"Извините, мужики, устал сегодня. Не в духе.\"\n\nУйти из-за стола?"
+				_set_danila_emotion(TEX_DANI_NEUTRAL)
+		"round_ended", "match_ended":
+			# Между раундами
+			if player_match_wins >= WINS_NEEDED:
+				label.text = "Данила: \"Отличная игра! Но мне пора.\"\nРабочий: \"Ладно, победитель. До следующего раза!\"\n\nЗавершить игру?"
+				_set_danila_emotion(TEX_DANI_HAPPY)
+				_set_worker_emotion(tex_worker_happy)
+			else:
+				label.text = "Данила: \"Хватит на сегодня.\"\nРабочий: \"Как хочешь, новичок.\"\n\nЗавершить игру?"
+				_set_danila_emotion(TEX_DANI_NEUTRAL)
+		_:
+			label.text = "Завершить карточную игру?"
+	
+	overlay.visible = true
+
+
+func _on_exit_stay():
+	"""Игрок решил остаться."""
+	var ui_layer = get_node_or_null("UI")
+	var overlay = ui_layer.get_node_or_null("ExitOverlay") if ui_layer else get_node_or_null("ExitOverlay")
+	if overlay:
+		overlay.visible = false
+	
+	# Восстановить эмоции
+	_set_danila_emotion(TEX_DANI_NEUTRAL)
+	_set_worker_emotion(tex_worker_neutral)
+
+
+func _on_exit_confirm():
+	"""Игрок подтвердил выход."""
+	var ui_layer = get_node_or_null("UI")
+	var overlay = ui_layer.get_node_or_null("ExitOverlay") if ui_layer else get_node_or_null("ExitOverlay")
+	if overlay:
+		overlay.visible = false
+	
+	# Определяем результат
+	var player_won = player_match_wins > dealer_match_wins
+	card_game_finished.emit(player_won, player_match_wins, dealer_match_wins)
+
 
 func _on_beg_pressed():
 	# Trigger Boss Warning instead of immediate money
@@ -125,6 +284,12 @@ func _on_steal_pressed():
 
 func _on_intro_start_pressed():
 	%IntroOverlay.visible = false
+	
+	# Скрыть кнопку интро, показать кнопку выхода из игры
+	if %ExitButton: %ExitButton.visible = false
+	var skip_btn = get_node_or_null("UI/SkipButton")
+	if skip_btn: skip_btn.visible = true
+	
 	start_betting_phase()
 
 func _load_worker_assets():
@@ -589,6 +754,7 @@ func _on_new_game_pressed():
 	start_betting_phase()
 
 func _on_skip_pressed():
+	# Вызывается из IntroOverlay ExitButton — выход без подтверждения
 	card_game_finished.emit(false, 0, 0)
 
 func _shuffle_deck():

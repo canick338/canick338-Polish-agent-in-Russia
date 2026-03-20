@@ -1,0 +1,585 @@
+[
+    {
+        "args": [
+            "factory_inside",
+            ""
+        ],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Первый день на заводе.",
+        "translation_key": "PREQUEL_DANILA_85d393b9",
+        "type": "dialogue"
+    },
+    {
+        "character": "boss_of_factory",
+        "text": "Так, новичок! Меня зовут Бронислав. Я начальник.",
+        "translation_key": "PREQUEL_DANILA_f6345a1a",
+        "type": "dialogue"
+    },
+    {
+        "args": [
+            "card_bronislav"
+        ],
+        "name": "unlock",
+        "type": "command"
+    },
+    {
+        "character": "danila",
+        "text": "Данила. Рад работать.",
+        "translation_key": "PREQUEL_DANILA_dbfa87df",
+        "type": "dialogue"
+    },
+    {
+        "character": "boss_of_factory",
+        "text": "Хорошо. У нас три задания. Расфасовка, варка и работа в павильде.",
+        "translation_key": "PREQUEL_DANILA_d8ab6e0f",
+        "type": "dialogue"
+    },
+    {
+        "character": "boss_of_factory",
+        "text": "Выполнишь всё - получишь зарплату. Не справишься - уходи.",
+        "translation_key": "PREQUEL_DANILA_22d6890c",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Понял. Начну с расфасовки.",
+        "translation_key": "PREQUEL_DANILA_c97f749d",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Перед тобой конвейер. Нужно быстро расфасовывать продукцию.",
+        "translation_key": "PREQUEL_DANILA_1a165197",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Это... сложнее, чем я думал.",
+        "translation_key": "PREQUEL_DANILA_31365b7b",
+        "type": "dialogue"
+    },
+    {
+        "character": "boss_of_factory",
+        "text": "У тебя 30 секунд. Наклей наклейки минимум на 20 банок. Начинай!",
+        "translation_key": "PREQUEL_DANILA_a310d660",
+        "type": "dialogue"
+    },
+    {
+        "args": [
+            "factory_jam"
+        ],
+        "name": "minigame",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Мини-игра завершена.",
+        "translation_key": "PREQUEL_DANILA_5549f7d4",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Фух... Вроде закончил. Счет: [factory_jam_final_score]. Надеюсь, этого хватит.",
+        "translation_key": "PREQUEL_DANILA_71fd34ca",
+        "type": "dialogue"
+    },
+    {
+        "condition": "factory_jam_final_score>=20",
+        "elif": [
+            {
+                "condition": "factory_jam_final_score>=8",
+                "then": [
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Нормально. Могло быть и лучше.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "boss_of_factory",
+                        "mood": "neutral",
+                        "side": "right",
+                        "text": "Приемлемо. Но старайся лучше.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "boss_of_factory",
+                        "mood": "neutral",
+                        "side": "right",
+                        "text": "Вот твоя стандартная плата.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "tired_at_factory",
+                        "side": "left",
+                        "text": "Спасибо.",
+                        "type": "dialogue"
+                    }
+                ]
+            }
+        ],
+        "else": [
+            {
+                "character": "danila",
+                "mood": "sad_factory",
+                "side": "left",
+                "text": "Чёрт... Всё валится из рук...",
+                "type": "dialogue"
+            },
+            {
+                "character": "boss_of_factory",
+                "mood": "angry",
+                "side": "right",
+                "text": "Стоп! Остановите конвейер!",
+                "type": "dialogue"
+            },
+            {
+                "character": "boss_of_factory",
+                "mood": "angry",
+                "side": "right",
+                "text": "Ты что творишь?! Разбил кучу банок!",
+                "type": "dialogue"
+            },
+            {
+                "character": "boss_of_factory",
+                "mood": "angry",
+                "side": "right",
+                "text": "Никакой зарплаты сегодня! Скажи спасибо, что не уволил!",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "mood": "sad_factory",
+                "side": "left",
+                "text": "Извините, начальник...",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "mood": "thinking_factory",
+                "side": "left",
+                "text": "Плохое начало...",
+                "type": "dialogue"
+            }
+        ],
+        "then": [
+            {
+                "character": "danila",
+                "mood": "thinking_factory",
+                "side": "left",
+                "text": "Справился! Даже больше нормы!",
+                "type": "dialogue"
+            },
+            {
+                "character": "boss_of_factory",
+                "mood": "happy",
+                "side": "right",
+                "text": "Отлично! Ты перевыполнил график!",
+                "type": "dialogue"
+            },
+            {
+                "character": "boss_of_factory",
+                "mood": "happy",
+                "side": "right",
+                "text": "Вот твоя зарплата и премия. Заслужил.",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "mood": "tired_but_happy_factory",
+                "side": "left",
+                "text": "Спасибо, начальник!",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "mood": "thinking_factory",
+                "side": "left",
+                "text": "Отличные деньги.",
+                "type": "dialogue"
+            }
+        ],
+        "type": "if"
+    },
+    {
+        "character": "boss_of_factory",
+        "text": "Теперь варка. Следи за температурой и временем.",
+        "translation_key": "PREQUEL_DANILA_220ad716",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Перед тобой огромные котлы. Нужно варить продукцию по рецепту.",
+        "translation_key": "PREQUEL_DANILA_0730fc21",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Температура... Время... Всё нужно контролировать.",
+        "translation_key": "PREQUEL_DANILA_9907956d",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "children": [
+                    {
+                        "args": [
+                            "cooking_style",
+                            "normal"
+                        ],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Нужно внимательно читать инструкцию.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "boss_of_factory",
+                        "mood": "happy",
+                        "side": "right",
+                        "text": "Хорошо. Правильно.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": [
+                            "cooking"
+                        ],
+                        "name": "minigame",
+                        "type": "command"
+                    }
+                ],
+                "text": "Строго следовать инструкции"
+            },
+            {
+                "children": [
+                    {
+                        "args": [
+                            "cooking_style",
+                            "fast"
+                        ],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Попробую ускорить процесс.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "boss_of_factory",
+                        "mood": "suspicious",
+                        "side": "right",
+                        "text": "Что ты делаешь? Неправильно!",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "sad_factory",
+                        "side": "left",
+                        "text": "Извините, сейчас исправлю... (Режим: Рискованный)",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": [
+                            "cooking"
+                        ],
+                        "name": "minigame",
+                        "type": "command"
+                    }
+                ],
+                "text": "Импровизировать и ускорить процесс"
+            },
+            {
+                "children": [
+                    {
+                        "args": [
+                            "cooking_style",
+                            "safe"
+                        ],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Спрошу у опытных рабочих.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "boss_of_factory",
+                        "mood": "suspicious",
+                        "side": "right",
+                        "text": "Хм, учишься у других. Неплохо.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Они помогли мне всё сделать.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": [
+                            "cooking_score",
+                            100
+                        ],
+                        "name": "set",
+                        "type": "command"
+                    }
+                ],
+                "text": "Спросить совета у опытных рабочих"
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "character": "danila",
+        "mood": "thinking_factory",
+        "side": "left",
+        "text": "Варка завершена. Фух...",
+        "type": "dialogue"
+    },
+    {
+        "condition": "cooking_score>=50",
+        "type": "if",
+        "then": [
+            {
+                "character": "boss_of_factory",
+                "mood": "happy",
+                "side": "right",
+                "text": "Отлично сварил! То что нужно.",
+                "type": "dialogue"
+            }
+        ],
+        "else": [
+            {
+                "character": "boss_of_factory",
+                "mood": "angry",
+                "side": "right",
+                "text": "Это что за помои? Переделывай!",
+                "type": "dialogue"
+            }
+        ]
+    },
+    {
+        "character": "=== МИНИ-ИГРА",
+        "text": "ПАВИЛЬД ===",
+        "translation_key": "PREQUEL_DANILA_ab9b045d",
+        "type": "dialogue"
+    },
+    {
+        "character": "boss_of_factory",
+        "text": "Последнее задание. Работа в павильде. Тяжёлая работа.",
+        "translation_key": "PREQUEL_DANILA_83d7e2a9",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Павильд - это огромный склад. Нужно переносить тяжёлые ящики.",
+        "translation_key": "PREQUEL_DANILA_b2cba11a",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Это... очень тяжело.",
+        "translation_key": "PREQUEL_DANILA_37b3a397",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "children": [
+                    {
+                        "character": "danila",
+                        "mood": "serious",
+                        "side": "left",
+                        "text": "Попробую работать один.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "tired_at_factory",
+                        "side": "left",
+                        "text": "Ящики очень тяжёлые...",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "tired_at_factory",
+                        "side": "left",
+                        "text": "Фух... Это тяжело...",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "tired_at_factory",
+                        "side": "left",
+                        "text": "Еле справился...",
+                        "type": "dialogue"
+                    }
+                ],
+                "text": "Работать в одиночку, не просить помощи"
+            },
+            {
+                "children": [
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Попрошу помощи у других рабочих.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Спасибо, ребята.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "tired_at_factory",
+                        "side": "left",
+                        "text": "Вместе справились быстрее.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "tired_at_factory",
+                        "side": "left",
+                        "text": "Хорошо, что помогли.",
+                        "type": "dialogue"
+                    }
+                ],
+                "text": "Просить помощи у других"
+            },
+            {
+                "children": [
+                    {
+                        "character": "danila",
+                        "mood": "thinking_factory",
+                        "side": "left",
+                        "text": "Буду работать медленно, но стабильно.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "serious",
+                        "side": "left",
+                        "text": "Не тороплюсь, но и не останавливаюсь.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "boss_of_factory",
+                        "mood": "neutral",
+                        "side": "right",
+                        "text": "Медленно, но работает.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "mood": "tired_at_factory",
+                        "side": "left",
+                        "text": "Справился...",
+                        "type": "dialogue"
+                    }
+                ],
+                "text": "Работать медленно, но стабильно"
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "character": "",
+        "text": "Все задания выполнены.",
+        "translation_key": "PREQUEL_DANILA_b674c174",
+        "type": "dialogue"
+    },
+    {
+        "character": "boss_of_factory",
+        "text": "Хорошо. Ты справился. Вот твоя зарплата.",
+        "translation_key": "PREQUEL_DANILA_2a20868f",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Начальник протягивает тебе маленькую пачку денег.",
+        "translation_key": "PREQUEL_DANILA_7fae0cae",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Это... всё?",
+        "translation_key": "PREQUEL_DANILA_27f3e35a",
+        "type": "dialogue"
+    },
+    {
+        "character": "boss_of_factory",
+        "text": "Да. За тяжёлую работу - маленькая зарплата. Таковы правила.",
+        "translation_key": "PREQUEL_DANILA_9fc2340f",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Я работал весь день... А денег так мало.",
+        "translation_key": "PREQUEL_DANILA_51f820bf",
+        "type": "dialogue"
+    },
+    {
+        "character": "boss_of_factory",
+        "text": "Не нравится? Можешь уйти. Рабочих много.",
+        "translation_key": "PREQUEL_DANILA_2ac500dd",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Нет, останусь. Нужны деньги.",
+        "translation_key": "PREQUEL_DANILA_33bd70d2",
+        "type": "dialogue"
+    },
+    {
+        "character": "boss_of_factory",
+        "text": "Хорошо. Завтра приходи снова.",
+        "translation_key": "PREQUEL_DANILA_0cd17900",
+        "type": "dialogue"
+    },
+    {
+        "name": "set",
+        "args": [
+            "system_pass_time",
+            1
+        ],
+        "type": "command"
+    },
+    {
+        "name": "set",
+        "args": [
+            "money",
+            "+80"
+        ],
+        "type": "command"
+    },
+    {
+        "name": "set",
+        "args": [
+            "factory_done",
+            1
+        ],
+        "type": "command"
+    }
+]

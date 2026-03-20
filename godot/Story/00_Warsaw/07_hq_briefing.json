@@ -1,0 +1,177 @@
+[
+	{
+		"args": ["intelligence_hq", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Штаб-квартира Польской Разведки. Кабинет Главы.",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"text": "Агент Марек. Садись.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Добрый день, пан генерал.",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"text": "У нас есть информация. В российском городе Обоянь расположена секретная лаборатория.",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"text": "Они разрабатывают что-то серьёзное. Нам нужны данные.",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"text": "Твоя легенда — рабочий-мигрант из Польши. Устроишься на местный завод, осмотришься, соберёшь информацию.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Понял. Когда вылет?",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"text": "Через неделю. Вот тебе командировочные — 500 злотых на билеты и документы.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["money", "+500"],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Генерал протягивает плотный конверт с деньгами.",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"text": "Купишь билет и поддельный паспорт у нашего контакта — Шломо. Еврейская лавка в старом городе. Он в курсе.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Есть, пан генерал.",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"text": "Удачи, Марек. Польша рассчитывает на тебя.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["fade_out"],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": ["warsaw_street", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Данила идёт домой по вечерним улицам Варшавы.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "500 злотых... Нужно сразу зайти к Шломо и...",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Тёмная подворотня. Шаги за спиной.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "— Стой, пацан! Гони бабки!",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Что?! Эй, подожди—",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Удар сзади. Темнота.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["fade_out"],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "...",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Чёрт... Конверт... Деньги...",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Конверт пуст. 500 злотых — украдены.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["money", 0],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"character": "danila",
+		"text": "Нет... Нет, нет, нет!",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Генералу сказать нельзя. Он меня уничтожит. Снимет с миссии.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Вылет через 5 дней. Я должен заново заработать эти деньги. Сам.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Завод Обломова. Пиццерия. Карточные игры. Любой способ.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "У меня нет выбора.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["prologue_act_3_done", 1],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["days_left", 5],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["system_pass_time", 1],
+		"name": "set",
+		"type": "command"
+	}
+]

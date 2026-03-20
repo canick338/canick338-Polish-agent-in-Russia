@@ -265,7 +265,7 @@ func _on_catch(jar: JarData) -> void:
 		_score += 1
 		_update_ui()
 		_show_popup(jar.node.position, "+1", Color.GREEN)
-		_input_cooldown = 0.5
+		# No cooldown on catching a good jar!
 
 func _on_miss(jar: JarData) -> void:
 	if jar.is_bad:

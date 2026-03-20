@@ -1,0 +1,138 @@
+{
+	"locations": [
+		{
+			"id": "warsaw_center",
+			"name": "Варшава (Польша)",
+			"chapter": "00_Warsaw",
+			"nodes": [
+				{
+					"id": "streets",
+					"name": "Улицы Варшавы",
+					"description": "Вспомнить прошлое. Найти путь.",
+					"icon": "🏙️",
+					"chibi": "danila",
+					"scene": "res://Story/00_Warsaw/01_intro_streets.json",
+					"requires": ["!warsaw_prologue_stage"],
+					"position": {"x": 800, "y": 500}
+				},
+				{
+					"id": "home",
+					"name": "Квартира",
+					"description": "Лечь спать. Восстановить силы.",
+					"icon": "🛏️",
+					"chibi": "danila",
+					"scene": "res://Story/00_Warsaw/system_sleep.json",
+					"requires": ["warsaw_prologue_stage", "!warsaw_ticket_bought", "!prologue_intro_done"],
+					"position": {"x": 200, "y": 700}
+				},
+				{
+					"id": "home_finale",
+					"name": "Квартира (Финал)",
+					"description": "Пора заканчивать. Ложись спать.",
+					"icon": "⭐",
+					"chibi": "danila",
+					"scene": "res://Story/00_Warsaw/05_agent_awakening.json",
+					"requires": ["warsaw_ticket_bought", "!prologue_intro_done"],
+					"position": {"x": 200, "y": 700}
+				},
+				{
+					"id": "factory",
+					"name": "Завод Обломова",
+					"description": "Тяжёлая работа за 80 zł. Фасовка, варка, погрузка.",
+					"icon": "🏭",
+					"chibi": "boss",
+					"scene": "res://Story/00_Warsaw/02_factory_shift.json",
+					"requires": ["warsaw_prologue_stage", "!prologue_intro_done"],
+					"position": {"x": 1400, "y": 350}
+				},
+				{
+					"id": "casino",
+					"name": "Подсобка (Казино)",
+					"description": "Карты с работягами. Рискни зарплатой!",
+					"icon": "🃏",
+					"chibi": "worker",
+					"scene": "res://Story/00_Warsaw/03_casino_night.json",
+					"requires": ["factory_done", "!prologue_intro_done"],
+					"position": {"x": 1600, "y": 700}
+				},
+				{
+					"id": "academy",
+					"name": "Академия Разведки",
+					"description": "Тренировки и экзамены. Стань агентом.",
+					"icon": "🎓",
+					"chibi": "danila",
+					"scene": "res://Story/00_Warsaw/06_academy.json",
+					"requires": ["warsaw_prologue_stage", "!prologue_act_2_done"],
+					"position": {"x": 600, "y": 250}
+				},
+				{
+					"id": "hq",
+					"name": "Офис Главы Разведки",
+					"description": "Получить задание. Миссия в Обояни.",
+					"icon": "🏛️",
+					"chibi": "commander",
+					"scene": "res://Story/00_Warsaw/07_hq_briefing.json",
+					"requires": ["prologue_act_2_done", "!prologue_act_3_done"],
+					"position": {"x": 960, "y": 200}
+				},
+				{
+					"id": "pizzeria",
+					"name": "Пиццерия «У Марио»",
+					"description": "Подработка на кухне за 60 zł.",
+					"icon": "🍕",
+					"chibi": "worker",
+					"scene": "res://Story/00_Warsaw/09_pizzeria.json",
+					"requires": ["prologue_act_3_done", "!prologue_intro_done"],
+					"position": {"x": 1200, "y": 650}
+				},
+				{
+					"id": "jewish_shop",
+					"name": "Лавка Шломо",
+					"description": "Купить билет и документы (500 zł).",
+					"icon": "🛒",
+					"chibi": "worker",
+					"scene": "res://Story/00_Warsaw/10_jewish_shop.json",
+					"requires": ["prologue_act_3_done", "!prologue_intro_done"],
+					"position": {"x": 400, "y": 400}
+				},
+				{
+					"id": "briefing_room",
+					"name": "Штаб (Брифинг)",
+					"description": "Получить смартфон и улететь в Обоянь.",
+					"icon": "📋",
+					"chibi": "commander",
+					"scene": "res://Story/00_Warsaw/01_briefing.json",
+					"requires": ["prologue_intro_done"],
+					"position": {"x": 960, "y": 540}
+				}
+			]
+		},
+		{
+			"id": "oboyan_center",
+			"name": "Обоянь (Россия)",
+			"chapter": "01_Oboyan",
+			"requires_location": ["warsaw_prologue_done"],
+			"nodes": [
+				{
+					"id": "home",
+					"name": "Съёмная квартира",
+					"description": "Отдохнуть и поспать.",
+					"icon": "🛏️",
+					"chibi": "bed",
+					"scene": "res://Story/01_Oboyan/system_sleep.json",
+					"position": {"x": 400, "y": 700}
+				},
+				{
+					"id": "factory",
+					"name": "Завод",
+					"description": "Устроиться на работу под прикрытием.",
+					"icon": "🏭",
+					"chibi": "danila",
+					"scene": "res://Story/01_Oboyan/01_arrival.json",
+					"position": {"x": 1200, "y": 300}
+				}
+			]
+		}
+	],
+	"chapters": ["00_Warsaw", "01_Oboyan"]
+}

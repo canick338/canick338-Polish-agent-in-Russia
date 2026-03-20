@@ -1,0 +1,122 @@
+[
+	{
+		"args": ["warsaw_metro", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Недели работы на заводе. Каждый день — тяжёлый труд.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я устал. Очень устал. Но я выжил. Заработал немного денег.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Метро. Ежедневные поездки.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Однажды, в вагоне метро, он увидел плакат.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Школа офицеров польской разведки...",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Сердце забилось чаще. Это было оно.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Судьба дала мне шанс.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["fade_out"],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": ["officer_school", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Академия Польской Разведки.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Экзамены. Тренировки. Жесткая дисциплина.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я был готов. Готов ко всему.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Сирота, который вырос на улицах, стал одним из лучших.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Они научили меня быть невидимым. Собирать информацию. Действовать.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Но главное — они дали мне цель. Принадлежность.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я больше не был один.",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Годы обучения пролетели быстро.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я стал лучшим выпускником. Агентом.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["card_danila"],
+		"name": "unlock",
+		"type": "command"
+	},
+	{
+		"character": "danila",
+		"text": "И вот я здесь. Агент. Готов к миссии.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "За Польшу. За свою страну.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["prologue_act_2_done", 1],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["system_sleep", 1],
+		"name": "set",
+		"type": "command"
+	}
+]
