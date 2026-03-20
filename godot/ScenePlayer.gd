@@ -672,6 +672,14 @@ func _evaluate_condition(condition: SceneParser.BaseExpression, variables_list: 
 	if condition.type == "RAW_STRING":
 		var condition_str = str(condition.value)
 		
+		# PRE-PROCESS: Auto-fill missing variables with 0 to prevent Expression crashes
+		var regex = RegEx.new()
+		if regex.compile("[a-zA-Z_]\\w*") == OK:
+			for m in regex.search_all(condition_str):
+				var w = m.get_string()
+				if not w in ["and", "or", "not", "true", "false", "in", "null"] and not variables_list.has(w):
+					variables_list[w] = 0
+		
 		# OPTIMIZED EXPRESSION EVALUATION
 		var expression = Expression.new()
 		var input_names_arr = variables_list.keys()
@@ -726,8 +734,11 @@ func _evaluate_condition(condition: SceneParser.BaseExpression, variables_list: 
 							# Другие типы тоже в строку
 							condition_str += str(var_value)
 					else:
-						# Это оператор или число - добавляем как строку
-						condition_str += val
+						# Если слово похоже на название переменной, но его нет - ставим 0
+						if val.is_valid_identifier() and not val in ["and", "or", "not", "true", "false"]:
+							condition_str += "0"
+						else:
+							condition_str += val
 				elif expr_type == SceneLexer.TOKEN_TYPES.STRING_LITERAL or expr_type == "String":
 					condition_str += '"' + str(expr.value) + '"'
 				else:
