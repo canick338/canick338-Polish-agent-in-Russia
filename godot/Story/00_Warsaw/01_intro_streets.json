@@ -160,6 +160,16 @@
 		"type": "command"
 	},
 	{
+		"args": ["hunger", 100],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["energy", 100],
+		"name": "set",
+		"type": "command"
+	},
+	{
 		"args": ["system_pass_time", 1],
 		"name": "set",
 		"type": "command"

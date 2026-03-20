@@ -10,9 +10,24 @@
 		"type": "command"
 	},
 	{
-		"character": "",
-		"text": "Ещё один день закончен.",
+		"character": "danila",
+		"text": "Ещё один день закончен...",
 		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Данила ложится спать.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["energy", 100],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["hunger", "-10"],
+		"name": "set",
+		"type": "command"
 	},
 	{
 		"args": ["system_sleep", 1],
@@ -30,10 +45,27 @@
 			},
 			{
 				"character": "danila",
-				"text": "Осталось дней: [days_left]...",
+				"text": "Осталось дней: [days_left]... Нужно торопиться.",
 				"type": "dialogue"
 			}
 		],
 		"else": []
+	},
+	{
+		"condition": "hunger<=0",
+		"type": "if",
+		"then": [
+			{
+				"character": "danila",
+				"text": "Я ужасно голоден... Нужно что-то поесть, иначе не смогу работать.",
+				"type": "dialogue"
+			}
+		],
+		"else": []
+	},
+	{
+		"character": "",
+		"text": "Утро нового дня.",
+		"type": "dialogue"
 	}
 ]

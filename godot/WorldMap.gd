@@ -41,6 +41,10 @@ func _ready() -> void:
 	# Tutorial: first time on map
 	if Variables.get_variable("map_tutorial_done") != 1:
 		_run_map_tutorial()
+	elif Variables.get_variable("prologue_act_3_done") == 1:
+		# 20% chance of random street event each time player enters map
+		if randi() % 5 == 0:
+			_trigger_random_event()
 
 func _run_map_tutorial() -> void:
 	Variables.add_variable("map_tutorial_done", 1)
@@ -94,6 +98,16 @@ func _update_time_hud() -> void:
 	if time_idx < 0 or time_idx > 3: time_idx = 0
 	
 	var hud_text = "День %d — %s" % [day, TIME_NAMES[time_idx]]
+	
+	# Hunger / Energy bars
+	var hunger = Variables.get_variable("hunger", -1)
+	var energy = Variables.get_variable("energy", -1)
+	if hunger >= 0:
+		var hunger_icon = "🍖" if hunger > 30 else "💀"
+		hud_text += "  %s%d" % [hunger_icon, hunger]
+	if energy >= 0:
+		var energy_icon = "⚡" if energy > 30 else "😴"
+		hud_text += "  %s%d" % [energy_icon, energy]
 	
 	# Days left countdown
 	var days_left = Variables.get_variable("days_left", -1)
@@ -315,3 +329,11 @@ func _on_phone_pressed() -> void:
 		add_child(phone)
 	else:
 		get_node("PhoneHUD").toggle()
+
+func _trigger_random_event() -> void:
+	var event_type = (randi() % 4) + 1  # 1 to 4
+	Variables.add_variable("random_event_type", event_type)
+	await get_tree().create_timer(0.8).timeout
+	var event_path = "res://Story/00_Warsaw/random_event.json"
+	if FileAccess.file_exists(event_path):
+		scene_requested.emit(event_path)

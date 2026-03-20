@@ -78,5 +78,25 @@
 		"args": ["system_pass_time", 1],
 		"name": "set",
 		"type": "command"
+	},
+	{
+		"args": ["energy", "-20"],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["hunger", "-15"],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Ну и конечно, Данила перехватил кусок пиццы на работе.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["hunger", "+30"],
+		"name": "set",
+		"type": "command"
 	}
 ]

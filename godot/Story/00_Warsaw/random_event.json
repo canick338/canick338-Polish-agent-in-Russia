@@ -1,0 +1,223 @@
+[
+	{
+		"character": "",
+		"text": "По пути к следующей локации...",
+		"type": "dialogue"
+	},
+	{
+		"condition": "random_event_type==1",
+		"type": "if",
+		"then": [
+			{
+				"character": "",
+				"text": "На тротуаре лежит потёртый кошелёк. Внутри — купюры.",
+				"type": "dialogue"
+			},
+			{
+				"options": [
+					{
+						"text": "Забрать деньги (+30 zł)",
+						"children": [
+							{
+								"character": "danila",
+								"text": "Прости, друг... Мне нужнее.",
+								"type": "dialogue"
+							},
+							{
+								"args": ["money", "+30"],
+								"name": "set",
+								"type": "command"
+							},
+							{
+								"character": "",
+								"text": "Совесть слегка покалывает. Но желудок не спрашивает о морали.",
+								"type": "dialogue"
+							}
+						]
+					},
+					{
+						"text": "Оставить кошелёк",
+						"children": [
+							{
+								"character": "danila",
+								"text": "Нет. Это не мои деньги.",
+								"type": "dialogue"
+							},
+							{
+								"character": "",
+								"text": "Ты чувствуешь себя лучше. Может, карма отплатит добром.",
+								"type": "dialogue"
+							},
+							{
+								"args": ["karma", "+1"],
+								"name": "set",
+								"type": "command"
+							}
+						]
+					}
+				],
+				"type": "choice"
+			}
+		],
+		"else": []
+	},
+	{
+		"condition": "random_event_type==2",
+		"type": "if",
+		"then": [
+			{
+				"character": "",
+				"text": "Пожилая женщина тащит тяжёлые сумки.",
+				"type": "dialogue"
+			},
+			{
+				"options": [
+					{
+						"text": "Помочь бабушке",
+						"children": [
+							{
+								"character": "danila",
+								"text": "Давайте помогу, пани.",
+								"type": "dialogue"
+							},
+							{
+								"character": "",
+								"text": "— Спасибо, сынок! Дай бог тебе здоровья!",
+								"type": "dialogue"
+							},
+							{
+								"args": ["energy", "-10"],
+								"name": "set",
+								"type": "command"
+							},
+							{
+								"args": ["karma", "+1"],
+								"name": "set",
+								"type": "command"
+							},
+							{
+								"character": "",
+								"text": "Она незаметно сунула тебе в карман 10 злотых.",
+								"type": "dialogue"
+							},
+							{
+								"args": ["money", "+10"],
+								"name": "set",
+								"type": "command"
+							}
+						]
+					},
+					{
+						"text": "Пройти мимо",
+						"children": [
+							{
+								"character": "danila",
+								"text": "Нет времени... Извините.",
+								"type": "dialogue"
+							}
+						]
+					}
+				],
+				"type": "choice"
+			}
+		],
+		"else": []
+	},
+	{
+		"condition": "random_event_type==3",
+		"type": "if",
+		"then": [
+			{
+				"character": "",
+				"text": "Полицейский патруль останавливает тебя.",
+				"type": "dialogue"
+			},
+			{
+				"character": "",
+				"text": "— Dokumenty, proszę.",
+				"type": "dialogue"
+			},
+			{
+				"character": "danila",
+				"text": "Конечно, вот мой документ...",
+				"type": "dialogue"
+			},
+			{
+				"character": "",
+				"text": "Полицейский внимательно изучает бумагу.",
+				"type": "dialogue"
+			},
+			{
+				"character": "",
+				"text": "— Всё в порядке. Проходите.",
+				"type": "dialogue"
+			},
+			{
+				"character": "danila",
+				"text": "Фух... Пронесло.",
+				"type": "dialogue"
+			}
+		],
+		"else": []
+	},
+	{
+		"condition": "random_event_type==4",
+		"type": "if",
+		"then": [
+			{
+				"character": "",
+				"text": "У стены стоит уличный музыкант. Играет грустную мелодию на аккордеоне.",
+				"type": "dialogue"
+			},
+			{
+				"options": [
+					{
+						"text": "Бросить 5 zł",
+						"children": [
+							{
+								"condition": "money>=5",
+								"type": "if",
+								"then": [
+									{
+										"args": ["money", "-5"],
+										"name": "set",
+										"type": "command"
+									},
+									{
+										"character": "",
+										"text": "Музыкант кивает и улыбается. Мелодия становится чуть веселее.",
+										"type": "dialogue"
+									},
+									{
+										"args": ["karma", "+1"],
+										"name": "set",
+										"type": "command"
+									}
+								],
+								"else": [
+									{
+										"character": "danila",
+										"text": "У меня самого ничего нет...",
+										"type": "dialogue"
+									}
+								]
+							}
+						]
+					},
+					{
+						"text": "Пройти мимо",
+						"children": [
+							{
+								"character": "",
+								"text": "Музыка затихает за спиной.",
+								"type": "dialogue"
+							}
+						]
+					}
+				],
+				"type": "choice"
+			}
+		],
+		"else": []
+	}
+]

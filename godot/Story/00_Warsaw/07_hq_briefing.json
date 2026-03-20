@@ -100,44 +100,188 @@
 		"type": "dialogue"
 	},
 	{
-		"character": "danila",
-		"text": "Что?! Эй, подожди—",
-		"type": "dialogue"
-	},
-	{
 		"character": "",
-		"text": "Удар сзади. Темнота.",
+		"text": "Двое крепких мужиков выходят из теней. У одного — нож.",
 		"type": "dialogue"
 	},
 	{
-		"args": ["fade_out"],
-		"name": "transition",
-		"type": "command"
+		"options": [
+			{
+				"text": "🏃 Попытаться убежать",
+				"children": [
+					{
+						"character": "danila",
+						"text": "Нет уж!",
+						"type": "dialogue"
+					},
+					{
+						"character": "",
+						"text": "Данила рванул вперёд. Ноги бьют по мокрому асфальту...",
+						"type": "dialogue"
+					},
+					{
+						"condition": "energy>=60",
+						"type": "if",
+						"then": [
+							{
+								"character": "",
+								"text": "Энергии хватило! Ты оторвался в переулках!",
+								"type": "dialogue"
+							},
+							{
+								"character": "danila",
+								"text": "Фух... Пронесло! Конверт цел!",
+								"type": "dialogue"
+							},
+							{
+								"args": ["energy", "-50"],
+								"name": "set",
+								"type": "command"
+							},
+							{
+								"args": ["robbery_escaped", 1],
+								"name": "set",
+								"type": "command"
+							}
+						],
+						"else": [
+							{
+								"character": "",
+								"text": "Сил не хватило... Ты слишком устал. Они догнали.",
+								"type": "dialogue"
+							},
+							{
+								"character": "",
+								"text": "Удар по голове. Ты падаешь. Конверт исчезает.",
+								"type": "dialogue"
+							},
+							{
+								"args": ["money", 0],
+								"name": "set",
+								"type": "command"
+							},
+							{
+								"args": ["energy", "-30"],
+								"name": "set",
+								"type": "command"
+							}
+						]
+					}
+				]
+			},
+			{
+				"text": "👊 Драться",
+				"children": [
+					{
+						"character": "danila",
+						"text": "Я не отдам деньги!",
+						"type": "dialogue"
+					},
+					{
+						"character": "",
+						"text": "Данила встал в стойку. Всё-таки Академия научила кое-чему...",
+						"type": "dialogue"
+					},
+					{
+						"condition": "energy>=80",
+						"type": "if",
+						"then": [
+							{
+								"character": "",
+								"text": "Быстрый удар! Первый нападавший отлетел к стене. Второй бросился бежать!",
+								"type": "dialogue"
+							},
+							{
+								"character": "danila",
+								"text": "Не на того напали, мрази.",
+								"type": "dialogue"
+							},
+							{
+								"args": ["energy", "-40"],
+								"name": "set",
+								"type": "command"
+							},
+							{
+								"args": ["robbery_escaped", 1],
+								"name": "set",
+								"type": "command"
+							}
+						],
+						"else": [
+							{
+								"character": "",
+								"text": "Ты слишком устал для драки. Нож полоснул по руке. Деньги забрали.",
+								"type": "dialogue"
+							},
+							{
+								"character": "danila",
+								"text": "Чёрт... Рука...",
+								"type": "dialogue"
+							},
+							{
+								"args": ["money", 0],
+								"name": "set",
+								"type": "command"
+							},
+							{
+								"args": ["energy", "-50"],
+								"name": "set",
+								"type": "command"
+							}
+						]
+					}
+				]
+			},
+			{
+				"text": "🤲 Отдать деньги",
+				"children": [
+					{
+						"character": "danila",
+						"text": "Ладно... Забирайте...",
+						"type": "dialogue"
+					},
+					{
+						"character": "",
+						"text": "Они вырвали конверт и скрылись в ночи.",
+						"type": "dialogue"
+					},
+					{
+						"args": ["money", 0],
+						"name": "set",
+						"type": "command"
+					}
+				]
+			}
+		],
+		"type": "choice"
 	},
 	{
-		"character": "",
-		"text": "...",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Чёрт... Конверт... Деньги...",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Конверт пуст. 500 злотых — украдены.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["money", 0],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"character": "danila",
-		"text": "Нет... Нет, нет, нет!",
-		"type": "dialogue"
+		"condition": "robbery_escaped==1",
+		"type": "if",
+		"then": [
+			{
+				"character": "danila",
+				"text": "Деньги при мне. Но это было близко... Нужно купить билет поскорее.",
+				"type": "dialogue"
+			}
+		],
+		"else": [
+			{
+				"character": "danila",
+				"text": "Чёрт... Конверт... Деньги...",
+				"type": "dialogue"
+			},
+			{
+				"character": "",
+				"text": "500 злотых — украдены.",
+				"type": "dialogue"
+			},
+			{
+				"character": "danila",
+				"text": "Нет... Нет, нет, нет!",
+				"type": "dialogue"
+			}
+		]
 	},
 	{
 		"character": "danila",

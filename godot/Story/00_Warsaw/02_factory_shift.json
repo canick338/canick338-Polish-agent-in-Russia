@@ -581,5 +581,15 @@
             1
         ],
         "type": "command"
+    },
+    {
+        "name": "set",
+        "args": ["energy", "-30"],
+        "type": "command"
+    },
+    {
+        "name": "set",
+        "args": ["hunger", "-20"],
+        "type": "command"
     }
 ]
