@@ -1,24 +1,40 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://phonehud_uid"]
 
 [ext_resource type="Script" path="res://PhoneHUD.gd" id="1"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/Phone/phone_bg.jpg" id="2"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phone"]
-bg_color = Color(0.06, 0.06, 0.09, 0.96)
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.3, 0.4, 0.6, 0.8)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bezel"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass"]
+bg_color = Color(0.1, 0.1, 0.15, 0.4)
+corner_radius_top_left = 34
+corner_radius_top_right = 34
+corner_radius_bottom_right = 34
+corner_radius_bottom_left = 34
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dock"]
+bg_color = Color(1, 1, 1, 0.15)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 
 [node name="PhoneHUD" type="CanvasLayer"]
 layer = 50
 script = ExtResource("1")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="BezelPanel" type="Panel" parent="."]
+clip_children = 2
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -30,21 +46,49 @@ offset_right = 230.0
 offset_bottom = 420.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_phone")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bezel")
 
-[node name="VBox" type="VBoxContainer" parent="PanelContainer"]
+[node name="Wallpaper" type="TextureRect" parent="BezelPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="GlassOverlay" type="Panel" parent="BezelPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Margin" type="MarginContainer" parent="BezelPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="BezelPanel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 15
 
-[node name="MarginTop" type="MarginContainer" parent="PanelContainer/VBox"]
-layout_mode = 2
-theme_override_constants/margin_top = 20
-
-[node name="TopBar" type="HBoxContainer" parent="PanelContainer/VBox"]
+[node name="TopBar" type="HBoxContainer" parent="BezelPanel/Margin/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="BackButton" type="Button" parent="PanelContainer/VBox/TopBar"]
+[node name="BackButton" type="Button" parent="BezelPanel/Margin/VBox/TopBar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 40)
 layout_mode = 2
@@ -52,40 +96,69 @@ theme_override_font_sizes/font_size = 18
 text = "◀"
 visible = false
 
-[node name="HeaderLabel" type="Label" parent="PanelContainer/VBox/TopBar"]
+[node name="HeaderLabel" type="Label" parent="BezelPanel/Margin/VBox/TopBar"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 26
-text = "☀️ День"
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5)
+theme_override_constants/shadow_offset_y = 2
+text = "14:30"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AppsContainer" type="GridContainer" parent="PanelContainer/VBox"]
+[node name="RightSpacer" type="Control" parent="BezelPanel/Margin/VBox/TopBar"]
+custom_minimum_size = Vector2(50, 40)
+layout_mode = 2
+
+[node name="TopSpacer" type="Control" parent="BezelPanel/Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="AppsContainer" type="GridContainer" parent="BezelPanel/Margin/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
-columns = 2
+columns = 3
 theme_override_constants/h_separation = 20
-theme_override_constants/v_separation = 15
+theme_override_constants/v_separation = 25
 alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBox"]
-layout_mode = 2
-
-[node name="ContentArea" type="VBoxContainer" parent="PanelContainer/VBox"]
+[node name="ContentArea" type="VBoxContainer" parent="BezelPanel/Margin/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 8
+theme_override_constants/separation = 10
 
-[node name="CloseButton" type="Button" parent="PanelContainer/VBox"]
+[node name="DockPanel" type="PanelContainer" parent="BezelPanel/Margin/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dock")
+
+[node name="Margin" type="MarginContainer" parent="BezelPanel/Margin/VBox/DockPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="DockGrid" type="GridContainer" parent="BezelPanel/Margin/VBox/DockPanel/Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 4
+theme_override_constants/h_separation = 15
+alignment = 1
+
+[node name="BottomSpacer" type="Control" parent="BezelPanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="BezelPanel/Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 5)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 18
-text = "Закрыть"
-
-[node name="MarginBottom" type="MarginContainer" parent="PanelContainer/VBox"]
-layout_mode = 2
-theme_override_constants/margin_bottom = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_dock")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dock")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dock")
+text = ""
