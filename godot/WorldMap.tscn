@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://uktstnt15yle"]
+[gd_scene load_steps=5 format=3 uid="uid://uktstnt15yle"]
 
 [ext_resource type="Script" uid="uid://d00fqb3t3882t" path="res://WorldMap.gd" id="1"]
 [ext_resource type="PackedScene" path="res://UI/WorldMap/MapNode.tscn" id="2_node"]
+[ext_resource type="Shader" path="res://Assets/Textures/Environment/Clouds/scroll_shader.gdshader" id="3_shader"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/Environment/Clouds/map_clouds_seamless3.png" id="4_clouds"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_clouds"]
+shader = ExtResource("3_shader")
+shader_parameter/scroll_speed = Vector2(0.015, -0.005)
 
 [node name="WorldMap" type="Control"]
 layout_mode = 3
@@ -29,6 +35,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.15, 0.2, 0.25, 1)
+
+[node name="CloudLayer" type="TextureRect" parent="MapBackground"]
+modulate = Color(1, 1, 1, 0.35)
+texture_repeat = 2
+material = SubResource("ShaderMaterial_clouds")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_clouds")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="DayNightModulate" type="CanvasModulate" parent="."]
+color = Color(1, 1, 1, 1)
 
 [node name="MapNodes" type="Control" parent="."]
 layout_mode = 1

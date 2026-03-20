@@ -15,6 +15,13 @@ var _hovered_node_data: Dictionary = {}
 var custom_tooltip_loaded: bool = false
 var _custom_tooltip_node: Control = null
 
+# === REAL-TIME CLOCK ===
+# Сколько реальных секунд = 1 игровой период (Утро→День→Вечер→Ночь)
+# Для теста: 10 секунд. Для релиза: 120-300 секунд.
+var TIME_TICK_SECONDS: float = 10.0
+var _time_timer: Timer = null
+var _time_elapsed: float = 0.0 # Seconds elapsed within current period
+
 @onready var map_background: TextureRect = $MapBackground
 @onready var nodes_container: Control = $MapNodes
 @onready var location_label: Label = %LocationLabel
@@ -45,6 +52,16 @@ func _ready() -> void:
 	_refresh_map()
 	_update_side_panel_locations()
 	_update_time_hud()
+	
+	# Start real-time clock
+	_time_timer = Timer.new()
+	_time_timer.wait_time = TIME_TICK_SECONDS
+	_time_timer.autostart = true
+	_time_timer.timeout.connect(_on_time_tick)
+	add_child(_time_timer)
+	
+	# Start background music
+	_start_map_music()
 	
 	# Tutorial: first time on map
 	if Variables.get_variable("map_tutorial_done") != 1:
@@ -204,10 +221,14 @@ func _update_time_hud() -> void:
 	center_info.visible = false
 	var top_bar = center_info.get_parent()
 	
-	# Clear out any previous Anime HUD elements
+	# Clear out any previous Anime HUD elements (SYNCHRONOUS delete!)
+	var to_remove = []
 	for c in top_bar.get_children():
 		if c.name.begins_with("AnimeHUD_"):
-			c.queue_free()
+			to_remove.append(c)
+	for c in to_remove:
+		top_bar.remove_child(c)
+		c.free()
 			
 	var day = Variables.get_variable("current_day")
 	if day == 0: day = 1
@@ -242,19 +263,44 @@ func _update_time_hud() -> void:
 	l_top.rotation_degrees = -6
 	hud_wrapper.add_child(l_top)
 	
+	# Dynamic time icon and color
+	var time_icon = "🌅"
+	var time_panel_color = Color(0.85, 0.7, 0.95)
+	var day_panel_color = Color(0.2, 0.8, 0.2)
+	match time_idx:
+		0:
+			time_icon = "🌅"
+			time_panel_color = Color(0.85, 0.7, 0.95) # Фиолетовый рассвет
+			day_panel_color = Color(0.6, 0.4, 0.8)
+		1:
+			time_icon = "☀️"
+			time_panel_color = Color(1.0, 0.95, 0.8) # Ясный жёлтый
+			day_panel_color = Color(0.2, 0.75, 0.3)
+		2:
+			time_icon = "🌇"
+			time_panel_color = Color(1.0, 0.7, 0.4) # Оранжевый закат
+			day_panel_color = Color(0.9, 0.5, 0.2)
+		3:
+			time_icon = "🌙"
+			time_panel_color = Color(0.25, 0.25, 0.5) # Глубокий синий
+			day_panel_color = Color(0.15, 0.15, 0.4)
+	
 	var time_lbl = Label.new()
-	time_lbl.text = "☀ " + TIME_NAMES[time_idx].to_upper()
+	time_lbl.text = time_icon + " " + TIME_NAMES[time_idx].to_upper()
 	time_lbl.add_theme_font_size_override("font_size", 24)
-	time_lbl.add_theme_color_override("font_color", Color.BLACK)
+	time_lbl.add_theme_color_override("font_color", Color.BLACK if time_idx != 3 else Color.WHITE)
 	time_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	time_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	time_lbl.size = l_top.size
 	l_top.add_child(time_lbl)
 	
+	# Tint the top panel based on time
+	lt_style.bg_color = time_panel_color
+	
 	# Bottom Green panel (ДЕНЬ)
 	var l_bot = Panel.new()
 	var lbot_style = StyleBoxFlat.new()
-	lbot_style.bg_color = Color(0.2, 0.8, 0.2) # reference green
+	lbot_style.bg_color = day_panel_color
 	lbot_style.border_width_left = 4; lbot_style.border_width_top = 4; lbot_style.border_width_right = 4; lbot_style.border_width_bottom = 4
 	lbot_style.border_color = Color.BLACK
 	l_bot.add_theme_stylebox_override("panel", lbot_style)
@@ -264,9 +310,9 @@ func _update_time_hud() -> void:
 	hud_wrapper.add_child(l_bot)
 	
 	var day_lbl = Label.new()
-	day_lbl.text = "12/2 ДЕНЬ %d" % day
+	day_lbl.text = "📅 ДЕНЬ %d" % day
 	day_lbl.add_theme_font_size_override("font_size", 22)
-	day_lbl.add_theme_color_override("font_color", Color.BLACK)
+	day_lbl.add_theme_color_override("font_color", Color.BLACK if time_idx != 3 else Color.WHITE)
 	day_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	day_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	day_lbl.size = l_bot.size
@@ -379,6 +425,29 @@ func set_location(loc_id: String) -> void:
 	_refresh_map()
 
 func _refresh_map() -> void:
+	var time_idx = Variables.get_variable("current_time")
+	if time_idx < 0 or time_idx > 3: time_idx = 0
+	
+	# === DAY-NIGHT MODULATE ===
+	var time_modulate = get_node_or_null("DayNightModulate")
+	if time_modulate:
+		var target_color = Color.WHITE
+		match time_idx:
+			0: target_color = Color(0.92, 0.88, 0.98)
+			1: target_color = Color(1.0, 1.0, 1.0)
+			2: target_color = Color(0.95, 0.65, 0.45)
+			3: target_color = Color(0.18, 0.2, 0.38)
+		time_modulate.color = target_color  # Instant on first load
+	
+	# === CLOUDS: instant set on first load ===
+	var cloud_layer = map_background.get_node_or_null("CloudLayer")
+	if cloud_layer:
+		match time_idx:
+			0: cloud_layer.modulate = Color(1.0, 1.0, 1.0, 0.4)
+			1: cloud_layer.modulate = Color(1.0, 1.0, 1.0, 0.0)
+			2: cloud_layer.modulate = Color(1.0, 0.7, 0.5, 0.5)
+			3: cloud_layer.modulate = Color(0.4, 0.4, 0.6, 0.3)
+		
 	var preplaced_nodes = []
 	for child in nodes_container.get_children():
 		# Preserve nodes that the user placed manually in the inspector
@@ -951,3 +1020,134 @@ func _trigger_random_event() -> void:
 	var event_path = "res://Story/00_Warsaw/random_event.json"
 	if FileAccess.file_exists(event_path):
 		scene_requested.emit(event_path)
+
+# === REAL-TIME CLOCK TICK ===
+func _on_time_tick() -> void:
+	var time_idx = Variables.get_variable("current_time")
+	if time_idx < 0 or time_idx > 3: time_idx = 0
+	
+	time_idx += 1
+	if time_idx > 3:
+		time_idx = 0
+		# Новый день!
+		var day = Variables.get_variable("current_day")
+		if day == 0: day = 1
+		Variables.add_variable("current_day", day + 1)
+		print("⏰ Новый день: ", day + 1)
+	
+	Variables.add_variable("current_time", time_idx)
+	_time_elapsed = 0.0 # Reset the sub-timer
+	print("⏰ Время сменилось: ", TIME_NAMES[time_idx], " (idx=", time_idx, ")")
+	
+	# Обновляем все визуалы плавно
+	_update_weather_visuals(time_idx)
+	_update_time_hud()
+
+# Continuous interpolation every frame — no more abrupt transitions!
+const CLOUD_STATES = [
+	Color(1.0, 1.0, 1.0, 0.4),   # 0 Утро: белые, видимые
+	Color(1.0, 1.0, 1.0, 0.0),   # 1 День: полностью прозрачные
+	Color(1.0, 0.7, 0.5, 0.5),   # 2 Вечер: оранжевые, видимые
+	Color(0.4, 0.4, 0.6, 0.3),   # 3 Ночь: тёмно-серые, еле видны
+]
+const LIGHT_STATES = [
+	Color(0.92, 0.88, 0.98),     # Утро
+	Color(1.0, 1.0, 1.0),        # День
+	Color(0.95, 0.65, 0.45),     # Вечер
+	Color(0.18, 0.2, 0.38),      # Ночь
+]
+
+func _process(delta: float) -> void:
+	_time_elapsed += delta
+	
+	var time_idx = Variables.get_variable("current_time")
+	if time_idx < 0 or time_idx > 3: time_idx = 0
+	var next_idx = (time_idx + 1) % 4
+	
+	# How far through the current period are we? (0.0 → 1.0)
+	var frac = clampf(_time_elapsed / TIME_TICK_SECONDS, 0.0, 1.0)
+	
+	# Smoothstep for extra-smooth feel
+	var smooth_frac = frac * frac * (3.0 - 2.0 * frac)
+	
+	# Interpolate clouds
+	var cloud_layer = map_background.get_node_or_null("CloudLayer")
+	if cloud_layer:
+		var from_cloud = CLOUD_STATES[time_idx]
+		var to_cloud = CLOUD_STATES[next_idx]
+		cloud_layer.modulate = from_cloud.lerp(to_cloud, smooth_frac)
+	
+	# Interpolate lighting
+	var time_modulate = get_node_or_null("DayNightModulate")
+	if time_modulate:
+		var from_light = LIGHT_STATES[time_idx]
+		var to_light = LIGHT_STATES[next_idx]
+		time_modulate.color = from_light.lerp(to_light, smooth_frac)
+
+# Legacy function kept for initial setup compatibility
+func _update_weather_visuals(_time_idx: int) -> void:
+	pass  # Now handled entirely by _process()
+
+# === BACKGROUND MUSIC SYSTEM ===
+var _map_music_player: AudioStreamPlayer = null
+var _map_music_playlist: Array[String] = []
+var _map_music_idx: int = 0
+
+const MAP_MUSIC_FOLDER = "res://Assets/Audio/Music/WorldMap"
+
+func _start_map_music() -> void:
+	if _map_music_player:
+		return  # Already playing
+	
+	# Scan folder for tracks
+	_map_music_playlist.clear()
+	var d = DirAccess.open(MAP_MUSIC_FOLDER)
+	if d:
+		d.list_dir_begin()
+		var file = d.get_next()
+		while file != "":
+			if not d.current_is_dir() and not file.begins_with("."):
+				var clean = file.replace(".import", "").replace(".remap", "")
+				if clean.ends_with(".ogg") or clean.ends_with(".mp3") or clean.ends_with(".wav"):
+					var full_path = MAP_MUSIC_FOLDER + "/" + clean
+					if not _map_music_playlist.has(full_path):
+						_map_music_playlist.append(full_path)
+			file = d.get_next()
+	
+	if _map_music_playlist.is_empty():
+		return
+	
+	_map_music_playlist.shuffle()
+	_map_music_idx = 0
+	
+	_map_music_player = AudioStreamPlayer.new()
+	_map_music_player.bus = "Music"
+	_map_music_player.volume_db = -10.0
+	_map_music_player.finished.connect(_on_map_music_finished)
+	add_child(_map_music_player)
+	
+	_play_next_map_track()
+
+func _play_next_map_track() -> void:
+	if _map_music_playlist.is_empty() or not _map_music_player:
+		return
+	if _map_music_idx >= _map_music_playlist.size():
+		_map_music_idx = 0
+		_map_music_playlist.shuffle()
+	
+	var track = _map_music_playlist[_map_music_idx]
+	if ResourceLoader.exists(track):
+		_map_music_player.stream = load(track)
+		# Fade in
+		_map_music_player.volume_db = -40.0
+		_map_music_player.play()
+		var tw = create_tween()
+		tw.tween_property(_map_music_player, "volume_db", -10.0, 2.0)
+		print("🎵 Playing: ", track.get_file())
+	else:
+		_map_music_idx += 1
+		_play_next_map_track()
+
+func _on_map_music_finished() -> void:
+	_map_music_idx += 1
+	_play_next_map_track()

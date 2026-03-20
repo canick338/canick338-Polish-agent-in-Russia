@@ -48,6 +48,43 @@ func _go_home() -> void:
 	_current_app = ""
 	_build_home_screen()
 
+# Live clock refresh
+var _clock_refresh_timer: float = 0.0
+func _process(delta: float) -> void:
+	_clock_refresh_timer += delta
+	if _clock_refresh_timer >= 1.0:
+		_clock_refresh_timer = 0.0
+		_refresh_phone_clock()
+
+func _refresh_phone_clock() -> void:
+	if not visible or not header_label: return
+	if _current_app != "": return
+	var time_icons = ["🌅", "☀️", "🌇", "🌙"]
+	var time_idx = Variables.get_variable("current_time")
+	if time_idx < 0 or time_idx > 3: time_idx = 0
+	
+	# Smooth clock: interpolate between period start hours
+	var start_hours = [6.0, 12.0, 18.0, 23.0]  # Начало каждого периода
+	var end_hours = [12.0, 18.0, 23.0, 30.0]    # Конец (30 = 6:00 следующего дня)
+	
+	# Get elapsed fraction from WorldMap timer
+	var parent_map = get_parent()
+	var elapsed = 0.0
+	var tick_sec = 10.0
+	if parent_map and "_time_elapsed" in parent_map:
+		elapsed = parent_map._time_elapsed
+	if parent_map and "TIME_TICK_SECONDS" in parent_map:
+		tick_sec = parent_map.TIME_TICK_SECONDS
+	
+	var frac = clampf(elapsed / tick_sec, 0.0, 1.0)
+	var current_hour = lerpf(start_hours[time_idx], end_hours[time_idx], frac)
+	if current_hour >= 24.0:
+		current_hour -= 24.0
+	
+	var h = int(current_hour) % 24
+	var m = int((current_hour - floor(current_hour)) * 60.0)
+	header_label.text = "%s %02d:%02d" % [time_icons[time_idx], h, m]
+
 func _build_home_screen() -> void:
 	_current_app = ""
 	if back_btn: back_btn.visible = false
@@ -56,11 +93,13 @@ func _build_home_screen() -> void:
 	# Update header with time
 	var day = Variables.get_variable("current_day")
 	if day == 0: day = 1
-	var time_names = ["14:30", "15:45", "20:15", "02:00"] # Simulated clock
+	var time_clocks = ["06:30", "12:00", "19:45", "23:30"]
+	var time_icons = ["🌅", "☀️", "🌇", "🌙"]
+	var time_names_ru = ["Утро", "День", "Вечер", "Ночь"]
 	var time_idx = Variables.get_variable("current_time")
 	if time_idx < 0 or time_idx > 3: time_idx = 0
 	if header_label:
-		header_label.text = time_names[time_idx]
+		header_label.text = time_icons[time_idx] + " " + time_clocks[time_idx]
 	
 	# Clear content area
 	_clear_content()
