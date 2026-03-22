@@ -29,6 +29,7 @@ var _bgm_b: AudioStreamPlayer
 var _bgm_active: AudioStreamPlayer  # Points to whichever is currently playing
 var _bgm_current_path: String = ""
 var _bgm_ducked: bool = false
+var _bgm_pause_position: float = 0.0  # Remember position for resume
 
 var _sfx_pool: Array[AudioStreamPlayer] = []
 var _sfx_idx: int = 0
@@ -127,19 +128,31 @@ func stop_bgm(fade_time: float = CROSSFADE_TIME) -> void:
 	await tw.finished
 	_bgm_active.stop()
 
-## Duck BGM (lower volume when radio/dialogue plays).
+## Duck BGM — fully pause with fade out (for radio).
 func duck_bgm() -> void:
 	_bgm_ducked = true
 	if _bgm_active.playing:
+		_bgm_pause_position = _bgm_active.get_playback_position()
 		var tw = create_tween()
-		tw.tween_property(_bgm_active, "volume_db", DUCK_VOLUME_DB, 0.5)
+		tw.tween_property(_bgm_active, "volume_db", -80.0, 0.8).set_trans(Tween.TRANS_SINE)
+		await tw.finished
+		_bgm_active.stop()
+		print("🔇 BGM paused at %.1fs" % _bgm_pause_position)
 
-## Unduck BGM (restore volume).
+## Unduck BGM — resume playback from where it was paused.
 func unduck_bgm() -> void:
 	_bgm_ducked = false
-	if _bgm_active.playing:
+	if _bgm_current_path != "" and not _bgm_active.playing:
+		# Resume from saved position
+		if not _bgm_active.stream:
+			var stream = load(_bgm_current_path)
+			if stream:
+				_bgm_active.stream = stream
+		_bgm_active.volume_db = -80.0
+		_bgm_active.play(_bgm_pause_position)
 		var tw = create_tween()
-		tw.tween_property(_bgm_active, "volume_db", NORMAL_VOLUME_DB, 0.8)
+		tw.tween_property(_bgm_active, "volume_db", NORMAL_VOLUME_DB, 1.2).set_trans(Tween.TRANS_SINE)
+		print("🔊 BGM resumed from %.1fs" % _bgm_pause_position)
 
 ## Check if BGM is currently playing.
 func is_bgm_playing() -> bool:
