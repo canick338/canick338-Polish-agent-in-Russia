@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://dt2vp7yddc7f3"]
 
 [ext_resource type="Script" uid="uid://barxek6plx3rc" path="res://ExitOverlay/ExitOverlay.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://c2eexfl581kyx" path="res://Backgrounds/exit_background.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://cgfljbvll4sdy" path="res://Backgrounds/exit_background.png" id="2_bg"]
 [ext_resource type="FontFile" uid="uid://bijargpv0txdf" path="res://Theme/Montserrat-ExtraBold.ttf" id="3_font"]
 [ext_resource type="Texture2D" uid="uid://dnbbhrn4htx02" path="res://Backgrounds/exit_frame.png" id="4_frame"]
 [ext_resource type="Texture2D" uid="uid://cyrhav6g4w0gk" path="res://Backgrounds/leaves_1.png" id="5_leaves1"]

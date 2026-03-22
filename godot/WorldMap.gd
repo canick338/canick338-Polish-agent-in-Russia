@@ -328,20 +328,28 @@ func _update_time_hud() -> void:
 	hud_wrapper.add_child(right_container)
 	
 	var y_offset = 0
-	var money = Variables.get_variable("money", -1)
-	if money >= 0 and Variables.get_variable("warsaw_prologue_stage") == 1:
-		_create_stat_panel(right_container, "ДЕНЬГИ", str(int(money)) + "$", y_offset)
-		y_offset += 55
-		
+	
+	# Инициализация статов, если их ещё нет
 	var hunger = Variables.get_variable("hunger", -1)
-	if hunger >= 0:
-		_create_stat_panel(right_container, "СЫТОСТЬ", str(int(hunger)), y_offset, Color(0.9, 0.2, 0.2))
-		y_offset += 55
+	if hunger <= 0 and hunger != 0: # -1 means not set
+		hunger = 100
+		Variables.add_variable("hunger", 100)
 		
 	var energy = Variables.get_variable("energy", -1)
-	if energy >= 0:
-		_create_stat_panel(right_container, "ЭНЕРГИЯ", str(int(energy)), y_offset, Color(0.2, 0.6, 0.9))
-		y_offset += 55
+	if energy <= 0 and energy != 0:
+		energy = 100
+		Variables.add_variable("energy", 100)
+		
+	var money = GameGlobal.player_money
+	
+	_create_stat_panel(right_container, "ДЕНЬГИ", str(int(money)) + "$", y_offset, Color(0.2, 0.8, 0.3))
+	y_offset += 55
+	
+	_create_stat_panel(right_container, "СЫТОСТЬ", str(int(hunger)), y_offset, Color(0.9, 0.2, 0.2))
+	y_offset += 55
+	
+	_create_stat_panel(right_container, "ЭНЕРГИЯ", str(int(energy)), y_offset, Color(0.2, 0.6, 0.9))
+	y_offset += 55
 		
 	# Days Left Alert Panel
 	var days_left = Variables.get_variable("days_left", -1)
@@ -552,6 +560,17 @@ void fragment() {
 
 func _on_node_clicked(scene_path: String) -> void:
 	_hide_tooltip()
+	
+	# Поездка забирает силы и сытость
+	var h = int(Variables.get_variable("hunger", 100)) - 10
+	var e = int(Variables.get_variable("energy", 100)) - 10
+	Variables.add_variable("hunger", clamp(h, 0, 100))
+	Variables.add_variable("energy", clamp(e, 0, 100))
+	
+	if h <= 0 or e <= 0:
+		_handle_exhaustion()
+		return
+		
 	scene_requested.emit(scene_path)
 
 func _on_node_hovered(title: String, desc: String, icon: String, pos: Vector2, chibi_id: String, chibi_path: String) -> void:
@@ -1039,9 +1058,63 @@ func _on_time_tick() -> void:
 	_time_elapsed = 0.0 # Reset the sub-timer
 	print("⏰ Время сменилось: ", TIME_NAMES[time_idx], " (idx=", time_idx, ")")
 	
+	# Трата статов от времени
+	var h = int(Variables.get_variable("hunger", 100)) - 5
+	var e = int(Variables.get_variable("energy", 100)) - 5
+	Variables.add_variable("hunger", clamp(h, 0, 100))
+	Variables.add_variable("energy", clamp(e, 0, 100))
+	
 	# Обновляем все визуалы плавно
 	_update_weather_visuals(time_idx)
 	_update_time_hud()
+	
+	if h <= 0 or e <= 0:
+		_handle_exhaustion()
+
+func _handle_exhaustion() -> void:
+	print("🚨 ОБМОРОК ОТ ИСТОЩЕНИЯ!")
+	# Сброс статов
+	Variables.add_variable("hunger", 50)
+	Variables.add_variable("energy", 50)
+	
+	# Штраф денег (20%)
+	var penalty = int(GameGlobal.player_money * 0.2)
+	if penalty > 0:
+		GameGlobal.remove_money(penalty)
+	
+	# Промотаем время на следующий день/период
+	var time_idx = Variables.get_variable("current_time", 0) + 1
+	if time_idx > 3:
+		time_idx = 0
+		Variables.add_variable("current_day", Variables.get_variable("current_day", 1) + 1)
+	Variables.add_variable("current_time", time_idx)
+	
+	_update_weather_visuals(time_idx)
+	_update_time_hud()
+	
+	# Визуальное уведомление
+	var panel = PanelContainer.new()
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.9, 0.1, 0.1, 0.9)
+	style.border_width_left = 6; style.border_width_top = 6; style.border_width_right = 6; style.border_width_bottom = 6
+	style.border_color = Color.BLACK
+	panel.add_theme_stylebox_override("panel", style)
+	
+	var text = Label.new()
+	text.text = "ВЫ ПОТЕРЯЛИ СОЗНАНИЕ ОТ ИСТОЩЕНИЯ.\nПока вы спали на улице, вас обокрали на %d$." % penalty
+	text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	text.add_theme_font_size_override("font_size", 24)
+	text.add_theme_color_override("font_color", Color.WHITE)
+	panel.add_child(text)
+	
+	panel.set_anchors_preset(Control.PRESET_CENTER)
+	panel.position -= Vector2(300, 100)
+	add_child(panel)
+	
+	var tw = create_tween()
+	tw.tween_interval(4.0)
+	tw.tween_property(panel, "modulate:a", 0.0, 1.0)
+	tw.tween_callback(panel.queue_free)
 
 # Continuous interpolation every frame — no more abrupt transitions!
 const CLOUD_STATES = [

@@ -71,6 +71,14 @@
 						],
 						"name": "set",
 						"type": "command"
+					},
+					{
+						"args": [
+							"karma",
+							"+5"
+						],
+						"name": "set",
+						"type": "command"
 					}
 				],
 				"text": "Да, приехал по делам"
@@ -93,6 +101,14 @@
 						"args": [
 							"suspicion_level",
 							"10"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"karma",
+							"-3"
 						],
 						"name": "set",
 						"type": "command"
@@ -125,6 +141,14 @@
 						],
 						"name": "set",
 						"type": "command"
+					},
+					{
+						"args": [
+							"karma",
+							"-10"
+						],
+						"name": "set",
+						"type": "command"
 					}
 				],
 				"text": "Это не твое дело"
@@ -152,6 +176,14 @@
 						"args": [
 							"friendship_dima",
 							"10"
+						],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": [
+							"karma",
+							"+5"
 						],
 						"name": "set",
 						"type": "command"

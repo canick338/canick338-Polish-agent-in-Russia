@@ -138,6 +138,17 @@ func remove_money(amount: int) -> bool:
 		return true
 	return false
 
+## Returns the karma-adjusted price for a base price.
+## The player sees this price in the UI without knowing karma is involved.
+func get_karma_price(base_price: int) -> int:
+	return KarmaManager.apply_price(base_price)
+
+## Attempt to purchase something with karma-adjusted pricing.
+## Returns true if the player had enough money.
+func purchase_with_karma(base_price: int) -> bool:
+	var final_price = get_karma_price(base_price)
+	return remove_money(final_price)
+
 # === УПРАВЛЕНИЕ КОЛЛЕКЦИЕЙ ===
 
 func is_card_unlocked(card_id: String) -> bool:

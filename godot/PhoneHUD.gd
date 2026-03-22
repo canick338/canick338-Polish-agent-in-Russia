@@ -202,7 +202,7 @@ func _open_notifications() -> void:
 	elif days_left == 0 and Variables.get_variable("warsaw_ticket_bought") != 1:
 		notifications.append({"color": Color(0.9, 0.2, 0.2), "text": "ВРЕМЯ ВЫШЛО! Миссия провалена."})
 	
-	var money = Variables.get_variable("money", 0)
+	var money = GameGlobal.player_money
 	if money >= 500 and Variables.get_variable("warsaw_ticket_bought") != 1:
 		notifications.append({"color": Color(0.2, 0.8, 0.3), "text": "Накоплено %d zł. Можно идти к Шломо за билетом." % money})
 	
@@ -240,6 +240,93 @@ func _open_notifications() -> void:
 	
 	scroll.add_child(vbox)
 	content_area.add_child(scroll)
+
+# ========================
+# 🛒 SHOP APP (DELIVERY)
+# ========================
+func _open_shop() -> void:
+	_show_app_header("Доставка Еды")
+	_clear_content()
+	
+	var scroll = ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var vbox = VBoxContainer.new()
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 15)
+	
+	# Intro
+	var lbl = Label.new()
+	lbl.text = "Быстрая доставка еды и напитков.\n(Восстанавливает Сытость и Энергию)"
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.add_theme_font_size_override("font_size", 12)
+	lbl.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
+	vbox.add_child(lbl)
+	
+	_add_shop_item(vbox, "☕ Эспрессо", "Бодрит. Восстанавливает энергию.", 15, "energy")
+	_add_shop_item(vbox, "🌯 Шаурма", "Пища богов. Восстанавливает всю сытость.", 25, "hunger")
+	_add_shop_item(vbox, "🍱 Бизнес-ланч", "Восстанавливает всё.", 50, "both")
+	
+	scroll.add_child(vbox)
+	content_area.add_child(scroll)
+
+func _add_shop_item(parent: Control, item_name: String, desc: String, base_price: int, restore_type: String) -> void:
+	var panel = PanelContainer.new()
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.15, 0.15, 0.2)
+	style.corner_radius_top_left = 8; style.corner_radius_top_right = 8
+	style.corner_radius_bottom_left = 8; style.corner_radius_bottom_right = 8
+	style.content_margin_left = 10; style.content_margin_right = 10
+	style.content_margin_top = 10; style.content_margin_bottom = 10
+	panel.add_theme_stylebox_override("panel", style)
+	
+	var hbox = HBoxContainer.new()
+	
+	var v = VBoxContainer.new()
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
+	var title = Label.new()
+	title.text = item_name
+	title.add_theme_font_size_override("font_size", 16)
+	title.add_theme_color_override("font_color", Color.WHITE)
+	v.add_child(title)
+	
+	var d_lbl = Label.new()
+	d_lbl.text = desc
+	d_lbl.add_theme_font_size_override("font_size", 12)
+	d_lbl.add_theme_color_override("font_color", Color.GRAY)
+	v.add_child(d_lbl)
+	hbox.add_child(v)
+	
+	var buy_btn = Button.new()
+	var final_price = GameGlobal.get_karma_price(base_price)
+	buy_btn.text = "%d$" % final_price
+	if final_price < base_price:
+		buy_btn.add_theme_color_override("font_color", Color.GREEN) # Скидка от кармы
+	elif final_price > base_price:
+		buy_btn.add_theme_color_override("font_color", Color.RED) # Наценка от кармы
+		
+	buy_btn.custom_minimum_size = Vector2(80, 40)
+	buy_btn.pressed.connect(func():
+		if GameGlobal.purchase_with_karma(base_price):
+			buy_btn.text = "Куплено"
+			buy_btn.disabled = true
+			if restore_type == "energy" or restore_type == "both":
+				Variables.add_variable("energy", 100)
+			if restore_type == "hunger" or restore_type == "both":
+				Variables.add_variable("hunger", 100)
+			
+			if get_parent() and get_parent().has_method("_update_time_hud"):
+				get_parent()._update_time_hud()
+		else:
+			buy_btn.text = "Нет $"
+			var tw = create_tween()
+			tw.tween_interval(1.0)
+			tw.tween_callback(func(): buy_btn.text = "%d$" % final_price)
+	)
+	hbox.add_child(buy_btn)
+	panel.add_child(hbox)
+	parent.add_child(panel)
 
 # ========================
 # 🏦 PKO BANK APP
@@ -320,7 +407,7 @@ func _open_bank() -> void:
 	top_card_hbox.add_child(account_lbl)
 	top_card_hbox.add_child(logo_vbox)
 	
-	var money = Variables.get_variable("money", 0)
+	var money = GameGlobal.player_money
 	var amount_lbl = Label.new()
 	amount_lbl.text = "%d,00 PLN" % money
 	amount_lbl.add_theme_font_size_override("font_size", 36)
@@ -448,73 +535,7 @@ func _open_gov_services() -> void:
 	
 	content_area.add_child(vbox)
 
-# ========================
-# 🛒 SHLOMO SHOP APP
-# ========================
-func _open_shop() -> void:
-	_show_app_header("Лавка Шломо")
-	_clear_content()
-	
-	var vbox = VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 12)
-	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	
-	var intro = Label.new()
-	intro.text = "Каталог товаров Шломо. Для покупки — приходите лично."
-	intro.add_theme_font_size_override("font_size", 15)
-	intro.add_theme_color_override("font_color", Color(0.7, 0.8, 0.7))
-	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	vbox.add_child(intro)
-	
-	var items = [
-		{"name": "Билет и паспорт", "price": "500 zł", "desc": "Поддельный паспорт и билет на поезд до Обояни."},
-		{"name": "Энергетик", "price": "20 zł", "desc": "Придаёт бодрости на весь день."},
-		{"name": "Сэндвич", "price": "10 zł", "desc": "Утоляет голод."},
-	]
-	
-	for item in items:
-		var item_panel = PanelContainer.new()
-		var item_style = StyleBoxFlat.new()
-		item_style.bg_color = Color(0.1, 0.12, 0.18, 0.9)
-		item_style.corner_radius_top_left = 10
-		item_style.corner_radius_top_right = 10
-		item_style.corner_radius_bottom_left = 10
-		item_style.corner_radius_bottom_right = 10
-		item_style.content_margin_left = 14
-		item_style.content_margin_right = 14
-		item_style.content_margin_top = 10
-		item_style.content_margin_bottom = 10
-		item_panel.add_theme_stylebox_override("panel", item_style)
-		
-		var item_vbox = VBoxContainer.new()
-		item_vbox.add_theme_constant_override("separation", 4)
-		
-		var top_hbox = HBoxContainer.new()
-		var name_lbl = Label.new()
-		name_lbl.text = item["name"]
-		name_lbl.add_theme_font_size_override("font_size", 18)
-		name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		
-		var price_lbl = Label.new()
-		price_lbl.text = item["price"]
-		price_lbl.add_theme_font_size_override("font_size", 18)
-		price_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.2))
-		
-		top_hbox.add_child(name_lbl)
-		top_hbox.add_child(price_lbl)
-		
-		var desc_lbl = Label.new()
-		desc_lbl.text = item["desc"]
-		desc_lbl.add_theme_font_size_override("font_size", 13)
-		desc_lbl.add_theme_color_override("font_color", Color(0.55, 0.6, 0.65))
-		desc_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		
-		item_vbox.add_child(top_hbox)
-		item_vbox.add_child(desc_lbl)
-		item_panel.add_child(item_vbox)
-		vbox.add_child(item_panel)
-	
-	content_area.add_child(vbox)
+
 
 # ========================
 # 🎮 GAMES APP
