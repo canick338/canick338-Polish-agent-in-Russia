@@ -90,6 +90,8 @@ func _create_dialogue_node(next_idx: int, data: Dictionary) -> SceneTranspiler.D
 		node.character = _clean_value(data["character"])
 	if data.has("mood"):
 		node.expression = _clean_value(data["mood"])
+	if data.has("expression"):
+		node.expression = _clean_value(data["expression"])
 	if data.has("animation"):
 		node.animation = _clean_value(data["animation"])
 	if data.has("side"):

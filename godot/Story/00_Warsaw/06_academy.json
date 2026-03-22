@@ -35,7 +35,7 @@
 		"character": "chief",
 		"side": "right",
 		"animation": "enter",
-		"mood": "chief_smile",
+		"expression": "chief_smile",
 		"text": "А, новый рекрут! Я видел твоё досье, парень. Сирота, выросший на улицах Варшавы. То, что нужно.",
 		"type": "dialogue"
 	},
@@ -47,7 +47,7 @@
 	{
 		"character": "chief",
 		"side": "right",
-		"mood": "chief_pointing_smile",
+		"expression": "chief_pointing_smile",
 		"text": "Здесь я делаю из уличных крыс настоящих львов! Добро пожаловать, сынок.",
 		"type": "dialogue"
 	},
@@ -80,7 +80,7 @@
 		"character": "chief",
 		"side": "right",
 		"animation": "enter",
-		"mood": "chief_shouting",
+		"expression": "chief_shouting",
 		"text": "Агент не должен чувствовать боли! Агент должен быть тенью!",
 		"type": "dialogue"
 	},
@@ -120,7 +120,7 @@
 		"character": "chief",
 		"side": "right",
 		"animation": "enter",
-		"mood": "chief_neutral",
+		"expression": "chief_neutral",
 		"text": "Марек. Так теперь тебя зовут. Твоё обучение окончено, пора послужить Польше.",
 		"type": "dialogue"
 	},
@@ -134,21 +134,21 @@
 	{
 		"character": "chief",
 		"side": "right",
-		"mood": "chief_crazy_pointing",
+		"expression": "chief_crazy_pointing",
 		"text": "Россия. Город Обоянь! Там спрятана секретная лаборатория. Ты должен узнать, что они там прячут!",
 		"type": "dialogue"
 	},
 	{
 		"character": "chief",
 		"side": "right",
-		"mood": "chief_neutral",
+		"expression": "chief_neutral",
 		"text": "Но мы не пошлём тебя туда как агента. Ты поедешь как нелегал-мигрант. И чтобы это выглядело правдоподобно...",
 		"type": "dialogue"
 	},
 	{
 		"character": "chief",
 		"side": "right",
-		"mood": "chief_smile",
+		"expression": "chief_smile",
 		"text": "Тебе придётся устроиться на наш тайный Завод Карла Обломова здесь, в Варшаве.",
 		"type": "dialogue"
 	},
@@ -160,14 +160,14 @@
 	{
 		"character": "chief",
 		"side": "right",
-		"mood": "chief_shouting",
+		"expression": "chief_shouting",
 		"text": "ЛЕГЕНДА! Ты должен заработать деньги на билет своими руками. У тебя будет неделя, чтобы накопить 500$ и явиться сюда за отчётом!",
 		"type": "dialogue"
 	},
 	{
 		"character": "chief",
 		"side": "right",
-		"mood": "chief_neutral",
+		"expression": "chief_neutral",
 		"text": "Берёшься за эту миссию, Марек?",
 		"type": "dialogue"
 	},
@@ -184,7 +184,7 @@
 					{
 						"character": "chief",
 						"side": "right",
-						"mood": "chief_smile",
+						"expression": "chief_smile",
 						"text": "Отличный настрой. Приходи в штаб, когда заработаешь 500$.",
 						"type": "dialogue"
 					},
@@ -211,7 +211,7 @@
 					{
 						"character": "chief",
 						"side": "right",
-						"mood": "chief_crazy_pointing",
+						"expression": "chief_crazy_pointing",
 						"text": "ЧТО?! Трус! Вон из моего кабинета! Наслаждайся своей жалкой мирной жизнью!",
 						"type": "dialogue"
 					},

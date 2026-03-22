@@ -11,7 +11,7 @@
 	},
 	{
 		"character": "chief",
-		"mood": "chief_neutral",
+		"expression": "chief_neutral",
 		"text": "Марек. Вижу, твоё прикрытие на Заводе работает без сбоев. Молодец.",
 		"type": "dialogue"
 	},
@@ -22,13 +22,13 @@
 	},
 	{
 		"character": "chief",
-		"mood": "chief_phone_on",
+		"expression": "chief_phone_on",
 		"text": "Ты готов к отправке в Обоянь. Держи. Это секретный смартфон с нашей собственной нейросетью.",
 		"type": "dialogue"
 	},
 	{
 		"character": "chief",
-		"mood": "chief_shouting_messenger",
+		"expression": "chief_shouting_messenger",
 		"text": "Лучший и самый защищённый мессенджер в мире! Ни одна русская прослушка его не возьмёт!",
 		"type": "dialogue"
 	},
@@ -39,7 +39,7 @@
 	},
 	{
 		"character": "chief",
-		"mood": "chief_smile",
+		"expression": "chief_smile",
 		"text": "Отлично. А вот казенные 500 злотых. Иди к Шломо в его Еврейскую Лавку и купи уже этот билет на поезд.",
 		"type": "dialogue"
 	},

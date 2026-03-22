@@ -18,7 +18,7 @@
 		"character": "chief",
 		"side": "right",
 		"animation": "enter",
-		"mood": "chief_neutral",
+		"expression": "chief_neutral",
 		"text": "Агент Марек. Время вышло.",
 		"type": "dialogue"
 	},
@@ -29,7 +29,7 @@
 	},
 	{
 		"character": "chief",
-		"mood": "chief_crazy_pointing",
+		"expression": "chief_crazy_pointing",
 		"text": "В разведке нет слова 'почти'! Ты провалил прикрытие и подвёл страну.",
 		"type": "dialogue"
 	},
@@ -40,7 +40,7 @@
 	},
 	{
 		"character": "chief",
-		"mood": "chief_neutral",
+		"expression": "chief_neutral",
 		"text": "Жаль. Ты подавал надежды.",
 		"type": "dialogue"
 	},

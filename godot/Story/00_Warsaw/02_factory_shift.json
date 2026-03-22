@@ -98,28 +98,28 @@
                 "then": [
                     {
                         "character": "danila",
-                        "mood": "thinking_factory",
+                        "expression": "thinking_factory",
                         "side": "left",
                         "text": "Нормально. Могло быть и лучше.",
                         "type": "dialogue"
                     },
                     {
                         "character": "boss_of_factory",
-                        "mood": "neutral",
+                        "expression": "neutral",
                         "side": "right",
                         "text": "Приемлемо. Но старайся лучше.",
                         "type": "dialogue"
                     },
                     {
                         "character": "boss_of_factory",
-                        "mood": "neutral",
+                        "expression": "neutral",
                         "side": "right",
                         "text": "Вот твоя стандартная плата.",
                         "type": "dialogue"
                     },
                     {
                         "character": "danila",
-                        "mood": "tired_at_factory",
+                        "expression": "tired_at_factory",
                         "side": "left",
                         "text": "Спасибо.",
                         "type": "dialogue"
@@ -130,42 +130,42 @@
         "else": [
             {
                 "character": "danila",
-                "mood": "sad_factory",
+                "expression": "sad_factory",
                 "side": "left",
                 "text": "Чёрт... Всё валится из рук...",
                 "type": "dialogue"
             },
             {
                 "character": "boss_of_factory",
-                "mood": "angry",
+                "expression": "angry",
                 "side": "right",
                 "text": "Стоп! Остановите конвейер!",
                 "type": "dialogue"
             },
             {
                 "character": "boss_of_factory",
-                "mood": "angry",
+                "expression": "angry",
                 "side": "right",
                 "text": "Ты что творишь?! Разбил кучу банок!",
                 "type": "dialogue"
             },
             {
                 "character": "boss_of_factory",
-                "mood": "angry",
+                "expression": "angry",
                 "side": "right",
                 "text": "Никакой зарплаты сегодня! Скажи спасибо, что не уволил!",
                 "type": "dialogue"
             },
             {
                 "character": "danila",
-                "mood": "sad_factory",
+                "expression": "sad_factory",
                 "side": "left",
                 "text": "Извините, начальник...",
                 "type": "dialogue"
             },
             {
                 "character": "danila",
-                "mood": "thinking_factory",
+                "expression": "thinking_factory",
                 "side": "left",
                 "text": "Плохое начало...",
                 "type": "dialogue"
@@ -174,35 +174,35 @@
         "then": [
             {
                 "character": "danila",
-                "mood": "thinking_factory",
+                "expression": "thinking_factory",
                 "side": "left",
                 "text": "Справился! Даже больше нормы!",
                 "type": "dialogue"
             },
             {
                 "character": "boss_of_factory",
-                "mood": "happy",
+                "expression": "happy",
                 "side": "right",
                 "text": "Отлично! Ты перевыполнил график!",
                 "type": "dialogue"
             },
             {
                 "character": "boss_of_factory",
-                "mood": "happy",
+                "expression": "happy",
                 "side": "right",
                 "text": "Вот твоя зарплата и премия. Заслужил.",
                 "type": "dialogue"
             },
             {
                 "character": "danila",
-                "mood": "tired_but_happy_factory",
+                "expression": "tired_but_happy_factory",
                 "side": "left",
                 "text": "Спасибо, начальник!",
                 "type": "dialogue"
             },
             {
                 "character": "danila",
-                "mood": "thinking_factory",
+                "expression": "thinking_factory",
                 "side": "left",
                 "text": "Отличные деньги.",
                 "type": "dialogue"
@@ -242,14 +242,14 @@
                     },
                     {
                         "character": "danila",
-                        "mood": "thinking_factory",
+                        "expression": "thinking_factory",
                         "side": "left",
                         "text": "Нужно внимательно читать инструкцию.",
                         "type": "dialogue"
                     },
                     {
                         "character": "boss_of_factory",
-                        "mood": "happy",
+                        "expression": "happy",
                         "side": "right",
                         "text": "Хорошо. Правильно.",
                         "type": "dialogue"
@@ -276,21 +276,21 @@
                     },
                     {
                         "character": "danila",
-                        "mood": "thinking_factory",
+                        "expression": "thinking_factory",
                         "side": "left",
                         "text": "Попробую ускорить процесс.",
                         "type": "dialogue"
                     },
                     {
                         "character": "boss_of_factory",
-                        "mood": "suspicious",
+                        "expression": "suspicious",
                         "side": "right",
                         "text": "Что ты делаешь? Неправильно!",
                         "type": "dialogue"
                     },
                     {
                         "character": "danila",
-                        "mood": "sad_factory",
+                        "expression": "sad_factory",
                         "side": "left",
                         "text": "Извините, сейчас исправлю... (Режим: Рискованный)",
                         "type": "dialogue"
@@ -317,21 +317,21 @@
                     },
                     {
                         "character": "danila",
-                        "mood": "thinking_factory",
+                        "expression": "thinking_factory",
                         "side": "left",
                         "text": "Спрошу у опытных рабочих.",
                         "type": "dialogue"
                     },
                     {
                         "character": "boss_of_factory",
-                        "mood": "suspicious",
+                        "expression": "suspicious",
                         "side": "right",
                         "text": "Хм, учишься у других. Неплохо.",
                         "type": "dialogue"
                     },
                     {
                         "character": "danila",
-                        "mood": "thinking_factory",
+                        "expression": "thinking_factory",
                         "side": "left",
                         "text": "Они помогли мне всё сделать.",
                         "type": "dialogue"
@@ -352,7 +352,7 @@
     },
     {
         "character": "danila",
-        "mood": "thinking_factory",
+        "expression": "thinking_factory",
         "side": "left",
         "text": "Варка завершена. Фух...",
         "type": "dialogue"
@@ -363,7 +363,7 @@
         "then": [
             {
                 "character": "boss_of_factory",
-                "mood": "happy",
+                "expression": "happy",
                 "side": "right",
                 "text": "Отлично сварил! То что нужно.",
                 "type": "dialogue"
@@ -372,7 +372,7 @@
         "else": [
             {
                 "character": "boss_of_factory",
-                "mood": "angry",
+                "expression": "angry",
                 "side": "right",
                 "text": "Это что за помои? Переделывай!",
                 "type": "dialogue"
@@ -409,28 +409,28 @@
                 "children": [
                     {
                         "character": "danila",
-                        "mood": "serious",
+                        "expression": "serious",
                         "side": "left",
                         "text": "Попробую работать один.",
                         "type": "dialogue"
                     },
                     {
                         "character": "danila",
-                        "mood": "tired_at_factory",
+                        "expression": "tired_at_factory",
                         "side": "left",
                         "text": "Ящики очень тяжёлые...",
                         "type": "dialogue"
                     },
                     {
                         "character": "danila",
-                        "mood": "tired_at_factory",
+                        "expression": "tired_at_factory",
                         "side": "left",
                         "text": "Фух... Это тяжело...",
                         "type": "dialogue"
                     },
                     {
                         "character": "danila",
-                        "mood": "tired_at_factory",
+                        "expression": "tired_at_factory",
                         "side": "left",
                         "text": "Еле справился...",
                         "type": "dialogue"
@@ -442,28 +442,28 @@
                 "children": [
                     {
                         "character": "danila",
-                        "mood": "thinking_factory",
+                        "expression": "thinking_factory",
                         "side": "left",
                         "text": "Попрошу помощи у других рабочих.",
                         "type": "dialogue"
                     },
                     {
                         "character": "danila",
-                        "mood": "thinking_factory",
+                        "expression": "thinking_factory",
                         "side": "left",
                         "text": "Спасибо, ребята.",
                         "type": "dialogue"
                     },
                     {
                         "character": "danila",
-                        "mood": "tired_at_factory",
+                        "expression": "tired_at_factory",
                         "side": "left",
                         "text": "Вместе справились быстрее.",
                         "type": "dialogue"
                     },
                     {
                         "character": "danila",
-                        "mood": "tired_at_factory",
+                        "expression": "tired_at_factory",
                         "side": "left",
                         "text": "Хорошо, что помогли.",
                         "type": "dialogue"
@@ -475,28 +475,28 @@
                 "children": [
                     {
                         "character": "danila",
-                        "mood": "thinking_factory",
+                        "expression": "thinking_factory",
                         "side": "left",
                         "text": "Буду работать медленно, но стабильно.",
                         "type": "dialogue"
                     },
                     {
                         "character": "danila",
-                        "mood": "serious",
+                        "expression": "serious",
                         "side": "left",
                         "text": "Не тороплюсь, но и не останавливаюсь.",
                         "type": "dialogue"
                     },
                     {
                         "character": "boss_of_factory",
-                        "mood": "neutral",
+                        "expression": "neutral",
                         "side": "right",
                         "text": "Медленно, но работает.",
                         "type": "dialogue"
                     },
                     {
                         "character": "danila",
-                        "mood": "tired_at_factory",
+                        "expression": "tired_at_factory",
                         "side": "left",
                         "text": "Справился...",
                         "type": "dialogue"

@@ -15,6 +15,7 @@ const COLOR_WHITE_TRANSPARENT = Color(1.0, 1.0, 1.0, 0.0)
 ## Keeps track of the character displayed on either side.
 var _left_character: Character = null
 var _right_character: Character = null
+var _last_speaking_side: String = ""
 
 var _tween: Tween
 @onready var _left_sprite: Sprite2D = $Left
@@ -123,8 +124,20 @@ func display(character: Character, side: String = SIDE_LEFT, expression := "", a
 			# ВАЖНО: Не скрываем другой спрайт - он должен оставаться видимым!
 			
 			# Эффект при смене диалога/эмоции (применяем ПЕРЕД idle эффектами)
-			if is_expression_change or is_new_character:
+			# Отыгрываем поп-эффект, только если:
+			# 1. Поменялась эмоция
+			# 2. Появился новый персонаж на этой стороне
+			# 3. Сменился активный спикер (персонаж начал говорить после другого)
+			var speaker_changed = (_last_speaking_side != side)
+			var should_play_effect = (is_expression_change or is_new_character or speaker_changed)
+			
+			if animation == "" and should_play_effect:
 				_play_dialogue_change_effect(sprite, side, expression, is_new_character)
+				
+			# Обновляем последнего говорящего
+			_last_speaking_side = side
+			
+			if animation == "":
 				# Запускаем idle эффекты с небольшой задержкой через Timer
 				var delay_timer := Timer.new()
 				delay_timer.wait_time = 0.25  # Задержка 0.25 сек
@@ -136,8 +149,18 @@ func display(character: Character, side: String = SIDE_LEFT, expression := "", a
 				)
 				delay_timer.start()
 			else:
-				# Запускаем эффекты "живости" для персонажа сразу
-				_start_idle_effects(sprite, side, expression)
+				# Для ручной анимации (enter) задерживаем дыхание, чтобы не перебивать движение
+				if animation == "enter":
+					var delay_anim_timer := Timer.new()
+					delay_anim_timer.wait_time = 0.55
+					delay_anim_timer.one_shot = true
+					add_child(delay_anim_timer)
+					delay_anim_timer.timeout.connect(func():
+						if is_instance_valid(sprite) and sprite.visible:
+							_start_idle_effects(sprite, side, expression)
+						delay_anim_timer.queue_free()
+					)
+					delay_anim_timer.start()
 	else:
 		if expression != "":
 			push_error("CharacterDisplayer.display: texture is null for expression: " + expression)
@@ -307,12 +330,12 @@ func _start_idle_effects(sprite: Sprite2D, side: String, expression: String) -> 
 	var shake_enabled := false
 	
 	match expression:
-		"worried", "nervous", "scared", "cry":
+		"worried", "nervous", "scared", "cry", "angry", "surprised", "chief_crazy_pointing", "chief_shouting", "chief_shouting_messenger":
 			intensity_multiplier = 1.5
 			shake_enabled = true
-		"tired_at_factory", "tired_but_happy_factory":
+		"tired_at_factory", "tired_but_happy_factory", "sad", "serious":
 			intensity_multiplier = 0.8
-		"happy", "tired_but_happy_factory":
+		"happy", "tired_but_happy_factory", "chief_smile", "chief_pointing_smile":
 			intensity_multiplier = 1.2
 		_:
 			intensity_multiplier = 1.0
@@ -463,13 +486,13 @@ func _play_dialogue_change_effect(sprite: Sprite2D, side: String, expression: St
 	var effect_intensity := 1.0
 	
 	match expression:
-		"worried", "nervous", "scared", "cry":
+		"worried", "nervous", "scared", "cry", "nervous_factory", "chief_crazy_pointing", "chief_shouting", "chief_shouting_messenger":
 			effect_type = "shake"
 			effect_intensity = 1.2
-		"angry", "serious":
+		"angry", "serious", "surprised", "determined_factory":
 			effect_type = "pop"
 			effect_intensity = 1.1
-		"happy", "tired_but_happy_factory":
+		"happy", "tired_but_happy_factory", "chief_smile", "chief_pointing_smile":
 			effect_type = "bounce"
 			effect_intensity = 1.0
 		_:
@@ -583,11 +606,10 @@ func _stop_idle_effects(side: String) -> void:
 					shake_timer.queue_free()
 	
 	# Возвращаем спрайт в исходное состояние
+	# Возвращаем спрайт в исходное состояние
 	if sprite:
-		var reset_tween := create_tween()
-		reset_tween.set_parallel(true)
-		reset_tween.tween_property(sprite, "position", original_pos, 0.3)
-		reset_tween.tween_property(sprite, "scale", original_scale, 0.3)
+		sprite.position = original_pos
+		sprite.scale = original_scale
 
 func hide_all() -> void:
 	"""Скрыть всех персонажей"""
