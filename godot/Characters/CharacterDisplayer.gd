@@ -330,7 +330,7 @@ func _start_idle_effects(sprite: Sprite2D, side: String, expression: String) -> 
 	var shake_enabled := false
 	
 	match expression:
-		"worried", "nervous", "scared", "cry", "angry", "surprised", "chief_crazy_pointing", "chief_shouting", "chief_shouting_messenger":
+		"worried", "nervous", "scared", "cry", "angry", "surprised", "chief_crazy_pointing", "chief_shouting", "chief_shouting_messenger", "excited", "asking_money":
 			intensity_multiplier = 1.5
 			shake_enabled = true
 		"tired_at_factory", "tired_but_happy_factory", "sad", "serious":
@@ -486,10 +486,10 @@ func _play_dialogue_change_effect(sprite: Sprite2D, side: String, expression: St
 	var effect_intensity := 1.0
 	
 	match expression:
-		"worried", "nervous", "scared", "cry", "nervous_factory", "chief_crazy_pointing", "chief_shouting", "chief_shouting_messenger":
+		"worried", "nervous", "scared", "cry", "nervous_factory", "chief_crazy_pointing", "chief_shouting", "chief_shouting_messenger", "asking_money":
 			effect_type = "shake"
 			effect_intensity = 1.2
-		"angry", "serious", "surprised", "determined_factory":
+		"angry", "serious", "surprised", "determined_factory", "excited":
 			effect_type = "pop"
 			effect_intensity = 1.1
 		"happy", "tired_but_happy_factory", "chief_smile", "chief_pointing_smile":

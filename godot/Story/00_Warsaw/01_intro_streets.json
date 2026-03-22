@@ -78,6 +78,7 @@
 		"character": "hobo",
 		"side": "right",
 		"animation": "enter",
+		"expression": "asking_money",
 		"text": "Пссс... эй, шкет. Мелочь есть? А сигаретка?",
 		"type": "dialogue"
 	},
@@ -90,6 +91,7 @@
 	{
 		"character": "hobo",
 		"side": "right",
+		"expression": "thoughtful",
 		"text": "Хе-хе. Дерзкий. Детдомовский, да? Глаза голодные, как у волчонка. Работу ищешь, небось?",
 		"type": "dialogue"
 	},
@@ -102,12 +104,14 @@
 	{
 		"character": "hobo",
 		"side": "right",
+		"expression": "neutral",
 		"text": "На заводе ты оставишь здоровье и сдохнешь в 40 лет. Слушай старого мудреца...",
 		"type": "dialogue"
 	},
 	{
 		"character": "hobo",
 		"side": "right",
+		"expression": "excited",
 		"text": "Хочешь есть от пуза? Иметь власть? Иди в Польскую Разведку. В Академию шпионов.",
 		"type": "dialogue"
 	},
@@ -120,6 +124,7 @@
 	{
 		"character": "hobo",
 		"side": "right",
+		"expression": "thoughtful",
 		"text": "В том и суть, дурень! Им нужны люди без корней. Без семьи. Такие, по которым никто не будет плакать, если они исчезнут.",
 		"type": "dialogue"
 	},
@@ -128,6 +133,75 @@
 		"side": "right",
 		"text": "Мордой торговать научат, ствол дадут. Академия тут недалеко. Раскинь мозгами, парень.",
 		"type": "dialogue"
+	},
+	{
+		"character": "hobo",
+		"side": "right",
+		"expression": "asking_money",
+		"text": "А ТЕПЕРЬ ДАЙ МЕЛОЧЬ, БЛЯ! Моя философская лекция не бесплатная!",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"text": "Дать бродяге 10$",
+				"children": [
+					{
+						"args": ["money", "-10"],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"character": "danila",
+						"side": "left",
+						"expression": "sad",
+						"text": "Держи. Последние отрываю от сердца.",
+						"type": "dialogue"
+					},
+					{
+						"character": "hobo",
+						"side": "right",
+						"expression": "excited",
+						"text": "Хе-хе! Вот она — КАРМА в действии, сынок!",
+						"type": "dialogue"
+					},
+					{
+						"character": "hobo",
+						"side": "right",
+						"expression": "neutral",
+						"text": "Деньги — вода. Отдал легко — вернётся с процентами. Запомни: открытая ладонь всегда поймает большую удачу.",
+						"type": "dialogue"
+					}
+				]
+			},
+			{
+				"text": "Отказать",
+				"children": [
+					{
+						"character": "danila",
+						"side": "left",
+						"expression": "angry",
+						"text": "Перебьёшься. Самому жрать нечего.",
+						"type": "dialogue"
+					},
+					{
+						"character": "hobo",
+						"side": "right",
+						"expression": "neutral",
+						"text": "Хех. Твоё право, парень.",
+						"type": "dialogue"
+					},
+					{
+						"character": "hobo",
+						"side": "right",
+						"expression": "neutral",
+						"text": "Только помни: сжатый кулак гроши сбережёт, но вот судьбу за хвост уже никогда не поймает. Бывай.",
+						"type": "dialogue"
+					}
+				]
+			}
+		],
+		"type": "choice"
 	},
 	{
 		"character": "hobo",

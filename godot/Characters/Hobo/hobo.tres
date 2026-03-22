@@ -1,7 +1,10 @@
-[gd_resource type="Resource" script_class="Character" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="Character" load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://Characters/Character.gd" id="1"]
-[ext_resource type="Texture2D" path="res://Characters/Worker/worker_neutral.png" id="2"]
+[ext_resource type="Texture2D" path="res://Characters/Hobo/hobo_static.png" id="2"]
+[ext_resource type="Texture2D" path="res://Characters/Hobo/hobo_excited.png" id="3"]
+[ext_resource type="Texture2D" path="res://Characters/Hobo/hobo_thoughtful.png" id="4"]
+[ext_resource type="Texture2D" path="res://Characters/Hobo/hobo_asks_money.png" id="5"]
 
 [resource]
 script = ExtResource("1")
@@ -11,5 +14,8 @@ bio = "Местный философ. Знает всё о Варшаве."
 age = 60
 default_image = "neutral"
 images = {
-"neutral": ExtResource("2")
+"neutral": ExtResource("2"),
+"excited": ExtResource("3"),
+"thoughtful": ExtResource("4"),
+"asking_money": ExtResource("5")
 }
