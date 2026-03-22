@@ -47,6 +47,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		_tween.custom_step(100.0)
 		_tween.kill()
 
+func clear_characters() -> void:
+	if _left_sprite:
+		_left_sprite.hide()
+		_left_sprite.texture = null
+	if _right_sprite:
+		_right_sprite.hide()
+		_right_sprite.texture = null
+	_left_character = null
+	_right_character = null
+	_stop_idle_effects(SIDE_LEFT)
+	_stop_idle_effects(SIDE_RIGHT)
+
 
 func display(character: Character, side: String = SIDE_LEFT, expression := "", animation := "") -> void:
 	# Проверка на null персонажа

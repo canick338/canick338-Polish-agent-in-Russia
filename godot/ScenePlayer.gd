@@ -128,9 +128,6 @@ func run_scene(start_key: int = 0) -> void:
 			var animation: String = node.animation if "animation" in node else ""
 			var expression: String = node.expression if "expression" in node else ""
 			
-			if not _character_displayer.visible:
-				_character_displayer.show()
-				
 			# Обновляем персонажа, но НЕ скрываем других - они остаются на экране
 			_character_displayer.display(character, side, expression, animation)
 			if not "line" in node:
@@ -176,7 +173,7 @@ func run_scene(start_key: int = 0) -> void:
 				AudioManager.play_event("transition_fade")
 				call(TRANSITIONS[node.transition])
 				if node.transition == "fade_out" and _character_displayer != null:
-					_character_displayer.hide()
+					_character_displayer.clear_characters()
 				await self.transition_finished
 			key = node.next
 
@@ -197,8 +194,6 @@ func run_scene(start_key: int = 0) -> void:
 			# Убеждаемся, что UI видим перед переходом к следующему узлу
 			if _text_box and not _text_box.visible:
 				_text_box.show()
-			if _character_displayer and not _character_displayer.visible:
-				_character_displayer.show()
 			# Небольшая задержка для стабилизации UI
 			await get_tree().process_frame
 
