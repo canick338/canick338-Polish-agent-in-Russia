@@ -41,6 +41,14 @@ const TIME_COLORS = [
 signal scene_requested(scene_path: String)
 
 func _ready() -> void:
+	# Smooth fade in transition
+	modulate.a = 0.0
+	var tw = create_tween()
+	tw.tween_property(self, "modulate:a", 1.0, 1.0)
+	
+	if has_node("/root/AudioManager"):
+		AudioManager.play_event("map_open")
+	
 	_load_manifest()
 	if phone_button: phone_button.pressed.connect(_on_phone_pressed)
 	if get_node_or_null("%ToggleSidePanelButton"):
@@ -226,9 +234,9 @@ func _update_time_hud() -> void:
 		top_bar.remove_child(c)
 		c.free()
 			
-	var day = Variables.get_variable("current_day")
+	var day = int(Variables.get_variable("current_day", 1))
 	if day == 0: day = 1
-	var time_idx = Variables.get_variable("current_time")
+	var time_idx = int(Variables.get_variable("current_time", 0))
 	if time_idx < 0 or time_idx > 3: time_idx = 0
 	
 	if time_idx == 3:
@@ -434,7 +442,7 @@ func set_location(loc_id: String) -> void:
 	_refresh_map()
 
 func _refresh_map() -> void:
-	var time_idx = Variables.get_variable("current_time")
+	var time_idx = int(Variables.get_variable("current_time", 0))
 	if time_idx < 0 or time_idx > 3: time_idx = 0
 	
 	# === DAY-NIGHT MODULATE ===
@@ -1146,7 +1154,7 @@ func _process(delta: float) -> void:
 
 	_time_elapsed += delta
 	
-	var time_idx = Variables.get_variable("current_time")
+	var time_idx = int(Variables.get_variable("current_time", 0))
 	if time_idx < 0 or time_idx > 3: time_idx = 0
 	var next_idx = (time_idx + 1) % 4
 	

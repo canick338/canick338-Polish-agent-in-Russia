@@ -1,31 +1,6 @@
 [
 	{
-		"args": ["polish_home", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "...",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Голова раскалывается. Где я?",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Что это было?",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Воспоминания... Они возвращаются.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["fade_out"],
+		"args": ["fade_in"],
 		"name": "transition",
 		"type": "command"
 	},
@@ -35,38 +10,15 @@
 		"type": "command"
 	},
 	{
-		"character": "",
-		"text": "Варшава. 1990-е годы.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Маленький мальчик. Без родителей. Без дома.",
+		"character": "danila",
+		"side": "left",
+		"animation": "enter",
+		"text": "(Мысли) Варшавский приют Святого Лаврентия. Место, где я вырос. Место, где учат выживать, а не жить.",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
-		"text": "Я помню... Детский дом родной.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Холодные стены. Пустые коридоры. Одиночество.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Никто не хотел меня забрать.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Годы шли. Мальчик рос.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Но одиночество оставалось. Всегда.",
+		"text": "(Мысли) Годы побоев, голода и холода сделали меня крепким. Но детство закончилось.",
 		"type": "dialogue"
 	},
 	{
@@ -75,38 +27,23 @@
 		"type": "command"
 	},
 	{
-		"args": ["warsaw_street", ""],
+		"args": ["polish_home", ""],
 		"name": "background",
 		"type": "command"
 	},
 	{
-		"character": "",
-		"text": "Подростковые годы. Улицы Варшавы стали домом.",
+		"character": "danila",
+		"text": "(Мысли) По достижении совершеннолетия государство сняло с себя ответственность. Выделило эту серую конуру на окраине.",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
-		"text": "Нужно было выживать.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Подработки. Мелкие дела. Иногда не совсем законные.",
+		"text": "(Мысли) Голые стены, скрипучий пол и чувство тотальной пустоты. Я понял, что если останусь здесь — сгнию заживо.",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
-		"text": "Я научился быть незаметным. Наблюдать. Запоминать.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Люди проходили мимо. Никто не замечал маленького сироту.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Но я выжил. Выжил сам.",
+		"text": "Нужно выйти на улицу. Найти хоть какую-то зацепку.",
 		"type": "dialogue"
 	},
 	{
@@ -115,43 +52,174 @@
 		"type": "command"
 	},
 	{
-		"args": ["factory_street", ""],
+		"args": ["black", ""],
 		"name": "background",
 		"type": "command"
 	},
 	{
 		"character": "",
-		"text": "Однажды я увидел плакат на стене: Академия Польской Разведки.",
+		"text": "Данила вышел на промозглые улицы Варшавы. Ветер гнал мусор по мостовой.",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
-		"text": "Набор рекрутов. Жесткий отбор.",
+		"side": "left",
+		"animation": "enter",
+		"text": "(Мысли) Холодно. Нужно найти хоть какую-то зацепку.",
+		"type": "dialogue"
+	},
+	{
+		"character": "hobo",
+		"side": "right",
+		"animation": "enter",
+		"text": "Пссс... эй, шкет. Мелочь есть? А сигаретка?",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Отвали, дед. Самого от голода шатает.",
+		"type": "dialogue"
+	},
+	{
+		"character": "hobo",
+		"side": "right",
+		"text": "Хе-хе. Дерзкий. Детдомовский, да? Глаза голодные, как у волчонка. Работу ищешь, небось?",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Да, ищу. Фасовочный завод, грузчик — плевать. Лишь бы жрать.",
+		"type": "dialogue"
+	},
+	{
+		"character": "hobo",
+		"side": "right",
+		"text": "На заводе ты оставишь здоровье и сдохнешь в 40 лет. Слушай старого мудреца...",
+		"type": "dialogue"
+	},
+	{
+		"character": "hobo",
+		"side": "right",
+		"text": "Хочешь есть от пуза? Иметь власть? Иди в Польскую Разведку. В Академию шпионов.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Шпионов? Я сирота без образования. Кто меня туда возьмёт?",
+		"type": "dialogue"
+	},
+	{
+		"character": "hobo",
+		"side": "right",
+		"text": "В том и суть, дурень! Им нужны люди без корней. Без семьи. Такие, по которым никто не будет плакать, если они исчезнут.",
+		"type": "dialogue"
+	},
+	{
+		"character": "hobo",
+		"side": "right",
+		"text": "Мордой торговать научат, ствол дадут. Академия тут недалеко. Раскинь мозгами, парень.",
+		"type": "dialogue"
+	},
+	{
+		"character": "hobo",
+		"animation": "leave",
+		"text": "..."
+	},
+	{
+		"character": "",
+		"text": "Бродяга растворился в подворотне. Данила остался стоять на холодном ветру.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Академия Разведки... Суицид или шанс? Нужно вернуться домой, посидеть, подумать обо всём этом.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["fade_out"],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": ["polish_home", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Данила вернулся в свою сырую конуру. Живот сводило от голода.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"side": "left",
+		"animation": "enter",
+		"text": "Наконец-то дома. Хотя домом это назвать язык не поворачивается.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["hunger", 20],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["energy", 40],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"options": [
+			{
+				"text": "🍳 Обыскать холодильник на предмет еды",
+				"children": [
+					{
+						"character": "danila",
+						"text": "Так... Чёрствая горбушка хлеба и засохший кусок дешёвой колбасы. С водой пойдёт.",
+						"type": "dialogue"
+					},
+					{
+						"character": "",
+						"text": "Вы перекусили. Показатель сытости частично восстановлен.",
+						"type": "dialogue"
+					},
+					{
+						"args": ["hunger", "+50"],
+						"name": "set",
+						"type": "command"
+					}
+				]
+			},
+			{
+				"text": "🛏️ Сесть на кровать и подумать о словах бродяги",
+				"children": [
+					{
+						"character": "danila",
+						"text": "Я сирота, никому не нужный в этом сером городе. Государство выкинуло меня на произвол судьбы.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"text": "Этот старик прав. Академия — единственный билет наверх. Иначе я закончу жизнь у фасовочного станка.",
+						"type": "dialogue"
+					}
+				]
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "danila",
+		"text": "Решено. Завтра же иду искать Академию Разведки на карте города.",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
-		"text": "Это был шанс. Шанс стать кем-то значимым.",
+		"text": "Данила закрыл глаза. Наступил новый день, полный неизвестности.",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
-		"text": "Я подал заявление.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Данила решился. Академия Разведки — единственный шанс на другую жизнь.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Пойду в Академию. Главное пройти вступительные экзамены.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Где-то тут должна быть карта города. Пора в путь.",
+		"text": "Так-с... посмотрим, что тут за карта.",
 		"type": "dialogue"
 	},
 	{
@@ -178,6 +246,15 @@
 		"args": ["system_pass_time", 1],
 		"name": "set",
 		"type": "command"
+	},
+	{
+		"args": ["current_day", 1],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["current_time", 0],
+		"name": "set",
+		"type": "command"
 	}
 ]
-

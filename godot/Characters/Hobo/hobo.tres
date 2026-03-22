@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Character" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Characters/Character.gd" id="1"]
+[ext_resource type="Texture2D" path="res://Characters/Worker/worker_neutral.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "hobo"
+display_name = "Уличный Бродяга"
+bio = "Местный философ. Знает всё о Варшаве."
+age = 60
+default_image = "neutral"
+images = {
+"neutral": ExtResource("2")
+}

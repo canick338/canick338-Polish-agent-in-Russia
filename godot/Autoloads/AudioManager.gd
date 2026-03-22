@@ -295,6 +295,7 @@ const SFX_PATHS = {
 	"unlock": "res://Assets/Audio/SFX/UI/unlock.ogg",
 	"quest_update": "res://Assets/Audio/SFX/UI/quest_update.ogg",
 	"notification": "res://Assets/Audio/SFX/UI/notification.ogg",
+	"map_open": "res://Assets/Audio/SFX/UI/map_open.ogg",
 	"map_node_hover": "res://Assets/Audio/SFX/UI/map_hover.ogg",
 	"map_node_click": "res://Assets/Audio/SFX/UI/map_click.ogg",
 	"phone_open": "res://Assets/Audio/SFX/UI/phone_open.ogg",
@@ -348,8 +349,10 @@ func _play_synth_event(event_name: String) -> void:
 			freq = 900.0; duration = 0.08; volume = -10.0
 		"transition_fade":
 			freq = 300.0; duration = 0.3; volume = -15.0
+		"map_open":
+			freq = 150.0; duration = 0.5; volume = -8.0; wave_type = 1
 		"time_pass":
-			freq = 500.0; duration = 0.2; volume = -12.0
+			freq = 500.0; duration = 0.5; volume = -10.0
 		"sleep":
 			freq = 250.0; duration = 0.5; volume = -15.0
 		"unlock":
