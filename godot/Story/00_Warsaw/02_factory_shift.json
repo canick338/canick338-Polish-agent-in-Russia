@@ -9,14 +9,17 @@
     },
     {
         "character": "",
-        "text": "Первый день на заводе.",
-        "translation_key": "PREQUEL_DANILA_85d393b9",
+        "text": "Первый день на Заводе Карла Обломова. Прикрытие началось.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "(Мысли) Нужно вести себя как обычный работяга. Не привлекать внимание.",
         "type": "dialogue"
     },
     {
         "character": "boss_of_factory",
         "text": "Так, новичок! Меня зовут Бронислав. Я начальник.",
-        "translation_key": "PREQUEL_DANILA_f6345a1a",
         "type": "dialogue"
     },
     {
@@ -556,6 +559,21 @@
         "character": "boss_of_factory",
         "text": "Хорошо. Завтра приходи снова.",
         "translation_key": "PREQUEL_DANILA_0cd17900",
+        "type": "dialogue"
+    },
+    {
+        "character": "worker",
+        "text": "Эй, парень. Смена окончена. Мы тут с мужиками в подсобке в карты перекидываемся. Заходи, если есть лишние гроши.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "В карты? Буду иметь в виду.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Вы узнали про подсобку. Теперь туда можно зайти с Карты Мира.",
         "type": "dialogue"
     },
     {

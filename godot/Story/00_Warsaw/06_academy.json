@@ -1,42 +1,19 @@
 [
 	{
-		"args": ["warsaw_metro", ""],
+		"args": ["officer_school", ""],
 		"name": "background",
 		"type": "command"
 	},
 	{
 		"character": "",
-		"text": "Недели работы на заводе. Каждый день — тяжёлый труд.",
+		"text": "Академия Польской Разведки. Сердце государственного шпионажа.",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
-		"text": "Я устал. Очень устал. Но я выжил. Заработал немного денег.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Метро. Ежедневные поездки.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Однажды, в вагоне метро, он увидел плакат.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Школа офицеров польской разведки...",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Сердце забилось чаще. Это было оно.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Судьба дала мне шанс.",
+		"side": "left",
+		"animation": "enter",
+		"text": "Это мой шанс. Легальная работа, да ещё и на правительство.",
 		"type": "dialogue"
 	},
 	{
@@ -45,53 +22,81 @@
 		"type": "command"
 	},
 	{
-		"args": ["officer_school", ""],
+		"args": ["office", ""],
 		"name": "background",
 		"type": "command"
 	},
 	{
 		"character": "",
-		"text": "Академия Польской Разведки.",
+		"text": "Данилу проводили в Главный Кабинет.",
 		"type": "dialogue"
 	},
 	{
-		"character": "",
-		"text": "Экзамены. Тренировки. Жесткая дисциплина.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Я был готов. Готов ко всему.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Сирота, который вырос на улицах, стал одним из лучших.",
+		"character": "chief",
+		"side": "right",
+		"animation": "enter",
+		"mood": "chief_smile",
+		"text": "А, новый рекрут! Я видел твоё досье, парень. Сирота, выросший на улицах Варшавы. То, что нужно.",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
-		"text": "Они научили меня быть невидимым. Собирать информацию. Действовать.",
+		"text": "Здравствуйте, пан Генерал.",
 		"type": "dialogue"
 	},
 	{
+		"character": "chief",
+		"mood": "chief_pointing_smile",
+		"text": "Здесь я делаю из уличных крыс настоящих львов! Добро пожаловать, сынок.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["fade_out"],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": ["factory_street", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
 		"character": "",
-		"text": "Но главное — они дали мне цель. Принадлежность.",
+		"text": "Учёба началась. Это был ад. Физические нагрузки на пределе возможностей.",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
-		"text": "Я больше не был один.",
+		"text": "(Мысли) Меня били, заставляли не спать сутками. Но я терпел. Ради нормальной жизни.",
 		"type": "dialogue"
 	},
 	{
 		"character": "",
-		"text": "Годы обучения пролетели быстро.",
+		"text": "Помимо мускулов, качали и мозги: криптография, психология допроса, слежка.",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"side": "right",
+		"animation": "enter",
+		"mood": "chief_shouting",
+		"text": "Агент не должен чувствовать боли! Агент должен быть тенью!",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
-		"text": "Я стал лучшим выпускником. Агентом.",
+		"text": "Они научили меня быть невидимым. Собирать информацию и выживать.",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"animation": "leave",
+		"type": "dialogue",
+		"text": "..."
+	},
+	{
+		"character": "",
+		"text": "Месяцы изнурительной подготовки подошли к концу. Сирота с улиц стал профессионалом. Выпускной.",
 		"type": "dialogue"
 	},
 	{
@@ -100,14 +105,121 @@
 		"type": "command"
 	},
 	{
-		"character": "danila",
-		"text": "И вот я здесь. Агент. Готов к миссии.",
+		"args": ["fade_out"],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": ["office", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "chief",
+		"side": "right",
+		"animation": "enter",
+		"mood": "chief_neutral",
+		"text": "Марек. Так теперь тебя зовут. Твоё обучение окончено, пора послужить Польше.",
 		"type": "dialogue"
 	},
 	{
 		"character": "danila",
-		"text": "За Польшу. За свою страну.",
+		"side": "left",
+		"animation": "enter",
+		"text": "Я готов, Генерал Джонни. В чём заключается миссия?",
 		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"mood": "chief_crazy_pointing",
+		"text": "Россия. Город Обоянь! Там спрятана секретная лаборатория. Ты должен узнать, что они там прячут!",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"mood": "chief_neutral",
+		"text": "Но мы не пошлём тебя туда как агента. Ты поедешь как нелегал-мигрант. И чтобы это выглядело правдоподобно...",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"mood": "chief_smile",
+		"text": "Тебе придётся устроиться на наш тайный Завод Карла Обломова здесь, в Варшаве.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Работать на фасовочном заводе? Для чего?",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"mood": "chief_shouting",
+		"text": "ЛЕГЕНДА! Ты должен заработать деньги на билет своими руками. У тебя будет неделя, чтобы накопить 500$ и явиться сюда за отчётом!",
+		"type": "dialogue"
+	},
+	{
+		"character": "chief",
+		"mood": "chief_neutral",
+		"text": "Берёшься за эту миссию, Марек?",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"text": "🤝 Так точно! (Стать Агентом, 7 дней)",
+				"children": [
+					{
+						"character": "danila",
+						"text": "Я не подведу. Через неделю у меня будут деньги и прикрытие.",
+						"type": "dialogue"
+					},
+					{
+						"character": "chief",
+						"mood": "chief_smile",
+						"text": "Отличный настрой. Приходи в штаб, когда заработаешь 500$.",
+						"type": "dialogue"
+					},
+					{
+						"args": ["accepted_johny", 1],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": ["days_left", 7],
+						"name": "set",
+						"type": "command"
+					}
+				]
+			},
+			{
+				"text": "✋ Нет. Я возвращаюсь к мирной жизни (Выживать 50 дней)",
+				"children": [
+					{
+						"character": "danila",
+						"text": "Знаете... Я передумал. Шпионаж — это смерть. Я просто пойду работать на завод Питером и буду жить мирно.",
+						"type": "dialogue"
+					},
+					{
+						"character": "chief",
+						"mood": "chief_crazy_pointing",
+						"text": "ЧТО?! Трус! Вон из моего кабинета! Наслаждайся своей жалкой мирной жизнью!",
+						"type": "dialogue"
+					},
+					{
+						"args": ["refused_johny", 1],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": ["days_left", -1],
+						"name": "set",
+						"type": "command"
+					}
+				]
+			}
+		],
+		"type": "choice"
 	},
 	{
 		"args": ["prologue_act_2_done", 1],
@@ -115,7 +227,7 @@
 		"type": "command"
 	},
 	{
-		"args": ["system_sleep", 1],
+		"args": ["system_pass_time", 1],
 		"name": "set",
 		"type": "command"
 	}

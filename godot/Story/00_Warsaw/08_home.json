@@ -1,0 +1,44 @@
+[
+	{
+		"args": ["polish_home", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "danila",
+		"side": "left",
+		"animation": "enter",
+		"text": "Моя съёмная конура. Мрачно, но крыша над головой есть.",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"text": "🛏️ Лечь спать (Начнётся новый день)",
+				"children": [
+					{
+						"args": ["res://Story/00_Warsaw/system_sleep.json"],
+						"name": "scene",
+						"type": "command"
+					}
+				]
+			},
+			{
+				"text": "🚪 Выйти на городскую Карту",
+				"children": [
+					{
+						"character": "danila",
+						"text": "Пора за дело.",
+						"type": "dialogue"
+					},
+					{
+						"args": [],
+						"name": "end_scene",
+						"type": "command"
+					}
+				]
+			}
+		],
+		"type": "choice"
+	}
+]

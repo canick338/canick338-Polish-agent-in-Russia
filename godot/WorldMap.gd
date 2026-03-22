@@ -66,10 +66,6 @@ func _ready() -> void:
 	# Tutorial: first time on map
 	if Variables.get_variable("map_tutorial_done") != 1:
 		_run_map_tutorial()
-	elif Variables.get_variable("prologue_act_3_done") == 1:
-		# 20% chance of random street event each time player enters map
-		if randi() % 5 == 0:
-			_trigger_random_event()
 
 func _run_map_tutorial() -> void:
 	Variables.add_variable("map_tutorial_done", 1)
@@ -234,6 +230,11 @@ func _update_time_hud() -> void:
 	if day == 0: day = 1
 	var time_idx = Variables.get_variable("current_time")
 	if time_idx < 0 or time_idx > 3: time_idx = 0
+	
+	if time_idx == 3:
+		Variables.add_variable("is_night", 1)
+	else:
+		Variables.add_variable("is_night", 0)
 	
 	var hud_wrapper = Control.new()
 	hud_wrapper.name = "AnimeHUD_Wrapper"
@@ -571,6 +572,21 @@ func _on_node_clicked(scene_path: String) -> void:
 		_handle_exhaustion()
 		return
 		
+	# Ироничная концовка "Долгая счастливая жизнь на заводе" (50 дней)
+	if scene_path.ends_with("02_factory_shift.json"):
+		if int(Variables.get_variable("current_day", 1)) >= 50 and int(Variables.get_variable("refused_johny", 0)) == 1:
+			scene_requested.emit("res://Story/00_Warsaw/factory_death_ending.json")
+			return
+		
+	# 15% шанс случайного события в пути
+	if randf() < 0.15:
+		var event_type = (randi() % 4) + 1
+		Variables.add_variable("random_event_type", event_type)
+		var event_path = "res://Story/00_Warsaw/random_event.json"
+		if FileAccess.file_exists(event_path):
+			scene_requested.emit(event_path)
+			return
+			
 	scene_requested.emit(scene_path)
 
 func _on_node_hovered(title: String, desc: String, icon: String, pos: Vector2, chibi_id: String, chibi_path: String) -> void:
@@ -1032,44 +1048,34 @@ func _on_phone_pressed() -> void:
 	else:
 		get_node("PhoneHUD").toggle()
 
-func _trigger_random_event() -> void:
-	var event_type = (randi() % 4) + 1  # 1 to 4
-	Variables.add_variable("random_event_type", event_type)
-	await get_tree().create_timer(0.8).timeout
-	var event_path = "res://Story/00_Warsaw/random_event.json"
-	if FileAccess.file_exists(event_path):
-		scene_requested.emit(event_path)
-
-# === REAL-TIME CLOCK TICK ===
-func _on_time_tick() -> void:
+func _advance_time_action() -> void:
 	var time_idx = Variables.get_variable("current_time")
 	if time_idx < 0 or time_idx > 3: time_idx = 0
 	
 	time_idx += 1
 	if time_idx > 3:
 		time_idx = 0
-		# Новый день!
-		var day = Variables.get_variable("current_day")
-		if day == 0: day = 1
+		var day = Variables.get_variable("current_day", 1)
 		Variables.add_variable("current_day", day + 1)
-		print("⏰ Новый день: ", day + 1)
 	
 	Variables.add_variable("current_time", time_idx)
-	_time_elapsed = 0.0 # Reset the sub-timer
-	print("⏰ Время сменилось: ", TIME_NAMES[time_idx], " (idx=", time_idx, ")")
+	_time_elapsed = 0.0 # Reset interpolation
 	
-	# Трата статов от времени
-	var h = int(Variables.get_variable("hunger", 100)) - 5
-	var e = int(Variables.get_variable("energy", 100)) - 5
+	# Action cost
+	var h = int(Variables.get_variable("hunger", 100)) - 20
+	var e = int(Variables.get_variable("energy", 100)) - 20
 	Variables.add_variable("hunger", clamp(h, 0, 100))
 	Variables.add_variable("energy", clamp(e, 0, 100))
 	
-	# Обновляем все визуалы плавно
 	_update_weather_visuals(time_idx)
 	_update_time_hud()
 	
 	if h <= 0 or e <= 0:
 		_handle_exhaustion()
+
+# === REAL-TIME CLOCK TICK (DISABLED) ===
+func _on_time_tick() -> void:
+	pass # Вся логика времени теперь работает по действиям (system_pass_time)
 
 func _handle_exhaustion() -> void:
 	print("🚨 ОБМОРОК ОТ ИСТОЩЕНИЯ!")
@@ -1131,6 +1137,13 @@ const LIGHT_STATES = [
 ]
 
 func _process(delta: float) -> void:
+	# Check for requested time leaps from JSON scenarios
+	var passed = Variables.get_variable("system_pass_time", 0)
+	if passed > 0:
+		Variables.add_variable("system_pass_time", 0)
+		for i in range(passed):
+			_advance_time_action()
+
 	_time_elapsed += delta
 	
 	var time_idx = Variables.get_variable("current_time")

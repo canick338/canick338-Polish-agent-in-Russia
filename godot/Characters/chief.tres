@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="Character" load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://Characters/Character.gd" id="1"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Polishcompany/PolishGeneral/chief_neutral.png" id="2"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Polishcompany/PolishGeneral/chief_smile.png" id="3"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Polishcompany/PolishGeneral/chief_pointing_smile.png" id="4"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Polishcompany/PolishGeneral/chief_crazy_pointing.png" id="5"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Polishcompany/PolishGeneral/chief_shouting.png" id="6"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Polishcompany/PolishGeneral/chief_phone_on.png" id="7"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Polishcompany/PolishGeneral/chief_phone_off.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://df708ovtyb7nt" path="res://danilassets/characters/Polishcompany/PolishGeneral/chief_shouting_messenger.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://b1mms3r42q4b3" path="res://danilassets/characters/Polishcompany/PolishGeneral/chief_flag_phone.png" id="10"]
+
+[resource]
+script = ExtResource("1")
+id = "chief"
+display_name = "Генерал Джонни"
+bio = "Глава Польской Разведки. Любит кричать и раздавать смартфоны."
+age = 55
+default_image = "chief_neutral"
+images = {
+"chief_neutral": ExtResource("2"),
+"chief_smile": ExtResource("3"),
+"chief_pointing_smile": ExtResource("4"),
+"chief_crazy_pointing": ExtResource("5"),
+"chief_shouting": ExtResource("6"),
+"chief_phone_on": ExtResource("7"),
+"chief_phone_off": ExtResource("8"),
+"chief_shouting_messenger": ExtResource("9"),
+"chief_flag_phone": ExtResource("10")
+}

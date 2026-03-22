@@ -10,6 +10,26 @@
 		"type": "command"
 	},
 	{
+		"args": ["current_time", 0],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["current_day", "+1"],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["energy", 100],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["hunger", 100],
+		"name": "set",
+		"type": "command"
+	},
+	{
 		"character": "",
 		"text": "*Вы поспали. Наступил следующий день!*",
 		"type": "dialogue"
