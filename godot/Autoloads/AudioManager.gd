@@ -40,7 +40,17 @@ var _ambience_current_path: String = ""
 var _radio: AudioStreamPlayer
 var _radio_current_path: String = ""
 
+# Spectrum Analysis
+var _spectrum_analyzer: AudioEffectSpectrumAnalyzer
+var _spectrum_instance: AudioEffectSpectrumAnalyzerInstance
+
 func _ready() -> void:
+	# --- Setup Spectrum Analyzer on Master Bus ---
+	var bus_idx = AudioServer.get_bus_index("Master")
+	_spectrum_analyzer = AudioEffectSpectrumAnalyzer.new()
+	AudioServer.add_bus_effect(bus_idx, _spectrum_analyzer)
+	_spectrum_instance = AudioServer.get_bus_effect_instance(bus_idx, AudioServer.get_bus_effect_count(bus_idx) - 1)
+	
 	# --- BGM: Two players for crossfade ---
 	_bgm_a = AudioStreamPlayer.new()
 	_bgm_a.bus = "Master"
@@ -454,3 +464,28 @@ func play_scene_bgm(scene_path: String) -> void:
 				file = d.get_next()
 	
 	# No scene-specific music found — don't stop what's already playing
+
+# ========================
+# 📊 REAL-TIME AUDIO ANALYSIS
+# ========================
+
+## Get magnitude of a specific frequency range (e.g. 20-200 for bass)
+func get_spectrum_magnitude(from_hz: float, to_hz: float) -> float:
+	if _spectrum_instance:
+		var mag: Vector2 = _spectrum_instance.get_magnitude_for_frequency_range(from_hz, to_hz, AudioEffectSpectrumAnalyzerInstance.MAGNITUDE_AVERAGE)
+		return mag.length()
+	return 0.0
+
+## Helper to quickly get the current "kick drum" / bass intensity (0.0 to 1.0+)
+func get_bass_intensity() -> float:
+	# Bass range is typically 20Hz - 200Hz
+	var raw_mag = get_spectrum_magnitude(20.0, 200.0)
+	# Map typical volume levels (-40db to 0db) to a 0..1 scale. 
+	# Raw magnitude is linear. A strong kick often hits > 0.1 linear magnitude.
+	return clampf(raw_mag * 5.0, 0.0, 1.0)
+
+## Helper to get mid frequencies (vocals, melody) intensity
+func get_mid_intensity() -> float:
+	# Mid range 200Hz - 2000Hz
+	var raw_mag = get_spectrum_magnitude(200.0, 2000.0)
+	return clampf(raw_mag * 8.0, 0.0, 1.0)

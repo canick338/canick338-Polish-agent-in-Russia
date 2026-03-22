@@ -17,8 +17,8 @@ var _world_map_instance: Control = null
 
 
 func _ready() -> void:
-	# Сначала показываем главное меню
-	show_main_menu()
+	# Сначала показываем кинематографическую заставку, потом меню
+	_show_splash()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -35,6 +35,16 @@ func show_pause_menu():
 		var menu = PAUSE_MENU_SCENE.instantiate()
 		add_child(menu)
 		# Menu script handles pausing the tree in _ready
+
+func _show_splash() -> void:
+	"""Показать заставку студии перед главным меню"""
+	var splash_scene = load("res://SplashScreen.tscn")
+	if splash_scene:
+		var splash = splash_scene.instantiate()
+		add_child(splash)
+		splash.splash_finished.connect(show_main_menu)
+	else:
+		show_main_menu()
 
 func show_main_menu() -> void:
 	"""Показать главное меню"""
