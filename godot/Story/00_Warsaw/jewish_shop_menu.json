@@ -1,0 +1,216 @@
+[
+    {
+        "args": ["polish_shop", ""],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "options": [
+            {
+                "text": "Купить билет и документы О-13 (500 zł)",
+                "children": [
+                    {
+                        "condition": "warsaw_ticket_bought==1",
+                        "type": "if",
+                        "then": [
+                            {
+                                "character": "jew",
+                                "side": "right",
+                                "expression": "smiling",
+                                "text": "Ты уже купил свой билет, мой юный друг. Второй тебе ни к чему, если только ты не планируешь раздвоиться.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "args": ["res://Story/00_Warsaw/jewish_shop_menu.json"],
+                                "name": "scene",
+                                "type": "command"
+                            }
+                        ],
+                        "elif": [
+                            {
+                                "condition": "money>=500",
+                                "then": [
+                                    {
+                                        "args": ["money", "-500"],
+                                        "name": "set",
+                                        "type": "command"
+                                    },
+                                    {
+                                        "args": ["warsaw_ticket_bought", 1],
+                                        "name": "set",
+                                        "type": "command"
+                                    },
+                                    {
+                                        "character": "jew",
+                                        "side": "right",
+                                        "expression": "smiling",
+                                        "text": "Отличный выбор. Вот твой 'Чистый лист'. Паспорт на имя Якуба Ковальски и билет на грузовой поезд.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "danila",
+                                        "expression": "serious",
+                                        "text": "Наконец-то. Теперь я готов.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "args": ["res://Story/00_Warsaw/jewish_shop_menu.json"],
+                                        "name": "scene",
+                                        "type": "command"
+                                    }
+                                ]
+                            }
+                        ],
+                        "else": [
+                            {
+                                "character": "jew",
+                                "side": "right",
+                                "expression": "surprised",
+                                "text": "Вейзмир... У тебя не хватает злотых. Я, конечно, добрый еврей, но благотворительностью не занимаюсь. Возвращайся, когда накопишь 500.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "args": ["res://Story/00_Warsaw/jewish_shop_menu.json"],
+                                "name": "scene",
+                                "type": "command"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "text": "Купить Польский Кебаб - +40 Сытости (25 zł)",
+                "children": [
+                    {
+                        "condition": "money>=25",
+                        "type": "if",
+                        "then": [
+                            {
+                                "args": ["money", "-25"],
+                                "name": "set",
+                                "type": "command"
+                            },
+                            {
+                                "args": ["hunger", "+40"],
+                                "name": "set",
+                                "type": "command"
+                            },
+                            {
+                                "character": "jew",
+                                "side": "right",
+                                "expression": "smiling",
+                                "text": "Свежайший, только из микроволновки! Наслаждайся ресурсом.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "danila",
+                                "text": "Данила съедает кебаб. Сытость восстановлена.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "args": ["res://Story/00_Warsaw/jewish_shop_menu.json"],
+                                "name": "scene",
+                                "type": "command"
+                            }
+                        ],
+                        "else": [
+                            {
+                                "character": "jew",
+                                "side": "right",
+                                "expression": "neutral",
+                                "text": "Нет денег — нет кебаба. Это золотое правило капитализма.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "args": ["res://Story/00_Warsaw/jewish_shop_menu.json"],
+                                "name": "scene",
+                                "type": "command"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "text": "Купить Энергетик 'Żywiec' - +50 Энергии (20 zł)",
+                "children": [
+                    {
+                        "condition": "money>=20",
+                        "type": "if",
+                        "then": [
+                            {
+                                "args": ["money", "-20"],
+                                "name": "set",
+                                "type": "command"
+                            },
+                            {
+                                "args": ["energy", "+50"],
+                                "name": "set",
+                                "type": "command"
+                            },
+                            {
+                                "character": "jew",
+                                "side": "right",
+                                "expression": "smiling",
+                                "text": "Бьёт по сердцу, как кувалда, но зато глаза не слипаются!",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "danila",
+                                "text": "Данила выпивает банку ядерной химии. Энергия восстановлена.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "args": ["res://Story/00_Warsaw/jewish_shop_menu.json"],
+                                "name": "scene",
+                                "type": "command"
+                            }
+                        ],
+                        "else": [
+                            {
+                                "character": "jew",
+                                "side": "right",
+                                "expression": "neutral",
+                                "text": "Даже на банку газировки не хватает? Иди поработай.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "args": ["res://Story/00_Warsaw/jewish_shop_menu.json"],
+                                "name": "scene",
+                                "type": "command"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "text": "Уйти",
+                "children": [
+                    {
+                        "character": "danila",
+                        "expression": "neutral",
+                        "text": "До встречи, Шломо.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "jew",
+                        "side": "right",
+                        "expression": "neutral",
+                        "text": "Будь осторожен на этих тёмных улицах, Якуб Ковальски.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": ["fade_out"],
+                        "name": "transition",
+                        "type": "command"
+                    },
+                    {
+                        "args": ["WorldMap"],
+                        "name": "scene",
+                        "type": "command"
+                    }
+                ]
+            }
+        ],
+        "type": "choice"
+    }
+]

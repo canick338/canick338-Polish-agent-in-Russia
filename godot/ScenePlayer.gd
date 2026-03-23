@@ -10,6 +10,8 @@ signal scene_event(event_name, args)
 const KEY_END_OF_SCENE := -1
 const KEY_RESTART_SCENE := -2
 
+var next_scene_path: String = ""
+
 ## Maps transition keys to a corresponding function to call.
 const TRANSITIONS := {
 	fade_in = "_appear_async",
@@ -230,10 +232,12 @@ func run_scene(start_key: int = 0) -> void:
 
 		# Change to another scene
 		elif node is SceneTranspiler.SceneCommandNode:
-			if node.scene_path == "next_scene":
+			if node.scene_path == "next_scene" or node.scene_path == "WorldMap":
+				next_scene_path = ""
 				key = KEY_END_OF_SCENE
 			else:
-				key = node.next
+				next_scene_path = node.scene_path
+				key = KEY_END_OF_SCENE
 
 		# Unlock Card/Dossier
 		elif node is SceneTranspiler.UnlockCommandNode:

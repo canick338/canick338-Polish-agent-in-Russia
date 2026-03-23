@@ -1,17 +1,115 @@
 [
     {
-        "args": [
-            "factory_inside",
-            ""
+        "type": "if",
+        "condition": "factory_work_done==1",
+        "then": [
+            {
+                "args": ["factory_inside", ""],
+                "name": "background",
+                "type": "command"
+            },
+            {
+                "character": "danila",
+                "side": "left",
+                "animation": "enter",
+                "expression": "tired",
+                "text": "Снова завод. Приторный клубничный дым и бесконечный конвейер.",
+                "type": "dialogue"
+            },
+            {
+                "character": "boss_of_factory",
+                "side": "right",
+                "animation": "enter",
+                "expression": "angry",
+                "text": "Меньше мыслей, больше работы, стажёр! Живо на линию!",
+                "type": "dialogue"
+            },
+            {
+                "args": ["factory_jam"],
+                "name": "minigame",
+                "type": "command"
+            },
+            {
+                "character": "",
+                "text": "Смена окончена. Конвейер останавливается.",
+                "type": "dialogue"
+            },
+            {
+                "type": "if",
+                "condition": "factory_jam_final_score>=20",
+                "then": [
+                    {
+                        "character": "boss_of_factory",
+                        "side": "right",
+                        "expression": "happy",
+                        "text": "Отличная скорость. Держи премию.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": ["money", "+80"],
+                        "name": "set",
+                        "type": "command"
+                    }
+                ],
+                "elif": [
+                    {
+                        "condition": "factory_jam_final_score>=8",
+                        "then": [
+                            {
+                                "character": "boss_of_factory",
+                                "side": "right",
+                                "expression": "neutral",
+                                "text": "Нормально поработал. Вот деньги.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "args": ["money", "+50"],
+                                "name": "set",
+                                "type": "command"
+                            }
+                        ]
+                    }
+                ],
+                "else": [
+                    {
+                        "character": "boss_of_factory",
+                        "side": "right",
+                        "expression": "angry",
+                        "text": "Ужас! Вычту штраф за разбитые банки!",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": ["money", "+15"],
+                        "name": "set",
+                        "type": "command"
+                    }
+                ]
+            },
+            {
+                "args": ["fade_out"],
+                "name": "transition",
+                "type": "command"
+            },
+            {
+                "args": ["WorldMap"],
+                "name": "scene",
+                "type": "command"
+            }
         ],
-        "name": "background",
-        "type": "command"
-    },
-    {
-        "character": "",
-        "text": "Фасовочный Завод Карла Обломова. Лёгкий сладкий запах клубничного джема смешивался с удушливой химической гарью промышленных моющих средств.",
-        "type": "dialogue"
-    },
+        "else": [
+            {
+                "args": [
+                    "factory_inside",
+                    ""
+                ],
+                "name": "background",
+                "type": "command"
+            },
+            {
+                "character": "",
+                "text": "Фасовочный Завод Карла Обломова. Лёгкий сладкий запах клубничного джема смешивался с удушливой химической гарью промышленных моющих средств.",
+                "type": "dialogue"
+            },
     {
         "character": "danila",
         "side": "left",
@@ -469,5 +567,7 @@
         ],
         "name": "scene",
         "type": "command"
+    }
+        ]
     }
 ]

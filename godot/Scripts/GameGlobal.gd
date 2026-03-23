@@ -94,6 +94,13 @@ func load_persistent_data_only() -> void:
 			if "unlocked_cards" in loaded_data: save_data["unlocked_cards"] = loaded_data["unlocked_cards"]
 			print("Persistent data loaded (Money, Cards).")
 
+func reset_new_game() -> void:
+	"""Resets the global state to default values for a new playthrough."""
+	save_data.clear()
+	save_data["money"] = 30
+	save_data["unlocked_cards"] = []
+	save_game()
+
 
 func apply_settings() -> void:
 	var config = ConfigFile.new()

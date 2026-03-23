@@ -213,14 +213,25 @@ func _on_main_menu_start_game() -> void:
 	else:
 		# Normal new game start — begin with prologue dialogue, NOT the map
 		Variables.clear_all_variables()
-		if GameGlobal and GameGlobal.has_method("save_project_state"):
-			GameGlobal.save_data.clear()
-			GameGlobal.save_project_state()
+		if GameGlobal and GameGlobal.has_method("reset_new_game"):
+			GameGlobal.reset_new_game()
 		# Play the intro streets scene first (orphanage flashback)
 		# The map will appear only after this scene finishes via _on_ScenePlayer_scene_finished
 		_play_scene_from_path("res://Story/00_Warsaw/01_intro_streets.json")
 
 func _on_ScenePlayer_scene_finished() -> void:
+	if _scene_player and _scene_player.next_scene_path != "":
+		var next_path = _scene_player.next_scene_path
+		_scene_player.next_scene_path = ""
+		_play_scene_from_path(next_path)
+		return
+
+	# Во время пролога время не должно идти (до получения первых заданий)
+	var is_academy_visited = int(Variables.get_variable("academy_visited", 0))
+	if is_academy_visited == 0:
+		show_world_map()
+		return
+
 	# === Продвижение времени после завершения сцены (action-based, как в VN) ===
 	var time_idx = int(Variables.get_variable("current_time", 0))
 	time_idx += 1

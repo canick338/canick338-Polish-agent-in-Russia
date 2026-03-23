@@ -1,335 +1,361 @@
 [
     {
-        "args": [
-            "polish_shop",
-            ""
-        ],
-        "name": "background",
-        "type": "command"
-    },
-    {
-        "character": "",
-        "text": "Лавка древностей пряталась в самом кривом и тёмном переулке старой Варшавы. Вывеска над дверью давно выцвела, глася просто 'Антиквариат и Редкие вещи'.",
-        "type": "dialogue"
-    },
-    {
-        "character": "danila",
-        "side": "left",
-        "animation": "enter",
-        "expression": "serious",
-        "text": "(Мысли) Генерал Джонни отправил меня к стажёру... то есть связному по имени Шломо. Это место — типичный фасад.",
-        "type": "dialogue"
-    },
-    {
-        "character": "danila",
-        "expression": "thinking",
-        "text": "(Мысли) Запах пыли, нафталина и старых книг бьёт в нос. Но я уверен: за правильную сумму здесь можно купить не только старинный портсигар, но и крылатую ракету.",
-        "type": "dialogue"
-    },
-    {
-        "character": "",
-        "text": "Из-за высокого прилавка, заваленного дореволюционными часами, бронзовыми канделябрами и стопками пожелтевших газет, медленно поднялся пожилой человек.",
-        "type": "dialogue"
-    },
-    {
-        "character": "jew",
-        "side": "right",
-        "animation": "enter",
-        "expression": "neutral",
-        "text": "Шолом алейхем. Чем бедная антикварная лавка старого Шломо может порадовать столь напряжённого и промокшего юношу в столь поздний час?",
-        "type": "dialogue"
-    },
-    {
-        "options": [
+        "type": "if",
+        "condition": "shlomo_intro_done==1",
+        "then": [
             {
-                "text": "Сразу перейти к делу",
-                "children": [
-                    {
-                        "character": "danila",
-                        "expression": "serious",
-                        "text": "Мне не нужны ваши канделябры. Я от Джонни. Мне нужен 'билет в один конец' и пакет новых документов.",
-                        "type": "dialogue"
-                    },
-                    {
-                        "character": "jew",
-                        "side": "right",
-                        "expression": "smiling",
-                        "text": "Ох уж эта молодёжь... Никакого такта. Никакого уважения к искусству беседы.",
-                        "type": "dialogue"
-                    }
-                ]
+                "args": [
+                    "polish_shop",
+                    ""
+                ],
+                "name": "background",
+                "type": "command"
             },
             {
-                "text": "Осмотреть антиквариат (Тонкий подход)",
-                "children": [
-                    {
-                        "character": "danila",
-                        "expression": "thinking",
-                        "text": "Красивые часы. Век девятнадцатый? Швейцария?",
-                        "type": "dialogue"
-                    },
-                    {
-                        "character": "jew",
-                        "side": "right",
-                        "expression": "surprised",
-                        "text": "Ого! Глаз-алмаз! Да, швейцарский хронометр. Принадлежал одному графу, пока тот не проиграл его в карты прадедушке Шломо.",
-                        "type": "dialogue"
-                    },
-                    {
-                        "character": "danila",
-                        "expression": "neutral",
-                        "text": "К сожалению, я здесь не за часами. Меня прислал 'любитель гантелей'. Мне нужны документы и особый проездной.",
-                        "type": "dialogue"
-                    },
-                    {
-                        "character": "jew",
-                        "side": "right",
-                        "expression": "smiling",
-                        "text": "Ах, 'любитель гантелей'. Понял-понял. Ваш заказ был предварительно передан по... духовным каналам.",
-                        "type": "dialogue"
-                    }
-                ]
+                "character": "jew",
+                "side": "right",
+                "animation": "enter",
+                "expression": "smiling",
+                "text": "Ах, Якуб Ковальски. Рад видеть. Желаешь проверить мои полки? У старого Шломо всегда есть чем подкрепить силы агента.",
+                "type": "dialogue"
+            },
+            {
+                "args": ["res://Story/00_Warsaw/jewish_shop_menu.json"],
+                "name": "scene",
+                "type": "command"
             }
         ],
-        "type": "choice"
-    },
-    {
-        "character": "jew",
-        "side": "right",
-        "expression": "neutral",
-        "text": "Куда же направляется наш юный друг в столь неспокойное для Европы время?",
-        "type": "dialogue"
-    },
-    {
-        "character": "danila",
-        "expression": "serious",
-        "text": "В Обоянь. Русский город.",
-        "type": "dialogue"
-    },
-    {
-        "character": "",
-        "text": "При упоминании Обояни улыбка на лице Шломо слегка потускнела. Он начал нервно протирать пенсне краем своего засаленного жилета.",
-        "type": "dialogue"
-    },
-    {
-        "character": "jew",
-        "side": "right",
-        "expression": "surprised",
-        "text": "Обоянь... Холодный, мрачный и очень опасный русский город. Вейзмир, там даже летом люди ходят в пуховиках от страха.",
-        "type": "dialogue"
-    },
-    {
-        "character": "jew",
-        "side": "right",
-        "expression": "neutral",
-        "text": "Пакет 'Чистый лист' у меня готов. Новый польский паспорт на имя Якуба Ковальски, пропуск механика и билет на прямой грузо-пассажирский поезд, минующий официальные таможни.",
-        "type": "dialogue"
-    },
-    {
-        "character": "jew",
-        "side": "right",
-        "expression": "smiling",
-        "text": "Цена вопроса — 500 злотых. Круглая, красивая сумма. Исключительно наличными, никаких банковских переводов, мы же не хотим кормить налоговую?",
-        "type": "dialogue"
-    },
-    {
-        "options": [
+        "else": [
             {
-                "text": "Отдать 500 zł (Еле-еле накопил на заводах)",
-                "children": [
+                "args": [
+                    "polish_shop",
+                    ""
+                ],
+                "name": "background",
+                "type": "command"
+            },
+            {
+                "character": "",
+                "text": "Лавка древностей пряталась в самом кривом и тёмном переулке старой Варшавы. Вывеска над дверью давно выцвела, глася просто 'Антиквариат и Редкие вещи'.",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "side": "left",
+                "animation": "enter",
+                "expression": "serious",
+                "text": "(Мысли) Генерал Джонни отправил меня к стажёру... то есть связному по имени Шломо. Это место — типичный фасад.",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "expression": "thinking",
+                "text": "(Мысли) Запах пыли, нафталина и старых книг бьёт в нос. Но я уверен: за правильную сумму здесь можно купить не только старинный портсигар, но и крылатую ракету.",
+                "type": "dialogue"
+            },
+            {
+                "character": "",
+                "text": "Из-за высокого прилавка, заваленного дореволюционными часами, бронзовыми канделябрами и стопками пожелтевших газет, медленно поднялся пожилой человек.",
+                "type": "dialogue"
+            },
+            {
+                "character": "jew",
+                "side": "right",
+                "animation": "enter",
+                "expression": "neutral",
+                "text": "Шолом алейхем. Чем бедная антикварная лавка старого Шломо может порадовать столь напряжённого и промокшего юношу в столь поздний час?",
+                "type": "dialogue"
+            },
+            {
+                "options": [
                     {
-                        "condition": "money>=500",
-                        "type": "if",
-                        "then": [
+                        "text": "Сразу перейти к делу",
+                        "children": [
                             {
-                                "args": [
-                                    "money",
-                                    "-500"
+                                "character": "danila",
+                                "expression": "serious",
+                                "text": "Мне не нужны ваши канделябры. Я от Джонни. Мне нужен 'билет в один конец' и пакет новых документов.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "jew",
+                                "side": "right",
+                                "expression": "smiling",
+                                "text": "Ох уж эта молодёжь... Никакого такта. Никакого уважения к искусству беседы.",
+                                "type": "dialogue"
+                            }
+                        ]
+                    },
+                    {
+                        "text": "Осмотреть антиквариат (Тонкий подход)",
+                        "children": [
+                            {
+                                "character": "danila",
+                                "expression": "thinking",
+                                "text": "Красивые часы. Век девятнадцатый? Швейцария?",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "jew",
+                                "side": "right",
+                                "expression": "surprised",
+                                "text": "Ого! Глаз-алмаз! Да, швейцарский хронометр. Принадлежал одному графу, пока тот не проиграл его в карты прадедушке Шломо.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "danila",
+                                "expression": "neutral",
+                                "text": "К сожалению, я здесь не за часами. Меня прислал 'любитель гантелей'. Мне нужны документы и особый проездной.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "jew",
+                                "side": "right",
+                                "expression": "smiling",
+                                "text": "Ах, 'любитель гантелей'. Понял-понял. Ваш заказ был предварительно передан по... духовным каналам.",
+                                "type": "dialogue"
+                            }
+                        ]
+                    }
+                ],
+                "type": "choice"
+            },
+            {
+                "character": "jew",
+                "side": "right",
+                "expression": "neutral",
+                "text": "Куда же направляется наш юный друг в столь неспокойное для Европы время?",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "expression": "serious",
+                "text": "В Обоянь. Русский город.",
+                "type": "dialogue"
+            },
+            {
+                "character": "",
+                "text": "При упоминании Обояни улыбка на лице Шломо слегка потускнела. Он начал нервно протирать пенсне краем своего засаленного жилета.",
+                "type": "dialogue"
+            },
+            {
+                "character": "jew",
+                "side": "right",
+                "expression": "surprised",
+                "text": "Обоянь... Холодный, мрачный и очень опасный русский город. Вейзмир, там даже летом люди ходят в пуховиках от страха.",
+                "type": "dialogue"
+            },
+            {
+                "character": "jew",
+                "side": "right",
+                "expression": "neutral",
+                "text": "Пакет 'Чистый лист' у меня готов. Новый польский паспорт на имя Якуба Ковальски, пропуск механика и билет на прямой грузо-пассажирский поезд, минующий официальные таможни.",
+                "type": "dialogue"
+            },
+            {
+                "character": "jew",
+                "side": "right",
+                "expression": "smiling",
+                "text": "Цена вопроса — 500 злотых. Круглая, красивая сумма. Исключительно наличными, никаких банковских переводов, мы же не хотим кормить налоговую?",
+                "type": "dialogue"
+            },
+            {
+                "options": [
+                    {
+                        "text": "Отдать 500 zł (Еле-еле накопил на заводах)",
+                        "children": [
+                            {
+                                "condition": "money>=500",
+                                "type": "if",
+                                "then": [
+                                    {
+                                        "args": [
+                                            "money",
+                                            "-500"
+                                        ],
+                                        "name": "set",
+                                        "type": "command"
+                                    },
+                                    {
+                                        "character": "danila",
+                                        "expression": "determined",
+                                        "text": "Вот. Пересчитай. Ровно пять сотен политых потом злотых и пара грошей мелочью.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "jew",
+                                        "side": "right",
+                                        "expression": "smiling",
+                                        "text": "Даже проверять не буду, у тебя честные глаза... Хотя нет, всё же проверю. Минутку... Да, всё верно до копеечки.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "",
+                                        "text": "Шломо достаёт из-под прилавка толстый жёлтый конверт и протягивает его Даниле.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "jew",
+                                        "side": "right",
+                                        "expression": "neutral",
+                                        "text": "Тимофей... то есть, простите, Якуб Ковальски. Твой поезд отходит с секретного перрона Варшавы ровно в полночь.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "danila",
+                                        "expression": "serious",
+                                        "text": "Спасибо. И помните, вы меня никогда не видели, а я никогда здесь не был.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "",
+                                        "text": "Данила прячет конверт во внутренний карман куртки и разворачивается к выходу, гордясь своей безупречной конспирацией.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "jew",
+                                        "side": "right",
+                                        "expression": "neutral",
+                                        "text": "Эй, Агент Ноль...",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "",
+                                        "text": "Данила замирает на месте как вкопанный. Холодный пот выступает у него на лбу.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "danila",
+                                        "expression": "fear",
+                                        "text": "Что?! Как вы меня назвали?! Откуда вы знаете мой секретный позывной?!",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "jew",
+                                        "side": "right",
+                                        "expression": "smiling",
+                                        "text": "Успокойся, мальчик мой. Старый Шломо просто продаёт антиквариат и иногда подслушивает болтливых генералов. Не делай такое лицо, будто увидел призрака.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "jew",
+                                        "side": "right",
+                                        "expression": "serious",
+                                        "text": "Удачи тебе на востоке. И... будь очень осторожен. Смотри не захлебнись 'крепким чаем' барона Карла, когда встретишь его. Этот чай обжигает навсегда.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "danila",
+                                        "expression": "sad",
+                                        "text": "(Мысли) Срань господня... Вся Варшава, включая продавцов антиквариата, знает, кто я такой, зачем еду и кого ловлю. И эти люди называют себя секретной польской разведкой?!",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "danila",
+                                        "expression": "tired",
+                                        "text": "(Вслух) Я... учту ваш совет. Прощайте.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "args": [
+                                            "warsaw_ticket_bought",
+                                            1
+                                        ],
+                                        "name": "set",
+                                        "type": "command"
+                                    },
+                                    {
+                                        "args": [
+                                            "shlomo_intro_done",
+                                            1
+                                        ],
+                                        "name": "set",
+                                        "type": "command"
+                                    },
+                                    {
+                                        "args": ["WorldMap"],
+                                        "name": "scene",
+                                        "type": "command"
+                                    }
                                 ],
-                                "name": "set",
-                                "type": "command"
-                            },
+                                "else": [
+                                    {
+                                        "character": "danila",
+                                        "expression": "sad",
+                                        "text": "Черт. У меня только [money] злотых. Я думал, мы сможем договориться о скидке для сотрудников...",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "jew",
+                                        "side": "right",
+                                        "expression": "laughing",
+                                        "text": "Скидка?! Ой-вей, не смеши старого человека! У меня поставщики фальшивых печатей берут втридорога из-за инфляции!",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "jew",
+                                        "side": "right",
+                                        "expression": "neutral",
+                                        "text": "Шломо ценит твои амбиции спасти мир, но мир не спасёшь с дырой в кармане. Возвращайся, когда заработаешь полную сумму на заводах, парень. До тех пор билет будет лежать в сейфе.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "character": "danila",
+                                        "expression": "angry",
+                                        "text": "(Мысли) Чёртов капитализм. Придётся снова идти горбатиться на Обломова или месить пиццу.",
+                                        "type": "dialogue"
+                                    },
+                                    {
+                                        "args": [
+                                            "shlomo_intro_done",
+                                            1
+                                        ],
+                                        "name": "set",
+                                        "type": "command"
+                                    },
+                                    {
+                                        "args": ["res://Story/00_Warsaw/jewish_shop_menu.json"],
+                                        "name": "scene",
+                                        "type": "command"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "text": "Вернуться позже (Нет полных денег)",
+                        "children": [
                             {
                                 "character": "danila",
-                                "expression": "determined_factory",
-                                "text": "Вот. Пересчитай. Ровно пять сотен политых потом злотых и пара грошей мелочью.",
+                                "expression": "neutral",
+                                "text": "Я передумаю. Знаете, 500 злотых на дороге не валяются. Я приду позже.",
                                 "type": "dialogue"
                             },
                             {
                                 "character": "jew",
                                 "side": "right",
                                 "expression": "smiling",
-                                "text": "Даже проверять не буду, у тебя честные глаза... Хотя нет, всё же проверю. Минутку... Да, всё верно до копеечки.",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "",
-                                "text": "Шломо достаёт из-под прилавка толстый жёлтый конверт и протягивает его Даниле.",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "jew",
-                                "side": "right",
-                                "expression": "neutral",
-                                "text": "Тимофей... то есть, простите, Якуб Ковальски. Твой поезд отходит с секретного перрона Варшавы ровно в полночь.",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "danila",
-                                "expression": "serious",
-                                "text": "Спасибо. И помните, вы меня никогда не видели, а я никогда здесь не был.",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "",
-                                "text": "Данила прячет конверт во внутренний карман куртки и разворачивается к выходу, гордясь своей безупречной конспирацией.",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "jew",
-                                "side": "right",
-                                "expression": "neutral",
-                                "text": "Эй, Агент Ноль...",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "",
-                                "text": "Данила замирает на месте как вкопанный. Холодный пот выступает у него на лбу.",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "danila",
-                                "expression": "fear",
-                                "text": "Что?! Как вы меня назвали?! Откуда вы знаете мой секретный позывной?!",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "jew",
-                                "side": "right",
-                                "expression": "smiling",
-                                "text": "Успокойся, мальчик мой. Старый Шломо просто продаёт антиквариат и иногда подслушивает болтливых генералов. Не делай такое лицо, будто увидел призрака.",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "jew",
-                                "side": "right",
-                                "expression": "serious",
-                                "text": "Удачи тебе на востоке. И... будь очень осторожен. Смотри не захлебнись 'крепким чаем' барона Карла, когда встретишь его. Этот чай обжигает навсегда.",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "danila",
-                                "expression": "sad",
-                                "text": "(Мысли) Срань господня... Вся Варшава, включая продавцов антиквариата, знает, кто я такой, зачем еду и кого ловлю. И эти люди называют себя секретной польской разведкой?!",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "danila",
-                                "expression": "tired",
-                                "text": "(Вслух) Я... учту ваш совет. Прощайте.",
+                                "text": "Конечно-конечно. Дверь старого Шломо всегда открыта для тех, у кого полные карманы. И закрыта для тех, у кого гуляет ветер.",
                                 "type": "dialogue"
                             },
                             {
                                 "args": [
-                                    "got_ticket",
+                                    "shlomo_intro_done",
                                     1
                                 ],
                                 "name": "set",
                                 "type": "command"
                             },
                             {
-                                "args": [
-                                    "fade_out"
-                                ],
-                                "name": "transition",
-                                "type": "command"
-                            },
-                            {
-                                "args": [
-                                    "res://Story/00_Warsaw/05_train_to_oboyan.json"
-                                ],
-                                "name": "scene",
-                                "type": "command"
-                            }
-                        ],
-                        "else": [
-                            {
-                                "character": "danila",
-                                "expression": "sad",
-                                "text": "Черт. У меня только [money] злотых. Я думал, мы сможем договориться о скидке для сотрудников...",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "jew",
-                                "side": "right",
-                                "expression": "laughing",
-                                "text": "Скидка?! Ой-вей, не смеши старого человека! У меня поставщики фальшивых печатей берут втридорога из-за инфляции!",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "jew",
-                                "side": "right",
-                                "expression": "neutral",
-                                "text": "Шломо ценит твои амбиции спасти мир, но мир не спасёшь с дырой в кармане. Возвращайся, когда заработаешь полную сумму на заводах, парень. До тех пор билет будет лежать в сейфе.",
-                                "type": "dialogue"
-                            },
-                            {
-                                "character": "danila",
-                                "expression": "angry",
-                                "text": "(Мысли) Чёртов капитализм. Придётся снова идти горбатиться на Обломова или месить пиццу.",
-                                "type": "dialogue"
-                            },
-                            {
-                                "args": [
-                                    "fade_out"
-                                ],
-                                "name": "transition",
-                                "type": "command"
-                            },
-                            {
-                                "args": [
-                                    "WorldMap"
-                                ],
+                                "args": ["res://Story/00_Warsaw/jewish_shop_menu.json"],
                                 "name": "scene",
                                 "type": "command"
                             }
                         ]
                     }
-                ]
-            },
-            {
-                "text": "Вернуться позже (Нет полных денег)",
-                "children": [
-                    {
-                        "character": "danila",
-                        "expression": "neutral",
-                        "text": "Я передумаю. Знаете, 500 злотых на дороге не валяются. Я приду позже.",
-                        "type": "dialogue"
-                    },
-                    {
-                        "character": "jew",
-                        "side": "right",
-                        "expression": "smiling",
-                        "text": "Конечно-конечно. Дверь старого Шломо всегда открыта для тех, у кого полные карманы. И закрыта для тех, у кого гуляет ветер.",
-                        "type": "dialogue"
-                    },
-                    {
-                        "args": [
-                            "fade_out"
-                        ],
-                        "name": "transition",
-                        "type": "command"
-                    },
-                    {
-                        "args": [
-                            "WorldMap"
-                        ],
-                        "name": "scene",
-                        "type": "command"
-                    }
-                ]
+                ],
+                "type": "choice"
             }
-        ],
-        "type": "choice"
+        ]
     }
 ]

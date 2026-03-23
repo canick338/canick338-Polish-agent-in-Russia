@@ -45,6 +45,10 @@ func add_variable(_name: String, value) -> void:
 				elif value.begins_with("-"):
 					_variables_cache[_name] = current_val - modifier
 					
+				if _name == "money":
+					GameGlobal.player_money = _variables_cache[_name]
+					return # GameGlobal saves its own state
+					
 				_save_to_disk()
 				return
 				
@@ -53,6 +57,10 @@ func add_variable(_name: String, value) -> void:
 			_variables_cache[_name] = value
 		else:
 			_variables_cache[_name] = _evaluate(str(value))
+			
+		if _name == "money":
+			GameGlobal.player_money = _variables_cache[_name]
+			return # GameGlobal handles saving
 	
 	# Save cache to disk
 	_save_to_disk()
@@ -68,10 +76,14 @@ func _save_to_disk() -> void:
 		push_error("Failed to open save file for writing: " + SAVE_FILE_LOCATION)
 
 func get_stored_variables_list() -> Dictionary:
-	# Return the in-memory cache directly
-	return _variables_cache
+	# Return the in-memory cache directly but inject money
+	var temp = _variables_cache.duplicate()
+	temp["money"] = GameGlobal.player_money
+	return temp
 
 func get_variable(name: String, default = 0):
+	if name == "money":
+		return GameGlobal.player_money
 	return _variables_cache.get(name, default)
 
 # Safely converts a string value to the appropriate type
