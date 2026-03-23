@@ -21,11 +21,15 @@ var _tween: Tween
 @onready var _left_sprite: Sprite2D = $Left
 @onready var _right_sprite: Sprite2D = $Right
 
-## Храним оригинальные позиции и масштабы для эффектов
 var _left_original_position: Vector2
 var _right_original_position: Vector2
 var _left_original_scale: Vector2
 var _right_original_scale: Vector2
+
+var _left_current_position: Vector2
+var _right_current_position: Vector2
+var _left_current_scale: Vector2
+var _right_current_scale: Vector2
 
 ## Tween'ы для эффектов (массив для хранения всех tween'ов)
 var _left_idle_tweens: Array[Tween] = []
@@ -35,11 +39,21 @@ var _right_idle_tweens: Array[Tween] = []
 func _ready() -> void:
 	_left_sprite.hide()
 	_right_sprite.hide()
+	
+	# Устранение артефактов (белых полос по краям при субпиксельной тряске/scaling'е)
+	_left_sprite.texture_repeat = CanvasItem.TEXTURE_REPEAT_DISABLED
+	_right_sprite.texture_repeat = CanvasItem.TEXTURE_REPEAT_DISABLED
+	
 	# Сохраняем оригинальные позиции и масштабы
 	_left_original_position = _left_sprite.position
 	_right_original_position = _right_sprite.position
 	_left_original_scale = _left_sprite.scale
 	_right_original_scale = _right_sprite.scale
+	
+	_left_current_position = _left_original_position
+	_right_current_position = _right_original_position
+	_left_current_scale = _left_original_scale
+	_right_current_scale = _right_original_scale
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -119,9 +133,29 @@ func display(character: Character, side: String = SIDE_LEFT, expression := "", a
 			_transition_character_to_side(character, previous_side, side, texture, expression)
 		else:
 			# Обычное отображение
+			var c_scale: float = 1.0
+			if "scale_multiplier" in character and character.scale_multiplier != 0.0:
+				c_scale = character.scale_multiplier
+				
+			var c_offset: Vector2 = Vector2.ZERO
+			if "position_offset" in character:
+				c_offset = character.position_offset
+			
+			if side == SIDE_LEFT:
+				_left_current_scale = _left_original_scale * c_scale
+				_left_current_position = _left_original_position + c_offset
+				sprite.scale = _left_current_scale
+				sprite.position = _left_current_position
+			else:
+				_right_current_scale = _right_original_scale * c_scale
+				_right_current_position = _right_original_position + c_offset
+				sprite.scale = _right_current_scale
+				sprite.position = _right_current_position
+				
 			sprite.texture = texture
 			sprite.show()
 			# ВАЖНО: Не скрываем другой спрайт - он должен оставаться видимым!
+			
 			
 			# Эффект при смене диалога/эмоции (применяем ПЕРЕД idle эффектами)
 			# Отыгрываем поп-эффект, только если:
@@ -237,17 +271,36 @@ func _transition_character_to_side(character: Character, from_side: String, to_s
 	var from_sprite: Sprite2D = _left_sprite if from_side == SIDE_LEFT else _right_sprite
 	var to_sprite: Sprite2D = _left_sprite if to_side == SIDE_LEFT else _right_sprite
 	
-	var from_pos: Vector2 = _left_original_position if from_side == SIDE_LEFT else _right_original_position
-	var to_pos: Vector2 = _left_original_position if to_side == SIDE_LEFT else _right_original_position
+	var from_pos: Vector2 = _left_current_position if from_side == SIDE_LEFT else _right_current_position
+	var base_to_pos: Vector2 = _left_original_position if to_side == SIDE_LEFT else _right_original_position
+	var base_to_scale: Vector2 = _left_original_scale if to_side == SIDE_LEFT else _right_original_scale
+	
+	var c_scale: float = 1.0
+	if "scale_multiplier" in character and character.scale_multiplier != 0.0:
+		c_scale = character.scale_multiplier
+		
+	var c_offset: Vector2 = Vector2.ZERO
+	if "position_offset" in character:
+		c_offset = character.position_offset
+	
+	var to_pos: Vector2 = base_to_pos + c_offset
+	var to_scale: Vector2 = base_to_scale * c_scale
+	
+	if to_side == SIDE_LEFT:
+		_left_current_position = to_pos
+		_left_current_scale = to_scale
+	else:
+		_right_current_position = to_pos
+		_right_current_scale = to_scale
 	
 	# Устанавливаем текстуру на новом спрайте
 	to_sprite.texture = texture
-	to_sprite.scale = from_sprite.scale  # Сохраняем масштаб
+	to_sprite.scale = to_scale
 	to_sprite.modulate = from_sprite.modulate  # Сохраняем прозрачность
 	
 	# Начальная позиция для нового спрайта (с противоположной стороны)
 	var start_offset := 300.0 if to_side == SIDE_LEFT else -300.0
-	var start_pos := to_pos + Vector2(start_offset, 0)
+	var start_pos: Vector2 = to_pos + Vector2(start_offset, 0)
 	
 	# Позиционируем новый спрайт в начальной позиции
 	to_sprite.position = start_pos
@@ -345,11 +398,11 @@ func _start_idle_effects(sprite: Sprite2D, side: String, expression: String) -> 
 	var original_scale: Vector2
 	
 	if side == SIDE_LEFT:
-		original_pos = _left_original_position
-		original_scale = _left_original_scale
+		original_pos = _left_current_position
+		original_scale = _left_current_scale
 	else:
-		original_pos = _right_original_position
-		original_scale = _right_original_scale
+		original_pos = _right_current_position
+		original_scale = _right_current_scale
 	
 	# Создаем отдельные tween'ы для каждого эффекта (параллельно)
 	# Эффект 1: Дыхание (естественное движение вверх-вниз, как в VN)
@@ -424,7 +477,7 @@ func _start_idle_effects(sprite: Sprite2D, side: String, expression: String) -> 
 
 func _start_shake_effect(sprite: Sprite2D, side: String, intensity: float) -> void:
 	"""Эффект дрожания для нервных эмоций (более плавный, как в VN)"""
-	var original_pos: Vector2 = _left_original_position if side == SIDE_LEFT else _right_original_position
+	var original_pos: Vector2 = _left_current_position if side == SIDE_LEFT else _right_current_position
 	
 	# Используем Tween для более плавного дрожания
 	var shake_tween := create_tween()
@@ -474,8 +527,8 @@ func _start_shake_effect(sprite: Sprite2D, side: String, intensity: float) -> vo
 
 func _play_dialogue_change_effect(sprite: Sprite2D, side: String, expression: String, is_new: bool) -> void:
 	"""Эффект при смене диалога/эмоции (легкий shake или pop)"""
-	var original_pos: Vector2 = _left_original_position if side == SIDE_LEFT else _right_original_position
-	var original_scale: Vector2 = _left_original_scale if side == SIDE_LEFT else _right_original_scale
+	var original_pos: Vector2 = _left_current_position if side == SIDE_LEFT else _right_current_position
+	var original_scale: Vector2 = _left_current_scale if side == SIDE_LEFT else _right_current_scale
 	
 	# Сохраняем текущую позицию (на случай если уже есть idle эффекты)
 	var current_pos = sprite.position
@@ -584,14 +637,14 @@ func _stop_idle_effects(side: String) -> void:
 	if side == SIDE_LEFT:
 		sprite = _left_sprite
 		idle_tweens = _left_idle_tweens
-		original_pos = _left_original_position
-		original_scale = _left_original_scale
+		original_pos = _left_current_position
+		original_scale = _left_current_scale
 		_left_idle_tweens = []
 	else:
 		sprite = _right_sprite
 		idle_tweens = _right_idle_tweens
-		original_pos = _right_original_position
-		original_scale = _right_original_scale
+		original_pos = _right_current_position
+		original_scale = _right_current_scale
 		_right_idle_tweens = []
 	
 	# Останавливаем все tween'ы

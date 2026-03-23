@@ -6,6 +6,8 @@ extends Resource
 @export var display_name := "Display Name"
 @export var bio := "Fill this with the character's complete bio. Supports BBCode." # (String, MULTILINE)
 @export var age := 0: set = set_age
+@export var scale_multiplier := 1.0
+@export var position_offset := Vector2.ZERO
 
 ## Default key to use if the user doesn't specify the image to display
 @export var default_image := "neutral"

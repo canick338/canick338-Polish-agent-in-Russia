@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="Character" load_steps=6 format=3]
 
-[ext_resource type="Script" path="res://Characters/Character.gd" id="1"]
-[ext_resource type="Texture2D" path="res://Characters/Hobo/hobo_static.png" id="2"]
-[ext_resource type="Texture2D" path="res://Characters/Hobo/hobo_excited.png" id="3"]
-[ext_resource type="Texture2D" path="res://Characters/Hobo/hobo_thoughtful.png" id="4"]
-[ext_resource type="Texture2D" path="res://Characters/Hobo/hobo_asks_money.png" id="5"]
+[ext_resource type="Script" uid="uid://go7xo1xas655" path="res://Characters/Character.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://73chvh0l0hix" path="res://Characters/Hobo/hobo_static.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://r3teh5vayxta" path="res://Characters/Hobo/hobo_excited.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://2bxsfk1x4wuk" path="res://Characters/Hobo/hobo_thoughtful.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://dem31e8ck5ddl" path="res://Characters/Hobo/hobo_asks_money.png" id="5"]
 
 [resource]
 script = ExtResource("1")
@@ -12,6 +12,8 @@ id = "hobo"
 display_name = "Уличный Бродяга"
 bio = "Местный философ. Знает всё о Варшаве."
 age = 60
+scale_multiplier = 0.5
+position_offset = Vector2(0, 0)
 default_image = "neutral"
 images = {
 "neutral": ExtResource("2"),

@@ -57,7 +57,7 @@
 		"type": "command"
 	},
 	{
-		"args": ["black", ""],
+		"args": ["polish_gateway", ""],
 		"name": "background",
 		"type": "command"
 	},

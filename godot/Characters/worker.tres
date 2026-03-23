@@ -9,6 +9,8 @@ id = "worker"
 display_name = "CHAR_WORKER"
 bio = "Обычный рабочий завода."
 age = 30
+scale_multiplier = 0.5
+position_offset = Vector2(0, 0)
 default_image = "neutral"
 images = {
 "neutral": ExtResource("2")

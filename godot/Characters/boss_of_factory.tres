@@ -12,6 +12,8 @@ id = "boss_of_factory"
 display_name = "CHAR_BOSS"
 bio = "Хитрый начальник завода, который всегда находит способ сэкономить на зарплатах рабочих."
 age = 50
+scale_multiplier = 1.0
+position_offset = Vector2(0, 0)
 default_image = "neutral"
 images = {
 "neutral": ExtResource("2"),
