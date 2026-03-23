@@ -6,97 +6,142 @@
 	},
 	{
 		"character": "",
-		"text": "Пиццерия «У Марио». Маленькое заведение в центре Варшавы.",
+		"text": "Пиццерия «У Марио». Запах свежего теста, томатного соуса и кофе.",
 		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"text": "🍕 Работать на кухне (+60 zł)",
+				"children": [
+					{
+						"character": "danila",
+						"expression": "neutral",
+						"text": "Шеф, я готов к работе.",
+						"type": "dialogue"
+					},
+					{
+						"character": "",
+						"text": "— Ладно, парень. Тесто, соус, начинка. Не напортачь.",
+						"type": "dialogue"
+					},
+					{
+						"character": "",
+						"text": "Несколько часов тяжёлой работы у печи.",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"expression": "tired",
+						"text": "Фух... Руки горят от жара.",
+						"type": "dialogue"
+					},
+					{
+						"character": "",
+						"text": "— Неплохо. Держи свои 60 злотых.",
+						"type": "dialogue"
+					},
+					{
+						"args": ["money", "+60"],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": ["energy", "-20"],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"character": "",
+						"text": "Данила перехватил кусок пиццы на работе.",
+						"type": "dialogue"
+					},
+					{
+						"args": ["hunger", "+30"],
+						"name": "set",
+						"type": "command"
+					}
+				]
+			},
+			{
+				"text": "☕ Просто поесть (-20 zł, сытость +40)",
+				"children": [
+					{
+						"character": "danila",
+						"expression": "neutral",
+						"text": "Одну Маргариту и кофе, пожалуйста.",
+						"type": "dialogue"
+					},
+					{
+						"args": ["money", "-20"],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"args": ["hunger", "+40"],
+						"name": "set",
+						"type": "command"
+					},
+					{
+						"character": "",
+						"text": "За соседним столиком рабочие в спецовках о чём-то спорят.",
+						"type": "dialogue"
+					},
+					{
+						"options": [
+							{
+								"text": "👂 Подслушать разговор",
+								"children": [
+									{
+										"character": "worker",
+										"side": "right",
+										"animation": "enter",
+										"expression": "neutral",
+										"text": "...на заводе что-то нечисто. Откуда такие поставки в маленький фасовочный цех?",
+										"type": "dialogue"
+									},
+									{
+										"character": "worker",
+										"side": "right",
+										"text": "Тише. Бронислав услышит — уволит без разговоров.",
+										"type": "dialogue"
+									},
+									{
+										"character": "danila",
+										"expression": "thinking",
+										"text": "(Мысли) Хм... На заводе что-то странное? Надо запомнить.",
+										"type": "dialogue"
+									},
+									{
+										"args": ["cafe_overheard_factory", 1],
+										"name": "set",
+										"type": "command"
+									}
+								]
+							},
+							{
+								"text": "☕ Молча доесть",
+								"children": [
+									{
+										"character": "danila",
+										"expression": "neutral",
+										"text": "Не моё дело. Лучше доем спокойно.",
+										"type": "dialogue"
+									}
+								]
+							}
+						],
+						"type": "choice"
+					}
+				]
+			}
+		],
+		"type": "choice"
 	},
 	{
 		"character": "danila",
-		"text": "Мне нужна подработка. Срочно.",
+		"expression": "neutral",
+		"text": "Пора двигать дальше.",
 		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Хозяин — толстый итальянец — смотрит на тебя.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "— Умеешь готовить пиццу?",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Научусь.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "— Ладно. Тесто, соус, начинка. Не напортачь.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Работа начинается. Нужно приготовить пиццу для клиентов.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Тесто... Раскатать... Соус... Сыр...",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Несколько часов тяжёлой работы у печи.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Фух... Руки горят от жара.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "— Неплохо, парень. Держи свои 60 злотых.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["money", "+60"],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"character": "danila",
-		"text": "Спасибо. Завтра тоже приду.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "— Двери всегда открыты, если руки не кривые.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["system_pass_time", 1],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["energy", "-20"],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["hunger", "-15"],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Ну и конечно, Данила перехватил кусок пиццы на работе.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["hunger", "+30"],
-		"name": "set",
-		"type": "command"
 	}
 ]

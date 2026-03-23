@@ -562,9 +562,82 @@
 		"type": "dialogue"
 	},
 	{
-		"args": [
-			"fade_out"
+		"args": ["fade_out"],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": ["black", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "По дороге домой, в тёмном переулке, Марек замечает мятый конверт на земле.",
+		"type": "dialogue"
+	},
+	{
+		"character": "marek",
+		"text": "Что это? Кто-то потерял...",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"text": "📄 Поднять и прочитать",
+				"children": [
+					{
+						"character": "",
+						"text": "Мятый лист с водяными знаками. Печать — двуглавый орёл. Текст на русском.",
+						"type": "dialogue"
+					},
+					{
+						"character": "",
+						"text": "«...Карл Обломов — куратор Варшавской линии, контактное лицо Обоянского отделения. Координировать через канал Ц-7...»",
+						"type": "dialogue"
+					},
+					{
+						"character": "marek",
+						"text": "Обломов?! Тот самый Обломов, на чьём заводе я работал в Варшаве?!",
+						"type": "dialogue"
+					},
+					{
+						"character": "marek",
+						"text": "Он... их человек? Завод был прикрытием не только для нас, но и для НИХ?!",
+						"type": "dialogue"
+					},
+					{
+						"character": "marek",
+						"text": "(Мысли) Если Обломов — двойной агент, значит, Генерал Джонни мог знать об этом. Или нет. Нужно быть осторожнее.",
+						"type": "dialogue"
+					},
+					{
+						"args": ["oblomov_secret_found", 1],
+						"name": "set",
+						"type": "command"
+					}
+				]
+			},
+			{
+				"text": "🚶 Пройти мимо",
+				"children": [
+					{
+						"character": "marek",
+						"text": "Чужие бумаги — чужие проблемы. Лучше не лезть.",
+						"type": "dialogue"
+					}
+				]
+			}
 		],
+		"type": "choice"
+	},
+	{
+		"args": ["oboyan_act2_done", 1],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["fade_out"],
 		"name": "transition",
 		"type": "command"
 	}

@@ -60,30 +60,12 @@ func _refresh_phone_clock() -> void:
 	if not visible or not header_label: return
 	if _current_app != "": return
 	var time_icons = ["🌅", "☀️", "🌇", "🌙"]
-	var time_idx = Variables.get_variable("current_time")
+	var time_idx = int(Variables.get_variable("current_time", 0))
 	if time_idx < 0 or time_idx > 3: time_idx = 0
 	
-	# Smooth clock: interpolate between period start hours
-	var start_hours = [6.0, 12.0, 18.0, 23.0]  # Начало каждого периода
-	var end_hours = [12.0, 18.0, 23.0, 30.0]    # Конец (30 = 6:00 следующего дня)
-	
-	# Get elapsed fraction from WorldMap timer
-	var parent_map = get_parent()
-	var elapsed = 0.0
-	var tick_sec = 10.0
-	if parent_map and "_time_elapsed" in parent_map:
-		elapsed = parent_map._time_elapsed
-	if parent_map and "TIME_TICK_SECONDS" in parent_map:
-		tick_sec = parent_map.TIME_TICK_SECONDS
-	
-	var frac = clampf(elapsed / tick_sec, 0.0, 1.0)
-	var current_hour = lerpf(start_hours[time_idx], end_hours[time_idx], frac)
-	if current_hour >= 24.0:
-		current_hour -= 24.0
-	
-	var h = int(current_hour) % 24
-	var m = int((current_hour - floor(current_hour)) * 60.0)
-	header_label.text = "%s %02d:%02d" % [time_icons[time_idx], h, m]
+	# Статичные часы для каждого периода (action-based, время не тикает)
+	var period_hours = ["07:30", "13:00", "19:45", "23:30"]
+	header_label.text = "%s %s" % [time_icons[time_idx], period_hours[time_idx]]
 
 func _build_home_screen() -> void:
 	_current_app = ""
@@ -115,6 +97,7 @@ func _build_home_screen() -> void:
 	# Add apps to home screen
 	if apps_grid:
 		_add_app_button("res://Assets/Textures/Phone/icon_shop.png", "Магазин", "_open_shop", apps_grid)
+		_add_app_button("res://Assets/Textures/Phone/icon_mail.png", "Миссии", "_open_missions", apps_grid)
 		_add_app_button("res://Assets/Textures/Phone/icon_games.png", "Игры", "_open_games", apps_grid)
 	
 	# Add apps to the bottom dock
@@ -212,6 +195,15 @@ func _open_notifications() -> void:
 	if notifications.is_empty():
 		notifications.append({"color": Color(0.4, 0.4, 0.4), "text": "Новых уведомлений нет."})
 	
+	# Напоминание о сне ночью
+	var time_idx = int(Variables.get_variable("current_time", 0))
+	if time_idx == 3:
+		notifications.insert(0, {"color": Color(0.3, 0.3, 0.9), "text": "🌙 Ночь. Всё закрыто! Иди домой и ложись спать."})
+	
+	# Счётчик дней
+	var day = int(Variables.get_variable("current_day", 1))
+	notifications.insert(0, {"color": Color(0.7, 0.7, 0.8), "text": "📅 День %d из 7" % day})
+	
 	for notif in notifications:
 		var panel = PanelContainer.new()
 		var pstyle = StyleBoxFlat.new()
@@ -240,6 +232,139 @@ func _open_notifications() -> void:
 	
 	scroll.add_child(vbox)
 	content_area.add_child(scroll)
+
+# ========================
+# 📋 MISSIONS APP
+# ========================
+func _open_missions() -> void:
+	_show_app_header("Миссии")
+	_clear_content()
+	
+	var scroll = ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var vbox = VBoxContainer.new()
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 15)
+	
+	# === ГЛАВНАЯ ЦЕЛЬ ===
+	var main_header = Label.new()
+	main_header.text = "🎯 ГЛАВНАЯ ЦЕЛЬ"
+	main_header.add_theme_font_size_override("font_size", 18)
+	main_header.add_theme_color_override("font_color", Color(0.95, 0.3, 0.4))
+	vbox.add_child(main_header)
+	
+	var main_quest := "Неизвестно"
+	if Variables.get_variable("warsaw_prologue_stage") != 1:
+		main_quest = "Выйти на улицы Варшавы"
+	elif Variables.get_variable("prologue_act_2_done") != 1:
+		main_quest = "Пройти обучение в Академии Разведки"
+	elif Variables.get_variable("factory_done") != 1:
+		main_quest = "Устроиться на Завод Обломова"
+	elif Variables.get_variable("prologue_act_3_done") != 1:
+		main_quest = "Явиться в Офис Разведки"
+	elif Variables.get_variable("warsaw_ticket_bought") != 1:
+		main_quest = "Заработать 500zł и купить билет у Шломо"
+	elif Variables.get_variable("warsaw_prologue_done") != 1:
+		main_quest = "Отправиться в Обоянь"
+	elif Variables.get_variable("oboyan_act1_done") != 1:
+		main_quest = "Прибыть в Обоянь и зарегистрироваться"
+	elif Variables.get_variable("oboyan_act2_done") != 1:
+		main_quest = "Войти в доверие к местным"
+	else:
+		main_quest = "Продолжить миссию в Обояни"
+	
+	_add_mission_card(vbox, main_quest, Color(0.95, 0.2, 0.3), true)
+	
+	# === РАЗВЕДДАННЫЕ ===
+	var intel_header = Label.new()
+	intel_header.text = "📂 РАЗВЕДДАННЫЕ"
+	intel_header.add_theme_font_size_override("font_size", 16)
+	intel_header.add_theme_color_override("font_color", Color(0.3, 0.7, 1.0))
+	vbox.add_child(intel_header)
+	
+	var has_intel := false
+	if Variables.get_variable("cafe_overheard_factory") == 1:
+		_add_mission_card(vbox, "☕ Рабочие в кафе обсуждали подозрительные поставки на завод.", Color(0.3, 0.6, 0.9), false)
+		has_intel = true
+	if Variables.get_variable("bar_oblomov_hint") == 1:
+		_add_mission_card(vbox, "🍺 Коллега видел Бронислава говорящим по-русски ночью.", Color(0.3, 0.6, 0.9), false)
+		has_intel = true
+	if Variables.get_variable("oblomov_secret_found") == 1:
+		_add_mission_card(vbox, "📄 ДОКУМЕНТ: Карл Обломов — куратор Варшавской линии, контактное лицо Обоянского отделения.", Color(0.9, 0.2, 0.2), false)
+		has_intel = true
+	if not has_intel:
+		_add_mission_card(vbox, "Пока ничего не найдено. Исследуй мир.", Color(0.4, 0.4, 0.4), false)
+	
+	# === СООБЩЕНИЯ ОТ ГЕНЕРАЛА ===
+	var msg_header = Label.new()
+	msg_header.text = "💬 СООБЩЕНИЯ"
+	msg_header.add_theme_font_size_override("font_size", 16)
+	msg_header.add_theme_color_override("font_color", Color(0.2, 0.8, 0.4))
+	vbox.add_child(msg_header)
+	
+	if Variables.get_variable("prologue_act_2_done") == 1 and Variables.get_variable("prologue_act_3_done") != 1:
+		_add_message_card(vbox, "Генерал Джонни", "Марек, не забудь явиться в офис после смены на заводе. Есть что обсудить.", "🎖️")
+	if Variables.get_variable("prologue_act_3_done") == 1 and Variables.get_variable("warsaw_ticket_bought") != 1:
+		_add_message_card(vbox, "Генерал Джонни", "Помни: 500zł и к Шломо! Время не ждёт, агент.", "🎖️")
+	if Variables.get_variable("worker_trust") == 1:
+		_add_message_card(vbox, "Рабочий с завода", "Привет, заходи в бар вечером. Есть разговор.", "👷")
+	if Variables.get_variable("oboyan_act1_done") == 1:
+		_add_message_card(vbox, "Генерал Джонни", "Марек, доклад по обстановке. Не высовывайся и не спеши. Разведка — это терпение.", "🎖️")
+	
+	scroll.add_child(vbox)
+	content_area.add_child(scroll)
+
+func _add_mission_card(parent: Control, text: String, color: Color, is_main: bool) -> void:
+	var panel = PanelContainer.new()
+	var pstyle = StyleBoxFlat.new()
+	pstyle.bg_color = Color(0.1, 0.12, 0.18, 0.9)
+	pstyle.corner_radius_top_left = 8; pstyle.corner_radius_top_right = 8
+	pstyle.corner_radius_bottom_left = 8; pstyle.corner_radius_bottom_right = 8
+	pstyle.border_width_left = 5
+	pstyle.border_color = color
+	pstyle.content_margin_left = 14; pstyle.content_margin_right = 14
+	pstyle.content_margin_top = 10; pstyle.content_margin_bottom = 10
+	panel.add_theme_stylebox_override("panel", pstyle)
+	
+	var lbl = Label.new()
+	lbl.text = text
+	lbl.add_theme_font_size_override("font_size", 15 if is_main else 13)
+	lbl.add_theme_color_override("font_color", Color.WHITE if is_main else Color(0.8, 0.85, 0.9))
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	panel.add_child(lbl)
+	parent.add_child(panel)
+
+func _add_message_card(parent: Control, sender: String, text: String, icon: String) -> void:
+	var panel = PanelContainer.new()
+	var pstyle = StyleBoxFlat.new()
+	pstyle.bg_color = Color(0.08, 0.15, 0.1, 0.9)
+	pstyle.corner_radius_top_left = 10; pstyle.corner_radius_top_right = 10
+	pstyle.corner_radius_bottom_left = 10; pstyle.corner_radius_bottom_right = 10
+	pstyle.content_margin_left = 12; pstyle.content_margin_right = 12
+	pstyle.content_margin_top = 8; pstyle.content_margin_bottom = 8
+	panel.add_theme_stylebox_override("panel", pstyle)
+	
+	var v = VBoxContainer.new()
+	v.add_theme_constant_override("separation", 4)
+	
+	var sender_lbl = Label.new()
+	sender_lbl.text = icon + " " + sender
+	sender_lbl.add_theme_font_size_override("font_size", 14)
+	sender_lbl.add_theme_color_override("font_color", Color(0.3, 0.9, 0.5))
+	v.add_child(sender_lbl)
+	
+	var msg_lbl = Label.new()
+	msg_lbl.text = text
+	msg_lbl.add_theme_font_size_override("font_size", 13)
+	msg_lbl.add_theme_color_override("font_color", Color(0.85, 0.9, 0.85))
+	msg_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	msg_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	v.add_child(msg_lbl)
+	
+	panel.add_child(v)
+	parent.add_child(panel)
 
 # ========================
 # 🛒 SHOP APP (DELIVERY)

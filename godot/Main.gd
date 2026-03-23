@@ -221,6 +221,21 @@ func _on_main_menu_start_game() -> void:
 		_play_scene_from_path("res://Story/00_Warsaw/01_intro_streets.json")
 
 func _on_ScenePlayer_scene_finished() -> void:
+	# === Продвижение времени после завершения сцены (action-based, как в VN) ===
+	var time_idx = int(Variables.get_variable("current_time", 0))
+	time_idx += 1
+	if time_idx > 3:
+		time_idx = 0
+		var day = int(Variables.get_variable("current_day", 1))
+		Variables.add_variable("current_day", day + 1)
+	Variables.add_variable("current_time", time_idx)
+	
+	# Обновить is_night
+	if time_idx == 3:
+		Variables.add_variable("is_night", 1)
+	else:
+		Variables.add_variable("is_night", 0)
+	
 	# Возвращаемся в хаб (Карту)
 	show_world_map()
 

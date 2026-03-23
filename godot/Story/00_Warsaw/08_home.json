@@ -8,7 +8,14 @@
 		"character": "danila",
 		"side": "left",
 		"animation": "enter",
+		"expression": "tired",
 		"text": "Моя съёмная конура. Мрачно, но крыша над головой есть.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"expression": "thinking",
+		"text": "Сегодня день [current_day] из 7. Осталось [money] злотых. Нужно 500.",
 		"type": "dialogue"
 	},
 	{
@@ -17,6 +24,12 @@
 				"text": "🛏️ Лечь спать (Начнётся новый день)",
 				"children": [
 					{
+						"character": "danila",
+						"expression": "tired",
+						"text": "Всё... Сил больше нет. Завтра новый день.",
+						"type": "dialogue"
+					},
+					{
 						"args": ["res://Story/00_Warsaw/system_sleep.json"],
 						"name": "scene",
 						"type": "command"
@@ -24,11 +37,29 @@
 				]
 			},
 			{
-				"text": "🚪 Выйти на городскую Карту",
+				"text": "📱 Проверить телефон",
 				"children": [
 					{
 						"character": "danila",
-						"text": "Пора за дело.",
+						"expression": "neutral",
+						"text": "Посмотрю, что в телефоне...",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"expression": "thinking",
+						"text": "(Мысли) Надо проверить миссии и сообщения перед сном.",
+						"type": "dialogue"
+					}
+				]
+			},
+			{
+				"text": "🚪 Выйти на карту",
+				"children": [
+					{
+						"character": "danila",
+						"expression": "neutral",
+						"text": "Нет, ещё рано. Пора за дело.",
 						"type": "dialogue"
 					},
 					{

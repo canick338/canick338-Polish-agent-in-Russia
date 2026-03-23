@@ -152,6 +152,11 @@
 						"type": "command"
 					},
 					{
+						"args": ["karma", 1],
+						"name": "set",
+						"type": "command"
+					},
+					{
 						"character": "danila",
 						"side": "left",
 						"expression": "sad",

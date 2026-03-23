@@ -15,12 +15,9 @@ var _hovered_node_data: Dictionary = {}
 var custom_tooltip_loaded: bool = false
 var _custom_tooltip_node: Control = null
 
-# === REAL-TIME CLOCK ===
-# Сколько реальных секунд = 1 игровой период (Утро→День→Вечер→Ночь)
-# Для теста: 10 секунд. Для релиза: 120-300 секунд.
-var TIME_TICK_SECONDS: float = 10.0
-var _time_timer: Timer = null
-var _time_elapsed: float = 0.0 # Seconds elapsed within current period
+# === ACTION-BASED TIME ===
+# Время меняется только через действия игрока (посещение локаций)
+# Нет пассивного таймера — как в визуальных новеллах (Persona, Steins;Gate)
 
 @onready var map_background: TextureRect = $MapBackground
 @onready var nodes_container: Control = $MapNodes
@@ -60,13 +57,10 @@ func _ready() -> void:
 	_refresh_map()
 	_update_side_panel_locations()
 	_update_time_hud()
+	_update_quest_banner()
+	_setup_ambient_barks()
 	
-	# Start real-time clock
-	_time_timer = Timer.new()
-	_time_timer.wait_time = TIME_TICK_SECONDS
-	_time_timer.autostart = true
-	_time_timer.timeout.connect(_on_time_tick)
-	add_child(_time_timer)
+	# Время: без пассивного таймера (action-based, как в VN/Persona)
 	
 	# Start background music
 	_start_map_music()
@@ -77,12 +71,35 @@ func _ready() -> void:
 
 func _run_map_tutorial() -> void:
 	Variables.add_variable("map_tutorial_done", 1)
-	# Launch a mini-dialogue as a scene
+	
+	# Small delay to let map render first
+	await get_tree().create_timer(0.5).timeout
+	
 	var tutorial_path = "res://Story/00_Warsaw/00_map_tutorial.json"
 	if FileAccess.file_exists(tutorial_path):
-		# Small delay to let map render first
-		await get_tree().create_timer(0.5).timeout
-		scene_requested.emit(tutorial_path)
+		var sp_scene = load("res://ScenePlayer.tscn")
+		if sp_scene:
+			# Создаём CanvasLayer, чтобы ScenePlayer был поверх UI карты (QuestBanner и т.д.)
+			var canvas = CanvasLayer.new()
+			canvas.name = "TutorialCanvas"
+			canvas.layer = 100
+			add_child(canvas)
+			
+			var sp = sp_scene.instantiate()
+			sp.name = "TutorialScenePlayer"
+			canvas.add_child(sp)
+			
+			# Для загрузки парсера
+			var LoaderClass = load("res://Parser/JSONDialogueLoader.gd")
+			var loader = LoaderClass.new()
+			var tree = loader.load_scene(tutorial_path)
+			
+			if tree:
+				sp.load_scene(tree)
+				sp.scene_finished.connect(func():
+					canvas.queue_free() # Удаляем вместе с CanvasLayer
+				)
+				sp.run_scene(0)
 
 func _create_tooltip_ui() -> void:
 	var custom_tt_path = "res://UI/WorldMap/Tooltip.tscn"
@@ -453,7 +470,7 @@ func _refresh_map() -> void:
 			0: target_color = Color(0.92, 0.88, 0.98)
 			1: target_color = Color(1.0, 1.0, 1.0)
 			2: target_color = Color(0.95, 0.65, 0.45)
-			3: target_color = Color(0.18, 0.2, 0.38)
+			3: target_color = Color(0.35, 0.35, 0.55)  # Ночь — тёмный, но ЧИТАЕМЫЙ
 		time_modulate.color = target_color  # Instant on first load
 	
 	# === CLOUDS: instant set on first load ===
@@ -763,6 +780,11 @@ func _create_map_node(data: Dictionary) -> void:
 	tw.tween_property(container, "position:y", base_y - 8, 1.2).set_trans(Tween.TRANS_SINE)
 	tw.tween_property(container, "position:y", base_y, 1.2).set_trans(Tween.TRANS_SINE)
 	
+	# Свечение нодов ночью для видимости
+	var time_idx_glow = int(Variables.get_variable("current_time", 0))
+	if time_idx_glow == 3:
+		container.modulate = Color(1.3, 1.3, 1.6)  # Яркое голубоватое свечение ночью
+	
 	# Pulse for "quest critical" nodes
 	if data.get("id", "") in ["hq", "home_finale", "streets", "academy"]:
 		var pulse_tw = create_tween().set_loops()
@@ -1056,6 +1078,39 @@ func _on_phone_pressed() -> void:
 	else:
 		get_node("PhoneHUD").toggle()
 
+func _update_quest_banner() -> void:
+	var quest_label = get_node_or_null("%QuestLabel")
+	var quest_banner = get_node_or_null("%QuestBanner")
+	if not quest_label or not quest_banner: return
+	
+	if not manifest_data.has("locations"):
+		quest_banner.visible = false
+		return
+	
+	# Найти первый доступный main-квест
+	var quest_name := ""
+	for loc in manifest_data["locations"]:
+		if loc["id"] != current_location_id: continue
+		if not loc.has("nodes"): continue
+		for node in loc["nodes"]:
+			if node.get("priority", "") == "main":
+				if _check_requirements(node.get("requires", [])):
+					quest_name = node.get("name", "")
+					break
+		if quest_name != "": break
+	
+	if quest_name == "":
+		quest_banner.visible = false
+		return
+	
+	quest_banner.visible = true
+	quest_label.text = "📋 ЦЕЛЬ: " + quest_name.to_upper()
+	
+	# Анимация появления
+	quest_banner.modulate.a = 0.0
+	var tw = create_tween()
+	tw.tween_property(quest_banner, "modulate:a", 1.0, 0.8).set_ease(Tween.EASE_OUT)
+
 func _advance_time_action() -> void:
 	var time_idx = Variables.get_variable("current_time")
 	if time_idx < 0 or time_idx > 3: time_idx = 0
@@ -1067,7 +1122,6 @@ func _advance_time_action() -> void:
 		Variables.add_variable("current_day", day + 1)
 	
 	Variables.add_variable("current_time", time_idx)
-	_time_elapsed = 0.0 # Reset interpolation
 	
 	# Action cost
 	var h = int(Variables.get_variable("hunger", 100)) - 20
@@ -1075,15 +1129,72 @@ func _advance_time_action() -> void:
 	Variables.add_variable("hunger", clamp(h, 0, 100))
 	Variables.add_variable("energy", clamp(e, 0, 100))
 	
-	_update_weather_visuals(time_idx)
+	_update_weather_visuals_instant(time_idx)
 	_update_time_hud()
+	_refresh_map()
+	_update_quest_banner()
+	
+	# Если наступила ночь — показать уведомление «Пора домой»
+	if time_idx == 3:
+		_show_night_popup()
 	
 	if h <= 0 or e <= 0:
 		_handle_exhaustion()
 
 # === REAL-TIME CLOCK TICK (DISABLED) ===
 func _on_time_tick() -> void:
-	pass # Вся логика времени теперь работает по действиям (system_pass_time)
+	pass
+
+func _show_night_popup() -> void:
+	var popup = PanelContainer.new()
+	popup.name = "NightPopup"
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.05, 0.05, 0.15, 0.95)
+	style.border_width_left = 4; style.border_width_top = 4
+	style.border_width_right = 4; style.border_width_bottom = 4
+	style.border_color = Color(0.3, 0.3, 0.8)
+	style.content_margin_left = 30; style.content_margin_right = 30
+	style.content_margin_top = 20; style.content_margin_bottom = 20
+	style.corner_radius_top_left = 12; style.corner_radius_top_right = 12
+	style.corner_radius_bottom_left = 12; style.corner_radius_bottom_right = 12
+	popup.add_theme_stylebox_override("panel", style)
+	
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 10)
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	
+	var icon = Label.new()
+	icon.text = "🌙"
+	icon.add_theme_font_size_override("font_size", 40)
+	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(icon)
+	
+	var title = Label.new()
+	title.text = "НАСТУПИЛА НОЧЬ"
+	title.add_theme_font_size_override("font_size", 22)
+	title.add_theme_color_override("font_color", Color(0.8, 0.8, 1.0))
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(title)
+	
+	var desc = Label.new()
+	desc.text = "Всё закрыто. Иди домой и ложись спать."
+	desc.add_theme_font_size_override("font_size", 16)
+	desc.add_theme_color_override("font_color", Color(0.6, 0.6, 0.8))
+	desc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(desc)
+	
+	popup.add_child(vbox)
+	popup.set_anchors_preset(Control.PRESET_CENTER)
+	popup.z_index = 60
+	add_child(popup)
+	
+	# Анимация: появление → исчезновение через 3 секунды
+	popup.modulate.a = 0.0
+	var tw = create_tween()
+	tw.tween_property(popup, "modulate:a", 1.0, 0.5)
+	tw.tween_interval(3.0)
+	tw.tween_property(popup, "modulate:a", 0.0, 0.5)
+	tw.tween_callback(popup.queue_free)
 
 func _handle_exhaustion() -> void:
 	print("🚨 ОБМОРОК ОТ ИСТОЩЕНИЯ!")
@@ -1103,8 +1214,9 @@ func _handle_exhaustion() -> void:
 		Variables.add_variable("current_day", Variables.get_variable("current_day", 1) + 1)
 	Variables.add_variable("current_time", time_idx)
 	
-	_update_weather_visuals(time_idx)
+	_update_weather_visuals_instant(time_idx)
 	_update_time_hud()
+	_refresh_map()
 	
 	# Визуальное уведомление
 	var panel = PanelContainer.new()
@@ -1141,46 +1253,30 @@ const LIGHT_STATES = [
 	Color(0.92, 0.88, 0.98),     # Утро
 	Color(1.0, 1.0, 1.0),        # День
 	Color(0.95, 0.65, 0.45),     # Вечер
-	Color(0.18, 0.2, 0.38),      # Ночь
+	Color(0.35, 0.35, 0.55),     # Ночь — тёмный, но видимый
 ]
 
-func _process(delta: float) -> void:
-	# Check for requested time leaps from JSON scenarios
+func _process(_delta: float) -> void:
+	# Обработка системных команд продвижения времени из JSON-сценариев
 	var passed = Variables.get_variable("system_pass_time", 0)
 	if passed > 0:
 		Variables.add_variable("system_pass_time", 0)
 		for i in range(passed):
 			_advance_time_action()
 
-	_time_elapsed += delta
-	
-	var time_idx = int(Variables.get_variable("current_time", 0))
+# Мгновенное обновление визуала погоды (без плавной интерполяции)
+func _update_weather_visuals_instant(time_idx: int) -> void:
 	if time_idx < 0 or time_idx > 3: time_idx = 0
-	var next_idx = (time_idx + 1) % 4
 	
-	# How far through the current period are we? (0.0 → 1.0)
-	var frac = clampf(_time_elapsed / TIME_TICK_SECONDS, 0.0, 1.0)
-	
-	# Smoothstep for extra-smooth feel
-	var smooth_frac = frac * frac * (3.0 - 2.0 * frac)
-	
-	# Interpolate clouds
 	var cloud_layer = map_background.get_node_or_null("CloudLayer")
 	if cloud_layer:
-		var from_cloud = CLOUD_STATES[time_idx]
-		var to_cloud = CLOUD_STATES[next_idx]
-		cloud_layer.modulate = from_cloud.lerp(to_cloud, smooth_frac)
+		cloud_layer.modulate = CLOUD_STATES[time_idx]
 	
-	# Interpolate lighting
 	var time_modulate = get_node_or_null("DayNightModulate")
 	if time_modulate:
-		var from_light = LIGHT_STATES[time_idx]
-		var to_light = LIGHT_STATES[next_idx]
-		time_modulate.color = from_light.lerp(to_light, smooth_frac)
-
-# Legacy function kept for initial setup compatibility
-func _update_weather_visuals(_time_idx: int) -> void:
-	pass  # Now handled entirely by _process()
+		# Плавный переход через tween вместо мгновенного
+		var tw = create_tween()
+		tw.tween_property(time_modulate, "color", LIGHT_STATES[time_idx], 1.5).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 
 # === BACKGROUND MUSIC (via AudioManager) ===
 const LOCATION_MUSIC = {
@@ -1213,3 +1309,121 @@ func _start_map_music() -> void:
 	
 	tracks.shuffle()
 	AudioManager.play_bgm(tracks[0])
+
+# === AMBIENT BARKS ===
+var _ambient_bark_timer: Timer
+
+func _setup_ambient_barks() -> void:
+	_ambient_bark_timer = Timer.new()
+	_ambient_bark_timer.wait_time = randf_range(15.0, 25.0)
+	_ambient_bark_timer.one_shot = true
+	_ambient_bark_timer.timeout.connect(_on_ambient_bark_timer_timeout)
+	add_child(_ambient_bark_timer)
+	_ambient_bark_timer.start()
+
+func _on_ambient_bark_timer_timeout() -> void:
+	# Restart timer with random interval
+	_ambient_bark_timer.wait_time = randf_range(15.0, 30.0)
+	_ambient_bark_timer.start()
+	
+	# Only show bark if not in another scene
+	if get_tree().get_nodes_in_group("ScenePlayer").size() > 0 or has_node("TutorialScenePlayer"):
+		return
+		
+	var h = int(Variables.get_variable("hunger", 100))
+	var e = int(Variables.get_variable("energy", 100))
+	var is_night = Variables.get_variable("current_time", 0) == 3
+	
+	var bark_text = ""
+	var bark_expr = "neutral"
+	
+	var r = randf()
+	if h < 30 and r < 0.6:
+		bark_text = "Живот крутит... Надо бы перекусить в пиццерии."
+		bark_expr = "sad"
+	elif e < 30 and r < 0.6:
+		bark_text = "Как же я устал... Сколы скоро отвалятся от недосыпа."
+		bark_expr = "tired"
+	elif is_night and r < 0.5:
+		bark_text = "Варшава ночью красивая, но всё закрыто. Пора домой."
+		bark_expr = "thinking"
+	else:
+		var generic = [
+			{"t": "Хороший день для заработка. Нужно 500 злотых.", "e": "danila_determined_fabric"},
+			{"t": "Интересно, как там пацаны в детдоме?", "e": "sad"},
+			{"t": "Надо быть осторожнее, тут не все дружелюбные.", "e": "serious"},
+			{"t": "Воздух другой... Не такой, как дома.", "e": "neutral"},
+			{"t": "Иногда кажется, что за мной следят...", "e": "worried"}
+		]
+		var choice = generic[randi() % generic.size()]
+		bark_text = choice.t
+		bark_expr = choice.e
+	
+	_show_map_bark(bark_text, bark_expr)
+
+func _show_map_bark(text: String, expr: String) -> void:
+	# Avoid overlapping barks
+	if has_node("AmbientBark"):
+		get_node("AmbientBark").queue_free()
+		
+	var canvas = CanvasLayer.new()
+	canvas.name = "AmbientBark"
+	canvas.layer = 90
+	add_child(canvas)
+	
+	var hbox = HBoxContainer.new()
+	hbox.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	hbox.position = Vector2(-550, -250) # Bottom right corner slightly offset
+	canvas.add_child(hbox)
+	
+	# Bubble
+	var bubble = PanelContainer.new()
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.95, 0.95, 0.95, 0.95)
+	style.border_width_left = 3; style.border_width_top = 3; style.border_width_right = 3; style.border_width_bottom = 3
+	style.border_color = Color(0.1, 0.1, 0.1, 1)
+	style.corner_radius_top_left = 12; style.corner_radius_top_right = 12; style.corner_radius_bottom_left = 12; style.corner_radius_bottom_right = 12
+	style.content_margin_left = 15; style.content_margin_right = 15; style.content_margin_top = 10; style.content_margin_bottom = 10
+	bubble.add_theme_stylebox_override("panel", style)
+	bubble.size_flags_vertical = Control.SIZE_SHRINK_END
+	
+	var lbl = Label.new()
+	lbl.text = text
+	lbl.add_theme_color_override("font_color", Color(0.1, 0.1, 0.1, 1))
+	lbl.add_theme_font_size_override("font_size", 16)
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lbl.custom_minimum_size = Vector2(200, 0)
+	bubble.add_child(lbl)
+	hbox.add_child(bubble)
+	
+	# Portrait
+	var portrait = TextureRect.new()
+	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	portrait.custom_minimum_size = Vector2(160, 160)
+	
+	var expr_paths = {
+		"neutral": "res://Characters/Danila/danila_neutral.png",
+		"sad": "res://Characters/Danila/danila_sad.png",
+		"tired": "res://Characters/Danila/danila_tired_but_happy_factory.png",
+		"thinking": "res://Characters/Danila/danila_thinking.png",
+		"serious": "res://Characters/Danila/danila_serious.png",
+		"worried": "res://Characters/Danila/danila_worried.png",
+		"danila_determined_fabric": "res://Characters/Danila/danila_determined_fabric.png"
+	}
+	var tex_path = expr_paths.get(expr, expr_paths["neutral"])
+	if ResourceLoader.exists(tex_path):
+		portrait.texture = load(tex_path)
+	hbox.add_child(portrait)
+	
+	# Animate bounce/fade
+	hbox.modulate.a = 0.0
+	hbox.position.y += 20
+	var tw = create_tween()
+	tw.tween_property(hbox, "modulate:a", 1.0, 0.4)
+	tw.parallel().tween_property(hbox, "position:y", hbox.position.y - 20, 0.4).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	
+	tw.tween_interval(4.0)
+	
+	tw.tween_property(hbox, "modulate:a", 0.0, 0.3)
+	tw.tween_callback(canvas.queue_free)

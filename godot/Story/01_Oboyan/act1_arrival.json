@@ -390,6 +390,11 @@
 		"type": "dialogue"
 	},
 	{
+		"args": ["oboyan_act1_done", 1],
+		"name": "set",
+		"type": "command"
+	},
+	{
 		"args": [
 			"fade_out"
 		],

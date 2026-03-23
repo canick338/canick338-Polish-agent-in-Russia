@@ -1,0 +1,87 @@
+[
+	{
+		"args": ["cafe_interior", ""],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Кафе «Варшавянка». Утренний свет пробивается через пыльные стёкла. Пахнет свежим хлебом и кофе.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"side": "left",
+		"animation": "enter",
+		"expression": "neutral",
+		"text": "Одно кофе и бутерброд, пожалуйста.",
+		"type": "dialogue"
+	},
+	{
+		"args": ["money", "-15"],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"args": ["hunger", "+30"],
+		"name": "set",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "За соседним столиком двое рабочих в спецовках о чём-то спорят.",
+		"type": "dialogue"
+	},
+	{
+		"options": [
+			{
+				"text": "👂 Подслушать разговор",
+				"children": [
+					{
+						"character": "worker",
+						"side": "right",
+						"animation": "enter",
+						"expression": "neutral",
+						"text": "...говорю тебе, на заводе что-то нечисто. Откуда у нас такие поставки? Это же маленький фасовочный цех!",
+						"type": "dialogue"
+					},
+					{
+						"character": "worker",
+						"side": "right",
+						"text": "Тише ты. Бронислав услышит — уволит без разговоров. Он такой сам...",
+						"type": "dialogue"
+					},
+					{
+						"character": "danila",
+						"expression": "thinking",
+						"text": "(Мысли) Интересно... Что они знают? На заводе действительно что-то странное? Нужно запомнить.",
+						"type": "dialogue"
+					},
+					{
+						"args": ["cafe_overheard_factory", 1],
+						"name": "set",
+						"type": "command"
+					}
+				]
+			},
+			{
+				"text": "☕ Спокойно допить кофе",
+				"children": [
+					{
+						"character": "danila",
+						"expression": "neutral",
+						"text": "(Мысли) Не стоит совать нос в чужие дела. Пока что.",
+						"type": "dialogue"
+					}
+				]
+			}
+		],
+		"type": "choice"
+	},
+	{
+		"character": "danila",
+		"expression": "neutral",
+		"text": "Неплохой кофе. По крайней мере, живот не бурчит.",
+		"type": "dialogue"
+	}
+]
