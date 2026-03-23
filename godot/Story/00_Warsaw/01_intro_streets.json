@@ -1,355 +1,429 @@
 [
-	{
-		"args": ["fade_in"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"args": ["orphanhome", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "danila",
-		"side": "left",
-		"animation": "enter",
-		"expression": "serious",
-		"text": "(Мысли) Варшавский приют Святого Лаврентия. Место, где я вырос. Место, где учат выживать, а не жить.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "neutral",
-		"text": "(Мысли) Годы побоев, голода и холода сделали меня крепким. Но детство закончилось.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["fade_out"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"args": ["polish_home", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "danila",
-		"expression": "thinking",
-		"text": "(Мысли) По достижении совершеннолетия государство сняло с себя ответственность. Выделило эту серую конуру на окраине.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "sad",
-		"text": "(Мысли) Голые стены, скрипучий пол и чувство тотальной пустоты. Я понял, что если останусь здесь — сгнию заживо.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "determined_factory",
-		"text": "Нужно выйти на улицу. Найти хоть какую-то зацепку.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["fade_out"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"args": ["polish_gateway", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Данила вышел на промозглые улицы Варшавы. Ветер гнал мусор по мостовой.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"side": "left",
-		"animation": "enter",
-		"expression": "worried",
-		"text": "(Мысли) Холодно. Нужно найти хоть какую-то зацепку.",
-		"type": "dialogue"
-	},
-	{
-		"character": "hobo",
-		"side": "right",
-		"animation": "enter",
-		"expression": "asking_money",
-		"text": "Пссс... эй, шкет. Мелочь есть? А сигаретка?",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "angry",
-		"text": "Отвали, дед. Самого от голода шатает.",
-		"type": "dialogue"
-	},
-	{
-		"character": "hobo",
-		"side": "right",
-		"expression": "thoughtful",
-		"text": "Хе-хе. Дерзкий. Детдомовский, да? Глаза голодные, как у волчонка. Работу ищешь, небось?",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "sad",
-		"text": "Да, ищу. Фасовочный завод, грузчик — плевать. Лишь бы жрать.",
-		"type": "dialogue"
-	},
-	{
-		"character": "hobo",
-		"side": "right",
-		"expression": "neutral",
-		"text": "На заводе ты оставишь здоровье и сдохнешь в 40 лет. Слушай старого мудреца...",
-		"type": "dialogue"
-	},
-	{
-		"character": "hobo",
-		"side": "right",
-		"expression": "excited",
-		"text": "Хочешь есть от пуза? Иметь власть? Иди в Польскую Разведку. В Академию шпионов.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "surprised",
-		"text": "Шпионов? Я сирота без образования. Кто меня туда возьмёт?",
-		"type": "dialogue"
-	},
-	{
-		"character": "hobo",
-		"side": "right",
-		"expression": "thoughtful",
-		"text": "В том и суть, дурень! Им нужны люди без корней. Без семьи. Такие, по которым никто не будет плакать, если они исчезнут.",
-		"type": "dialogue"
-	},
-	{
-		"character": "hobo",
-		"side": "right",
-		"text": "Мордой торговать научат, ствол дадут. Академия тут недалеко. Раскинь мозгами, парень.",
-		"type": "dialogue"
-	},
-	{
-		"character": "hobo",
-		"side": "right",
-		"expression": "asking_money",
-		"text": "А ТЕПЕРЬ ДАЙ МЕЛОЧЬ, БЛЯ! Моя философская лекция не бесплатная!",
-		"type": "dialogue"
-	},
-	{
-		"options": [
-			{
-				"text": "Дать бродяге 10$",
-				"children": [
-					{
-						"args": ["money", "-10"],
-						"name": "set",
-						"type": "command"
-					},
-					{
-						"args": ["karma", 1],
-						"name": "set",
-						"type": "command"
-					},
-					{
-						"character": "danila",
-						"side": "left",
-						"expression": "sad",
-						"text": "Держи. Последние отрываю от сердца.",
-						"type": "dialogue"
-					},
-					{
-						"character": "hobo",
-						"side": "right",
-						"expression": "excited",
-						"text": "Хе-хе! Вот она — КАРМА в действии, сынок!",
-						"type": "dialogue"
-					},
-					{
-						"character": "hobo",
-						"side": "right",
-						"expression": "neutral",
-						"text": "Деньги — вода. Отдал легко — вернётся с процентами. Запомни: открытая ладонь всегда поймает большую удачу.",
-						"type": "dialogue"
-					}
-				]
-			},
-			{
-				"text": "Отказать",
-				"children": [
-					{
-						"character": "danila",
-						"side": "left",
-						"expression": "angry",
-						"text": "Перебьёшься. Самому жрать нечего.",
-						"type": "dialogue"
-					},
-					{
-						"character": "hobo",
-						"side": "right",
-						"expression": "neutral",
-						"text": "Хех. Твоё право, парень.",
-						"type": "dialogue"
-					},
-					{
-						"character": "hobo",
-						"side": "right",
-						"expression": "neutral",
-						"text": "Только помни: сжатый кулак гроши сбережёт, но вот судьбу за хвост уже никогда не поймает. Бывай.",
-						"type": "dialogue"
-					}
-				]
-			}
-		],
-		"type": "choice"
-	},
-	{
-		"character": "hobo",
-		"animation": "leave",
-		"text": "..."
-	},
-	{
-		"character": "",
-		"text": "Бродяга растворился в подворотне. Данила остался стоять на холодном ветру.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "thinking",
-		"text": "Академия Разведки... Суицид или шанс? Нужно вернуться домой, посидеть, подумать обо всём этом.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["fade_out"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"args": ["polish_home", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Данила вернулся в свою сырую конуру. Живот сводило от голода.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"side": "left",
-		"animation": "enter",
-		"expression": "sad",
-		"text": "Наконец-то дома. Хотя домом это назвать язык не поворачивается.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["hunger", 20],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["energy", 40],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"options": [
-			{
-				"text": "🍳 Обыскать холодильник на предмет еды",
-				"children": [
-					{
-						"character": "danila",
-						"expression": "thinking",
-						"text": "Так... Чёрствая горбушка хлеба и засохший кусок дешёвой колбасы. С водой пойдёт.",
-						"type": "dialogue"
-					},
-					{
-						"character": "",
-						"text": "Вы перекусили. Показатель сытости частично восстановлен.",
-						"type": "dialogue"
-					},
-					{
-						"args": ["hunger", "+50"],
-						"name": "set",
-						"type": "command"
-					}
-				]
-			},
-			{
-				"text": "🛏️ Сесть на кровать и подумать о словах бродяги",
-				"children": [
-					{
-						"character": "danila",
-						"expression": "sad",
-						"text": "Я сирота, никому не нужный в этом сером городе. Государство выкинуло меня на произвол судьбы.",
-						"type": "dialogue"
-					},
-					{
-						"character": "danila",
-						"expression": "serious",
-						"text": "Этот старик прав. Академия — единственный билет наверх. Иначе я закончу жизнь у фасовочного станка.",
-						"type": "dialogue"
-					}
-				]
-			}
-		],
-		"type": "choice"
-	},
-	{
-		"character": "danila",
-		"expression": "determined_factory",
-		"text": "Решено. Завтра же иду искать Академию Разведки на карте города.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Данила закрыл глаза. Наступил новый день, полный неизвестности.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "neutral",
-		"text": "Так-с... посмотрим, что тут за карта.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["prologue_act", 1],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["warsaw_prologue_stage", 1],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["hunger", 100],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["energy", 100],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["system_pass_time", 1],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["current_day", 1],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["current_time", 0],
-		"name": "set",
-		"type": "command"
-	}
+    {
+        "args": ["fade_in"],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": ["orphanhome", ""],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "danila",
+        "side": "left",
+        "animation": "enter",
+        "expression": "serious",
+        "text": "(Мысли) Варшавский приют Святого Лаврентия. Тёмные кирпичные стены, которые помнили ещё послевоенные годы. Место, где учат выживать, а не жить. Место, которое я называл домом последние пятнадцать лет.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "neutral",
+        "text": "(Мысли) Годы побоев за лишний кусок заплесневелого хлеба. Холодные, едва тёплые батареи морозной польской зимой. И этот вечный запах варёной капусты, въевшийся в кожу.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "sad",
+        "text": "(Мысли) Я помню, как мы дрались на заднем дворе за рваные кроссовки из гуманитарной помощи. Я помню воспитателя пана Марека с его тяжёлым кожаным ремнём. Я не сломался. Я просто... зачерствел.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "serious",
+        "text": "(Мысли) Но сегодня мой восемнадцатый день рождения. Система выплёвывает меня обратно на улицу, туда, откуда меня когда-то и подобрали.",
+        "type": "dialogue"
+    },
+    {
+        "args": ["fade_out"],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": ["polish_home", ""],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Дверь с облупившейся краской захлопнулась с глухим стуком. Данила бросил свою тощую сумку на пол.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "thinking",
+        "text": "(Мысли) Государство расщедрилось. Выделило мне эту тесную бетонную коробку на самой окраине Варшавы. Теперь это моя 'крепость'.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "sad",
+        "text": "(Мысли) Стены тонкие, как бумага. За левой стеной кто-то непрерывно кашляет. За правой — ругаются муж с женой. С потолка сыплется побелка, когда сосед сверху ходит. Здесь даже тараканы дохнут от тоски.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "tired",
+        "text": "(Мысли) Если я останусь здесь — сгнию заживо. Стану одним из тех серых теней, которые по утрам бредут на завод, а вечером напиваются дешёвой водкой 'Выборова'.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "determined_factory",
+        "text": "(Вслух) Нет. Я заслуживаю большего. Мне нужны деньги. Нужны связи. Нужно выбраться из этой дыры.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "thinking",
+        "text": "Пойду на улицу. Вдруг кому-то нужны руки, которые не боятся грязной работы. Курьер, грузчик, вышибала — плевать. Лишь бы платили.",
+        "type": "dialogue"
+    },
+    {
+        "args": ["fade_out"],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": ["polish_gateway", ""],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Ветер гнал мокрые газеты и пластиковые стаканчики по мостовой. Варшава встретила Данилу свинцово-серым небом, ледяной моросью и запахом дешёвого бензина.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "side": "left",
+        "animation": "enter",
+        "expression": "worried",
+        "text": "(Мысли) Желудок сводит спазмом. Я не ел со вчерашнего вечера, когда в приюте давали кашу. Надо найти подработку прямо сейчас. Иначе до завтра я просто не дотяну.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Из тёмного сырого переулка, откуда несло мочой и гнилыми яблоками, послышался хриплый кашель.",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "animation": "enter",
+        "expression": "asking_money",
+        "text": "Пссс... эй, шкет! Да-да, ты, с взглядом побитой бездомной собаки. Курить не найдётся?",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "text": "🚬 Отдать последнюю мятую сигарету",
+                "children": [
+                    {
+                        "character": "danila",
+                        "side": "left",
+                        "expression": "neutral",
+                        "text": "Осталась одна. Извини, зажигалка не работает. Держи.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "surprised",
+                        "text": "Воу... Последнюю отдал? Не ожидал. У меня свои спички есть. Уважаю, шкет. Уважаю.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "thoughtful",
+                        "text": "Не похож ты на местного. Местные бы плюнули под ноги. Только со стен приюта слез, да? Воняет от тебя дешёвым гос-мылом и наивной безысходностью.",
+                        "type": "dialogue"
+                    }
+                ]
+            },
+            {
+                "text": "Отказаться (Сказать, что не куришь)",
+                "children": [
+                    {
+                        "character": "danila",
+                        "side": "left",
+                        "expression": "angry",
+                        "text": "Не курю. И тебе не советую. Лёгкие быстрее выплюнешь.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "sad",
+                        "text": "Эх, молодёжь. За ЗОЖ радеете, а потом помираете под колёсами пьяных бизнесменов.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "thoughtful",
+                        "text": "Хотя... по глазам твоим волчьим вижу, что ты только со стен приюта слез. Воняет от тебя дешёвым мылом. Ищешь, кому бы продать свои руки подешевле?",
+                        "type": "dialogue"
+                    }
+                ]
+            },
+            {
+                "text": "Дать ему наглости (Грубый ответ)",
+                "children": [
+                    {
+                        "character": "danila",
+                        "side": "left",
+                        "expression": "angry",
+                        "text": "Отвали, дед. И без тебя тошно. У самого ни гроша, ещё и ты тут пристал.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "excited",
+                        "text": "Ого! Дерзкий! Мне нравится! Злость — это хорошее топливо на улице, пацан.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "thoughtful",
+                        "text": "Но одним рыком сыт не будешь. Я же вижу — приютский ты. Выпущенный на вольные хлеба без куска пирога. Ищешь работу, верно?",
+                        "type": "dialogue"
+                    }
+                ]
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "character": "danila",
+        "expression": "sad",
+        "text": "(Тяжело вздыхает) Ищу. Фасовочный завод, грузчик, мусорщик — сейчас уже плевать. Лишь бы зубы на полку не положить от голода.",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "expression": "neutral",
+        "text": "Завод, значит... Слушай сюда, детдомовец. У нас тут в районе новый игрок появился. Страшный человек. Русский из города Обоянь.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "surprised",
+        "text": "Русский? Обоянь? Никогда не слышал.",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "expression": "thoughtful",
+        "text": "И слава Богу, что не слышал. Говорят, зовут его Карл Обломов. Носит строгие итальянские костюмы. Никогда не пьёт алкоголь, хлещет только чёрный дорогой чай прямо на улице из серебряного термоса.",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "expression": "fear",
+        "text": "От его холодного взгляда местная мафия в лужи гадит. Те, кто пытался с ним бодаться за районы, потом находили свои машины начинёнными взрывчаткой, а свои склады — сожжёнными дотла.",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "expression": "neutral",
+        "text": "Говорят, он теперь подминает под себя легальные фасовочные заводы. Если ты пойдёшь работать сменщиком на конвейер — ты станешь его шестерёнкой.",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "text": "Сдохнешь в 40 лет от переработки, так и не увидев мира, или, что хуже, тебя пришьют в подворотне как лишнего свидетеля, когда ты случайно увидишь, что они там фасуют вместо джема.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "serious",
+        "text": "Звучит мрачно. Но у меня нет выбора, дед. Без образования мозгами не заработаешь.",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "expression": "excited",
+        "text": "Ерунда собачья! Ты мыслишь как раб, пацан! Хочешь реальную власть? Хочешь носить костюм, стрелять из казённого оружия и есть крабов от пуза за счёт государства?",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "surprised",
+        "text": "Что ты несёшь?",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "expression": "neutral",
+        "text": "Академия Польской Разведки. Шпионы, сынок! Легализованные ублюдки с лицензией на всё.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "thinking",
+        "text": "Шпионы? Дед, ты стекломоя перепил? Какая разведка? Кому в госбезопасности нужен сирота из трущоб с девятью классами образования?",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "expression": "thoughtful",
+        "text": "В том-то и суть, дурень молодо-зелено! Им НЕ НУЖНЫ маменькины сынки из университетов. Те ломаются на первом же допросе! Те плачут, когда видят кровь!",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "expression": "excited",
+        "text": "Им нужны «призраки». Те, кто вырос на самом дне. Кого били, но не убили. Те, по кому никто не всплакнёт, если они пропадут без вести на задании в Сибири.",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "expression": "neutral",
+        "text": "У тебя нет корней. Нет матери, нет отца, нет сопливой невесты. Ты идеальный кандидат. Они вправят тебе мозги, дадут ксиву, пистолет, а главное — дадут цель.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "thinking",
+        "text": "(Мысли) Звучит как бред сумасшедшего... Пахнет как бред сумасшедшего. Но в его словах есть жуткая, холодная логика. Приют научил меня выживать в любых условиях. Чем не агентурная база?",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "neutral",
+        "text": "Где находится эта 'Академия'?",
+        "type": "dialogue"
+    },
+    {
+        "character": "hobo",
+        "side": "right",
+        "expression": "asking_money",
+        "text": "А ТЕПЕРЬ СЛУШАЙ СЮДА! Мои консалтинговые услуги не бесплатны! Знания стоят денег! Десятка злотых, шкет. У тебя же есть стартовая заначка от государства, я по твоим джинсам вижу!",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "text": "💰 Дать бродяге 10 золотых (Путь Кармы)",
+                "children": [
+                    {
+                        "args": ["money", "-10"],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "args": ["karma", 1],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "character": "danila",
+                        "side": "left",
+                        "expression": "sad",
+                        "text": "Подавись. Это мои последние деньги на сегодня. Я рассчитывал купить на них хлеб и колбасу.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "expression": "serious",
+                        "text": "Но ты заработал их честно. За ценную наводку надо платить.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "excited",
+                        "text": "ХАХА! Вот она — КАРМА в действии! Ты не безнадёжен, пацан! Мир круглый, всё возвращается!",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "thoughtful",
+                        "text": "Деньги — вода. Зажал копейку — потерял миллион. Отдал легко — вернётся с жирными процентами. Запомни это, будущий Агент. Открытая ладонь ловит большую удачу.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "neutral",
+                        "text": "Академия на улице Пшемысла Гроховяка, дом 13. Удачи тебе, шкет.",
+                        "type": "dialogue"
+                    }
+                ]
+            },
+            {
+                "text": "🚫 Послать его (Оставить деньги себе)",
+                "children": [
+                    {
+                        "character": "danila",
+                        "side": "left",
+                        "expression": "angry",
+                        "text": "Я же сказал — я пуст! Иди разводи глупых туристов в центре города, старый хрен. Адрес я и так на Голубятниковском форуме найду.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "neutral",
+                        "text": "Хех. Жадный. Твоё право, пацан. Каждый выживает как умеет.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "thoughtful",
+                        "text": "Но помни мои слова. Скупость на улице обычно обходится дороже щедрости. Смотри только, чтобы твоя закрытая ладонь не срослась с пистолетом.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "hobo",
+                        "side": "right",
+                        "expression": "neutral",
+                        "text": "Иди на улицу Пшемысла Гроховяка. Дом 13. И не забудь, кто направил тебя в рай...",
+                        "type": "dialogue"
+                    }
+                ]
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "character": "danila",
+        "expression": "serious",
+        "text": "(Мысли) Академия Разведки... Звучит безумно, абсурдно и как билет в один конец. Но лучше бросить кости там, чем медленно гнить за фасовочным конвейером.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "determined_factory",
+        "text": "(Вслух) Пора взглянуть на карту города. Варшава, покажи мне свои секреты.",
+        "type": "dialogue"
+    },
+    {
+        "args": ["warsaw_prologue_stage", 1],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": ["WorldMap"],
+        "name": "scene",
+        "type": "command"
+    }
 ]

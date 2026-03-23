@@ -1,243 +1,482 @@
 [
-	{
-		"args": ["officer_school", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Академия Польской Разведки. Сердце государственного шпионажа.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"side": "left",
-		"animation": "enter",
-		"text": "Это мой шанс. Легальная работа, да ещё и на правительство.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["fade_out"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"args": ["office", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Данилу проводили в Главный Кабинет.",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"side": "right",
-		"animation": "enter",
-		"expression": "chief_smile",
-		"text": "А, новый рекрут! Я видел твоё досье, парень. Сирота, выросший на улицах Варшавы. То, что нужно.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Здравствуйте, пан Генерал.",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"side": "right",
-		"expression": "chief_pointing_smile",
-		"text": "Здесь я делаю из уличных крыс настоящих львов! Добро пожаловать, сынок.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["fade_out"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"args": ["factory_street", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Учёба началась. Это был ад. Физические нагрузки на пределе возможностей.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "(Мысли) Меня били, заставляли не спать сутками. Но я терпел. Ради нормальной жизни.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Помимо мускулов, качали и мозги: криптография, психология допроса, слежка.",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"side": "right",
-		"animation": "enter",
-		"expression": "chief_shouting",
-		"text": "Агент не должен чувствовать боли! Агент должен быть тенью!",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Они научили меня быть невидимым. Собирать информацию и выживать.",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"side": "right",
-		"animation": "leave",
-		"type": "dialogue",
-		"text": "..."
-	},
-	{
-		"character": "",
-		"text": "Месяцы изнурительной подготовки подошли к концу. Сирота с улиц стал профессионалом. Выпускной.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["card_danila"],
-		"name": "unlock",
-		"type": "command"
-	},
-	{
-		"args": ["fade_out"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"args": ["office", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "chief",
-		"side": "right",
-		"animation": "enter",
-		"expression": "chief_neutral",
-		"text": "Марек. Так теперь тебя зовут. Твоё обучение окончено, пора послужить Польше.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"side": "left",
-		"animation": "enter",
-		"text": "Я готов, Генерал Джонни. В чём заключается миссия?",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"side": "right",
-		"expression": "chief_crazy_pointing",
-		"text": "Россия. Город Обоянь! Там спрятана секретная лаборатория. Ты должен узнать, что они там прячут!",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"side": "right",
-		"expression": "chief_neutral",
-		"text": "Но мы не пошлём тебя туда как агента. Ты поедешь как нелегал-мигрант. И чтобы это выглядело правдоподобно...",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"side": "right",
-		"expression": "chief_smile",
-		"text": "Тебе придётся устроиться на наш тайный Завод Карла Обломова здесь, в Варшаве.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Работать на фасовочном заводе? Для чего?",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"side": "right",
-		"expression": "chief_shouting",
-		"text": "ЛЕГЕНДА! Ты должен заработать деньги на билет своими руками. У тебя будет неделя, чтобы накопить 500$ и явиться сюда за отчётом!",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"side": "right",
-		"expression": "chief_neutral",
-		"text": "Берёшься за эту миссию, Марек?",
-		"type": "dialogue"
-	},
-	{
-		"options": [
-			{
-				"text": "🤝 Так точно! (Стать Агентом, 7 дней)",
-				"children": [
-					{
-						"character": "danila",
-						"text": "Я не подведу. Через неделю у меня будут деньги и прикрытие.",
-						"type": "dialogue"
-					},
-					{
-						"character": "chief",
-						"side": "right",
-						"expression": "chief_smile",
-						"text": "Отличный настрой. Приходи в штаб, когда заработаешь 500$.",
-						"type": "dialogue"
-					},
-					{
-						"args": ["accepted_johny", 1],
-						"name": "set",
-						"type": "command"
-					},
-					{
-						"args": ["days_left", 7],
-						"name": "set",
-						"type": "command"
-					}
-				]
-			},
-			{
-				"text": "✋ Нет. Я возвращаюсь к мирной жизни (Выживать 50 дней)",
-				"children": [
-					{
-						"character": "danila",
-						"text": "Знаете... Я передумал. Шпионаж — это смерть. Я просто пойду работать на завод Питером и буду жить мирно.",
-						"type": "dialogue"
-					},
-					{
-						"character": "chief",
-						"side": "right",
-						"expression": "chief_crazy_pointing",
-						"text": "ЧТО?! Трус! Вон из моего кабинета! Наслаждайся своей жалкой мирной жизнью!",
-						"type": "dialogue"
-					},
-					{
-						"args": ["refused_johny", 1],
-						"name": "set",
-						"type": "command"
-					},
-					{
-						"args": ["days_left", -1],
-						"name": "set",
-						"type": "command"
-					}
-				]
-			}
-		],
-		"type": "choice"
-	},
-	{
-		"args": ["prologue_act_2_done", 1],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["system_pass_time", 1],
-		"name": "set",
-		"type": "command"
-	}
+    {
+        "args": ["officer_school", ""],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Варшава. Академия Польской Разведки. Внешне здание выглядело как забытый Богом советский НИИ по изучению почвоведения.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "side": "left",
+        "animation": "enter",
+        "expression": "serious",
+        "text": "(Мысли) Осыпающаяся штукатурка, ржавые решетки на окнах и вывеска, на которой стёрлась половина букв. Идеальное прикрытие.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "thinking",
+        "text": "(Мысли) Тот старик у подворотни не врал. Меня пропустили внутрь без единого вопроса. Охранник на входе просто посмотрел в мои глаза и молча нажал кнопку турникета.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "sad",
+        "text": "(Мысли) Видимо, взгляд сироты, которому нечего терять, здесь вместо пропуска.",
+        "type": "dialogue"
+    },
+    {
+        "args": ["fade_out"],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": ["office", ""],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Меня провели по длинным темным коридорам и втолкнули в кабинет, насквозь пропахший дешёвым табаком и оружейным маслом.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "animation": "enter",
+        "expression": "chief_neutral",
+        "text": "Ещё одно пушечное мясо с варшавских помоек? Садись. Или стой, если задница болит от приютских скамеек.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "serious",
+        "text": "Я Данила. Пришёл вербоваться.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_smile",
+        "text": "Вербоваться он пришёл... Слушай сюда, герой. Меня зовут Генерал Джонни. И здесь я решаю, кто станет элитным агентом, а кто пойдёт на корм варшавским псам.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_pointing_smile",
+        "text": "Ты думаешь, это игра? Ты думаешь, мы дадим тебе смокинг, мартини и трёх грудастых блондинок? Спешу расстроить, парень.",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "text": "Я готов ко всему. Мне нужны деньги и цель.",
+                "children": [
+                    {
+                        "character": "chief",
+                        "side": "right",
+                        "expression": "chief_neutral",
+                        "text": "Цель он ищет... Ладно. Посмотрим, насколько хватит твоей готовности, когда тебе будут ломать рёбра на допросе.",
+                        "type": "dialogue"
+                    }
+                ]
+            },
+            {
+                "text": "А блондинки совсем не предусмотрены?",
+                "children": [
+                    {
+                        "character": "chief",
+                        "side": "right",
+                        "expression": "chief_shouting",
+                        "text": "ТЫ ЧУВСТВО ЮМОРА СВОЁ В ДЕТДОМЕ ОСТАВЬ! У НАС ЗДЕСЬ СЕРЬЁЗНАЯ ОРГАНИЗАЦИЯ!",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": ["energy", "-10"],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "character": "danila",
+                        "expression": "sad",
+                        "text": "(Мысли) Ой... Зря я это сказал. Он аж покраснел от злости.",
+                        "type": "dialogue"
+                    }
+                ]
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "character": "",
+        "text": "Генерал внезапно вытаскивает из ящика стола какой-то свёрток в фольге и с силой кидает его прямо в лицо Даниле.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "surprised",
+        "text": "Ай! Что за чёрт?! Это... шаурма?",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_shouting_messenger",
+        "text": "ЭТО ПОЛЬСКИЙ КЕБАБ, ИДИОТ! Запомни первое правило Агента Ноль: настоящий шпион использует всё, что попадётся ему под руку!",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_neutral",
+        "text": "Еда — это энергия. Еда — это оружие. Спрячь его в карман куртки. И никогда, слышишь, НИКОГДА не выбрасывай ресурс, пока он не спасёт тебе жизнь.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "thinking",
+        "text": "(Мысли) Сумасшедший старик. Но... ладно. Кебаб так кебаб. Засуну его в глубокий карман кожанки.",
+        "type": "dialogue"
+    },
+    {
+        "args": ["has_kebab", 1],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": ["fade_out"],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": ["factory_street", ""],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Ускоренный курс подготовки занял три кошмарных недели. Данилу учили стрелять, вскрывать замки шпилькой и терпеть боль без крика.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "animation": "enter",
+        "expression": "chief_shouting",
+        "text": "ДВИГАЙ ЗАДОМ! ТЫ МЕДЛЕННЕЕ, ЧЕМ БЕРЕМЕННАЯ ЧЕРЕПАХА В ПРОБКЕ!",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "tired",
+        "text": "(Мысли) Легкие горят огнём. Мышцы свело судорогой. Я спал два часа за последние двое суток.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_neutral",
+        "text": "Сегодня выпускной экзамен на полигоне. Сначала проверим твои нервы. Перед тобой тренировочный манекен 'Шпионский Узник 3000'.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_smile",
+        "text": "Твоя задача — 'разговорить' деревяшку за 10 секунд. Выбирай метод, Агент.",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "text": "🗣 Применить психологическое давление (Орать)",
+                "children": [
+                    {
+                        "character": "danila",
+                        "expression": "angry",
+                        "text": "ГДЕ ДЕТОНАТОР?! КОМУ ТЫ ПРОДАЛ КОДЫ?! ГОВОРИ, ИЛИ Я ОТПРАВЛЮ ТВОЮ ДЕРЕВЯННУЮ МАТЬ НА ЛЕСОПИЛКУ!",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "chief",
+                        "side": "right",
+                        "expression": "chief_smile",
+                        "text": "Неплохо. Хорошая подача голоса. Выглядишь как маньяк. Одобряю.",
+                        "type": "dialogue"
+                    }
+                ]
+            },
+            {
+                "text": "🤜 Избить манекен стулом (Физическое насилие)",
+                "children": [
+                    {
+                        "character": "",
+                        "text": "Данила молча берет железный стул со спинкой и со всей силы обрушивает его на манекен. Голова манекена отлетает в стену.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "expression": "panting",
+                        "text": "Он... раскололся, сэр.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "chief",
+                        "side": "right",
+                        "expression": "chief_pointing_smile",
+                        "text": "БУКВАЛЬНО! Мне нравится твой подход! Жёстко, эффективно, травмоопасно!",
+                        "type": "dialogue"
+                    }
+                ]
+            },
+            {
+                "text": "🤫 Предложить манекену сигарету и поговорить по душам",
+                "children": [
+                    {
+                        "character": "danila",
+                        "expression": "sad",
+                        "text": "Знаешь... у меня тоже было тяжёлое детство в лесу. Понимаю тебя. Давай просто всё честно обсудим. Куришь?",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "chief",
+                        "side": "right",
+                        "expression": "chief_shouting",
+                        "text": "ЧТО ЭТО ЗА МЕЛОДРАМА?! ТЫ АГЕНТ РАЗВЕДКИ ИЛИ ПСИХОТЕРАПЕВТ ДЛЯ ЧУРБАНОВ?! МИНУС 50 ОТЖИМАНИЙ УПОРОМ ЛЁЖА!",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": ["energy", "-20"],
+                        "name": "set",
+                        "type": "command"
+                    }
+                ]
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_neutral",
+        "text": "Хватит игр. Теперь главное испытание. Детектор лжи у нас сломался, поэтому тест на профпригодность проведёт старший курсант Пшемек.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_shouting_messenger",
+        "text": "ПШЕМЕК! ВЫХОДИ ХОЛОП, БАРИН ПРИШЁЛ!",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Двери полигона с грохотом разъезжаются. Из полумрака на арену выходит гора мышц в камуфляжных штанах. Пшемек на полметра выше Данилы, а его кулаки размером с пивные кружки.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "surprised",
+        "text": "Это шутка? Он же меня пополам сломает! Это спарринг или казнь?",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_smile",
+        "text": "Выживешь — получишь удостоверение. Упадёшь — отправишься мыть сортиры на Главпочтамт до конца своих дней. НАЧАЛИ!",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Пшемек издаёт звериный рык и бросается вперёд, замахиваясь для сокрушительного удара, способного проломить кирпичную стену.",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "text": "🛡 Поставить жёсткий блок",
+                "children": [
+                    {
+                        "character": "",
+                        "text": "Ты пытаешься заблокировать удар предплечьями. Кулак Пшемека врезается в тебя с силой несущегося пикапа.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": ["energy", "-30"],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "character": "danila",
+                        "expression": "sad",
+                        "text": "АГРХ! Блять... Кажется, он мне кость треснул...",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "Тебя отбрасывает к стене. Пшемек медленно надвигается, хрустя костяшками пальцев.",
+                        "type": "dialogue"
+                    }
+                ]
+            },
+            {
+                "text": "🤸 Увернуться и ударить в печень",
+                "children": [
+                    {
+                        "character": "",
+                        "text": "Ты приседаешь под проносящимся над головой кулаком и резко бьёшь Пшемека в область печени.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "Раздаётся глухой стук, словно ты ударил дубовый пень. Пшемек даже не поморщился. Он хватает тебя за воротник и швыряет через всё помещение.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": ["energy", "-40"],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "character": "danila",
+                        "expression": "panting",
+                        "text": "(Кашляет кровью) У него там бронепластина вместо пресса или как?!",
+                        "type": "dialogue"
+                    }
+                ]
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "character": "danila",
+        "expression": "thinking",
+        "text": "(Мысли) Прямым боем его не взять. Он тупой, но прочный, как танк. Нужно использовать окружение. Или... ресурс.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Данила судорожно вспоминает наставления Генерала. 'Выживает на всём', 'Используй ресурс'. Его рука машинально скользит в глубокий карман кожанки, где лежит тот самый засохший Кебаб.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Пшемек разгоняется для финального броска, который должен раздавить Данилу в лепёшку.",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "text": "🌯 Швырнуть КЕБАБ прямо ему под ноги!",
+                "children": [
+                    {
+                        "character": "",
+                        "text": "С криком отчаяния Данила выхватывает протухшую шаурму и со всей силы бросает её на бетонный пол прямо на пути бегущего гиганта.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "Заветренный чесночный соус, жирное мясо и лук разлетаются влажной скользкой лужей. Армейский ботинок Пшемека наступает прямо в центр кулинарного кошмара.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "Физика беспощадна даже к амбалам. Нога Пшемека уезжает вперёд со скоростью болида 'Формулы-1'. 140 килограммов мышц с оглушительным грохотом обрушиваются спиной на бетон.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "expression": "determined_factory",
+                        "text": "ОРА-ОРА-ОРА-ОРА! ЖРИ БЕТОН, КУСОК ДЕРЬМА!",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "Воспользовавшись заминкой, Данила прыгает сверху и обрушивает на шокированного Пшемека град отчаянных, сверхскоростных ударов. Десятки кулаков сливаются в однообразное месиво.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "Голова Пшемека безвольно откидывается в сторону. Нокаут.",
+                        "type": "dialogue"
+                    }
+                ]
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "character": "danila",
+        "expression": "panting",
+        "text": "(Тяжело дышит) Я... Я победил. Я мать его агентурная кэгэбэшная машина для убийств.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_smile",
+        "text": "Хлоп... Хлоп... Хлоп...",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_pointing_smile",
+        "text": "Использовать просроченный фастфуд как тактическую мину, чтобы повалить элитного бойца спецназа... Это так грязно. Так подло. ТАК МЕРЗКО!",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_shouting_messenger",
+        "text": "И МНЕ ЭТО, ЧЁРТ ВОЗЬМИ, НРАВИТСЯ! ТЫ ИДЕАЛЬНЫЙ АКАДЕМИК! Ты доказал, что готов выживать в любых условиях.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "neutral",
+        "text": "Сэр, вы же сами дали мне этот кебаб. Вы планировали это с самого начала?",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_neutral",
+        "text": "Разведка никогда не раскрывает своих секретов, Агент Ноль. А теперь приведи себя в порядок, смой с кулаков кровь Пшемека и чесночный соус.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_smile",
+        "text": "Твоя стажировка окончена. Ты официально в штате. Жду тебя в Главном Штабе. У нас есть для тебя серьёзная миссия, связанная с одним 'любителем чая'.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "serious",
+        "text": "(Мысли) Миссия. Любитель чая. Бомж на улице был прав. Всё сходится в одну точку. Варшава — это лишь начало моего пути.",
+        "type": "dialogue"
+    },
+    {
+        "args": ["academy_done", 1],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": ["fade_out"],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": ["WorldMap"],
+        "name": "scene",
+        "type": "command"
+    }
 ]

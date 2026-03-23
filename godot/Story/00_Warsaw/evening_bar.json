@@ -1,124 +1,274 @@
 [
-	{
-		"args": ["bar_interior", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Бар «Три Короны». Тусклый свет, дым сигарет и запах дешёвого пива.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"side": "left",
-		"animation": "enter",
-		"expression": "neutral",
-		"text": "(Мысли) После смены все работяги собираются тут. Может, узнаю что-нибудь полезное.",
-		"type": "dialogue"
-	},
-	{
-		"character": "worker",
-		"side": "right",
-		"animation": "enter",
-		"expression": "neutral",
-		"text": "О, новенький! Садись к нам. Сегодня пьём за конец недели!",
-		"type": "dialogue"
-	},
-	{
-		"options": [
-			{
-				"text": "🍺 Выпить с ребятами (-20 энергии, инфо)",
-				"children": [
-					{
-						"character": "danila",
-						"expression": "neutral",
-						"text": "Наливай. За здоровье.',",
-						"type": "dialogue"
-					},
-					{
-						"args": ["energy", "-20"],
-						"name": "set",
-						"type": "command"
-					},
-					{
-						"args": ["money", "-20"],
-						"name": "set",
-						"type": "command"
-					},
-					{
-						"character": "worker",
-						"side": "right",
-						"expression": "neutral",
-						"text": "Ты нормальный мужик, Данила. Не то что эти... ну, ты понимаешь.",
-						"type": "dialogue"
-					},
-					{
-						"character": "worker",
-						"side": "right",
-						"text": "Слушай, я тебе скажу кое-что. Бронислав... он не просто начальник завода.",
-						"type": "dialogue"
-					},
-					{
-						"character": "danila",
-						"expression": "surprised",
-						"text": "В каком смысле?",
-						"type": "dialogue"
-					},
-					{
-						"character": "worker",
-						"side": "right",
-						"text": "Я видел, как он ночью разговаривал по телефону. По-русски. Бегло. А ведь он якобы поляк до мозга костей.",
-						"type": "dialogue"
-					},
-					{
-						"character": "danila",
-						"expression": "thinking",
-						"text": "(Мысли) Обломов говорит по-русски? Это очень подозрительно...",
-						"type": "dialogue"
-					},
-					{
-						"args": ["bar_oblomov_hint", 1],
-						"name": "set",
-						"type": "command"
-					},
-					{
-						"args": ["worker_trust", 1],
-						"name": "set",
-						"type": "command"
-					}
-				]
-			},
-			{
-				"text": "✋ Отказаться (остаться трезвым)",
-				"children": [
-					{
-						"character": "danila",
-						"expression": "serious",
-						"text": "Спасибо, но мне завтра рано вставать.",
-						"type": "dialogue"
-					},
-					{
-						"character": "worker",
-						"side": "right",
-						"expression": "neutral",
-						"text": "Как хочешь. Но на заводе не любят тех, кто держится особняком...",
-						"type": "dialogue"
-					},
-					{
-						"character": "danila",
-						"expression": "thinking",
-						"text": "(Мысли) Ладно, зато я не потеряю голову. Агент должен быть начеку.",
-						"type": "dialogue"
-					}
-				]
-			}
-		],
-		"type": "choice"
-	},
-	{
-		"character": "",
-		"text": "Данила вышел из бара в прохладную ночь Варшавы.",
-		"type": "dialogue"
-	}
+    {
+        "args": ["bar_inside", ""],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Бар «Упавший Орёл». Самое паршивое место в Восточной Варшаве. Сюда приходят не праздновать, а забывать: тяжелую смену на заводе, злую жену и отсутствие перспектив.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "side": "left",
+        "animation": "enter",
+        "expression": "tired",
+        "text": "(Мысли) Воздух здесь настолько густой от сигаретного дыма и перегара, что его можно резать ножом и мазать на хлеб. Идеальное место для сбора агентурных данных.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "thinking",
+        "text": "(Мысли) Пьяные языки не умеют держать секреты. Если Синдикат Обломова где-то и наследил, то местные работяги точно об этом болтают за кружкой тёплого нефильтрованного.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Данила садится за липкий барный стул. Бармен, лысый великан со шрамом через всё лицо по имени Казимир, медленно протирает грязной тряпкой ещё более грязный стакан.",
+        "type": "dialogue"
+    },
+    {
+        "character": "bartender",
+        "side": "right",
+        "animation": "enter",
+        "expression": "angry",
+        "text": "Чего уставился? Здесь не бесплатный театр. Либо заказывай пойло, либо проваливай на мороз к бездомным собакам.",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "text": "🍺 Купить дешёвое пиво (10 zl) - Восстановить немного энергии",
+                "children": [
+                    {
+                        "condition": "money>=10",
+                        "type": "if",
+                        "then": [
+                            {
+                                "args": ["money", "-10"],
+                                "name": "set",
+                                "type": "command"
+                            },
+                            {
+                                "args": ["energy", "+20"],
+                                "name": "set",
+                                "type": "command"
+                            },
+                            {
+                                "character": "danila",
+                                "side": "left",
+                                "expression": "neutral",
+                                "text": "Налей кружку своего знаменитого разливного. И не вздумай разбавлять водой.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "bartender",
+                                "side": "right",
+                                "expression": "neutral",
+                                "text": "Пфф. Вода стоит дороже, чем то, что я тебе наливаю. Держи свою мочу молодого поросёнка.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "",
+                                "text": "Данила делает глоток. Вкус отвратительный, словно пиво пропустили через старый ржавый радиатор. Но по телу расходится тепло.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "danila",
+                                "expression": "thinking_factory",
+                                "text": "(Мысли) Отличная дрянь. Отбивает все вкусовые рецепторы на неделю вперёд. Немного взбодрился.",
+                                "type": "dialogue"
+                            }
+                        ],
+                        "else": [
+                            {
+                                "character": "danila",
+                                "expression": "sad",
+                                "text": "Чёрт... У меня даже десятки нет. Придётся глотать слюни.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "bartender",
+                                "side": "right",
+                                "expression": "angry",
+                                "text": "Тогда проваливай, нищеброд! Воздух только зря переводишь!",
+                                "type": "dialogue"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "text": "🥂 Купить шот элитной польской водки (50 zl) - Максимум слухов!",
+                "children": [
+                    {
+                        "condition": "money>=50",
+                        "type": "if",
+                        "then": [
+                            {
+                                "args": ["money", "-50"],
+                                "name": "set",
+                                "type": "command"
+                            },
+                            {
+                                "character": "danila",
+                                "side": "left",
+                                "expression": "serious",
+                                "text": "Пятьдесят злотых. Налей мне самой чистой 'Слёзы Зубра', Казимир. И скажи... что вообще в городе происходит?",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "bartender",
+                                "side": "right",
+                                "expression": "surprised",
+                                "text": "Ого! А ты, я погляжу, при деньгах, бродяга. Уважаю тех, кто платит хрустящими купюрами.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "",
+                                "text": "Бармен наливает стопку прозрачной, как стекло, водки. Данила выпивает её залпом. Горло обжигает ледяным пламенем.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "danila",
+                                "expression": "panting",
+                                "text": "КХА! Ядрёная... Так что насчёт слухов?",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "bartender",
+                                "side": "right",
+                                "expression": "neutral",
+                                "text": "Слушай внимательно, парень. Варшава меняется. Приютские сироты вдруг начали пропадать с улиц. Говорят, их пакуют в чёрные фургоны.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "bartender",
+                                "side": "right",
+                                "expression": "thoughtful",
+                                "text": "А кто пакует? Правительство! Отвозят их в какую-то сумасшедшую 'Академию Разведки', откармливают кебабами и заставляют избивать манекены. Бред сумасшедшего!",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "danila",
+                                "expression": "surprised",
+                                "text": "(Мысли) Мда. Секретность польских спецслужб пробила очередное дно. Об этом знает даже местный бармен.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "bartender",
+                                "side": "right",
+                                "expression": "fear",
+                                "text": "Но это ещё цветочки. Главная беда пришла с Востока. Русский по имени Карл Обломов. Он купил фасовочный завод на окраине.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "bartender",
+                                "side": "right",
+                                "expression": "serious",
+                                "text": "Мои постоянные клиенты, работяги с завода, клянутся матерью, что в паллетах с красным скотчем нет никакого джема. Они отгружают их на товарняки до Обояни каждую неделю.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "danila",
+                                "expression": "thinking",
+                                "text": "Товарняки до Обояни? Интересно... Спасибо за водку, Казимир. И за болтливость.",
+                                "type": "dialogue"
+                            }
+                        ],
+                        "else": [
+                            {
+                                "character": "danila",
+                                "expression": "sad",
+                                "text": "Ой. Кошелёк-то пуст.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "bartender",
+                                "side": "right",
+                                "expression": "angry",
+                                "text": "Ты что, решил старого Казимира на понт взять?! ВОН ОТСЮДА! И не возвращайся без денег!",
+                                "type": "dialogue"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "text": "👂 Не пить, а просто послушать разговоры работяг (Бесплатно)",
+                "children": [
+                    {
+                        "character": "danila",
+                        "side": "left",
+                        "expression": "neutral",
+                        "text": "Я передумал. Жду друга.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "bartender",
+                        "side": "right",
+                        "expression": "angry",
+                        "text": "Сидишь без заказа больше пяти минут — платишь за стул. Понял?",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "Данила отошёл в тёмный угол бара и натянул капюшон пониже. За соседним столиком громко спорили два пьяных фасовщика с завода Обломова.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "worker_1",
+                        "side": "right",
+                        "expression": "tired",
+                        "text": "Ик... Я тебе говорю, Пётрек! Этот Бронислав совсем охренел. Заставляет нас клеить красные метки на банки с клубникой.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "worker_2",
+                        "side": "right",
+                        "expression": "angry",
+                        "text": "Да ты сам тупой, Януш! Это не клубника! Ты видел, как эти банки таможня проверяет?! Они их даже не открывают! Просто ставят штамп 'Добро'.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "worker_1",
+                        "side": "right",
+                        "expression": "fear",
+                        "text": "Тихо ты! Хочешь, чтобы люди Обломова нас в фундамент закатали?! Он же лично приказал гнать эти партии в Обоянь без задержек...",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "side": "left",
+                        "expression": "serious",
+                        "text": "(Мысли) Значит, они подкупают или запугивают таможню. 'Красные метки', 'поезда в Обоянь'... Картина собирается воедино. Обломов построил идеальный коридор.",
+                        "type": "dialogue"
+                    }
+                ]
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "character": "danila",
+        "expression": "tired",
+        "text": "(Мысли) Пора уходить. От местной атмосферы начинает болеть голова. Нужно заработать денег на билет и валить из этой дыры.",
+        "type": "dialogue"
+    },
+    {
+        "args": ["bar_visited", 1],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": ["fade_out"],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": ["WorldMap"],
+        "name": "scene",
+        "type": "command"
+    }
 ]

@@ -1,240 +1,317 @@
 [
-	{
-		"args": ["intelligence_hq", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Штаб-квартира Польской Разведки. Тусклый свет ламп.",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"expression": "chief_neutral",
-		"text": "Марек. Вижу, твоё прикрытие на Заводе работает без сбоев. Молодец.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Стараюсь, Генерал.",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"expression": "chief_phone_on",
-		"text": "Ты готов к отправке в Обоянь. Держи. Это секретный смартфон с нашей собственной нейросетью.",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"expression": "chief_shouting_messenger",
-		"text": "Лучший и самый защищённый мессенджер в мире! Ни одна русская прослушка его не возьмёт!",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Понял. Я буду на связи.",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"expression": "chief_smile",
-		"text": "Отлично. А вот казенные 500 злотых. Иди к Шломо в его Еврейскую Лавку и купи уже этот билет на поезд.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["money", "+500"],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Генерал Джонни протягивает пачку наличных.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Так точно. Я не подведу Польшу.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["fade_out"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"args": ["warsaw_street", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Данила идёт домой по вечерним улицам Варшавы.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "500 злотых... Нужно сразу зайти к Шломо и...",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Тёмная подворотня. Шаги за спиной.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "— Стой, пацан! Гони бабки!",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Двое крепких мужиков с ножом преграждают путь.",
-		"type": "dialogue"
-	},
-	{
-		"options": [
-			{
-				"text": "🏃 Убежать",
-				"children": [
-					{
-						"condition": "energy>=60",
-						"type": "if",
-						"then": [
-							{
-								"character": "",
-								"text": "Тебе хватило сил оторваться! Деньги спасены.",
-								"type": "dialogue"
-							},
-							{
-								"args": ["energy", "-50"],
-								"name": "set",
-								"type": "command"
-							},
-							{
-								"args": ["robbery_escaped", 1],
-								"name": "set",
-								"type": "command"
-							}
-						],
-						"else": [
-							{
-								"character": "",
-								"text": "Сил не хватило... Удар по голове. Конверт пропал.",
-								"type": "dialogue"
-							},
-							{
-								"args": ["money", 0],
-								"name": "set",
-								"type": "command"
-							},
-							{
-								"args": ["energy", "-30"],
-								"name": "set",
-								"type": "command"
-							}
-						]
-					}
-				]
-			},
-			{
-				"text": "👊 Драться",
-				"children": [
-					{
-						"condition": "energy>=80",
-						"type": "if",
-						"then": [
-							{
-								"character": "",
-								"text": "Быстрый удар! Бандиты отступили. Ты спас деньги, но сильно устал.",
-								"type": "dialogue"
-							},
-							{
-								"args": ["energy", "-40"],
-								"name": "set",
-								"type": "command"
-							},
-							{
-								"args": ["robbery_escaped", 1],
-								"name": "set",
-								"type": "command"
-							}
-						],
-						"else": [
-							{
-								"character": "",
-								"text": "Ты слишком устал. Нож полоснул по руке. Деньги забрали.",
-								"type": "dialogue"
-							},
-							{
-								"args": ["money", 0],
-								"name": "set",
-								"type": "command"
-							},
-							{
-								"args": ["energy", "-50"],
-								"name": "set",
-								"type": "command"
-							}
-						]
-					}
-				]
-			},
-			{
-				"text": "🤲 Отдать деньги",
-				"children": [
-					{
-						"character": "danila",
-						"text": "Забирайте...",
-						"type": "dialogue"
-					},
-					{
-						"args": ["money", 0],
-						"name": "set",
-						"type": "command"
-					}
-				]
-			}
-		],
-		"type": "choice"
-	},
-	{
-		"condition": "robbery_escaped==1",
-		"type": "if",
-		"then": [
-			{
-				"character": "danila",
-				"text": "Деньги при мне. Отлично. Скорее к Шломо.",
-				"type": "dialogue"
-			}
-		],
-		"else": [
-			{
-				"character": "danila",
-				"text": "Чёрт... Конверт... Все 500 злотых украли!",
-				"type": "dialogue"
-			},
-			{
-				"character": "danila",
-				"text": "Генералу Джонни сказать нельзя — он снимет меня с миссии за такую оплошность.",
-				"type": "dialogue"
-			},
-			{
-				"character": "danila",
-				"text": "Придётся самому зарабатывать их на Заводе или в Пиццерии...",
-				"type": "dialogue"
-			}
-		]
-	},
-	{
-		"args": ["prologue_act_3_done", 1],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["system_pass_time", 1],
-		"name": "set",
-		"type": "command"
-	}
+    {
+        "args": ["intelligence_hq", ""],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Штаб-квартира Польской Разведки пряталась глубоко под землёй. В воздухе пахло старым бумажным архивом, дешёвым кофе из автомата и паранойей государственного уровня.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "side": "left",
+        "animation": "enter",
+        "expression": "serious",
+        "text": "(Мысли) Меня провели через четыре поста охраны, просканировали сетчатку глаза и заставили расписаться кровью в бланке о неразглашении.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Двойные стальные двери с шипением разъехались. За ними оказался просторный, но тускло освещенный кабинет. На стенах висели портреты каких-то усатых мужчин в военной форме, а на огромном дубовом столе лежали папки с грифом 'Совершенно секретно'.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Генерал Джонни, всё тот же человек, что закидал Данилу кебабом в Академии, не сидел за столом. Он стоял посреди комнаты и напряжённо, с багровым от натуги лицом, качал бицепс огромной 30-килограммовой гантелей.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "animation": "enter",
+        "expression": "chief_neutral",
+        "text": "(Кряхтит) Девяносто восемь... Ух... Девяносто девять... А, это ты, Агент Ноль! Проходи, не стой как бетонный столб. Сто... Сотня! Хух.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Генерал с грохотом бросает гантелю на толстый ковёр. Земля под ногами вздрагивает.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "neutral",
+        "text": "Так точно, сэр. Я прошёл базовую подготовку и готов к первому настоящему заданию. Надеюсь, оно не связано с метанием шаурмы.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_smile",
+        "text": "Отличный настрой, салага. Сарказм — признак живого ума. Слушай меня предельно внимательно, повторять не буду. Садись.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Генерал обходит стол, закуривает толстую сигарету без фильтра и выпускает облако едкого дыма прямо в лица исторических деятелей на портретах.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_neutral",
+        "text": "Наша разведка работает 24 часа в сутки, чтобы эта страна спала спокойно. Недавно наши радары засекли аномальную криминальную активность.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_pointing_smile",
+        "text": "В Варшаву из далёкой России, из города Обоянь, тянется липкая криминальная паутина. Во главе синдиката стоит Карл Обломов. Русский авторитет новой формации.",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "text": "Спросить про Карла Обломова подробнее",
+                "children": [
+                    {
+                        "character": "danila",
+                        "expression": "thinking",
+                        "text": "Карл Обломов? Бомж на улице предупреждал меня о нём. Говорил, что его боится даже местная мафия.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "chief",
+                        "side": "right",
+                        "expression": "chief_shouting",
+                        "text": "ТВОЙ БОМЖ И ИНФОРМАТОРЫ РАЗВЕДКИ ПОЛУЧАЮТ ДАННЫЕ ИЗ ОДНОГО ИСТОЧНИКА! У Обломова везде глаза и уши.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "chief",
+                        "side": "right",
+                        "expression": "chief_neutral",
+                        "text": "Обломов — это не просто бандит в спортивных штанах. Он закончил элитные университеты. Он контроллирует логистику, порты и, самое главное, наркотрафик.",
+                        "type": "dialogue"
+                    }
+                ]
+            },
+            {
+                "text": "Промолчать и слушать молча",
+                "children": [
+                    {
+                        "character": "danila",
+                        "expression": "serious",
+                        "text": "(Мысли) Лучше не перебивать. Пусть выговорится. Политика и криминал — слишком тонкий лёд.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "chief",
+                        "side": "right",
+                        "expression": "chief_neutral",
+                        "text": "Вижу, ты умеешь держать язык за зубами. Это спасёт тебе жизнь. Обломов контроллирует весь наркотрафик в Центральной Европе.",
+                        "type": "dialogue"
+                    }
+                ]
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_shouting_messenger",
+        "text": "И что хуже всего — он пьёт ЧАЙ! Элитный чёрный чай с крупным листом! В то время как истинные европейские патриоты пьют чёрный кофе и водку из горла!",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "surprised",
+        "text": "(Мысли) Это он сейчас серьёзно? Он реально злится на то, какой напиток предпочитает криминальный авторитет?",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "neutral",
+        "text": "Чай? Вопиющее преступление против государства, сэр. В чём заключается моя миссия?",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_neutral",
+        "text": "Твоя долгосрочная цель, Агент Ноль, — отправиться в его логово, в город Обоянь. Внедриться в его синдикат изнутри, подняться по иерархии и отрубить змее голову.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Генерал открывает ящик стола и достаёт оттуда странного вида устройство.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_phone_on",
+        "text": "Для оперативной связи на вражеской территории я выдаю тебе этот сверхсекретный правительственный смартфон. В нём установлена 'Польская Нейросеть'.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_pointing_smile",
+        "text": "Она защищена лучше, чем золотой запас страны! С её помощью ты сможешь отслеживать задачи, карту города и свою усталость. Береги его как зеницу ока.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "surprised",
+        "text": "Подождите... Я же вижу логотип Huawei на задней крышке. И... это что, наклейка 'Скидка на Пиво 50% в Бедронке'?",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_shouting",
+        "text": "ЭТО ГЕНИАЛЬНАЯ ЛЕГЕНДА ПРИКРЫТИЯ! Если русские ФСБшники найдут его у тебя, они подумают, что ты обычный алкоголик-гастарбайтер, а не агент МИ-6!",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "tired",
+        "text": "(Мысли) Спорить бесполезно. Видимо, у них просто нет денег на нормальные гаджеты, как в фильмах про Джеймса Бонда.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "serious",
+        "text": "Ясно. А как мне попасть в Россию? Гратуры, визы, билеты?",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_neutral",
+        "text": "Тебе нужен поддельный паспорт и 'грязный' билет на поезд до Обояни, который не пробивается по базам. Наш доверенный связной — старый еврей Шломо из антикварной лавки в переулках Варшавы.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_smile",
+        "text": "Билет и пакет документов стоят ровно 500 злотых. Иди к нему, когда соберёшь нужную сумму.",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "text": "Спросить о финансировании миссии (Попросить денег)",
+                "children": [
+                    {
+                        "character": "danila",
+                        "expression": "neutral",
+                        "text": "Понял вас, Генерал. Так... где мои 500 злотых на командировочные расходы?",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "chief",
+                        "side": "right",
+                        "expression": "chief_shouting_messenger",
+                        "text": "КОМАНДИРОВОЧНЫЕ РОСХОДЫ?! МЫ ЧТО, БЛАГОТВОРИТЕЛЬНЫЙ ФОНД МАТЕРИ ТЕРЕЗЫ?!",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "chief",
+                        "side": "right",
+                        "expression": "chief_shouting",
+                        "text": "У нас жесточайше урезали бюджет! Все деньги ушли на этот массажный кабинет в подвале штаба и на закупку тренировочных кебабов для курсантов!",
+                        "type": "dialogue"
+                    }
+                ]
+            },
+            {
+                "text": "Промолчать и ждать приказа",
+                "children": [
+                    {
+                        "character": "danila",
+                        "expression": "thinking",
+                        "text": "(Мысли) Знакомство с Академией подсказывает мне, что денег они не дадут. И мне придётся грабить бабушек на улице.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "chief",
+                        "side": "right",
+                        "expression": "chief_neutral",
+                        "text": "Вижу по твоим глазам, что ты ищешь подвох. Ты его нашёл. Денег мы тебе не выдадим. Бюджет пуст, как голова Пшемека после спарринга.",
+                        "type": "dialogue"
+                    }
+                ]
+            }
+        ],
+        "type": "choice"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_smile",
+        "text": "Именно поэтому мы придумали гениальный план двойного внедрения. Ты будешь работать под прикрытием здесь, в Варшаве, чтобы заработать себе на билет в Россию.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_pointing_smile",
+        "text": "План таков: у Карла Обломова есть легальный бизнес — Фасовочный Завод по производству джема. Иди туда, устройся грузчиком.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_neutral",
+        "text": "И деньги заработаешь, и создашь себе железобетонное прикрытие 'шестёрки', чтобы синдикат в Обояни тебе поверил. Никто не заподозрит в забитом работяге агента МИ-6.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "sad",
+        "text": "То есть... Моя супер-секретная шпионская миссия, ради которой я рисковал жизнью на тренировках, — это буквально пойти работать фасовщиком варенья за копейки?",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_pointing_smile",
+        "text": "Именно! Гениально, правда? Я же говорю, мы лучшие стратеги в Европе! А если не хватит денег с завода — найди подработку. Пиццу разноси, бутылки сдавай. Мне плевать.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "expression": "chief_neutral",
+        "text": "Ступай, Агент Ноль. И постарайся не сдохнуть от переработок до того, как купишь билет. Варшава — жестокий город.",
+        "type": "dialogue"
+    },
+    {
+        "args": ["fade_out"],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "character": "danila",
+        "expression": "tired",
+        "text": "(Мысли) Что ж... Жизнь шпиона оказалась не такой гламурной, как в кино. Пора открывать карту города и искать этот проклятый завод.",
+        "type": "dialogue"
+    },
+    {
+        "args": ["hq_briefed", 1],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": ["WorldMap"],
+        "name": "scene",
+        "type": "command"
+    }
 ]
