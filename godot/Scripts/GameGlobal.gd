@@ -180,7 +180,7 @@ func save_game(slot_id: int = 0):
 	var main_node = get_tree().root.get_node_or_null("Main")
 	if main_node and main_node.has_method("get_current_state"):
 		var game_state = main_node.get_current_state()
-		final_data["scene_index"] = game_state.get("scene_index", 0)
+		final_data["scene_path"] = game_state.get("scene_path", "")
 		final_data["node_index"] = game_state.get("node_index", 0)
 	
 	# Сохраняем переменные сюжета
@@ -219,16 +219,16 @@ func load_game(slot_id: int = 0) -> bool:
 				# Main is already running (loading from pause menu)
 				if main_node.has_method("load_from_state"):
 					var game_state = {
-						"scene_index": loaded_data.get("scene_index", 0),
-						"node_index": loaded_data.get("node_index", 0)
+						"scene_path": loaded_data.get("scene_path", ""),
+						"node_index": int(loaded_data.get("node_index", 0))
 					}
 					main_node.load_from_state(game_state)
 			else:
 				# Main is not running (loading from main menu)
 				# Store the state to load later when Main starts
 				save_data["pending_load"] = {
-					"scene_index": loaded_data.get("scene_index", 0),
-					"node_index": loaded_data.get("node_index", 0)
+					"scene_path": loaded_data.get("scene_path", ""),
+					"node_index": int(loaded_data.get("node_index", 0))
 				}
 			
 			print("Game loaded from slot ", slot_id)

@@ -26,4 +26,11 @@ func _on_load_pressed():
 
 func _on_exit_pressed():
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://Main.tscn")
+	
+	var main_node = get_parent()
+	if main_node and main_node.has_method("return_to_main_menu"):
+		main_node.return_to_main_menu()
+	else:
+		get_tree().change_scene_to_file("res://Main.tscn")
+		
+	queue_free()

@@ -28,6 +28,11 @@ var _minigame_instance: Control = null
 var _cinematic_layer: Control = null
 var _current_node_index := 0  # Track current position for save/load
 
+
+func get_current_position() -> int:
+	"""Returns the current dialogue node index for save/load."""
+	return _current_node_index
+
 @onready var _text_box := $TextBox
 @onready var _character_displayer := $CharacterDisplayer
 @onready var _anim_player: AnimationPlayer = $FadeAnimationPlayer
@@ -329,11 +334,6 @@ func load_scene_from_file(path: String) -> void:
 		load_scene(dialogue_tree)
 	else:
 		push_error("Failed to load scene from: " + path)
-
-
-func get_current_position() -> int:
-	"""Returns the current dialogue node index for saving."""
-	return _current_node_index
 
 
 func _restore_background_for_position(start_key: int) -> void:

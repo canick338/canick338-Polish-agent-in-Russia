@@ -58,6 +58,27 @@ func show_main_menu() -> void:
 			_main_menu_instance.exit_requested.connect(func(): get_tree().quit())
 
 
+func return_to_main_menu() -> void:
+	"""Очищает все активные сцены и возвращает в главное меню"""
+	if _scene_player:
+		_scene_player.queue_free()
+		_scene_player = null
+		
+	if _world_map_instance:
+		_world_map_instance.queue_free()
+		_world_map_instance = null
+		
+	if _casino_instance:
+		_casino_instance.queue_free()
+		_casino_instance = null
+		
+	if _main_menu_instance:
+		_main_menu_instance.queue_free()
+		_main_menu_instance = null
+		
+	show_main_menu()
+
+
 func show_casino() -> void:
 	"""Показать слот-машину в начале игры"""
 	if SLOT_MACHINE_SCENE:
@@ -144,9 +165,23 @@ func get_current_state() -> Dictionary:
 
 
 func load_from_state(state: Dictionary) -> void:
-	"""Restores game from saved state."""
+	"""Восстанавливает игру из сохранённого состояния."""
 	var scene_path = state.get("scene_path", "")
-	var node_idx = state.get("node_index", 0)
+	var node_idx = int(state.get("node_index", 0))
+	
+	# Очищаем все активные сцены перед загрузкой
+	if _scene_player:
+		_scene_player.queue_free()
+		_scene_player = null
+	if _world_map_instance:
+		_world_map_instance.queue_free()
+		_world_map_instance = null
+	if _casino_instance:
+		_casino_instance.queue_free()
+		_casino_instance = null
+	if _main_menu_instance:
+		_main_menu_instance.queue_free()
+		_main_menu_instance = null
 	
 	if scene_path != "":
 		_play_scene_from_path(scene_path, node_idx)
@@ -170,7 +205,7 @@ func _on_main_menu_start_game() -> void:
 		var pending = GameGlobal.save_data["pending_load"]
 		GameGlobal.save_data.erase("pending_load")
 		
-		print("Loading from saved position: scene=%d, node=%d" % [pending["scene_index"], pending["node_index"]])
+		print("Loading from saved position: scene=%s, node=%d" % [pending.get("scene_path", ""), pending.get("node_index", 0)])
 		
 		# Load the game
 		await get_tree().process_frame
