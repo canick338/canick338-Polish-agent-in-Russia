@@ -1,47 +1,57 @@
 [
-	{
-		"args": ["train_station", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Железнодорожный вокзал Варшавы. Холодный ветер завывает над путями.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Вот и всё. Билет до Обояни в кармане. Документы на имя Марека готовы.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Гудок поезда разрывает тишину.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Пора. Вперёд, в неизвестность.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["fade_out"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Поезд медленно набирает ход, унося агента навстречу его судьбе...",
-		"type": "dialogue"
-	},
-	{
-		"args": ["warsaw_prologue_done", 1],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["warsaw_achievement"],
-		"name": "achievement",
-		"type": "command"
-	}
+    {
+        "args": [
+            "train_station",
+            ""
+        ],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Железнодорожный вокзал Варшавы. Холодный ветер завывает над путями.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Вот и всё. Билет до Обояни в кармане. Документы на имя Марека готовы.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Гудок поезда разрывает тишину.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Пора. Вперёд, в неизвестность.",
+        "type": "dialogue"
+    },
+    {
+        "args": [
+            "fade_out"
+        ],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Поезд медленно набирает ход, унося агента навстречу его судьбе...",
+        "type": "dialogue"
+    },
+    {
+        "args": [
+            "warsaw_prologue_done",
+            1
+        ],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": [
+            "warsaw_achievement"
+        ],
+        "name": "achievement",
+        "type": "command"
+    }
 ]

@@ -1,223 +1,277 @@
 [
-	{
-		"character": "",
-		"text": "По пути к следующей локации...",
-		"type": "dialogue"
-	},
-	{
-		"condition": "random_event_type==1",
-		"type": "if",
-		"then": [
-			{
-				"character": "",
-				"text": "На тротуаре лежит потёртый кошелёк. Внутри — купюры.",
-				"type": "dialogue"
-			},
-			{
-				"options": [
-					{
-						"text": "Забрать деньги (+30 zł)",
-						"children": [
-							{
-								"character": "danila",
-								"text": "Прости, друг... Мне нужнее.",
-								"type": "dialogue"
-							},
-							{
-								"args": ["money", "+30"],
-								"name": "set",
-								"type": "command"
-							},
-							{
-								"character": "",
-								"text": "Совесть слегка покалывает. Но желудок не спрашивает о морали.",
-								"type": "dialogue"
-							}
-						]
-					},
-					{
-						"text": "Оставить кошелёк",
-						"children": [
-							{
-								"character": "danila",
-								"text": "Нет. Это не мои деньги.",
-								"type": "dialogue"
-							},
-							{
-								"character": "",
-								"text": "Ты чувствуешь себя лучше. Может, карма отплатит добром.",
-								"type": "dialogue"
-							},
-							{
-								"args": ["karma", "+1"],
-								"name": "set",
-								"type": "command"
-							}
-						]
-					}
-				],
-				"type": "choice"
-			}
-		],
-		"else": []
-	},
-	{
-		"condition": "random_event_type==2",
-		"type": "if",
-		"then": [
-			{
-				"character": "",
-				"text": "Пожилая женщина тащит тяжёлые сумки.",
-				"type": "dialogue"
-			},
-			{
-				"options": [
-					{
-						"text": "Помочь бабушке",
-						"children": [
-							{
-								"character": "danila",
-								"text": "Давайте помогу, пани.",
-								"type": "dialogue"
-							},
-							{
-								"character": "",
-								"text": "— Спасибо, сынок! Дай бог тебе здоровья!",
-								"type": "dialogue"
-							},
-							{
-								"args": ["energy", "-10"],
-								"name": "set",
-								"type": "command"
-							},
-							{
-								"args": ["karma", "+1"],
-								"name": "set",
-								"type": "command"
-							},
-							{
-								"character": "",
-								"text": "Она незаметно сунула тебе в карман 10 злотых.",
-								"type": "dialogue"
-							},
-							{
-								"args": ["money", "+10"],
-								"name": "set",
-								"type": "command"
-							}
-						]
-					},
-					{
-						"text": "Пройти мимо",
-						"children": [
-							{
-								"character": "danila",
-								"text": "Нет времени... Извините.",
-								"type": "dialogue"
-							}
-						]
-					}
-				],
-				"type": "choice"
-			}
-		],
-		"else": []
-	},
-	{
-		"condition": "random_event_type==3",
-		"type": "if",
-		"then": [
-			{
-				"character": "",
-				"text": "Полицейский патруль останавливает тебя.",
-				"type": "dialogue"
-			},
-			{
-				"character": "",
-				"text": "— Dokumenty, proszę.",
-				"type": "dialogue"
-			},
-			{
-				"character": "danila",
-				"text": "Конечно, вот мой документ...",
-				"type": "dialogue"
-			},
-			{
-				"character": "",
-				"text": "Полицейский внимательно изучает бумагу.",
-				"type": "dialogue"
-			},
-			{
-				"character": "",
-				"text": "— Всё в порядке. Проходите.",
-				"type": "dialogue"
-			},
-			{
-				"character": "danila",
-				"text": "Фух... Пронесло.",
-				"type": "dialogue"
-			}
-		],
-		"else": []
-	},
-	{
-		"condition": "random_event_type==4",
-		"type": "if",
-		"then": [
-			{
-				"character": "",
-				"text": "У стены стоит уличный музыкант. Играет грустную мелодию на аккордеоне.",
-				"type": "dialogue"
-			},
-			{
-				"options": [
-					{
-						"text": "Бросить 5 zł",
-						"children": [
-							{
-								"condition": "money>=5",
-								"type": "if",
-								"then": [
-									{
-										"args": ["money", "-5"],
-										"name": "set",
-										"type": "command"
-									},
-									{
-										"character": "",
-										"text": "Музыкант кивает и улыбается. Мелодия становится чуть веселее.",
-										"type": "dialogue"
-									},
-									{
-										"args": ["karma", "+1"],
-										"name": "set",
-										"type": "command"
-									}
-								],
-								"else": [
-									{
-										"character": "danila",
-										"text": "У меня самого ничего нет...",
-										"type": "dialogue"
-									}
-								]
-							}
-						]
-					},
-					{
-						"text": "Пройти мимо",
-						"children": [
-							{
-								"character": "",
-								"text": "Музыка затихает за спиной.",
-								"type": "dialogue"
-							}
-						]
-					}
-				],
-				"type": "choice"
-			}
-		],
-		"else": []
-	}
+    {
+        "type": "if",
+        "condition": "random_event_type==1",
+        "then": [
+            {
+                "args": ["warsaw_street", ""],
+                "name": "background",
+                "type": "command"
+            },
+            {
+                "character": "danila",
+                "side": "left",
+                "animation": "enter",
+                "expression": "tired",
+                "text": "(Мысли) Парк Лейта. Здесь воздух пахнет мокрыми листьями, дешёвой махоркой и отчаянием. Идеальное место, чтобы подумать, где найти пару злотых на кусок хлеба.",
+                "type": "dialogue"
+            },
+            {
+                "character": "",
+                "text": "На кривой лавочке сидит грязный старик в рваном плаще, кроша заплесневелый хлеб жирным варшавским голубям.",
+                "type": "dialogue"
+            },
+            {
+                "character": "hobo",
+                "side": "right",
+                "animation": "enter",
+                "expression": "asking_money",
+                "text": "Красный скотч... Они лепят красный скотч на клубничный джем... Но это не джем... Птицы знают. Птицы всё видят.",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "expression": "worried",
+                "text": "Чего? Какой ещё джем, дед?",
+                "type": "dialogue"
+            },
+            {
+                "character": "hobo",
+                "side": "right",
+                "expression": "angry",
+                "text": "Чай из Обояни! Он обжигает горло! Не пей его, парень в куртке! Не пей!",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "expression": "serious",
+                "text": "(Мысли) Очередной сумасшедший, повредившийся рассудком от палёного спирта. Несёт полнейший бред про банки с джемом. Жаль старика. Пойду-ка я отсюда.",
+                "type": "dialogue"
+            },
+            {
+                "args": ["energy", "-10"],
+                "name": "set",
+                "type": "command"
+            },
+            {
+                "args": ["fade_out"],
+                "name": "transition",
+                "type": "command"
+            },
+            {
+                "args": ["WorldMap"],
+                "name": "scene",
+                "type": "command"
+            }
+        ],
+        "elif": [
+            {
+                "condition": "random_event_type==2",
+                "then": [
+                    {
+                        "args": ["polish_gateway", ""],
+                        "name": "background",
+                        "type": "command"
+                    },
+                    {
+                        "character": "danila",
+                        "side": "left",
+                        "animation": "enter",
+                        "expression": "determined_factory",
+                        "text": "(Мысли) Эта кирпичная кладка в углу... Один кирпич явно выпирает. Цемент вокруг него раскрошился. Может, уличные барыги спрятали там наличку? Пару сотен злотых мне бы сейчас очень пригодились.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "Данила тратит двадцать минут, ломая ногти и используя ржавый гвоздь, чтобы вытащить тяжёлый кирпич. Он затравленно оглядывается по сторонам, боясь, что владельцы тайника вернутся.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "expression": "panting",
+                        "text": "Фух... вытащил. Посмотрим, что там за сокровища...",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "Внутри ниши лежит старая, выцветшая пачка от дешёвых польских сигарет, пустой пакетик от леденцов и пожеванная жвачка с прилипшей монеткой в 1 грош.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "expression": "tired",
+                        "text": "(Мысли) Заначка местных третьеклассников. Я только что потратил уйму сил, чтобы ограбить детвору на жвачку. День определённо не задался.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": ["energy", "-20"],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "args": ["karma", "-1"],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "args": ["fade_out"],
+                        "name": "transition",
+                        "type": "command"
+                    },
+                    {
+                        "args": ["WorldMap"],
+                        "name": "scene",
+                        "type": "command"
+                    }
+                ]
+            },
+            {
+                "condition": "random_event_type==3",
+                "then": [
+                    {
+                        "args": ["polish_shop", ""],
+                        "name": "background",
+                        "type": "command"
+                    },
+                    {
+                        "character": "danila",
+                        "side": "left",
+                        "animation": "enter",
+                        "expression": "thinking",
+                        "text": "(Мысли) Холодно. В моей бетонной коробке теплее не станет. Надо как-то выживать.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "expression": "thinking_factory",
+                        "text": "(Мысли) Бомж сказал пойти в Академию Разведки. Звучит как бред сумасшедшего. Какая к чёрту разведка? Но он утверждал, что они берут всех подряд, кто готов выполнять грязную работу. Терять мне нечего...",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "В этот момент две грязные детские руки аккуратно тянутся к заднему карману джинсов Данилы, где пусто так же, как и у него в душе.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "Не прерывая своих мрачных размышлений ни на секунду, Данила молниеносно перехватывает запястье малолетнего карманника, выкручивая его до хруста.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "worker",
+                        "side": "right",
+                        "expression": "fear",
+                        "text": "АЙ! Дяденька, пусти! Руку сломаешь!",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "side": "left",
+                        "expression": "angry",
+                        "text": "(Обыденным тоном) Выкладывай всё, что наворовал за сегодня, мелкий ублюдок. Иначе отправлю тебя в тот же приют Святого Лаврентия, где гнил сам.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "",
+                        "text": "Плачущий пацан выгребает из карманов горсть мелочи — ровно 25 злотых. Данила забирает их и пинком прогоняет парня.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "expression": "serious",
+                        "text": "(Мысли) Нечестно? Извините, мораль осталась там, за забором приюта. Зато сегодня я смогу купить себе горячей еды.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": ["energy", "-5"],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "args": ["money", "+25"],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "args": ["karma", "-2"],
+                        "name": "set",
+                        "type": "command"
+                    },
+                    {
+                        "args": ["fade_out"],
+                        "name": "transition",
+                        "type": "command"
+                    },
+                    {
+                        "args": ["WorldMap"],
+                        "name": "scene",
+                        "type": "command"
+                    }
+                ]
+            }
+        ],
+        "else": [
+            {
+                "args": ["factory_street", ""],
+                "name": "background",
+                "type": "command"
+            },
+            {
+                "character": "danila",
+                "side": "left",
+                "animation": "enter",
+                "expression": "neutral",
+                "text": "Иду мимо старой промзоны. Лужи на разбитом асфальте переливаются бензиновой радугой.",
+                "type": "dialogue"
+            },
+            {
+                "character": "",
+                "text": "На дне одной из луж что-то блеснуло. Толстый кусок металла, покрытый зелёной окисью.",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "expression": "surprised",
+                "text": "Что за хрень? Тяжёлая.",
+                "type": "dialogue"
+            },
+            {
+                "character": "",
+                "text": "Данила поднимает предмет. Это старый, увесистый брелок в форме серпа и молота, выплавленный из цельного куска стали. На обратной стороне выбита тусклая надпись: 'Пропуск О-13'.",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "expression": "thinking",
+                "text": "(Мысли) Можно попробовать сдать на металлолом местному старьёвщику. Даст пару грошей на пиво.",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "expression": "smiling",
+                "text": "(Мысли) Хотя нет, выглядит слишком необычно. И почему-то он светится в темноте... Слава Чернобылю, наверное. Оставлю пока себе, кушать не просит.",
+                "type": "dialogue"
+            },
+            {
+                "args": ["energy", "-10"],
+                "name": "set",
+                "type": "command"
+            },
+            {
+                "args": ["has_soviet_keychain", 1],
+                "name": "set",
+                "type": "command"
+            },
+            {
+                "args": ["fade_out"],
+                "name": "transition",
+                "type": "command"
+            },
+            {
+                "args": ["WorldMap"],
+                "name": "scene",
+                "type": "command"
+            }
+        ]
+    }
 ]

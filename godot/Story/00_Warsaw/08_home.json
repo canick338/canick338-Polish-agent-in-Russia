@@ -1,75 +1,80 @@
 [
-	{
-		"args": ["polish_home", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "danila",
-		"side": "left",
-		"animation": "enter",
-		"expression": "tired",
-		"text": "Моя съёмная конура. Мрачно, но крыша над головой есть.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "thinking",
-		"text": "Сегодня день [current_day] из 7. Осталось [money] злотых. Нужно 500.",
-		"type": "dialogue"
-	},
-	{
-		"options": [
-			{
-				"text": "🛏️ Лечь спать (Начнётся новый день)",
-				"children": [
-					{
-						"character": "danila",
-						"expression": "tired",
-						"text": "Всё... Сил больше нет. Завтра новый день.",
-						"type": "dialogue"
-					},
-					{
-						"args": ["res://Story/00_Warsaw/system_sleep.json"],
-						"name": "scene",
-						"type": "command"
-					}
-				]
-			},
-			{
-				"text": "📱 Проверить телефон",
-				"children": [
-					{
-						"character": "danila",
-						"expression": "neutral",
-						"text": "Посмотрю, что в телефоне...",
-						"type": "dialogue"
-					},
-					{
-						"character": "danila",
-						"expression": "thinking",
-						"text": "(Мысли) Надо проверить миссии и сообщения перед сном.",
-						"type": "dialogue"
-					}
-				]
-			},
-			{
-				"text": "🚪 Выйти на карту",
-				"children": [
-					{
-						"character": "danila",
-						"expression": "neutral",
-						"text": "Нет, ещё рано. Пора за дело.",
-						"type": "dialogue"
-					},
-					{
-						"args": [],
-						"name": "end_scene",
-						"type": "command"
-					}
-				]
-			}
-		],
-		"type": "choice"
-	}
+    {
+        "args": [
+            "polish_home",
+            ""
+        ],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "danila",
+        "side": "left",
+        "animation": "enter",
+        "expression": "tired",
+        "text": "Моя съёмная конура. Мрачно, но крыша над головой есть.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "thinking",
+        "text": "Сегодня день [current_day] из 7. Осталось [money] злотых. Нужно 500.",
+        "type": "dialogue"
+    },
+    {
+        "options": [
+            {
+                "text": "Лечь спать (Начнётся новый день)",
+                "children": [
+                    {
+                        "character": "danila",
+                        "expression": "tired",
+                        "text": "Всё... Сил больше нет. Завтра новый день.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": [
+                            "res://Story/00_Warsaw/system_sleep.json"
+                        ],
+                        "name": "scene",
+                        "type": "command"
+                    }
+                ]
+            },
+            {
+                "text": "Проверить телефон",
+                "children": [
+                    {
+                        "character": "danila",
+                        "expression": "neutral",
+                        "text": "Посмотрю, что в телефоне...",
+                        "type": "dialogue"
+                    },
+                    {
+                        "character": "danila",
+                        "expression": "thinking",
+                        "text": "(Мысли) Надо проверить миссии и сообщения перед сном.",
+                        "type": "dialogue"
+                    }
+                ]
+            },
+            {
+                "text": "Выйти на карту",
+                "children": [
+                    {
+                        "character": "danila",
+                        "expression": "neutral",
+                        "text": "Нет, ещё рано. Пора за дело.",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": [],
+                        "name": "end_scene",
+                        "type": "command"
+                    }
+                ]
+            }
+        ],
+        "type": "choice"
+    }
 ]

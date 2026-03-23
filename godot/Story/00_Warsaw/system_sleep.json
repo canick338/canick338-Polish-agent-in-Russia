@@ -1,99 +1,124 @@
 [
-	{
-		"args": ["fade_out"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"args": ["polish_home", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "danila",
-		"text": "Ещё один день закончен...",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Данила ложится спать.",
-		"type": "dialogue"
-	},
-	{
-		"args": ["energy", 100],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["hunger", "-10"],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["current_time", 0],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["current_day", "+1"],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"args": ["system_sleep", 1],
-		"name": "set",
-		"type": "command"
-	},
-	{
-		"condition": "accepted_johny==1",
-		"type": "if",
-		"then": [
-			{
-				"args": ["days_left", "-1"],
-				"name": "set",
-				"type": "command"
-			},
-			{
-				"condition": "days_left>0",
-				"type": "if",
-				"then": [
-					{
-						"character": "danila",
-						"text": "Осталось дней до отчёта: [days_left]. Нужно торопиться.",
-						"type": "dialogue"
-					}
-				],
-				"else": [
-					{
-						"character": "danila",
-						"text": "Время вышло. Я не успел...",
-						"type": "dialogue"
-					},
-					{
-						"args": ["res://Story/00_Warsaw/failed_mission.json"],
-						"name": "scene",
-						"type": "command"
-					}
-				]
-			}
-		],
-		"else": []
-	},
-	{
-		"condition": "hunger<=0",
-		"type": "if",
-		"then": [
-			{
-				"character": "danila",
-				"text": "Я ужасно голоден... Нужно что-то поесть.",
-				"type": "dialogue"
-			}
-		],
-		"else": []
-	},
-	{
-		"character": "",
-		"text": "Утро нового дня.",
-		"type": "dialogue"
-	}
+    {
+        "args": [
+            "fade_out"
+        ],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": [
+            "polish_home",
+            ""
+        ],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "danila",
+        "text": "Ещё один день закончен...",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Данила ложится спать.",
+        "type": "dialogue"
+    },
+    {
+        "args": [
+            "energy",
+            100
+        ],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": [
+            "hunger",
+            "-10"
+        ],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": [
+            "current_time",
+            0
+        ],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": [
+            "current_day",
+            "+1"
+        ],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": [
+            "system_sleep",
+            1
+        ],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "condition": "accepted_johny==1",
+        "type": "if",
+        "then": [
+            {
+                "args": [
+                    "days_left",
+                    "-1"
+                ],
+                "name": "set",
+                "type": "command"
+            },
+            {
+                "condition": "days_left>0",
+                "type": "if",
+                "then": [
+                    {
+                        "character": "danila",
+                        "text": "Осталось дней до отчёта: [days_left]. Нужно торопиться.",
+                        "type": "dialogue"
+                    }
+                ],
+                "else": [
+                    {
+                        "character": "danila",
+                        "text": "Время вышло. Я не успел...",
+                        "type": "dialogue"
+                    },
+                    {
+                        "args": [
+                            "res://Story/00_Warsaw/failed_mission.json"
+                        ],
+                        "name": "scene",
+                        "type": "command"
+                    }
+                ]
+            }
+        ],
+        "else": []
+    },
+    {
+        "condition": "hunger<=0",
+        "type": "if",
+        "then": [
+            {
+                "character": "danila",
+                "text": "Я ужасно голоден... Нужно что-то поесть.",
+                "type": "dialogue"
+            }
+        ],
+        "else": []
+    },
+    {
+        "character": "",
+        "text": "Утро нового дня.",
+        "type": "dialogue"
+    }
 ]

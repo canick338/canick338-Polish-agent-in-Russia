@@ -1,6 +1,9 @@
 [
     {
-        "args": ["factory_inside", ""],
+        "args": [
+            "factory_inside",
+            ""
+        ],
         "name": "background",
         "type": "command"
     },
@@ -38,7 +41,9 @@
         "type": "dialogue"
     },
     {
-        "args": ["card_bronislav"],
+        "args": [
+            "card_bronislav"
+        ],
         "name": "unlock",
         "type": "command"
     },
@@ -73,7 +78,9 @@
         "type": "dialogue"
     },
     {
-        "args": ["fade_out"],
+        "args": [
+            "fade_out"
+        ],
         "name": "transition",
         "type": "command"
     },
@@ -136,7 +143,9 @@
         "type": "dialogue"
     },
     {
-        "args": ["factory_jam"],
+        "args": [
+            "factory_jam"
+        ],
         "name": "minigame",
         "type": "command"
     },
@@ -171,7 +180,10 @@
                         "type": "dialogue"
                     },
                     {
-                        "args": ["money", "+50"],
+                        "args": [
+                            "money",
+                            "+50"
+                        ],
                         "name": "set",
                         "type": "command"
                     },
@@ -240,7 +252,10 @@
                 "type": "dialogue"
             },
             {
-                "args": ["money", "+80"],
+                "args": [
+                    "money",
+                    "+80"
+                ],
                 "name": "set",
                 "type": "command"
             },
@@ -273,12 +288,17 @@
         "type": "dialogue"
     },
     {
-        "args": ["fade_out"],
+        "args": [
+            "fade_out"
+        ],
         "name": "transition",
         "type": "command"
     },
     {
-        "args": ["locker_room", ""],
+        "args": [
+            "locker_room",
+            ""
+        ],
         "name": "background",
         "type": "command"
     },
@@ -302,7 +322,7 @@
     {
         "options": [
             {
-                "text": "👂 Подойти ближе к вентиляции (Риск!)",
+                "text": "Подойти ближе к вентиляции (Риск!)",
                 "children": [
                     {
                         "character": "",
@@ -326,7 +346,7 @@
                     {
                         "character": "danila",
                         "side": "left",
-						"animation": "enter",
+                        "animation": "enter",
                         "expression": "surprised",
                         "text": "(Мысли) Бинго! Томаш был прав насчёт красного скотча. 'Чайные листья' — это явно кодовое слово для наркоты, которую синдикат гонит в Россию.",
                         "type": "dialogue"
@@ -346,7 +366,7 @@
                     {
                         "options": [
                             {
-                                "text": "🏃 Сбежать через чёрный ход",
+                                "text": "Сбежать через чёрный ход",
                                 "children": [
                                     {
                                         "character": "",
@@ -362,7 +382,7 @@
                                 ]
                             },
                             {
-                                "text": "🧍 Притвориться пьяным уборщиком",
+                                "text": "Притвориться пьяным уборщиком",
                                 "children": [
                                     {
                                         "character": "",
@@ -396,7 +416,7 @@
                 ]
             },
             {
-                "text": "🚶 Не рисковать и уйти",
+                "text": "Не рисковать и уйти",
                 "children": [
                     {
                         "character": "danila",
@@ -421,22 +441,32 @@
         "type": "dialogue"
     },
     {
-        "args": ["energy", "-40"],
+        "args": [
+            "energy",
+            "-40"
+        ],
         "name": "set",
         "type": "command"
     },
     {
-        "args": ["factory_work_done", 1],
+        "args": [
+            "factory_work_done",
+            1
+        ],
         "name": "set",
         "type": "command"
     },
     {
-        "args": ["fade_out"],
+        "args": [
+            "fade_out"
+        ],
         "name": "transition",
         "type": "command"
     },
     {
-        "args": ["WorldMap"],
+        "args": [
+            "WorldMap"
+        ],
         "name": "scene",
         "type": "command"
     }

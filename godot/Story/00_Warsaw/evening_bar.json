@@ -1,6 +1,9 @@
 [
     {
-        "args": ["bar_inside", ""],
+        "args": [
+            "bar_inside",
+            ""
+        ],
         "name": "background",
         "type": "command"
     },
@@ -39,19 +42,25 @@
     {
         "options": [
             {
-                "text": "🍺 Купить дешёвое пиво (10 zl) - Восстановить немного энергии",
+                "text": "Купить дешёвое пиво (10 zl) - Восстановить немного энергии",
                 "children": [
                     {
                         "condition": "money>=10",
                         "type": "if",
                         "then": [
                             {
-                                "args": ["money", "-10"],
+                                "args": [
+                                    "money",
+                                    "-10"
+                                ],
                                 "name": "set",
                                 "type": "command"
                             },
                             {
-                                "args": ["energy", "+20"],
+                                "args": [
+                                    "energy",
+                                    "+20"
+                                ],
                                 "name": "set",
                                 "type": "command"
                             },
@@ -100,14 +109,17 @@
                 ]
             },
             {
-                "text": "🥂 Купить шот элитной польской водки (50 zl) - Максимум слухов!",
+                "text": "Купить шот элитной польской водки (50 zl) - Максимум слухов!",
                 "children": [
                     {
                         "condition": "money>=50",
                         "type": "if",
                         "then": [
                             {
-                                "args": ["money", "-50"],
+                                "args": [
+                                    "money",
+                                    "-50"
+                                ],
                                 "name": "set",
                                 "type": "command"
                             },
@@ -196,7 +208,7 @@
                 ]
             },
             {
-                "text": "👂 Не пить, а просто послушать разговоры работяг (Бесплатно)",
+                "text": "Не пить, а просто послушать разговоры работяг (Бесплатно)",
                 "children": [
                     {
                         "character": "danila",
@@ -257,17 +269,24 @@
         "type": "dialogue"
     },
     {
-        "args": ["bar_visited", 1],
+        "args": [
+            "bar_visited",
+            1
+        ],
         "name": "set",
         "type": "command"
     },
     {
-        "args": ["fade_out"],
+        "args": [
+            "fade_out"
+        ],
         "name": "transition",
         "type": "command"
     },
     {
-        "args": ["WorldMap"],
+        "args": [
+            "WorldMap"
+        ],
         "name": "scene",
         "type": "command"
     }

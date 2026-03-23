@@ -587,15 +587,24 @@ void fragment() {
 func _on_node_clicked(scene_path: String) -> void:
 	_hide_tooltip()
 	
-	# Поездка забирает силы и сытость
-	var h = int(Variables.get_variable("hunger", 100)) - 10
-	var e = int(Variables.get_variable("energy", 100)) - 10
-	Variables.add_variable("hunger", clamp(h, 0, 100))
-	Variables.add_variable("energy", clamp(e, 0, 100))
-	
-	if h <= 0 or e <= 0:
-		_handle_exhaustion()
-		return
+	if not scene_path.ends_with("08_home.json") and not scene_path.ends_with("01_intro_streets.json") and not scene_path.ends_with("00_map_tutorial.json"):
+		var time_idx = int(Variables.get_variable("current_time", 0))
+		time_idx += 1
+		if time_idx > 3:
+			time_idx = 0
+			var day = int(Variables.get_variable("current_day", 1))
+			Variables.add_variable("current_day", day + 1)
+		Variables.add_variable("current_time", time_idx)
+		
+		# Поездка забирает силы и сытость
+		var h = int(Variables.get_variable("hunger", 100)) - 15
+		var e = int(Variables.get_variable("energy", 100)) - 15
+		Variables.add_variable("hunger", clamp(h, 0, 100))
+		Variables.add_variable("energy", clamp(e, 0, 100))
+		
+		if h <= 0 or e <= 0:
+			_handle_exhaustion()
+			return
 		
 	# Ироничная концовка "Долгая счастливая жизнь на заводе" (50 дней)
 	if scene_path.ends_with("02_factory_shift.json"):
@@ -619,13 +628,37 @@ func _on_node_hovered(title: String, desc: String, icon: String, pos: Vector2, c
 
 func _check_requirements(reqs: Array) -> bool:
 	for req in reqs:
-		var r_str = str(req)
+		var r_str = str(req).strip_edges()
+		
+		# Support numeric operators
+		if ">=" in r_str:
+			var parts = r_str.split(">=")
+			if float(Variables.get_variable(parts[0].strip_edges(), 0)) < float(parts[1].strip_edges()):
+				return false
+			continue
+		if "<=" in r_str:
+			var parts = r_str.split("<=")
+			if float(Variables.get_variable(parts[0].strip_edges(), 0)) > float(parts[1].strip_edges()):
+				return false
+			continue
+		if ">" in r_str:
+			var parts = r_str.split(">")
+			if float(Variables.get_variable(parts[0].strip_edges(), 0)) <= float(parts[1].strip_edges()):
+				return false
+			continue
+		if "<" in r_str:
+			var parts = r_str.split("<")
+			if float(Variables.get_variable(parts[0].strip_edges(), 0)) >= float(parts[1].strip_edges()):
+				return false
+			continue
+			
+		# Legacy boolean checks
 		if r_str.begins_with("!"):
-			var r = r_str.substr(1)
-			if Variables.get_variable(r) == 1:
+			var r = r_str.substr(1).strip_edges()
+			if float(Variables.get_variable(r, 0)) > 0:
 				return false
 		else:
-			if Variables.get_variable(req) != 1:
+			if float(Variables.get_variable(r_str, 0)) <= 0:
 				return false
 	return true
 

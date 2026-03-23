@@ -1,57 +1,62 @@
 [
-	{
-		"args": ["fade_in"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"args": ["warsaw_street", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Данила выходит на улицу. Очередной серый день.",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"side": "right",
-		"animation": "enter",
-		"expression": "chief_neutral",
-		"text": "Агент Марек. Время вышло.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Генерал?! Я... я почти собрал деньги. Мне нужен ещё один день!",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"expression": "chief_crazy_pointing",
-		"text": "В разведке нет слова 'почти'! Ты провалил прикрытие и подвёл страну.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Генерал достаёт пистолет с глушителем.",
-		"type": "dialogue"
-	},
-	{
-		"character": "chief",
-		"expression": "chief_neutral",
-		"text": "Жаль. Ты подавал надежды.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "*Глухой хлопок*",
-		"type": "dialogue"
-	},
-	{
-		"args": [],
-		"name": "restart_scene",
-		"type": "command"
-	}
+    {
+        "args": [
+            "fade_in"
+        ],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": [
+            "warsaw_street",
+            ""
+        ],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Данила выходит на улицу. Очередной серый день.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "side": "right",
+        "animation": "enter",
+        "expression": "chief_neutral",
+        "text": "Агент Марек. Время вышло.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Генерал?! Я... я почти собрал деньги. Мне нужен ещё один день!",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "expression": "chief_crazy_pointing",
+        "text": "В разведке нет слова 'почти'! Ты провалил прикрытие и подвёл страну.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Генерал достаёт пистолет с глушителем.",
+        "type": "dialogue"
+    },
+    {
+        "character": "chief",
+        "expression": "chief_neutral",
+        "text": "Жаль. Ты подавал надежды.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "*Глухой хлопок*",
+        "type": "dialogue"
+    },
+    {
+        "args": [],
+        "name": "restart_scene",
+        "type": "command"
+    }
 ]

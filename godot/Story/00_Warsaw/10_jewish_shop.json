@@ -1,6 +1,9 @@
 [
     {
-        "args": ["polish_shop", ""],
+        "args": [
+            "polish_shop",
+            ""
+        ],
         "name": "background",
         "type": "command"
     },
@@ -132,14 +135,17 @@
     {
         "options": [
             {
-                "text": "💵 Отдать 500 zł (Еле-еле накопил на заводах)",
+                "text": "Отдать 500 zł (Еле-еле накопил на заводах)",
                 "children": [
                     {
                         "condition": "money>=500",
                         "type": "if",
                         "then": [
                             {
-                                "args": ["money", "-500"],
+                                "args": [
+                                    "money",
+                                    "-500"
+                                ],
                                 "name": "set",
                                 "type": "command"
                             },
@@ -224,17 +230,24 @@
                                 "type": "dialogue"
                             },
                             {
-                                "args": ["got_ticket", 1],
+                                "args": [
+                                    "got_ticket",
+                                    1
+                                ],
                                 "name": "set",
                                 "type": "command"
                             },
                             {
-                                "args": ["fade_out"],
+                                "args": [
+                                    "fade_out"
+                                ],
                                 "name": "transition",
                                 "type": "command"
                             },
                             {
-                                "args": ["res://Story/00_Warsaw/05_train_to_oboyan.json"],
+                                "args": [
+                                    "res://Story/00_Warsaw/05_train_to_oboyan.json"
+                                ],
                                 "name": "scene",
                                 "type": "command"
                             }
@@ -267,12 +280,16 @@
                                 "type": "dialogue"
                             },
                             {
-                                "args": ["fade_out"],
+                                "args": [
+                                    "fade_out"
+                                ],
                                 "name": "transition",
                                 "type": "command"
                             },
                             {
-                                "args": ["WorldMap"],
+                                "args": [
+                                    "WorldMap"
+                                ],
                                 "name": "scene",
                                 "type": "command"
                             }
@@ -281,7 +298,7 @@
                 ]
             },
             {
-                "text": "🚶 Вернуться позже (Нет полных денег)",
+                "text": "Вернуться позже (Нет полных денег)",
                 "children": [
                     {
                         "character": "danila",
@@ -297,12 +314,16 @@
                         "type": "dialogue"
                     },
                     {
-                        "args": ["fade_out"],
+                        "args": [
+                            "fade_out"
+                        ],
                         "name": "transition",
                         "type": "command"
                     },
                     {
-                        "args": ["WorldMap"],
+                        "args": [
+                            "WorldMap"
+                        ],
                         "name": "scene",
                         "type": "command"
                     }

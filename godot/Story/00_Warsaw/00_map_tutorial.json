@@ -1,70 +1,70 @@
 [
-	{
-		"character": "danila",
-		"side": "left",
-		"animation": "enter",
-		"expression": "surprised",
-		"text": "Ого... Так вот она — Варшава. Сверху выглядит совсем по-другому.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "thinking",
-		"text": "(Мысли) Ладно, давай разберёмся. На карте видны точки — это места, куда можно пойти.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "neutral",
-		"text": "Если навести на точку — появится подсказка. Что за место, кто там, зачем идти.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "serious",
-		"text": "Наверху — время суток. Утро, День, Вечер, Ночь. Каждый визит куда-то сдвигает время.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "worried",
-		"text": "Ночью почти всё закрыто. Надо вовремя возвращаться домой и ложиться спать, иначе можно упасть в обморок.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "neutral",
-		"text": "А вот внизу — цель. Подсказка, куда идти дальше. Там написано, что нужно сделать.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "happy",
-		"text": "И ещё! У меня есть телефон — кнопка 📱 справа сверху.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "thinking",
-		"text": "Там всё: миссии, баланс, уведомления, даже радио. Генерал пишет мне туда.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "determined_fabric",
-		"text": "У меня есть неделя. Семь дней, чтобы заработать 500 злотых и уехать в Обоянь.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "serious",
-		"text": "Каждый день на счету. Мне нужно работать на заводе, копить деньги и не забывать есть.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"expression": "neutral",
-		"text": "Ладно. День первый. Посмотрим, что тут есть.",
-		"type": "dialogue"
-	}
+    {
+        "character": "danila",
+        "side": "left",
+        "animation": "enter",
+        "expression": "surprised",
+        "text": "Ого... Так вот она — Варшава. Сверху выглядит совсем по-другому.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "thinking",
+        "text": "(Мысли) Ладно, давай разберёмся. На карте видны точки — это места, куда можно пойти.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "neutral",
+        "text": "Если навести на точку — появится подсказка. Что за место, кто там, зачем идти.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "serious",
+        "text": "Наверху — время суток. Утро, День, Вечер, Ночь. Каждый визит куда-то сдвигает время.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "worried",
+        "text": "Ночью почти всё закрыто. Надо вовремя возвращаться домой и ложиться спать, иначе можно упасть в обморок.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "neutral",
+        "text": "А вот внизу — цель. Подсказка, куда идти дальше. Там написано, что нужно сделать.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "happy",
+        "text": "И ещё! У меня есть телефон — кнопка 📱 справа сверху.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "thinking",
+        "text": "Там всё: миссии, баланс, уведомления, даже радио. Генерал пишет мне туда.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "determined_fabric",
+        "text": "У меня есть неделя. Семь дней, чтобы заработать 500 злотых и уехать в Обоянь.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "serious",
+        "text": "Каждый день на счету. Мне нужно работать на заводе, копить деньги и не забывать есть.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "expression": "neutral",
+        "text": "Ладно. День первый. Посмотрим, что тут есть.",
+        "type": "dialogue"
+    }
 ]

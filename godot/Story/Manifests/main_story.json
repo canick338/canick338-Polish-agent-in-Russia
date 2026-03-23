@@ -1,185 +1,285 @@
 {
-	"locations": [
-		{
-			"id": "warsaw_center",
-			"name": "Варшава (Польша)",
-			"chapter": "00_Warsaw",
-			"nodes": [
-				{
-					"id": "streets",
-					"name": "Улицы Варшавы",
-					"description": "Вспомнить прошлое. Найти путь.",
-					"icon": "🏙️",
-					"chibi": "danila",
-					"scene": "res://Story/00_Warsaw/01_intro_streets.json",
-					"requires": ["!warsaw_prologue_stage"],
-					"priority": "main",
-					"position": {"x": 800, "y": 500}
-				},
-				{
-					"id": "academy",
-					"name": "Академия Разведки",
-					"description": "Тренировки и экзамены. Стань агентом.",
-					"icon": "🎓",
-					"chibi": "danila",
-					"scene": "res://Story/00_Warsaw/06_academy.json",
-					"requires": ["warsaw_prologue_stage", "!prologue_act_2_done", "!is_night"],
-					"priority": "main",
-					"position": {"x": 600, "y": 250}
-				},
-				{
-					"id": "factory",
-					"name": "Завод Обломова",
-					"description": "Тяжёлая работа за 80 zł. Прикрытие для агента.",
-					"icon": "🏭",
-					"chibi": "boss",
-					"scene": "res://Story/00_Warsaw/02_factory_shift.json",
-					"requires": ["prologue_act_2_done", "!is_night"],
-					"priority": "job",
-					"position": {"x": 1400, "y": 350}
-				},
-				{
-					"id": "hq",
-					"name": "Офис Главы Разведки",
-					"description": "Получить смартфон и деньги на билет.",
-					"icon": "🏛️",
-					"chibi": "commander",
-					"scene": "res://Story/00_Warsaw/07_hq_briefing.json",
-					"requires": ["factory_done", "!prologue_act_3_done", "!is_night"],
-					"priority": "main",
-					"position": {"x": 960, "y": 200}
-				},
-				{
-					"id": "pizzeria",
-					"name": "Пиццерия «У Марио»",
-					"description": "Перекусить и подработать. Пицца, кофе, подслушать разговоры.",
-					"icon": "🍕",
-					"chibi": "worker",
-					"scene": "res://Story/00_Warsaw/09_pizzeria.json",
-					"requires": ["warsaw_prologue_stage", "!is_night"],
-					"priority": "job",
-					"position": {"x": 1200, "y": 650}
-				},
-				{
-					"id": "bar",
-					"name": "Бар «Три Короны»",
-					"description": "Выпить с коллегами. Узнать слухи.",
-					"icon": "🍺",
-					"chibi": "worker",
-					"scene": "res://Story/00_Warsaw/evening_bar.json",
-					"requires": ["factory_done", "!is_night"],
-					"priority": "side",
-					"time_period": [2, 3],
-					"position": {"x": 1500, "y": 600}
-				},
-				{
-					"id": "casino",
-					"name": "Подсобка (Казино)",
-					"description": "Карты с работягами. Рискни зарплатой!",
-					"icon": "🃏",
-					"chibi": "worker",
-					"scene": "res://Story/00_Warsaw/03_casino_night.json",
-					"requires": ["factory_done", "!is_night"],
-					"priority": "side",
-					"position": {"x": 1600, "y": 700}
-				},
-				{
-					"id": "home",
-					"name": "Квартира",
-					"description": "Лечь спать. Восстановить силы. Начать новый день.",
-					"icon": "🛏️",
-					"chibi": "danila",
-					"scene": "res://Story/00_Warsaw/08_home.json",
-					"requires": ["warsaw_prologue_stage"],
-					"priority": "side",
-					"position": {"x": 200, "y": 700}
-				},
-				{
-					"id": "jewish_shop",
-					"name": "Лавка Шломо",
-					"description": "Купить билет и документы (500 zł).",
-					"icon": "🛒",
-					"chibi": "worker",
-					"scene": "res://Story/00_Warsaw/10_jewish_shop.json",
-					"requires": ["prologue_act_3_done", "!warsaw_ticket_bought", "!is_night"],
-					"priority": "main",
-					"position": {"x": 400, "y": 400}
-				},
-				{
-					"id": "train_station",
-					"name": "Вокзал (Отъезд)",
-					"description": "Уехать в Обоянь на поезде.",
-					"icon": "🚂",
-					"chibi": "danila",
-					"scene": "res://Story/00_Warsaw/05_train_to_oboyan.json",
-					"requires": ["warsaw_ticket_bought", "!warsaw_prologue_done", "!is_night"],
-					"priority": "main",
-					"position": {"x": 200, "y": 400}
-				}
-			]
-		},
-		{
-			"id": "oboyan_center",
-			"name": "Обоянь (Россия)",
-			"chapter": "01_Oboyan",
-			"requires_location": ["warsaw_prologue_done"],
-			"nodes": [
-				{
-					"id": "arrival",
-					"name": "Прибытие в Обоянь",
-					"description": "Первые шаги в российском городе.",
-					"icon": "🚉",
-					"chibi": "danila",
-					"scene": "res://Story/01_Oboyan/act1_arrival.json",
-					"requires": ["!oboyan_act1_done", "!is_night"],
-					"priority": "main",
-					"position": {"x": 960, "y": 400}
-				},
-				{
-					"id": "infiltration",
-					"name": "Вхождение в доверие",
-					"description": "Устроиться на завод. Подружиться с местными.",
-					"icon": "🕵️",
-					"chibi": "danila",
-					"scene": "res://Story/01_Oboyan/act2_infiltration.json",
-					"requires": ["oboyan_act1_done", "!oboyan_act2_done", "!is_night"],
-					"priority": "main",
-					"position": {"x": 1200, "y": 300}
-				},
-				{
-					"id": "danger",
-					"name": "Опасность раскрытия",
-					"description": "Майор Волков сужает кольцо.",
-					"icon": "⚠️",
-					"chibi": "danila",
-					"scene": "res://Story/01_Oboyan/act3_danger.json",
-					"requires": ["oboyan_act2_done", "!is_night"],
-					"priority": "main",
-					"position": {"x": 800, "y": 250}
-				},
-				{
-					"id": "home",
-					"name": "Съёмная квартира",
-					"description": "Отдохнуть и поспать.",
-					"icon": "🛏️",
-					"chibi": "danila",
-					"scene": "res://Story/01_Oboyan/system_sleep.json",
-					"priority": "side",
-					"position": {"x": 400, "y": 700}
-				},
-				{
-					"id": "oboyan_casino",
-					"name": "Казино «Три Топора»",
-					"description": "Карточные игры с местными.",
-					"icon": "🃏",
-					"chibi": "danila",
-					"scene": "res://Story/01_Oboyan/01_casino_night.json",
-					"requires": ["oboyan_act1_done", "!is_night"],
-					"priority": "side",
-					"position": {"x": 1400, "y": 600}
-				}
-			]
-		}
-	],
-	"chapters": ["00_Warsaw", "01_Oboyan"]
+    "locations": [
+        {
+            "id": "warsaw_center",
+            "name": "Варшава (Польша)",
+            "chapter": "00_Warsaw",
+            "nodes": [
+
+                {
+                    "id": "academy",
+                    "name": "Подать документы в Академию",
+                    "description": "Пройти бюрократический ад перед настоящим делом.",
+                    "icon": "🎓",
+                    "chibi": "danila",
+                    "scene": "res://Story/00_Warsaw/06_academy.json",
+                    "requires": [
+                        "warsaw_prologue_stage",
+                        "academy_stage<3",
+                        "!is_night"
+                    ],
+                    "priority": "main",
+                    "position": {
+                        "x": 600,
+                        "y": 250
+                    }
+                },
+                {
+                    "id": "factory",
+                    "name": "Завод Обломова",
+                    "description": "Тяжёлая работа за 80 zł. Прикрытие для агента.",
+                    "icon": "🏭",
+                    "chibi": "boss",
+                    "scene": "res://Story/00_Warsaw/02_factory_shift.json",
+                    "requires": [
+                        "hq_briefed",
+                        "factory_stage<4",
+                        "!is_night"
+                    ],
+                    "priority": "job",
+                    "position": {
+                        "x": 1400,
+                        "y": 350
+                    }
+                },
+                {
+                    "id": "hq",
+                    "name": "Офис Главы Разведки",
+                    "description": "Получить смартфон и деньги на билет.",
+                    "icon": "🏛️",
+                    "chibi": "commander",
+                    "scene": "res://Story/00_Warsaw/07_hq_briefing.json",
+                    "requires": [
+                        "academy_stage>=3",
+                        "!hq_briefed",
+                        "!is_night"
+                    ],
+                    "priority": "main",
+                    "position": {
+                        "x": 960,
+                        "y": 200
+                    }
+                },
+                {
+                    "id": "pizzeria",
+                    "name": "Пиццерия «У Марио»",
+                    "description": "Перекусить и подработать. Пицца, кофе, подслушать разговоры.",
+                    "icon": "🍕",
+                    "chibi": "worker",
+                    "scene": "res://Story/00_Warsaw/09_pizzeria.json",
+                    "requires": [
+                        "warsaw_prologue_stage",
+                        "!is_night"
+                    ],
+                    "priority": "job",
+                    "position": {
+                        "x": 1200,
+                        "y": 650
+                    }
+                },
+                {
+                    "id": "bar",
+                    "name": "Бар «Три Короны»",
+                    "description": "Выпить с коллегами. Узнать слухи.",
+                    "icon": "🍺",
+                    "chibi": "worker",
+                    "scene": "res://Story/00_Warsaw/evening_bar.json",
+                    "requires": [
+                        "hq_briefed",
+                        "!is_night"
+                    ],
+                    "priority": "side",
+                    "time_period": [
+                        2,
+                        3
+                    ],
+                    "position": {
+                        "x": 1500,
+                        "y": 600
+                    }
+                },
+                {
+                    "id": "casino",
+                    "name": "Подсобка (Казино)",
+                    "description": "Карты с работягами. Рискни зарплатой!",
+                    "icon": "🃏",
+                    "chibi": "worker",
+                    "scene": "res://Story/00_Warsaw/03_casino_night.json",
+                    "requires": [
+                        "hq_briefed",
+                        "!is_night"
+                    ],
+                    "priority": "side",
+                    "position": {
+                        "x": 1600,
+                        "y": 700
+                    }
+                },
+                {
+                    "id": "home",
+                    "name": "Квартира",
+                    "description": "Лечь спать. Восстановить силы. Начать новый день.",
+                    "icon": "🛏️",
+                    "chibi": "danila",
+                    "scene": "res://Story/00_Warsaw/08_home.json",
+                    "requires": [
+                        "warsaw_prologue_stage"
+                    ],
+                    "priority": "side",
+                    "position": {
+                        "x": 200,
+                        "y": 700
+                    }
+                },
+                {
+                    "id": "park_walk",
+                    "name": "Прогулка по парку",
+                    "description": "Подышать воздухом. Абсурд Варшавы.",
+                    "icon": "🌲",
+                    "chibi": "danila",
+                    "scene": "res://Story/00_Warsaw/random_event.json",
+                    "requires": [
+                        "warsaw_prologue_stage",
+                        "!is_night"
+                    ],
+                    "priority": "side",
+                    "position": {
+                        "x": 800,
+                        "y": 500
+                    }
+                },
+                {
+                    "id": "jewish_shop",
+                    "name": "Лавка Шломо",
+                    "description": "Купить билет и документы (500 zł).",
+                    "icon": "🛒",
+                    "chibi": "worker",
+                    "scene": "res://Story/00_Warsaw/10_jewish_shop.json",
+                    "requires": [
+                        "hq_briefed",
+                        "!warsaw_ticket_bought",
+                        "!is_night"
+                    ],
+                    "priority": "main",
+                    "position": {
+                        "x": 400,
+                        "y": 400
+                    }
+                },
+                {
+                    "id": "train_station",
+                    "name": "Вокзал (Отъезд)",
+                    "description": "Уехать в Обоянь на поезде.",
+                    "icon": "🚂",
+                    "chibi": "danila",
+                    "scene": "res://Story/00_Warsaw/05_train_to_oboyan.json",
+                    "requires": [
+                        "warsaw_ticket_bought",
+                        "!global_leave_warsaw"
+                    ],
+                    "priority": "main",
+                    "position": {
+                        "x": 200,
+                        "y": 400
+                    }
+                }
+            ]
+        },
+        {
+            "id": "oboyan_center",
+            "name": "Обоянь (Россия)",
+            "chapter": "01_Oboyan",
+            "requires_location": [
+                "warsaw_prologue_done"
+            ],
+            "nodes": [
+                {
+                    "id": "arrival",
+                    "name": "Прибытие в Обоянь",
+                    "description": "Первые шаги в российском городе.",
+                    "icon": "🚉",
+                    "chibi": "danila",
+                    "scene": "res://Story/01_Oboyan/act1_arrival.json",
+                    "requires": [
+                        "!oboyan_act1_done",
+                        "!is_night"
+                    ],
+                    "priority": "main",
+                    "position": {
+                        "x": 960,
+                        "y": 400
+                    }
+                },
+                {
+                    "id": "infiltration",
+                    "name": "Вхождение в доверие",
+                    "description": "Устроиться на завод. Подружиться с местными.",
+                    "icon": "🕵️",
+                    "chibi": "danila",
+                    "scene": "res://Story/01_Oboyan/act2_infiltration.json",
+                    "requires": [
+                        "oboyan_act1_done",
+                        "!oboyan_act2_done",
+                        "!is_night"
+                    ],
+                    "priority": "main",
+                    "position": {
+                        "x": 1200,
+                        "y": 300
+                    }
+                },
+                {
+                    "id": "danger",
+                    "name": "Опасность раскрытия",
+                    "description": "Майор Волков сужает кольцо.",
+                    "icon": "⚠️",
+                    "chibi": "danila",
+                    "scene": "res://Story/01_Oboyan/act3_danger.json",
+                    "requires": [
+                        "oboyan_act2_done",
+                        "!is_night"
+                    ],
+                    "priority": "main",
+                    "position": {
+                        "x": 800,
+                        "y": 250
+                    }
+                },
+                {
+                    "id": "home",
+                    "name": "Съёмная квартира",
+                    "description": "Отдохнуть и поспать.",
+                    "icon": "🛏️",
+                    "chibi": "danila",
+                    "scene": "res://Story/01_Oboyan/system_sleep.json",
+                    "priority": "side",
+                    "position": {
+                        "x": 400,
+                        "y": 700
+                    }
+                },
+                {
+                    "id": "oboyan_casino",
+                    "name": "Казино «Три Топора»",
+                    "description": "Карточные игры с местными.",
+                    "icon": "🃏",
+                    "chibi": "danila",
+                    "scene": "res://Story/01_Oboyan/01_casino_night.json",
+                    "requires": [
+                        "oboyan_act1_done",
+                        "!is_night"
+                    ],
+                    "priority": "side",
+                    "position": {
+                        "x": 1400,
+                        "y": 600
+                    }
+                }
+            ]
+        }
+    ],
+    "chapters": [
+        "00_Warsaw",
+        "01_Oboyan"
+    ]
 }

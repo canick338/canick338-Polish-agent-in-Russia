@@ -1,64 +1,69 @@
 [
-	{
-		"args": ["fade_in"],
-		"name": "transition",
-		"type": "command"
-	},
-	{
-		"args": ["factory_inside", ""],
-		"name": "background",
-		"type": "command"
-	},
-	{
-		"character": "",
-		"text": "Ты отказался от опасной жизни шпиона. Решил остаться простым работягой.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "(Мысли) 50 дней... 50 долгих, тяжёлых, но мирных смен на заводе Обломова.",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Никакой беготни с пистолетами. Вкусная пицца у Марио, картишки с мужиками в подсобке. Это и есть долгая, счастливая жизнь.",
-		"type": "dialogue"
-	},
-	{
-		"character": "boss_of_factory",
-		"side": "right",
-		"animation": "enter",
-		"text": "Эй, пацан! Хватит мечтать! Загибай рукава, станок заклинило!",
-		"type": "dialogue"
-	},
-	{
-		"character": "danila",
-		"text": "Да, Бронислав. Сейчас всё исправлю.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Данила тянется к механизму. Ремень соскальзывает...",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Резкий рывок. Хруст костей. И темнота.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Спустя 50 дней счастливой и долгой жизни, Данилу намотало на станок.",
-		"type": "dialogue"
-	},
-	{
-		"character": "",
-		"text": "Грустно. Жестоко. Но справедливо.",
-		"type": "dialogue"
-	},
-	{
-		"args": [],
-		"name": "restart_scene",
-		"type": "command"
-	}
+    {
+        "args": [
+            "fade_in"
+        ],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": [
+            "factory_inside",
+            ""
+        ],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Ты отказался от опасной жизни шпиона. Решил остаться простым работягой.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "(Мысли) 50 дней... 50 долгих, тяжёлых, но мирных смен на заводе Обломова.",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Никакой беготни с пистолетами. Вкусная пицца у Марио, картишки с мужиками в подсобке. Это и есть долгая, счастливая жизнь.",
+        "type": "dialogue"
+    },
+    {
+        "character": "boss_of_factory",
+        "side": "right",
+        "animation": "enter",
+        "text": "Эй, пацан! Хватит мечтать! Загибай рукава, станок заклинило!",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "Да, Бронислав. Сейчас всё исправлю.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Данила тянется к механизму. Ремень соскальзывает...",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Резкий рывок. Хруст костей. И темнота.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Спустя 50 дней счастливой и долгой жизни, Данилу намотало на станок.",
+        "type": "dialogue"
+    },
+    {
+        "character": "",
+        "text": "Грустно. Жестоко. Но справедливо.",
+        "type": "dialogue"
+    },
+    {
+        "args": [],
+        "name": "restart_scene",
+        "type": "command"
+    }
 ]
