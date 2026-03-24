@@ -27,12 +27,12 @@
             {
                 "children": [
                     {
-                        "condition": "money>=500",
+                        "condition": "money>=60",
                         "type": "if",
                         "then": [
                             {
                                 "character": "danila",
-                                "text": "Вот держи. Ровно 500.",
+                                "text": "Вот держи. Ровно 60.",
                                 "type": "dialogue"
                             },
                             {
@@ -48,7 +48,7 @@
                             {
                                 "args": [
                                     "money",
-                                    "-500"
+                                    "-60"
                                 ],
                                 "name": "set",
                                 "type": "command"
@@ -65,13 +65,13 @@
                         "else": [
                             {
                                 "character": "boss_of_factory",
-                                "text": "Шутишь? У тебя нет 500 баксов. Иди работай!",
+                                "text": "Шутишь? У тебя нет 60 баксов. Иди работай!",
                                 "type": "dialogue"
                             }
                         ]
                     }
                 ],
-                "text": "Купить билеты и паспорта (500)"
+                "text": "Купить билеты и паспорта (60)"
             },
             {
                 "children": [

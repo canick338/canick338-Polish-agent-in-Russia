@@ -52,3 +52,4 @@ with codecs.open(path, 'w', 'utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=4)
 
 print("Done updating Bronislav.")
+

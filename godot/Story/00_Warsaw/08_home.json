@@ -18,7 +18,7 @@
     {
         "character": "danila",
         "expression": "thinking",
-        "text": "Сегодня день [current_day] из 7. Осталось [money] злотых. Нужно 500.",
+        "text": "Сегодня день [current_day] из 7. Осталось [money] злотых. Нужно 60.",
         "type": "dialogue"
     },
     {
