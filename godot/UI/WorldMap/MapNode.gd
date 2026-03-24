@@ -8,25 +8,29 @@ signal node_unhovered()
 
 var data: Dictionary
 var chibi_path: String
-
-# Обязательно добавь эти узлы в своей сцене MapNode.tscn:
-# - Label с именем "NameLabel"
-# - TextureRect с именем "Portrait" (где будет чибик)
-# - Button с именем "Button" (чтобы можно было кликать и наводить)
-
-@onready var name_label: Label = find_child("NameLabel", true, false)
-@onready var portrait_rect: TextureRect = find_child("Portrait", true, false)
-@onready var button: Button = find_child("Button", true, false)
+var _setup_done := false
 
 func _ready() -> void:
-	if button:
-		button.pressed.connect(_on_button_pressed)
-		button.mouse_entered.connect(_on_button_mouse_entered)
-		button.mouse_exited.connect(_on_button_mouse_exited)
+	var btn = find_child("Button", true, false)
+	if btn:
+		btn.pressed.connect(_on_button_pressed)
+		btn.mouse_entered.connect(_on_button_mouse_entered)
+		btn.mouse_exited.connect(_on_button_mouse_exited)
+	# Если setup() был вызван до _ready(), применяем данные сейчас
+	if _setup_done:
+		_apply_data()
 
 func setup(node_data: Dictionary, p_chibi_path: String) -> void:
 	data = node_data
 	chibi_path = p_chibi_path
+	_setup_done = true
+	# Если нода уже в дереве — применяем сразу
+	if is_inside_tree():
+		_apply_data()
+
+func _apply_data() -> void:
+	var name_label = find_child("NameLabel", true, false)
+	var portrait_rect = find_child("Portrait", true, false)
 	
 	if name_label:
 		name_label.text = data.get("name", "???")

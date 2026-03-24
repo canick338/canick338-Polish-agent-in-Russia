@@ -311,6 +311,22 @@
     },
     {
         "args": [
+            "factory_visit_count",
+            0
+        ],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": [
+            "casino_unlocked",
+            0
+        ],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": [
             "hq_briefed",
             1
         ],

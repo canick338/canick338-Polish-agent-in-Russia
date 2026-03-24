@@ -587,18 +587,11 @@ void fragment() {
 func _on_node_clicked(scene_path: String) -> void:
 	_hide_tooltip()
 	
+	# Время НЕ продвигается здесь — только в Main.gd после завершения сцены
+	# Здесь только вычитаем голод/энергию за «поездку» к локации
 	if not scene_path.ends_with("08_home.json") and not scene_path.ends_with("01_intro_streets.json") and not scene_path.ends_with("00_map_tutorial.json"):
-		var time_idx = int(Variables.get_variable("current_time", 0))
-		time_idx += 1
-		if time_idx > 3:
-			time_idx = 0
-			var day = int(Variables.get_variable("current_day", 1))
-			Variables.add_variable("current_day", day + 1)
-		Variables.add_variable("current_time", time_idx)
-		
-		# Поездка забирает силы и сытость
-		var h = int(Variables.get_variable("hunger", 100)) - 15
-		var e = int(Variables.get_variable("energy", 100)) - 15
+		var h = int(Variables.get_variable("hunger", 100)) - 5
+		var e = int(Variables.get_variable("energy", 100)) - 5
 		Variables.add_variable("hunger", clamp(h, 0, 100))
 		Variables.add_variable("energy", clamp(e, 0, 100))
 		

@@ -15,7 +15,7 @@
                     "scene": "res://Story/00_Warsaw/06_academy.json",
                     "requires": [
                         "warsaw_prologue_stage",
-                        "academy_stage<3",
+                        "academy_stage<5",
                         "!is_night"
                     ],
                     "priority": "main",
@@ -33,7 +33,6 @@
                     "scene": "res://Story/00_Warsaw/02_factory_shift.json",
                     "requires": [
                         "hq_briefed",
-                        "factory_stage<4",
                         "!is_night"
                     ],
                     "priority": "job",
@@ -50,7 +49,7 @@
                     "chibi": "commander",
                     "scene": "res://Story/00_Warsaw/07_hq_briefing.json",
                     "requires": [
-                        "academy_stage>=3",
+                        "academy_stage>=5",
                         "!hq_briefed",
                         "!is_night"
                     ],
@@ -68,7 +67,7 @@
                     "chibi": "worker",
                     "scene": "res://Story/00_Warsaw/09_pizzeria.json",
                     "requires": [
-                        "warsaw_prologue_stage",
+                        "hq_briefed",
                         "!is_night"
                     ],
                     "priority": "job",
@@ -85,7 +84,7 @@
                     "chibi": "worker",
                     "scene": "res://Story/00_Warsaw/evening_bar.json",
                     "requires": [
-                        "hq_briefed",
+                        "factory_visit_count>=1",
                         "!is_night"
                     ],
                     "priority": "side",
@@ -106,7 +105,7 @@
                     "chibi": "worker",
                     "scene": "res://Story/00_Warsaw/03_casino_night.json",
                     "requires": [
-                        "hq_briefed",
+                        "casino_unlocked",
                         "!is_night"
                     ],
                     "priority": "side",
@@ -181,6 +180,23 @@
                     "position": {
                         "x": 200,
                         "y": 400
+                    }
+                },
+                {
+                    "id": "jewish_shop_menu",
+                    "name": "Лавка Шломо (Магазин)",
+                    "description": "Кебаб, энергетик и билет — всё по цене Шломо.",
+                    "icon": "🛒",
+                    "chibi": "worker",
+                    "scene": "res://Story/00_Warsaw/jewish_shop_menu.json",
+                    "requires": [
+                        "shlomo_intro_done",
+                        "!is_night"
+                    ],
+                    "priority": "side",
+                    "position": {
+                        "x": 350,
+                        "y": 470
                     }
                 }
             ]

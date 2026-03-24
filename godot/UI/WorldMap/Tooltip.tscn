@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://nojn31iba4kl"]
 
-[ext_resource type="Script" path="res://UI/WorldMap/Tooltip.gd" id="1_i3nwq"]
+[ext_resource type="Script" uid="uid://bohwulrj8cpxl" path="res://UI/WorldMap/Tooltip.gd" id="1_i3nwq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lvjib"]
 content_margin_left = 4.0

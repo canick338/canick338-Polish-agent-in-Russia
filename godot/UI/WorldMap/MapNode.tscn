@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://ddtqpr0jjpjcs"]
 
-[ext_resource type="Script" path="res://UI/WorldMap/MapNode.gd" id="1_aakn4"]
+[ext_resource type="Script" uid="uid://bqddr3v5udtfh" path="res://UI/WorldMap/MapNode.gd" id="1_aakn4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1f8nl"]
 bg_color = Color(0, 0, 0, 1)

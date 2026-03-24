@@ -227,9 +227,9 @@ func _on_ScenePlayer_scene_finished() -> void:
 		_play_scene_from_path(next_path)
 		return
 
-	# Во время пролога время не должно идти (до получения первых заданий)
-	var is_academy_visited = int(Variables.get_variable("academy_visited", 0))
-	if is_academy_visited == 0:
+	# Во время пролога время не должно идти (до получения задания в штабе)
+	var is_briefed = int(Variables.get_variable("hq_briefed", 0))
+	if is_briefed == 0:
 		show_world_map()
 		return
 
