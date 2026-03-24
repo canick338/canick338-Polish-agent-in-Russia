@@ -99,6 +99,8 @@ func reset_new_game() -> void:
 	save_data.clear()
 	save_data["money"] = 30
 	save_data["unlocked_cards"] = []
+	if has_node("/root/Variables"):
+		get_node("/root/Variables").clear_all_variables()
 	save_game()
 
 
@@ -219,6 +221,9 @@ func load_game(slot_id: int = 0) -> bool:
 			# Обновляем состояние игры
 			if "money" in loaded_data: save_data["money"] = int(loaded_data["money"])
 			if "unlocked_cards" in loaded_data: save_data["unlocked_cards"] = loaded_data["unlocked_cards"]
+			
+			if "story_vars" in loaded_data and has_node("/root/Variables"):
+				get_node("/root/Variables").load_variables(loaded_data["story_vars"])
 			
 			# Восстанавливаем позицию в сюжете
 			var main_node = get_tree().root.get_node_or_null("Main")

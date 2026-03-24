@@ -106,6 +106,7 @@ func _on_casino_finished(is_win: bool) -> void:
 
 func show_world_map() -> void:
 	"""Показать глобальную карту (Hub) - Варшава (Пролог) или Обоянь"""
+	_current_scene_path = ""
 	
 	if _scene_player:
 		_scene_player.queue_free()

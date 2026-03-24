@@ -14,6 +14,12 @@ func clear_all_variables() -> void:
 	_variables_cache.clear()
 	_save_to_disk()
 
+func load_variables(data: Dictionary) -> void:
+	_variables_cache = data.duplicate()
+	if _variables_cache.has("money"):
+		_variables_cache.erase("money")
+	_save_to_disk()
+
 func _load_from_disk() -> void:
 	if FileAccess.file_exists(SAVE_FILE_LOCATION):
 		var read_file = FileAccess.open(SAVE_FILE_LOCATION, FileAccess.READ)
