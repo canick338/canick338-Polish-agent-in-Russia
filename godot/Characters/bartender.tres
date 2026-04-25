@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Character" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Characters/Character.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "bartender"
+display_name = "Казимир"
+bio = "Лысый великан со шрамом через всё лицо. Бармен бара «Упавший Орёл». Грубый, но знает все городские слухи."
+age = 45
+scale_multiplier = 1.0
+position_offset = Vector2(0, 0)
+default_image = "neutral"
+images = {
+"neutral": null,
+"angry": null,
+"surprised": null,
+"thoughtful": null,
+"fear": null,
+"serious": null
+}
