@@ -57,7 +57,7 @@
             {
                 "character": "mario",
                 "side": "right",
-                "expression": "neutral",
+                "expression": "tells",
                 "text": "А ты... ты выглядишь так, будто питаешься камнями и запиваешь их дождевой водой. У тебя нет грации итальянского повара. Проваливай домой, сирота.",
                 "type": "dialogue"
             },
@@ -184,7 +184,7 @@
             {
                 "character": "mario",
                 "side": "right",
-                "expression": "neutral",
+                "expression": "thinking",
                 "text": "Слушай внимательно. У нас возникла деликатная проблема. На заднем дворе завелась 'крыса'. И эта 'крыса' по ночам ворует мою лучшую сицилийскую муку.",
                 "type": "dialogue"
             },
@@ -412,7 +412,7 @@
                             {
                                 "character": "mario",
                                 "side": "right",
-                                "expression": "neutral",
+                                "expression": "tells",
                                 "text": "Но ты справился с рецептом. Держи свои 30 злотых и приходи завтра на смену уборщика.",
                                 "type": "dialogue"
                             },
@@ -484,7 +484,7 @@
                             {
                                 "character": "mario",
                                 "side": "right",
-                                "expression": "neutral",
+                                "expression": "tells",
                                 "text": "Я плачу тебе двойную ставку. Держи 60 злотых! Моя пиццерия станет криминально вкусной с тобой!",
                                 "type": "dialogue"
                             },
@@ -615,7 +615,7 @@
             {
                 "character": "mario",
                 "side": "right",
-                "expression": "neutral",
+                "expression": "tells",
                 "text": "А, это ты, мастер кунг-фу! Надевай фартук. Сегодня у нас день Пепперони. Меси тесто, пока руки не отвалятся!",
                 "type": "dialogue"
             },

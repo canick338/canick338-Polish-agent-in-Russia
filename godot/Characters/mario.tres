@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Character" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://Characters/Character.gd" id="1"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Mario/povar_neutral.png" id="2"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Mario/povar_angry.png" id="3"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Mario/povar_surprise_shock.png" id="4"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Mario/povar_happy.png" id="5"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Mario/povar_tired.png" id="6"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Mario/povar_thinking.png" id="7"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Mario/povar_tells.png" id="8"]
+
+[resource]
+script = ExtResource("1")
+id = "mario"
+display_name = "Марио"
+bio = "Владелец пиццерии «У Марио». Импульсивный и эмоциональный сицилиец с пышными усами и громким голосом."
+age = 50
+scale_multiplier = 1.0
+position_offset = Vector2(0, 0)
+default_image = "neutral"
+images = {
+"neutral": ExtResource("2"),
+"angry": ExtResource("3"),
+"surprised": ExtResource("4"),
+"fear": ExtResource("4"),
+"happy": ExtResource("5"),
+"tired": ExtResource("6"),
+"sad": ExtResource("6"),
+"serious": ExtResource("7"),
+"shouting": ExtResource("3"),
+"thinking": ExtResource("7"),
+"tells": ExtResource("8")
+}
