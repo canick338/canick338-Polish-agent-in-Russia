@@ -115,6 +115,21 @@ func run_scene(start_key: int = 0) -> void:
 						AudioManager.play_bgm(str(evt_args[0]))
 				elif evt_name == "stop_music":
 					AudioManager.stop_bgm()
+				elif evt_name == "play_sfx":
+					if evt_args.size() > 0:
+						var vol = -5.0
+						if evt_args.size() > 1: vol = float(evt_args[1])
+						AudioManager.play_sfx(str(evt_args[0]), vol)
+				elif evt_name == "shake_and_play_sfx":
+					var intensity = 1.0
+					if evt_args.size() > 0:
+						intensity = float(evt_args[0])
+					if _cinematic_layer:
+						_cinematic_layer.trigger_impact(intensity)
+					if evt_args.size() > 1:
+						var vol = -5.0
+						if evt_args.size() > 2: vol = float(evt_args[2])
+						AudioManager.play_sfx(str(evt_args[1]), vol)
 
 		if node is SceneTranspiler.BackgroundCommandNode:
 			if node.background == "black":

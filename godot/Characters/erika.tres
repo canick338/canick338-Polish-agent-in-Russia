@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Character" load_steps=10 format=3 uid="uid://erika_bartender"]
+
+[ext_resource type="Script" path="res://Characters/Character.gd" id="1"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Erika/erika_happy.png" id="2"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Erika/erika_sad.png" id="3"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Erika/erika_cute.png" id="4"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Erika/erika_neutral.png" id="5"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Erika/erika_shocked.png" id="6"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Erika/erika_drunk_happy.png" id="7"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Erika/erika_drunk_sad.png" id="8"]
+[ext_resource type="Texture2D" path="res://danilassets/characters/Erika/erika_shy.png" id="9"]
+
+[resource]
+script = ExtResource("1")
+id = "erika"
+display_name = "Эрика"
+bio = "Барменша. Милая, но может постоять за себя."
+age = 22
+scale_multiplier = 0.5
+position_offset = Vector2(0, 0)
+default_image = "neutral"
+images = {
+"neutral": ExtResource("5"),
+"happy": ExtResource("2"),
+"sad": ExtResource("3"),
+"cute": ExtResource("4"),
+"shocked": ExtResource("6"),
+"drunk_happy": ExtResource("7"),
+"drunk_sad": ExtResource("8"),
+"shy": ExtResource("9"),
+"angry": ExtResource("3")
+}

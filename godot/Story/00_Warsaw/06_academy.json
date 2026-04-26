@@ -866,7 +866,7 @@
                                 "expression": "determined_factory",
                                 "text": "ОРА-ОРА-ОРА-ОРА! ЖРИ БЕТОН, КУСОК ДЕРЬМА!",
                                 "type": "dialogue",
-                                "event": {"name": "shake_camera", "args": [1.5]}
+                                "event": {"name": "shake_and_play_sfx", "args": [1.5, "res://Assets/Audio/Music/Scenes/jojo-punch.ogg"]}
                             },
                             {
                                 "character": "",
