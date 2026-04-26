@@ -50,47 +50,41 @@ const CARD_DATABASE = {
 # === БАЗА ДАННЫХ ГАЛЕРЕИ ===
 # Фотографии и CG, которые игрок собирает по ходу сюжета
 const GALLERY_DATABASE = {
-	"photo_orphanage": {
-		"title": "Приют Святого Лаврентия",
-		"description": "Варшавский приют, где Данила провёл 15 лет. Тёмные кирпичные стены, которые помнили ещё послевоенные годы.",
-		"texture_path": "res://Backgrounds/orphanhome.png",
+	"test_warsaw_1": {
+		"title": "Данила обедает",
+		"description": "Обед во время тяжелой смены. Кебаб — лучшее изобретение человечества.",
+		"texture_path": "res://Assets/Textures/Phone/PhoneGallery/Warsaw/warsaw_1.png",
+		"category": "Персонажи"
+	},
+	"test_warsaw_2": {
+		"title": "Улица Восточной Варшавы",
+		"description": "Типичный пейзаж на окраине. Серые панельки и лужи.",
+		"texture_path": "res://Assets/Textures/Phone/PhoneGallery/Warsaw/warsaw_2.png",
 		"category": "Варшава"
 	},
-	"photo_polish_home": {
-		"title": "Квартира в Варшаве",
-		"description": "Тесная бетонная коробка на окраине. Стены тонкие, как бумага. Зато — свой угол.",
-		"texture_path": "res://Backgrounds/PolishHomeDanila.png",
-		"category": "Варшава"
+	"test_warsaw_3": {
+		"title": "Пицца от Марио",
+		"description": "Настоящее произведение искусства. Поэзия на тесте.",
+		"texture_path": "res://Assets/Textures/Phone/PhoneGallery/Warsaw/warsaw_3.png",
+		"category": "Еда"
 	},
-	"photo_pizzeria": {
-		"title": "Пиццерия «У Марио»",
-		"description": "Сицилийские мотивы, запах плавленого сыра и безумный итальянец за стойкой.",
-		"texture_path": "res://danilassets/location/Pizzeria_Mario/pizzeria_inside.png",
-		"category": "Варшава"
+	"test_warsaw_4": {
+		"title": "Встреча в баре",
+		"description": "Тяжелый разговор в баре «Упавший Орёл».",
+		"texture_path": "res://Assets/Textures/Phone/PhoneGallery/Warsaw/warsaw_4.png",
+		"category": "Персонажи"
 	},
-	"photo_bar": {
-		"title": "Бар «Упавший Орёл»",
-		"description": "Самое паршивое место в Восточной Варшаве. Сюда приходят не праздновать, а забывать.",
-		"texture_path": "res://danilassets/location/Warsawbar/bar.png",
-		"category": "Варшава"
+	"test_warsaw_5": {
+		"title": "Скрытое наблюдение",
+		"description": "Объект зафиксирован камерой с безопасного расстояния.",
+		"texture_path": "res://Assets/Textures/Phone/PhoneGallery/Warsaw/warsaw_5.png",
+		"category": "Задание"
 	},
-	"photo_gateway": {
-		"title": "Улицы Варшавы",
-		"description": "Свинцово-серое небо, ледяная морось и запах дешёвого бензина. Варшава как она есть.",
-		"texture_path": "res://Backgrounds/Polish_gateway_background.png",
-		"category": "Варшава"
-	},
-	"photo_factory": {
-		"title": "Завод Обломова",
-		"description": "Фасовочный завод на окраине. Что на самом деле в этих банках с красными метками?",
-		"texture_path": "res://Backgrounds/Factory/factory_inside.png",
-		"category": "Варшава"
-	},
-	"photo_office": {
-		"title": "Штаб Разведки",
-		"description": "Офис Генерала Джонни. Здесь решаются судьбы агентов и операций.",
-		"texture_path": "res://Backgrounds/office.png",
-		"category": "Варшава"
+	"test_warsaw_6": {
+		"title": "Странные документы",
+		"description": "То, что удалось найти в кабинете.",
+		"texture_path": "res://Assets/Textures/Phone/PhoneGallery/Warsaw/warsaw_6.jpg",
+		"category": "Задание"
 	}
 }
 

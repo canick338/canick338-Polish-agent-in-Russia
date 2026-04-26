@@ -168,7 +168,8 @@ func _open_gallery() -> void:
 	_clear_content()
 	
 	var gallery_data = GameGlobal.get_gallery_data()
-	var unlocked = GameGlobal.get_unlocked_photos()
+	# ТЕСТ: Временно все фото открыты
+	var unlocked = gallery_data.keys()
 	
 	var categories := ["Все"]
 	for photo_id in gallery_data:
