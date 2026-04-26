@@ -5,6 +5,7 @@ extends Node
 
 signal card_unlocked(card_id)
 signal money_changed(new_amount)
+signal gallery_photo_unlocked(photo_id)
 
 # === БАЗА ДАННЫХ КАРТОЧЕК ===
 # Здесь мы добавляем новые карточки.
@@ -46,6 +47,53 @@ const CARD_DATABASE = {
 	}
 }
 
+# === БАЗА ДАННЫХ ГАЛЕРЕИ ===
+# Фотографии и CG, которые игрок собирает по ходу сюжета
+const GALLERY_DATABASE = {
+	"photo_orphanage": {
+		"title": "Приют Святого Лаврентия",
+		"description": "Варшавский приют, где Данила провёл 15 лет. Тёмные кирпичные стены, которые помнили ещё послевоенные годы.",
+		"texture_path": "res://Backgrounds/orphanhome.png",
+		"category": "Варшава"
+	},
+	"photo_polish_home": {
+		"title": "Квартира в Варшаве",
+		"description": "Тесная бетонная коробка на окраине. Стены тонкие, как бумага. Зато — свой угол.",
+		"texture_path": "res://Backgrounds/PolishHomeDanila.png",
+		"category": "Варшава"
+	},
+	"photo_pizzeria": {
+		"title": "Пиццерия «У Марио»",
+		"description": "Сицилийские мотивы, запах плавленого сыра и безумный итальянец за стойкой.",
+		"texture_path": "res://danilassets/location/Pizzeria_Mario/pizzeria_inside.png",
+		"category": "Варшава"
+	},
+	"photo_bar": {
+		"title": "Бар «Упавший Орёл»",
+		"description": "Самое паршивое место в Восточной Варшаве. Сюда приходят не праздновать, а забывать.",
+		"texture_path": "res://danilassets/location/Warsawbar/bar.png",
+		"category": "Варшава"
+	},
+	"photo_gateway": {
+		"title": "Улицы Варшавы",
+		"description": "Свинцово-серое небо, ледяная морось и запах дешёвого бензина. Варшава как она есть.",
+		"texture_path": "res://Backgrounds/Polish_gateway_background.png",
+		"category": "Варшава"
+	},
+	"photo_factory": {
+		"title": "Завод Обломова",
+		"description": "Фасовочный завод на окраине. Что на самом деле в этих банках с красными метками?",
+		"texture_path": "res://Backgrounds/Factory/factory_inside.png",
+		"category": "Варшава"
+	},
+	"photo_office": {
+		"title": "Штаб Разведки",
+		"description": "Офис Генерала Джонни. Здесь решаются судьбы агентов и операций.",
+		"texture_path": "res://Backgrounds/office.png",
+		"category": "Варшава"
+	}
+}
+
 const COOKING_BALANCE = {
 	"heating_rate": 200.0,
 	"cooling_rate": 300.0,
@@ -60,7 +108,8 @@ const COOKING_BALANCE = {
 # Переменные, которые мы сохраняем
 var save_data = {
 	"money": 30,
-	"unlocked_cards": [] # Список ID открытых карточек
+	"unlocked_cards": [], # Список ID открытых карточек
+	"unlocked_photos": [] # Список ID открытых фотографий
 }
 
 # Путь к файлу сохранения
@@ -92,6 +141,7 @@ func load_persistent_data_only() -> void:
 			# Restore only meta-progression
 			if "money" in loaded_data: save_data["money"] = int(loaded_data["money"])
 			if "unlocked_cards" in loaded_data: save_data["unlocked_cards"] = loaded_data["unlocked_cards"]
+			if "unlocked_photos" in loaded_data: save_data["unlocked_photos"] = loaded_data["unlocked_photos"]
 			print("Persistent data loaded (Money, Cards).")
 
 func reset_new_game() -> void:
@@ -99,6 +149,7 @@ func reset_new_game() -> void:
 	save_data.clear()
 	save_data["money"] = 30
 	save_data["unlocked_cards"] = []
+	save_data["unlocked_photos"] = []
 	if has_node("/root/Variables"):
 		get_node("/root/Variables").clear_all_variables()
 	save_game()
@@ -170,6 +221,30 @@ func unlock_card(card_id: String):
 		save_game()
 		card_unlocked.emit(card_id)
 
+# === УПРАВЛЕНИЕ ГАЛЕРЕЕЙ ===
+
+func is_photo_unlocked(photo_id: String) -> bool:
+	return photo_id in save_data["unlocked_photos"]
+
+func unlock_photo(photo_id: String) -> void:
+	if not is_photo_unlocked(photo_id):
+		save_data["unlocked_photos"].append(photo_id)
+		print("Photo unlocked: ", photo_id)
+		save_game()
+		gallery_photo_unlocked.emit(photo_id)
+		# Показать уведомление
+		if has_node("/root/NotificationLayer"):
+			var notif = get_node("/root/NotificationLayer")
+			if notif.has_method("show_notification"):
+				var photo_data = GALLERY_DATABASE.get(photo_id, {})
+				notif.show_notification("Новое фото: " + photo_data.get("title", photo_id))
+
+func get_unlocked_photos() -> Array:
+	return save_data["unlocked_photos"]
+
+func get_gallery_data() -> Dictionary:
+	return GALLERY_DATABASE
+
 
 
 # === СИСТЕМА СОХРАНЕНИЙ ===
@@ -221,6 +296,7 @@ func load_game(slot_id: int = 0) -> bool:
 			# Обновляем состояние игры
 			if "money" in loaded_data: save_data["money"] = int(loaded_data["money"])
 			if "unlocked_cards" in loaded_data: save_data["unlocked_cards"] = loaded_data["unlocked_cards"]
+			if "unlocked_photos" in loaded_data: save_data["unlocked_photos"] = loaded_data["unlocked_photos"]
 			
 			if "story_vars" in loaded_data and has_node("/root/Variables"):
 				get_node("/root/Variables").load_variables(loaded_data["story_vars"])

@@ -116,6 +116,8 @@ func run_scene(start_key: int = 0) -> void:
 				if bg and bg.texture:
 					if _background:
 						_background.texture = bg.texture
+						# Auto-unlock gallery photo for this background
+						_try_unlock_gallery_photo(node.background)
 					else:
 						push_error("Background node not ready!")
 				else:
@@ -812,3 +814,22 @@ func _store_scene_data(data: Dictionary, path: String) -> void:
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	file.store_string(var_to_str(_scene_data))
 	file.close()
+
+
+## Maps background IDs to gallery photo IDs for auto-unlocking.
+const _BG_TO_GALLERY := {
+	"orphanhome": "photo_orphanage",
+	"polish_home": "photo_polish_home",
+	"pizzeria_inside": "photo_pizzeria",
+	"bar_inside": "photo_bar",
+	"polish_gateway": "photo_gateway",
+	"factory_inside": "photo_factory",
+	"office": "photo_office",
+}
+
+func _try_unlock_gallery_photo(background_id: String) -> void:
+	"""Automatically unlocks a gallery photo when a matching background is shown."""
+	if _BG_TO_GALLERY.has(background_id):
+		var photo_id = _BG_TO_GALLERY[background_id]
+		if not GameGlobal.is_photo_unlocked(photo_id):
+			GameGlobal.unlock_photo(photo_id)

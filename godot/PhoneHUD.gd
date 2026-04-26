@@ -94,13 +94,15 @@ func _build_home_screen() -> void:
 		for child in dock_grid.get_children():
 			child.queue_free()
 		
-	# Add apps to home screen
+	# Add apps to home screen (4 columns, 1 row)
 	if apps_grid:
+		apps_grid.columns = 4
 		_add_app_button("res://Assets/Textures/Phone/icon_shop.png", "Магазин", "_open_shop", apps_grid)
 		_add_app_button("res://Assets/Textures/Phone/icon_mail.png", "Миссии", "_open_missions", apps_grid)
+		_add_app_button("res://Assets/Textures/Phone/icon_gallery.png", "Галерея", "_open_gallery", apps_grid)
 		_add_app_button("res://Assets/Textures/Phone/icon_games.png", "Игры", "_open_games", apps_grid)
 	
-	# Add apps to the bottom dock
+	# Add apps to the bottom dock (4 columns)
 	if dock_grid:
 		_add_app_button("res://Assets/Textures/Phone/icon_mail.png", "Инфо", "_open_notifications", dock_grid)
 		_add_app_button("res://Assets/Textures/Phone/icon_bank.png", "Bank", "_open_bank", dock_grid)
@@ -157,7 +159,261 @@ func _show_app_header(title: String) -> void:
 			child.queue_free()
 
 # ========================
-# 📬 NOTIFICATIONS APP
+# GALLERY APP
+# ========================
+var _gallery_current_category := "Все"
+
+func _open_gallery() -> void:
+	_show_app_header("Галерея")
+	_clear_content()
+	
+	var gallery_data = GameGlobal.get_gallery_data()
+	var unlocked = GameGlobal.get_unlocked_photos()
+	
+	var categories := ["Все"]
+	for photo_id in gallery_data:
+		var cat = gallery_data[photo_id].get("category", "Другое")
+		if cat not in categories:
+			categories.append(cat)
+	
+	var outer_scroll = ScrollContainer.new()
+	outer_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	outer_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	outer_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
+	outer_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	
+	var main_vbox = VBoxContainer.new()
+	main_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	main_vbox.add_theme_constant_override("separation", 10)
+	
+	# === Banner ===
+	var banner = PanelContainer.new()
+	banner.custom_minimum_size = Vector2(0, 100)
+	var bs = StyleBoxFlat.new()
+	bs.bg_color = Color(0.12, 0.1, 0.2, 0.95)
+	bs.corner_radius_top_left = 12
+	bs.corner_radius_top_right = 12
+	bs.corner_radius_bottom_left = 12
+	bs.corner_radius_bottom_right = 12
+	banner.add_theme_stylebox_override("panel", bs)
+	var btex = TextureRect.new()
+	btex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	btex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	btex.custom_minimum_size = Vector2(0, 100)
+	if ResourceLoader.exists("res://danilassets/characters/Daniel/testart.png"):
+		btex.texture = load("res://danilassets/characters/Daniel/testart.png")
+	btex.modulate = Color(1, 1, 1, 0.3)
+	banner.add_child(btex)
+	var bov = VBoxContainer.new()
+	bov.anchors_preset = Control.PRESET_FULL_RECT
+	bov.alignment = BoxContainer.ALIGNMENT_CENTER
+	var bt = Label.new()
+	bt.text = "Фотоальбом агента"
+	bt.add_theme_font_size_override("font_size", 17)
+	bt.add_theme_color_override("font_color", Color(0.95, 0.92, 1.0))
+	bt.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
+	bt.add_theme_constant_override("shadow_offset_y", 2)
+	bt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	bov.add_child(bt)
+	var bst = Label.new()
+	bst.text = "Собрано %d из %d" % [unlocked.size(), gallery_data.size()]
+	bst.add_theme_font_size_override("font_size", 12)
+	bst.add_theme_color_override("font_color", Color(0.7, 0.65, 0.9))
+	bst.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.5))
+	bst.add_theme_constant_override("shadow_offset_y", 1)
+	bst.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	bov.add_child(bst)
+	banner.add_child(bov)
+	main_vbox.add_child(banner)
+	
+	# === Category tabs ===
+	var tabs = HBoxContainer.new()
+	tabs.add_theme_constant_override("separation", 6)
+	for cat in categories:
+		var tb = Button.new()
+		tb.text = cat
+		tb.custom_minimum_size = Vector2(0, 28)
+		tb.add_theme_font_size_override("font_size", 12)
+		var ts = StyleBoxFlat.new()
+		ts.corner_radius_top_left = 14
+		ts.corner_radius_top_right = 14
+		ts.corner_radius_bottom_left = 14
+		ts.corner_radius_bottom_right = 14
+		ts.content_margin_left = 12
+		ts.content_margin_right = 12
+		ts.bg_color = Color(0.42, 0.3, 0.9, 0.95) if cat == _gallery_current_category else Color(0.18, 0.18, 0.22, 0.7)
+		tb.add_theme_stylebox_override("normal", ts)
+		var hs = ts.duplicate()
+		hs.bg_color = Color(0.5, 0.38, 1.0, 0.95)
+		tb.add_theme_stylebox_override("hover", hs)
+		tb.pressed.connect(func():
+			_gallery_current_category = cat
+			_open_gallery()
+		)
+		tabs.add_child(tb)
+	main_vbox.add_child(tabs)
+	
+	# === Photo grid ===
+	var grid = GridContainer.new()
+	grid.columns = 2
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	grid.add_theme_constant_override("h_separation", 8)
+	grid.add_theme_constant_override("v_separation", 8)
+	
+	for photo_id in gallery_data:
+		var photo = gallery_data[photo_id]
+		if _gallery_current_category != "Все" and photo.get("category", "") != _gallery_current_category:
+			continue
+		var is_unlocked = photo_id in unlocked
+		
+		var card = PanelContainer.new()
+		card.custom_minimum_size = Vector2(0, 125)
+		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var cs = StyleBoxFlat.new()
+		cs.corner_radius_top_left = 10
+		cs.corner_radius_top_right = 10
+		cs.corner_radius_bottom_left = 10
+		cs.corner_radius_bottom_right = 10
+		if is_unlocked:
+			cs.bg_color = Color(0.14, 0.13, 0.2, 0.9)
+			cs.border_width_bottom = 2
+			cs.border_color = Color(0.42, 0.3, 0.9, 0.6)
+		else:
+			cs.bg_color = Color(0.08, 0.08, 0.1, 0.85)
+		card.add_theme_stylebox_override("panel", cs)
+		
+		var cv = VBoxContainer.new()
+		cv.add_theme_constant_override("separation", 4)
+		var tr = TextureRect.new()
+		tr.custom_minimum_size = Vector2(0, 85)
+		tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		if is_unlocked:
+			var tp = photo.get("texture_path", "")
+			if ResourceLoader.exists(tp):
+				tr.texture = load(tp)
+		else:
+			tr.modulate = Color(0.1, 0.1, 0.12, 1)
+		cv.add_child(tr)
+		
+		var tl = Label.new()
+		tl.text = photo.get("title", "???") if is_unlocked else "[Закрыто]"
+		tl.add_theme_font_size_override("font_size", 11)
+		tl.add_theme_color_override("font_color", Color(0.9, 0.88, 0.95) if is_unlocked else Color(0.3, 0.28, 0.35))
+		tl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		tl.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		cv.add_child(tl)
+		
+		var mg = MarginContainer.new()
+		mg.add_theme_constant_override("margin_left", 4)
+		mg.add_theme_constant_override("margin_right", 4)
+		mg.add_theme_constant_override("margin_top", 4)
+		mg.add_theme_constant_override("margin_bottom", 4)
+		mg.add_child(cv)
+		card.add_child(mg)
+		
+		if is_unlocked:
+			var cb = Button.new()
+			cb.flat = true
+			cb.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+			cb.anchors_preset = Control.PRESET_FULL_RECT
+			cb.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
+			cb.add_theme_stylebox_override("hover", StyleBoxEmpty.new())
+			cb.add_theme_stylebox_override("pressed", StyleBoxEmpty.new())
+			cb.pressed.connect(func(): _open_photo_viewer(photo_id))
+			card.add_child(cb)
+		grid.add_child(card)
+	
+	main_vbox.add_child(grid)
+	outer_scroll.add_child(main_vbox)
+	content_area.add_child(outer_scroll)
+
+func _open_photo_viewer(photo_id: String) -> void:
+	"""Opens a fullscreen view of a single photo with description."""
+	var gallery_data = GameGlobal.get_gallery_data()
+	var photo = gallery_data.get(photo_id, {})
+	if photo.is_empty(): return
+	
+	_show_app_header(photo.get("title", "???"))
+	_clear_content()
+	
+	var vbox = VBoxContainer.new()
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 10)
+	
+	# Photo display
+	var tex_rect = TextureRect.new()
+	tex_rect.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	tex_rect.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tex_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+	tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	var tex_path = photo.get("texture_path", "")
+	if ResourceLoader.exists(tex_path):
+		tex_rect.texture = load(tex_path)
+	vbox.add_child(tex_rect)
+	
+	# Info panel
+	var info_panel = PanelContainer.new()
+	var info_style = StyleBoxFlat.new()
+	info_style.bg_color = Color(0.12, 0.11, 0.18, 0.95)
+	info_style.corner_radius_top_left = 10
+	info_style.corner_radius_top_right = 10
+	info_style.corner_radius_bottom_left = 10
+	info_style.corner_radius_bottom_right = 10
+	info_panel.add_theme_stylebox_override("panel", info_style)
+	
+	var info_margin = MarginContainer.new()
+	info_margin.add_theme_constant_override("margin_left", 12)
+	info_margin.add_theme_constant_override("margin_right", 12)
+	info_margin.add_theme_constant_override("margin_top", 8)
+	info_margin.add_theme_constant_override("margin_bottom", 10)
+	
+	var info_vbox = VBoxContainer.new()
+	info_vbox.add_theme_constant_override("separation", 4)
+	
+	var title_lbl = Label.new()
+	title_lbl.text = photo.get("title", "")
+	title_lbl.add_theme_font_size_override("font_size", 16)
+	title_lbl.add_theme_color_override("font_color", Color(0.95, 0.92, 1.0))
+	info_vbox.add_child(title_lbl)
+	
+	var cat_lbl = Label.new()
+	cat_lbl.text = photo.get("category", "")
+	cat_lbl.add_theme_font_size_override("font_size", 11)
+	cat_lbl.add_theme_color_override("font_color", Color(0.5, 0.45, 0.75))
+	info_vbox.add_child(cat_lbl)
+	
+	var desc_lbl = Label.new()
+	desc_lbl.text = photo.get("description", "")
+	desc_lbl.add_theme_font_size_override("font_size", 12)
+	desc_lbl.add_theme_color_override("font_color", Color(0.65, 0.62, 0.75))
+	desc_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	info_vbox.add_child(desc_lbl)
+	
+	info_margin.add_child(info_vbox)
+	info_panel.add_child(info_margin)
+	vbox.add_child(info_panel)
+	
+	# Back to gallery button
+	var back_gallery_btn = Button.new()
+	back_gallery_btn.text = "← Назад к галерее"
+	back_gallery_btn.custom_minimum_size = Vector2(0, 36)
+	var back_style = StyleBoxFlat.new()
+	back_style.bg_color = Color(0.3, 0.25, 0.55, 0.8)
+	back_style.corner_radius_top_left = 8
+	back_style.corner_radius_top_right = 8
+	back_style.corner_radius_bottom_left = 8
+	back_style.corner_radius_bottom_right = 8
+	back_gallery_btn.add_theme_stylebox_override("normal", back_style)
+	back_gallery_btn.add_theme_font_size_override("font_size", 13)
+	back_gallery_btn.pressed.connect(func(): _open_gallery())
+	vbox.add_child(back_gallery_btn)
+	
+	content_area.add_child(vbox)
+
+# ========================
+# NOTIFICATIONS APP
 # ========================
 func _open_notifications() -> void:
 	_show_app_header("Уведомления")
