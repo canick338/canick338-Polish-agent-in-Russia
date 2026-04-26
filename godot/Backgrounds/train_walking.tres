@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Background" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Backgrounds/Background.gd" id="1"]
+[ext_resource type="Texture2D" path="res://danilassets/location/Train/walking_on_the train_looking_out_the_window.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "train_walking"
+display_name = "Поезд"
+texture = ExtResource("2")

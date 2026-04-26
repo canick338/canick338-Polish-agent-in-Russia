@@ -35,8 +35,55 @@
         "type": "command"
     },
     {
+        "args": [
+            "train_walking",
+            ""
+        ],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "args": [
+            "fade_in"
+        ],
+        "name": "transition",
+        "type": "command"
+    },
+    {
         "character": "",
         "text": "Поезд медленно набирает ход, унося агента навстречу его судьбе...",
+        "type": "dialogue"
+    },
+    {
+        "character": "danila",
+        "text": "(Мысли) Варшава осталась позади. Впереди только неизвестность.",
+        "type": "dialogue"
+    },
+    {
+        "args": [
+            "fade_out"
+        ],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "args": [
+            "train_sad",
+            ""
+        ],
+        "name": "background",
+        "type": "command"
+    },
+    {
+        "args": [
+            "fade_in"
+        ],
+        "name": "transition",
+        "type": "command"
+    },
+    {
+        "character": "",
+        "text": "Стук колёс гипнотизирует, но уснуть невозможно. Слишком много мыслей.",
         "type": "dialogue"
     },
     {
