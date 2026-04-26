@@ -759,13 +759,114 @@
                             {
                                 "character": "",
                                 "text": "Физика беспощадна даже к амбалам. Нога Пшемека уезжает вперёд со скоростью болида 'Формулы-1'. 140 килограммов мышц с оглушительным грохотом обрушиваются спиной на бетон.",
+                                "type": "dialogue",
+                                "event": {"name": "play_music", "args": ["res://Assets/Audio/Music/Scenes/jojos-golden-wind.ogg"]}
+                            },
+                            {
+                                "args": [
+                                    "fade_out"
+                                ],
+                                "name": "transition",
+                                "type": "command"
+                            },
+                            {
+                                "args": [
+                                    "res://danilassets/location/PolishSecretOffice/cg_points_a_finger.png",
+                                    "zoom_in",
+                                    1.5
+                                ],
+                                "name": "cinematic",
+                                "type": "command"
+                            },
+                            {
+                                "args": [
+                                    "fade_in"
+                                ],
+                                "name": "transition",
+                                "type": "command"
+                            },
+                            {
+                                "character": "danila",
+                                "side": "left",
+                                "expression": "serious",
+                                "text": "(Указывает пальцем) Ты думал, что гора мышц решит всё? Ты забыл главное правило разведки: используй ресурс!",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "",
+                                "text": "Пшемек, рыча, пытается подняться с пола, но его армейские ботинки беспомощно скользят по луковому соусу, словно корова на льду.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "character": "",
+                                "text": "Данила картинно поправляет воротник куртки, медленно приближаясь к поверженному гиганту.",
+                                "type": "dialogue"
+                            },
+                            {
+                                "args": [
+                                    "fade_out"
+                                ],
+                                "name": "transition",
+                                "type": "command"
+                            },
+                            {
+                                "args": [
+                                    "res://danilassets/location/PolishSecretOffice/cg_battle_between_danila_and_thug.png",
+                                    "shake",
+                                    0.5
+                                ],
+                                "name": "cinematic",
+                                "type": "command"
+                            },
+                            {
+                                "args": [
+                                    "fade_in"
+                                ],
+                                "name": "transition",
+                                "type": "command"
+                            },
+                            {
+                                "character": "",
+                                "text": "В порыве слепой ярости Пшемек выбрасывает кулак, способный проломить кирпичную стену, но Данила уворачивается с грацией танцора диско.",
                                 "type": "dialogue"
                             },
                             {
                                 "character": "danila",
+                                "side": "left",
+                                "expression": "angry",
+                                "text": "Слишком предсказуемо! Твоя сила — ничто без техники! Мои кулаки быстрее скорости звука! Почувствуй мощь настоящего агента!",
+                                "type": "dialogue"
+                            },
+                            {
+                                "args": [
+                                    "fade_out"
+                                ],
+                                "name": "transition",
+                                "type": "command"
+                            },
+                            {
+                                "args": [
+                                    "res://danilassets/location/PolishSecretOffice/cg_danila_beats_thug.png",
+                                    "impact",
+                                    0.5
+                                ],
+                                "name": "cinematic",
+                                "type": "command"
+                            },
+                            {
+                                "args": [
+                                    "fade_in"
+                                ],
+                                "name": "transition",
+                                "type": "command"
+                            },
+                            {
+                                "character": "danila",
+                                "side": "left",
                                 "expression": "determined_factory",
                                 "text": "ОРА-ОРА-ОРА-ОРА! ЖРИ БЕТОН, КУСОК ДЕРЬМА!",
-                                "type": "dialogue"
+                                "type": "dialogue",
+                                "event": {"name": "shake_camera", "args": [1.5]}
                             },
                             {
                                 "character": "",
@@ -773,9 +874,33 @@
                                 "type": "dialogue"
                             },
                             {
+                                "args": [
+                                    "fade_out"
+                                ],
+                                "name": "transition",
+                                "type": "command"
+                            },
+                            {
+                                "args": [
+                                    "res://danilassets/location/PolishSecretOffice/cg_thug_defeated.png",
+                                    "zoom_out",
+                                    2.0
+                                ],
+                                "name": "cinematic",
+                                "type": "command"
+                            },
+                            {
+                                "args": [
+                                    "fade_in"
+                                ],
+                                "name": "transition",
+                                "type": "command"
+                            },
+                            {
                                 "character": "",
                                 "text": "Голова Пшемека безвольно откидывается в сторону. Нокаут.",
-                                "type": "dialogue"
+                                "type": "dialogue",
+                                "event": {"name": "stop_music"}
                             }
                         ]
                     }
@@ -783,9 +908,31 @@
                 "type": "choice"
             },
             {
+                "args": [
+                    "fade_out"
+                ],
+                "name": "transition",
+                "type": "command"
+            },
+            {
+                "args": [
+                    "PolishSecretOffice",
+                    "fade_in"
+                ],
+                "name": "background",
+                "type": "command"
+            },
+            {
                 "character": "danila",
                 "expression": "panting",
                 "text": "(Тяжело дышит) Я... Я победил. Я мать его агентурная кэгэбэшная машина для убийств.",
+                "type": "dialogue"
+            },
+            {
+                "character": "danila",
+                "side": "left",
+                "expression": "smile",
+                "text": "Генерал, я сдал экзамен?",
                 "type": "dialogue"
             },
             {

@@ -1,62 +1,62 @@
 [
-    {
-        "args": [
-            "polish_home",
+	{
+		"args": [
+			"polish_home",
             ""
-        ],
-        "name": "background",
-        "type": "command"
-    },
-    {
-        "character": "",
-        "text": "Глаза медленно открываются.",
-        "type": "dialogue"
-    },
-    {
-        "character": "danila",
-        "text": "Где я?",
-        "type": "dialogue"
-    },
-    {
-        "character": "",
-        "text": "Знакомая комната. Моя квартира.",
-        "type": "dialogue"
-    },
-    {
-        "character": "danila",
-        "text": "Всё это было... воспоминанием?",
-        "type": "dialogue"
-    },
-    {
-        "character": "",
-        "text": "Шесть месяцев под прикрытием. Завтра начинается миссия. В Россию. В Обоянь.",
-        "type": "dialogue"
-    },
-    {
-        "character": "danila",
-        "text": "Я выжил в детдоме. Я выжил на заводе. Я выживу и там.",
-        "type": "dialogue"
-    },
-    {
-        "args": [
+		],
+		"name": "background",
+		"type": "command"
+	},
+	{
+		"character": "",
+		"text": "Глаза медленно открываются.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Где я?",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Знакомая комната. Моя квартира.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Всё это было... воспоминанием?",
+		"type": "dialogue"
+	},
+	{
+		"character": "",
+		"text": "Шесть месяцев под прикрытием. Завтра начинается миссия. В Россию. В Обоянь.",
+		"type": "dialogue"
+	},
+	{
+		"character": "danila",
+		"text": "Я выжил в детдоме. Я выжил на заводе. Я выживу и там.",
+		"type": "dialogue"
+	},
+	{
+		"args": [
             "card_danila"
-        ],
-        "name": "unlock",
-        "type": "command"
-    },
-    {
-        "args": [
+		],
+		"name": "unlock",
+		"type": "command"
+	},
+	{
+		"args": [
             "fade_out"
-        ],
-        "name": "transition",
-        "type": "command"
-    },
-    {
-        "args": [
-            "prologue_intro_done",
-            1
-        ],
-        "name": "set",
-        "type": "command"
-    }
+		],
+		"name": "transition",
+		"type": "command"
+	},
+	{
+		"args": [
+			"prologue_intro_done",
+			1
+		],
+		"name": "set",
+		"type": "command"
+	}
 ]

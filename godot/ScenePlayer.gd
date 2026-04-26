@@ -102,6 +102,19 @@ func run_scene(start_key: int = 0) -> void:
 			if evt_name != "":
 				print("ScenePlayer emitting event: ", evt_name, evt_args)
 				scene_event.emit(evt_name, evt_args)
+				
+				# Natively handle specific built-in signals
+				if evt_name == "shake_camera":
+					var intensity = 1.0
+					if evt_args.size() > 0:
+						intensity = float(evt_args[0])
+					if _cinematic_layer:
+						_cinematic_layer.trigger_impact(intensity)
+				elif evt_name == "play_music":
+					if evt_args.size() > 0:
+						AudioManager.play_bgm(str(evt_args[0]))
+				elif evt_name == "stop_music":
+					AudioManager.stop_bgm()
 
 		if node is SceneTranspiler.BackgroundCommandNode:
 			if node.background == "black":
@@ -127,6 +140,11 @@ func run_scene(start_key: int = 0) -> void:
 			if "transition" in node and node.transition != "" and TRANSITIONS.has(node.transition):
 				call(TRANSITIONS[node.transition])
 				await self.transition_finished
+				
+			# Hide cinematic layer if we transition to a regular background
+			if _cinematic_layer and _cinematic_layer.visible:
+				_cinematic_layer.hide()
+				_cinematic_layer.stop_idle()
 
 		# Displaying a character.
 		# Показываем персонажа только если он явно указан в узле
@@ -182,7 +200,9 @@ func run_scene(start_key: int = 0) -> void:
 				AudioManager.play_event("transition_fade")
 				call(TRANSITIONS[node.transition])
 				if node.transition == "fade_out" and _character_displayer != null:
-					_character_displayer.clear_characters()
+					# Do not clear characters if we are in the middle of a cinematic sequence
+					if not (_cinematic_layer and _cinematic_layer.visible):
+						_character_displayer.clear_characters()
 				await self.transition_finished
 			key = node.next
 
