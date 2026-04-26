@@ -744,21 +744,6 @@
                                                     "erika_kissed",
                                                     1
                                                 ]
-                                            },
-                                            {
-                                                "type": "dialogue",
-                                                "character": "danila",
-                                                "text": "(Мысли) Пора. Варшава не спит, и мне тоже нельзя расслабляться.",
-                                                "expression": "serious",
-                                                "side": "left"
-                                            },
-                                            {
-                                                "type": "command",
-                                                "name": "set",
-                                                "args": [
-                                                    "bar_visited",
-                                                    3
-                                                ]
                                             }
                                         ]
                                     },
@@ -783,21 +768,6 @@
                                                 "text": "Д-да... конечно. Допивай чай и уходи. Мне нужно закрываться.",
                                                 "expression": "sad",
                                                 "side": "right"
-                                            },
-                                            {
-                                                "type": "dialogue",
-                                                "character": "danila",
-                                                "text": "(Мысли) Пора. Варшава не спит, и мне тоже нельзя расслабляться.",
-                                                "expression": "serious",
-                                                "side": "left"
-                                            },
-                                            {
-                                                "type": "command",
-                                                "name": "set",
-                                                "args": [
-                                                    "bar_visited",
-                                                    3
-                                                ]
                                             }
                                         ]
                                     }
@@ -818,22 +788,22 @@
                                 "text": "Ой, да больно надо! Допивай и проваливай, мне домой пора!",
                                 "expression": "angry",
                                 "side": "right"
-                            },
-                            {
-                                "type": "dialogue",
-                                "character": "danila",
-                                "text": "(Мысли) Пора. Варшава не спит, и мне тоже нельзя расслабляться.",
-                                "expression": "serious",
-                                "side": "left"
-                            },
-                            {
-                                "type": "command",
-                                "name": "set",
-                                "args": [
-                                    "bar_visited",
-                                    3
-                                ]
                             }
+                        ]
+                    },
+                    {
+                        "type": "dialogue",
+                        "character": "danila",
+                        "text": "(Мысли) Пора. Варшава не спит, и мне тоже нельзя расслабляться.",
+                        "expression": "serious",
+                        "side": "left"
+                    },
+                    {
+                        "type": "command",
+                        "name": "set",
+                        "args": [
+                            "bar_visited",
+                            3
                         ]
                     }
                 ],
