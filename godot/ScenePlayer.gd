@@ -256,11 +256,7 @@ func run_scene(start_key: int = 0) -> void:
 				
 			elif node.symbol == "system_sleep":
 				AudioManager.play_event("sleep")
-				# Sleep resets time to morning (0) and proceeds to next day.
-				var day = Variables.get_variable("current_day")
-				if day == 0: day = 1
-				Variables.add_variable("current_day", day + 1)
-				Variables.add_variable("current_time", 0)
+				# Управление временем и днями сна делегировано сюжетному JSON
 				
 			else:
 				Variables.add_variable(node.symbol, node.value)

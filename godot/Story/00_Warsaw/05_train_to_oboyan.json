@@ -100,5 +100,20 @@
         ],
         "name": "achievement",
         "type": "command"
+    },
+    {
+        "args": [
+            "global_leave_warsaw",
+            1
+        ],
+        "name": "set",
+        "type": "command"
+    },
+    {
+        "args": [
+            "res://Story/01_Oboyan/act1_arrival.json"
+        ],
+        "name": "scene",
+        "type": "command"
     }
 ]

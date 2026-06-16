@@ -47,6 +47,8 @@ func _ready() -> void:
 		AudioManager.play_event("map_open")
 	
 	_load_manifest()
+	if int(Variables.get_variable("warsaw_prologue_done", 0)) == 1:
+		current_location_id = "oboyan_center"
 	if phone_button: phone_button.pressed.connect(_on_phone_pressed)
 	if get_node_or_null("%ToggleSidePanelButton"):
 		%ToggleSidePanelButton.pressed.connect(_toggle_side_panel)
@@ -539,11 +541,25 @@ void fragment() {
 				fallback.material = sm
 			
 	elif current_location_id == "oboyan_center":
-		map_background.texture = null
+		var img_loaded = false
+		var img_path = ProjectSettings.globalize_path("res://danilassets/location/Oboyan/oboyan_map.png")
+		if FileAccess.file_exists(img_path):
+			var img = Image.load_from_file(img_path)
+			if img:
+				var tex = ImageTexture.create_from_image(img)
+				map_background.texture = tex
+				map_background.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+				map_background.modulate = Color(1.0, 1.0, 1.0)
+				img_loaded = true
+				
 		var fallback = map_background.get_node_or_null("MapColorFallback")
-		if fallback: 
-			fallback.material = null
-			fallback.color = Color(0.22, 0.16, 0.1)
+		if fallback:
+			if img_loaded:
+				fallback.visible = false
+				fallback.material = null
+			else:
+				fallback.visible = true
+				fallback.color = Color(0.22, 0.16, 0.1)
 	
 	if not manifest_data.has("locations"): return
 	
@@ -589,7 +605,7 @@ func _on_node_clicked(scene_path: String) -> void:
 	
 	# Время НЕ продвигается здесь — только в Main.gd после завершения сцены
 	# Здесь только вычитаем голод/энергию за «поездку» к локации
-	if not scene_path.ends_with("08_home.json") and not scene_path.ends_with("01_intro_streets.json") and not scene_path.ends_with("00_map_tutorial.json"):
+	if not scene_path.ends_with("08_home.json") and not scene_path.ends_with("system_sleep.json") and not scene_path.ends_with("01_intro_streets.json") and not scene_path.ends_with("00_map_tutorial.json"):
 		var h = int(Variables.get_variable("hunger", 100)) - 5
 		var e = int(Variables.get_variable("energy", 100)) - 5
 		Variables.add_variable("hunger", clamp(h, 0, 100))

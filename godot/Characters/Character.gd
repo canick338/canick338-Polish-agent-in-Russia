@@ -30,4 +30,4 @@ func get_image(expression: String) -> Texture2D:
 
 
 func set_age(value: int) -> void:
-	age = int(min(value, 0))
+	age = int(max(value, 0))

@@ -8,7 +8,7 @@
 	},
 	{
 		"args": [
-			"polish_home"
+			"res://danilassets/location/Oboyan/city_square.jpg"
 		],
 		"name": "background",
 		"type": "command"

@@ -310,5 +310,12 @@ func _add_jump_point(name: String, index: int) -> void:
 	if _jump_points.has(name):
 		return
 	_jump_points[name] = index
-	# Resolve pending
-	# Not implementing fully for brevity, assume converter does linear pass
+	
+	# Resolve pending unresolved jumps to this mark
+	var temp := []
+	for jump_node in _unresolved_jump_nodes:
+		if jump_node.jump_point == name:
+			jump_node.next = index
+		else:
+			temp.append(jump_node)
+	_unresolved_jump_nodes = temp

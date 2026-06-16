@@ -234,6 +234,11 @@ func _on_ScenePlayer_scene_finished() -> void:
 		return
 
 	# === Продвижение времени после завершения сцены (action-based, как в VN) ===
+	if _current_scene_path != "" and _current_scene_path.ends_with("system_sleep.json"):
+		# После сна время не идет вперед, остаемся утром нового дня (0)
+		show_world_map()
+		return
+
 	var time_idx = int(Variables.get_variable("current_time", 0))
 	time_idx += 1
 	if time_idx > 3:
